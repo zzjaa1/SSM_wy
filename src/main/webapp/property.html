@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>物业后台</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/property.css">
+</head>
+<body>
+<!--头部-->
+    <header>
+        <div class="logo">
+            <em><img src="../../images/logo.png" alt=""></em>云联汇
+        </div>
+        <div class="header_left">
+            <a href="property_homePage.html" style="color: #fff;">
+                <em><img src="../../images/1.png" alt=""></em>郑州市德旺物业管理有限公司
+                <img src="../../images/2.png" alt="" class="right_top_img">
+            </a>
+        </div>
+        <!--头部右侧-->
+        <div class="header_right">
+            <div class="hr_div1">
+                <em class="hr_em1"><img src="../../images/3.png" alt=""></em>
+                <span class="hr_show">美景天城</span>
+                <em class="hr_em2"><img src="../../images/4.png" alt="" class="hr1_img1"></em>
+                <ul class="header_list" id="hdl_c">
+                    <li style="position: relative" id="hl_li"><img src="../../images/42.png" alt="" class="hdl_img"></li>
+                    <li class="hdl_select">
+                        美景天城
+                    </li>
+                    <li class="hdl_select">
+                        美景天城二
+                    </li>
+                </ul>
+            </div>
+            <div class="hr_div1" style="border-left: 1px solid #fff;">
+                <em class="hr_em1" style="width: 15px;height: 15px;margin-left: 5px"><img src="../../images/5.png" alt=""></em>
+                <span>欢迎Admin</span>
+                <em class="hr_em2"><img src="../../images/4.png" alt="" class="hr1_img1"></em>
+                <ul class="header_list" style="right:0">
+                    <li style="position: relative"  id="hl_li2"><img src="../../images/42.png" alt="" class="hdl_img"></li>
+                    <li>
+                        <a href="#"><span><img src="../../images/sz.png" alt=""></span>我的设置</a>
+                    </li>
+                    <li>
+                        <a href="#"><span><img src="../../images/mm.png" alt=""></span>修改密码</a>
+                    </li>
+                    <li>
+                        <a href="property_index.html"><span><img src="../../images/tc.png" alt=""></span>退出系统</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </header>
+<!--页面左侧-->
+<div class="left">
+    <div class="left_list" id="left_list2">
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll" id="menu_style">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test" >
+                    <li class="layui-nav-item"  v-for="s in sa">
+                        <a @click="dj(s.id)"  class="">{{s.text}}</a>
+                        <dl class="layui-nav-child"    :title="s.text">
+                            <dd v-for="ss in s.chard" :style="sty" :class="s.id">
+                                <a href="javascript:;" >{{ss.text}}</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script>
+            var a=new Vue({
+                el: '#menu_style',
+                data:{
+                    sa:[
+                        {id:'1',text:'导航1',
+                            chard:[{id:"11",text:'导航11',chard:[{}]},
+                                {id:"12",text:'导航12',chard:[{}]}
+                            ]
+                        },
+                        {
+                            id:'2',text:'导航2',
+                            chard:[{id:"22",text:'导航22',chard:[{}]}]
+                        }]
+                    ,
+                    sty:"display:none"
+                },
+                computed: {
+
+                },
+                methods:{
+                    dj:function (chard){
+                        if(this.sty=="display:none"){
+                            a.sty="display:block";
+                        }else{
+                            a.sty="display:none";
+                        }
+                    }
+                }
+            })
+        </script>
+
+    </div>
+</div>
+    <div class="con">
+            <div style="width: 100%;height: 900px;background: #ddd">
+                           主题内容
+            </div>
+    </div>
+    <script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+    <script>
+        /*左侧效果*/
+        $(".li_a").bind("click", function() {
+           $(this).next(".left_slide").slideToggle().siblings(".left_slide").slideUp();
+        });
+        /*头部右侧效果*/
+        $(document).click(function(ev){
+            var e=ev||window.event;
+            var target=e.target||e.srcElement;
+            if(target.parentNode.className!="hr_div1"){
+                $(".header_list").hide()
+            }
+        })
+        $('.hr_div1').click(function(){
+            var i=$('.hr_div1').index(this);
+            if($(".header_list").eq(i).get(0).style.display=="block"){
+                $(".header_list").eq(i).hide()
+            }else{
+                $(".header_list").hide()
+                $(".header_list").eq(i).show()
+            }
+        })
+        $('.hdl_select').click(function () {
+            var a=$(this).html();
+            $('.hr_show').html(a);
+        });
+
+    </script>
+</body>
+</html>

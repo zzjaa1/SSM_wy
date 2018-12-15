@@ -1,0 +1,94 @@
+body{font-size:14px;color:#666;font-family: '微软雅黑', serif}
+#left_list2 .li_a{font-size:16px;}
+select{color:#666}
+.chairfix:after{content:"";clear:both;display:block;}
+#con_head a{color:#666;}
+.com{overflow:hidden;margin-top:0;padding-top:15px;}
+.equipment_reach{width:97%;margin:0 auto;border:1px solid #cdcdcd;height:50px;line-height:50px;}
+.equipment_list{width:97%;margin:0 auto;border:1px solid #cdcdcd;margin-top:20px}
+.equipment_reach p{margin-left:20px;}
+.equipment_reach input[type=text]{width:220px;height:27px;padding-left:10px;}
+.equipment_reach input[type=button]{width:45px;height:30px;background-color:#00a0e9;color:#fff;border:none;
+    border-radius: 5px;cursor: pointer;line-height:30px;}
+.equipment_list_title{height:37px;line-height:37px}
+.equipment_list_title span{font-weight:bold;}
+.equipment_list_title img{vertical-align: middle}
+.equipment_list_title div,.equipment_list_title span{  float: left;}
+.equipment_list_title div{border-right:1px solid #cdcdcd;width:37px;text-align:center;margin-right:20px;}
+.equipment_list_title a{float:right;background-color:#00a0e9;color:#fff;
+    display:inline-block;width:80px;height:30px;margin:3px 10px;line-height:30px;text-align:center}
+.equipment_list_mess{border-top:1px solid #cdcdcd}
+.equipment_list_mess li{float:left;height:30px;line-height:30px;text-align:center;
+    width:10%;border-right:1px solid #cdcdcd;box-sizing: border-box;font-weight:bold;}
+.equipment_list_message li{font-weight:normal;text-align:left;}
+.equipment_list_message .equipment_list_mess{background-color:#fff}
+.equipment_list_message{border-bottom:1px solid #cdcdcd}
+.equipment_list_message li span{padding-left:20px;}
+.equipment_list_xiuG{background-color:#FF3816;color:#fff;width:50px;
+    height:20px;display:inline-block;margin:5px 0;line-height:20px;text-align:center;border-radius: 5px;}
+.equipment_list_foot{height:50px;line-height:50px;}
+.equipment_list_foot p:nth-child(1){float:left;margin-left:10px}
+.equipment_list_foot p:nth-child(2){float:right;margin-right:10px;}
+.theForm input[type=text]{width:220px;height:28px;padding-left:5px;}
+.theForm input[type=date]{width:220px;height:28px;padding-left:5px;color:#666}
+.theForm select{width:231px;height:30px;}
+.theForm div label{width:182px;display:inline-block;  float: left;padding-top:6px;text-align:right;margin-right:20px;}
+.theForm div label em{color:red}
+.theForm>div{padding:10px 0;border-top: 1px solid #ffffff;  border-bottom: 1px solid #eeeeee;overflow:hidden;}
+.theForm_fot .close,.theForm_fot .save{width:60px;height:30px;display:inline-block;background-color:#FF3816;line-height:30px;text-align:center;color:#fff;margin-left:10px;font-weight:bold;}
+.theForm_fot{padding:30px 50px;border-top:1px solid #CDCDCD}
+.theForm_fot .save{background-color:#2f96b4;}
+.equipment_index_biao{width:97%;margin:0 auto;margin-top:20px;border:1px solid #CDCDCD}
+.equipment_index_top{height:37px;line-height:37px;border-bottom:1px solid #CDCDCD;}
+.equipment_index_top img{vertical-align: middle}
+.equipment_index_top div{width:34px; text-align: center;border-right:1px solid #CDCDCD;  float: left;}
+.equipment_index_top p{ float: left;padding-left:20px;font-size:14px;font-weight:bold;}
+.maskCon{width:560px;height:446px;background-color:#fff;position:absolute;top:150px;left:50%;margin-left:-223px;z-index:600;display:none}
+.maskCon_top{height:40px;line-height:40px;background-color:#efefef;border-bottom:1px solid #CDCDCD;}
+.maskCon_top span{float:left;margin-left:20px;}
+.maskCon_top_del{float:right;margin-right:20px;font-size:15px;cursor:pointer}
+.maskCon_group{border-bottom:1px solid #CDCDCD;margin:0 10px;padding:15px 0;}
+.maskCon_group em{color:red}
+.maskCon_group input{width: 385px;height:30px;margin-top:10px;}
+.maskCon_group select{width: 220px;height:30px;color:#666}
+.maskCon_fot{background-color:#efefef}
+.maskCon_fot a{padding:5px 10px;background-color:#2f96b4;color:#fff;  float: right;margin:40px 10PX;}
+.maskCon_fot .maskCon_fot_quXiao{background-color:#FF3816}
+.maskCon_con{height:340px;}
+.mask{width:100%;height:100%;background-color:rgba(0,0,0,0.5);position:fixed;top:0;left:0;z-index:500;display:none;}
+.waring{background-color:#FF3816;color:#fff;width:800px;height:60px;text-align:center;line-height:60px;
+    position:fixed;left:50%;margin-left:-400px;top:200px;z-index:700;display:none;border-radius: 13px;  opacity:0;}
+.newAd{margin-top:10px;}
+.newAd li{width:320px;margin-top:10px;background-color:#fff;font-size:12px;border:1px solid #CDCDCD;overflow:hidden;}
+.newAd li p{margin:5px 20px;}
+.newAd_del{padding:5px 8px;background-color:#F2DEDE;float:right;cursor:pointer}
+.newAd span{color:#FF3816;margin-left:10px;}
+
+.equipment_managed_mess li{width:10%}
+.equipmetn_theForm p{margin-top:6px;}
+.maskCon_mess li{width:33%}
+.maskCon_mess a{background-color:#006DCC;padding:2px 5px;color:#fff}
+.maskCon .equipment_list{height:384px;background-color:#fff}
+.equipment_list_fot a{margin:12px 10px;}
+
+.equipment_plan_mess li{width:15%}
+.maskCon_reach{width:95%;background-color:#EFEFEF;margin-top:20px;}
+.theForm .chooseCon1,.theForm .chooseCon2,.theForm .chooseCon3{padding:0;border:none;display:none}
+.chooseCon1 div,.chooseCon2 div,.chooseCon3 div{padding:10px 0;border-top: 1px solid #ffffff;  border-bottom: 1px solid #eeeeee;overflow:hidden;}
+.theForm strong{font-size:12px;}
+
+.conChang{width:97%;border:1px solid #CDCDCD;margin:10px auto;min-height:550px;}
+.conChang_title{height:37px;line-height:37px;border-bottom: 1px solid #CDCDCD}
+.conChang_title span{float:left;padding:0 20px;border-right:1px solid #CDCDCD}
+.conChang_title .select{background-color:#eee}
+.conChang_title span:hover{font-weight:bold;cursor:pointer}
+.conChang_content1_date{width:97%;border:1px solid #CDCDCD;height:50px;line-height:50px;margin:20px auto;}
+.conChang_content1_date input[type=date]{width:220px;height:25px;color:#666}
+.conChang_content1_date input[type=button]{width:50px;height:30px;background-color: #00a0e9;color:#fff;border-radius: 5px;}
+.conChang_content1_date label,.conChang_content1_date input{margin-left:10px;}
+.theContent_mess li{width:15%}
+.conChang_title{border-bottom:1px solid #CDCDCD}
+.theContent_left{float:left;width:40%}
+.theContent_right{  float: left;width:60%;border:1px solid #CDCDCD;box-sizing:border-box;border-top:none;border-right:none}
+.innerCon{min-height:350px;}
+.conChang_content1_foot .equipment_list{margin-top:0;border-top:none;margin-bottom:20px;}

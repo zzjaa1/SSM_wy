@@ -1,0 +1,145 @@
+.con_head{
+    width:87.35%;
+    height:40px;
+    background-color: #fff;
+    font-size: 14px;
+    line-height: 40px;
+    box-sizing: border-box;
+    padding-left: 20px;
+    color: #333;
+    margin-top: 60px;
+    margin-left: 200px;
+    border-bottom: 1px solid #ccc;
+}
+.con_head a{
+    color: #666;
+}
+.con_head em{
+    display: inline-block;
+    width:20px;
+    height:20px;
+    vertical-align: sub;
+    margin-right: 10px;
+}
+.con_head em img{
+    width:100%;
+    height:100%;
+}
+.con_head span{
+    margin: 0 10px;
+}
+.con_left{
+    width:100%;
+    float: left;
+    background-color: #F9F9F9;
+}
+.con_left .con_left_head{
+    width:100%;
+    height:35px;
+    font-size: 14px;
+    color: #666;
+    line-height: 35px;
+    font-weight: bold;
+    box-sizing: border-box;
+    padding-left: 20px;
+    border-bottom: 1px solid #ccc;
+    background-color: #F0F0F0;
+}
+.con_left_head em{
+    width:20px;
+    height:20px;
+    display: inline-block;
+    vertical-align: sub;
+    margin-right: 10px;
+}
+.con_left_head em img{
+    width:100%;
+    height:100%;
+}
+.con_box{
+    width:100%;
+    font-size: 12px;
+    color: #666;
+}
+.cb_alert{
+    width:97%;
+    height:70px;
+    background-color: #fcf8e3;
+    border:1px solid #fbeed5;
+    color: #c09853;
+    box-sizing: border-box;
+    padding:10px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.cb_alert p{
+    font-size: 20px;
+}
+.figs{
+    width:100%;
+    height:52px;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #eeeeee;
+    font-size: 15px;
+    box-sizing: border-box;
+    padding: 0 10px 0px 60px;
+    line-height: 52px;
+}
+.figs span{
+    width:170px;
+    display: inline-block;
+    text-align: right;
+}
+.figs select{
+    width:220px;
+    height:30px;
+    font-size: 15px;
+    color: #666;
+    padding-left: 5px;
+    font-family: '微软雅黑', serif;
+}
+.figs input{
+    width:600px;
+    height:30px;
+    font-size: 15px;
+    color: #666;
+    padding-left: 5px;
+    border:none;
+    border:1px solid #ccc;
+}
+.btn button{
+    padding: 5px 20px;
+    font-size: 15px;
+    color: #fff;
+    border:none;
+    background-color: #2f96b4;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-family: '微软雅黑', serif;
+}
+.figs em{
+    color: red;
+}
+.cr_ipt1{
+    border:none;
+    border:1px solid #666;
+}
+.btn_a{
+    padding: 5px 20px;
+    font-size: 15px;
+    color: #fff;
+    border:none;
+    background-color: #2f96b4;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-family: '微软雅黑', serif;
+}
+
+
+
+
+

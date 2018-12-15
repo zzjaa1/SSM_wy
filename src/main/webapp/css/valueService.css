@@ -1,0 +1,104 @@
+body{font-size:14px;color:#666;}
+#con_head a{color:#666}
+#left_list2 .li_a{font-size:16px;}
+.chairfix:after{content:"";clear:both;display:block;}
+.equipment_list{width:97%;margin:0 auto;border:1px solid #cdcdcd;margin-top:20px}
+.equipment_list_title{height:37px;line-height:37px}
+.equipment_list_title span{font-weight:bold;}
+.equipment_list_title img{vertical-align: sub}
+.equipment_list_title div,.equipment_list_title span{  float: left;}
+.equipment_list_title div{border-right:1px solid #cdcdcd;width:37px;text-align:center;margin-right:20px;}
+.equipment_list_title a{float:right;background-color: #00a0e9;color:#fff;
+    display:inline-block;width:50px;height:30px;margin:3px 5px;line-height:30px;text-align:center}
+.equipment_list_mess{border-top:1px solid #cdcdcd}
+.equipment_list_mess li{float:left;height:30px;line-height:30px;text-align:center;
+    width:10%;border-right:1px solid #cdcdcd;box-sizing: border-box;font-weight:bold;}
+.valueService_mess li{width:12%}
+.valueService_service_mess li{width:10%}
+.equipment_list_message li{font-weight:normal;text-align:left;}
+.equipment_list_message .equipment_list_mess{background-color:#fff}
+.equipment_list_message{border-bottom:1px solid #cdcdcd}
+.equipment_list_message li span{padding-left:20px;}
+.equipment_list_xiuG{background-color:#FF3816;color:#fff;width:50px;
+    height:20px;display:inline-block;margin:5px 0;line-height:20px;text-align:center;border-radius: 5px}
+.equipment_list_foot{height:50px;line-height:50px;}
+.equipment_list_foot p:nth-child(1){float:left;margin-left:10px}
+.equipment_list_foot p:nth-child(2){float:right;margin-right:10px;}
+.theForm input[type=text]{width:220px;height:28px;padding-left:7px;}
+.theForm input[type=date]{width:220px;height:28px;padding-left:7px;color:#666}
+.theForm textarea{padding-left:7px;}
+.theForm select{width:231px;height:30px;color:#666;padding-left:5px;}
+.theForm div label{width:182px;display:inline-block;  float: left;padding-top:6px;text-align:right;margin-right:20px;font-weight:normal}
+.theForm div label em{color:red}
+.theForm>div{padding:10px 0;border-top: 1px solid #ffffff;  border-bottom: 1px solid #eeeeee;overflow:hidden;}
+.theForm_fot .close,.theForm_fot .save{width:60px;height:30px;display:inline-block;background-color:#FF3816;
+    line-height:30px;text-align:center;color:#fff;margin-left:10px;
+    font-weight:bold;opacity:1;font-size:14px;}
+.theForm_fot{padding:30px 50px;border-top:1px solid #CDCDCD}
+.theForm_fot .save{background-color:#2f96b4;}
+.equipment_index_biao{width:97%;margin:0 auto;margin-top:20px;border:1px solid #CDCDCD}
+.equipment_index_top{height:37px;line-height:37px;border-bottom:1px solid #CDCDCD;}
+.equipment_index_top div{width:34px; text-align: center;border-right:1px solid #CDCDCD;  float: left;}
+.equipment_index_top p{ float: left;padding-left:20px;font-size:14px;font-weight:bold;}
+.waring{background-color:#FF3816;color:#fff;width:800px;height:60px;text-align:center;line-height:60px;
+    position:fixed;left:50%;margin-left:-400px;top:200px;z-index:700;display:none;border-radius: 13px;  opacity:0;}
+.service_project li{  float: left;  overflow: hidden;border:1px solid #CDCDCD;height:50px;line-height:50px;width:700px;margin-top:10px;}
+.service_project li:nth-child(1){margin-top:0}
+.service_project p{float:left;font-size:12px;margin-left:20px;  overflow: hidden;}
+.theForm .service_project p input{margin-left:10px;width:200px;float:left;margin-top:10px;}
+.theForm .service_project p span{float:left}
+.service_project,.service_project_outer{float:left;width:160px;}
+.service_project var{float:right;margin-right:10px;}
+.service_project_outer img{vertical-align: sub;}
+.service_project var:hover{color:#1AFA29;cursor:pointer}
+.service_project_outer strong{color:#D81E06;margin-top:20px;display:inline-block;cursor:pointer}
+.service_project_outer strong img{margin-right:10px;}
+.theImg{width:840px;
+    overflow: hidden;height:150px;border:1px solid #CDCDCD}
+.theImg li{width:200px;height:150px;float:left;
+    overflow: hidden;background-size: contain;position:relative;margin-left:10px;}
+.theImg li img{width:200px;height:150px;}
+.theImg li span{position:absolute;right:0;bottom:0;display:inline-block;width:20px;height:20px;
+    line-height:30;  text-align: center;background-color:red;color:#fff;z-index:10;cursor: pointer}
+.theTidai{background-color:#49AFCD;color:#fff;padding:5px 15px;margin-right:10px;}
+.theSpe,.theSpee{float:left;font-size:12px;}
+.theForm .theSpe input,.theForm .theSpee input{width:94px;}
+.theForm>div>p{  float: left;}
+.theSpeeSpe select,.theSpeeSpeSpe select{width:160px;}
+.theForm .theSpeeSpeSpe input{width:80px;}
+.valueService_activity_title a{width:90px;}
+.valueService_activity__mess li{width:20%}
+#theVillage{width:220px;height:30px;color:#666;margin-left:20px;}
+
+.valueService_biao{width:60%;margin:0 auto;margin-top:20px}
+.theBgImg{text-align:center;margin-top:20px;}
+.newForm em{color:red}
+.newForm input{width:98%;height:30px;padding:0 4px;}
+.newForm .datainp{width:30%}
+.newForm{width:97%;margin:0 auto}
+.newForm label{width:98%;display:inline-block;margin-bottom:5px;color:#666}
+.newForm>div{margin:15px 0;}
+.newForm textarea{padding-left:10px;width:98%}
+
+.fileP{  position: relative;margin:10px 0;}
+.theFile{position:absolute;left:0;top:0;opacity:0;}
+
+.theBgImg a{position:relative;background-color:black;color:#f0ad4e;padding:5px 10px;font-weight:bold;margin:0px auto;}
+.theBgImg input{position:absolute;top:0;left:0;width:60px;opacity:0;}
+.theBgImg img{width:97%;margin:20px auto;height:410px;}
+.newForm .activity_add_bIg .theImg img{width:100%}
+.newForm .activity_add_bIg .theImg li{margin-left:0;width:25%}
+.activity_add_bIg ul{width:100%;color:#666}
+.newForm input[type=checkbox]{width:13px;margin-right:5px;}
+.theMoney select{color:#666;width:200px;height:30px;margin-bottom:10px;}
+.theName li{float:left;
+    overflow: hidden;margin:5px;color:#666}
+.theName ul{background-color:#EFEFEF}
+.theName li span,.theName li var{width:96px;height:25px;display:inline-block;line-height:25px;border:1px solid #CDCDCD;background-color:#EFEFEF;float:left;padding-left:5px;}
+.theName li var{width:25px;border-left:none;padding-left:0;text-align:center;}
+.theName .theDele{background-color:#FAA732;color:#fff;cursor:pointer}
+.addForm input[type=text]{width:100px;height:25px;margin:5px 0;}
+.addForm{margin:10px 0;background-color:#EFEFEF;color:#666;height:40px;line-height:40px;}
+.addForm a{background-color: #5BB75B;color:#fff;padding:5px 10px;margin-left:10px;}
+.newForm .addForm input[type=checkbox]{margin-right:0;margin-left:5px;}
+.theMoney,.theName{display:none}

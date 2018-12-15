@@ -1,0 +1,33 @@
+
+body{background-color:#F9F9F9;color:#666}
+header{ z-index:10;}
+.chairFix:after{  content:"";  clear:both;  display:block;  }
+#con_head a{  font-size:14px;  color: #666666;  }
+#chooseIn{border:1px solid #CDCDCD;width:97%;margin:20px auto}
+#reporting_charge{border:1px solid #CDCDCD;width:97%;margin:10px auto}
+.chooseIn_top{height:37px;line-height:37px;border-bottom:1px solid #CDCDCD;}
+.chooseIn_top div{width:34px; text-align: center;border-right:1px solid #CDCDCD;  float: left;}
+.chooseIn_top h5{ float: left;padding-left:20px;font-size:14px}
+.chooseIn_con{background-color:#F9F9F9;font-size:14px;height:60px;line-height:60px;}
+.chooseIn_con li{ float: left;margin-left:20px;}
+.chooseIn_con button{width:62px;height:30px;background-color:#00a0e9;color:#fff;border:none}
+.reporting_charge_con{background-color:#F9F9F9}
+.reporting_charge_con .reporting_charge_con_same{background-color:#fff;width:20%;height:400px;  float: left;margin:15px 0;margin-left:4%}
+.hed,.payment_Statistics_head{height:40px;line-height:40px;  position: relative;}
+.hed h5,.payment_Statistics_head h5{ text-align: center;font-size:18px;}
+.hed button,.payment_Statistics_head button{ float: right;width:20px;height:20px; position: absolute;right:10px;top:10px}
+.hed button img,.payment_Statistics_head img{float:left;  position: absolute;top:0;left:0;}
+#payment_Statistics{background-color:#fff;border:1px solid #CDCDCD;width:97%;margin:0px auto;margin-top:20px;height:450px;}
+.payment_Statistics_con{  position: relative;margin-top:200px;}
+.shuzhou{ position: relative;width:1062px;margin:0 auto;}
+.shuzhou_x{border:2px solid #7CB5EC;width:1042px;margin:0 auto; }
+.shuzhou_dott{position:absolute;top:-2px;left:0;}
+.shuzhou_dott li{width:9px;height:9px;background-color:#7CB5EC;border-radius:50%;  float: left;margin-left:86px;}
+.money{transform:rotateX(90deg);-webkit-transform:rotateX(90deg) translate(90);font-size:12px;}
+.hideMoney em{height:7px;width:7px;background-color:#7CB5EC;border-radius:50%; display:inline-block;margin-right:5px;}
+.hideMoney{border:1px solid #7CB5EC;width:120px;height:50px;  position: absolute;bottom:17px;left:-59px;background-color:#F8F8F8}
+.theSan{border-top:7px solid #7CB5EC;border-left:7px solid transparent;border-right:7px solid transparent;position:absolute;top:50px;left:55px;}
+.chooseIn_con label{margin-right:10px;}
+.shuzhou_dott li:hover{  background-color:red;  }
+.chooseIn_con select,.chooseIn_con input{  font-family:"微软雅黑";}
+.chooseIn_con input{  width:130px;height:26px}

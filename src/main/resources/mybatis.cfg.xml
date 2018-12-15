@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 引入外部配置文件 -->
+    <properties resource="jdbc.properties"/>
+    <settings>
+        <setting name="logImpl" value="LOG4J2"/>
+    </settings>
+    <!-- 别名 -->
+    <typeAliases>
+      <!--  <typeAlias type="com.zking.ssm.model.Book" alias="Book"/>
+        <typeAlias type="com.zking.ssm.model.BookVo" alias="BookVo"/>
+        <typeAlias type="com.zking.ssm.model.BookType" alias="BookType"/>
+        <typeAlias type="com.zking.ssm.model.bookFileVo" alias="bookFileVo"/>
+        <typeAlias type="com.zking.ssm.model.Category" alias="Category"/>
+        <typeAlias type="com.zking.ssm.model.Customer" alias="Customer"/>
+        <typeAlias type="com.zking.ssm.model.File" alias="File"/>
+        <typeAlias type="com.zking.ssm.model.News" alias="News"/>
+        <typeAlias type="com.zking.ssm.model.NewsCategory" alias="NewsCategory"/>
+        <typeAlias type="com.zking.ssm.model.Order" alias="Order"/>-->
+
+    </typeAliases>
+    <!-- 配置mybatis运行环境 -->
+    <environments default="development">
+        <environment id="development">
+            <!-- type="JDBC" 代表使用JDBC的提交和回滚来管理事务 -->
+            <transactionManager type="jdbc"/>
+            <!-- mybatis提供了3种数据源类型，分别是：POOLED,UNPOOLED,JNDI -->
+            <!-- POOLED 表示支持JDBC数据源连接池 -->
+            <!-- UNPOOLED 表示不支持数据源连接池 -->
+            <!-- JNDI 表示支持外部数据源连接池 -->
+            <dataSource type="POOLED">
+                <property name="driver"
+                          value="${jdbc.driver}"/>
+                <property name="url"
+                          value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!--<mapper resource="com/zking/ssm/mapper/BookMapper.xml"/>
+        <mapper resource="com/zking/ssm/mapper/CategoryMapper.xml"/>
+        <mapper resource="com/zking/ssm/mapper/CustomerMapper.xml"/>
+        <mapper resource="com/zking/ssm/mapper/FileMapper.xml"/>
+        <mapper resource="com/zking/ssm/mapper/NewsCategoryMapper.xml"/>
+        <mapper resource="com/zking/ssm/mapper/NewsMapper.xml"/>
+        <mapper resource="com/zking/ssm/mapper/OrderMapper.xml"/>-->
+    </mappers>
+</configuration>

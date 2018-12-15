@@ -1,0 +1,113 @@
+body{
+    height:1080px;
+    background: linear-gradient(to bottom,#082B4F 0%,#3B86B0 30%,#B0C79C 60%,
+    #E89A45 100%);
+    position: relative;
+    overflow: hidden;
+}
+.box{
+    font-family: '微软雅黑', serif;
+    margin-bottom:-3000px;
+    padding-bottom:3000px;
+    width:960px;
+    height:460px;
+    position: fixed;
+    border-radius: 15px;
+    left:50%;
+    margin-left: -480px;
+    top:50%;
+    margin-top: -230px;
+    overflow: hidden;
+}
+.box_left{
+    width:450px;
+    height:460px;
+    background-color: #0066CC;
+    float: left;
+    border-bottom-left-radius: 15px;
+}
+.box_right{
+    width:510px;
+    height:460px;
+    background-color: #fff;
+    float: left;
+    overflow: hidden;
+    border-bottom-right-radius: 15px;
+}
+.box_img{
+    width:450px;
+    height:350px;
+    overflow: hidden;
+}
+.box_img img{
+    width:100%;
+    height:100%;
+}
+.left_news{
+    width:450px;
+    height:90px;
+}
+.left_p1{
+    font-size: 31px;
+    color: #fff;
+    margin-left: 20px;
+    margin-top: 13px;
+}
+.left_p2{
+    font-size: 14px;
+    color: #fff;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+.right_p1{
+    margin:50px 0 15px 57px;
+    color: #293649;
+    font-size: 22px;
+}
+.right_p2{
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    margin-left: 45px;
+}
+.ipt1{
+    display: block;
+    width:400px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-left: 45px;
+    margin-bottom: 15px;
+    font-family: '微软雅黑', serif;
+}
+.btn1{
+    width:240px;
+    height:34px;
+    background-color: #00a0e9;
+    color: #fff;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    text-align: center;;
+    cursor: pointer;
+    border-radius: 4px;
+    border:none;
+    margin-left: 45px;
+    font-family: '微软雅黑', serif;
+}
+.right_a{
+    color: #333;
+    margin-left: 15px;
+    font-size: 14px;
+}
+.btn1:hover{
+    background-color: #3276b1;
+}

@@ -1,0 +1,95 @@
+.sysMana_select{
+                                           border-top:1px solid #CDCDCD;
+                                       }
+.sysMana_select p{margin:5px 10px;}
+.sysMana_select select{width:200px;height:31px;}
+.sysMana_mess li,.sysPerOne_mess li{width:20%}
+.sysMana_biao{margin-top:20px;}
+.sysPer_mess li{width:50%}
+.sysPer_list_message{border-bottom:none}
+.sysPer_mess a{color:green}
+.sysPerOne_bar{width:97%;margin:20px auto;border:1px solid #CDCDCD;margin-top:0;}
+.sysPerOne_bar a{background-color:#FF3816;color:#fff;padding:5px 15px;}
+.sysPerOne_bar p{margin:10px;}
+.sysPerOne_title a{width:80px;}
+.sysPerOne_title em{color:#28b779;margin-right:10px;}
+.sysPerOngAdd_top em{color:#28b779;margin-right:10px;}
+.theTable{border:1px solid #CDCDCD;width:80%;}
+.theTable th{height:27px;text-align:center;background-color:#EFEFEF;font-weight:bold}
+.theTable tr td{height:30px;}
+.theTable tr input[type=checkbox]{vertical-align:sub;margin:0 5px;display:inline-block}
+
+.reacherInfor{border-top:1px solid #CDCDCD}
+.reacherInfor p{margin:10px}
+.reacherInfor p:nth-child(2){background-color:#D9EDF7;height:38px;line-height:38px;font-size:12px;color:#3a87ad;padding-left:10px;}
+.reacherInfor p span{font-weight:bold;}
+.reacherInfor input[type=text]{width:220px;height:25px;padding-left:8px;margin-left:10px}
+.reacherInfor input[type=button]{width:50px;height:28px;background-color: #00a0e9;color:#fff;border:none;cursor: pointer;border-radius: 5px;}
+.sysOwner_mess li{width:15%}
+.sysOwnerP{font-size:12px;}
+.sysOwnerP input[type=text]{width:164px;}
+.sysOwnerP select{width:85px;}
+.mask{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 500;
+    display:none;
+}
+.batchCon{
+    width:560px;
+    position: fixed;
+    top:100px;
+    left:50%;
+    margin-left:-280px;
+    background-color:#fff;
+    z-index: 600;
+    display:none;
+}
+.batchCon_top{height:36px;background-color:#efefef;line-height:36px;}
+.batchCon_top h3{float:left;margin-left:10px;font-size:14px;}
+.batchCon_top span{float:right;margin-right:10px;font-size:16px;cursor:pointer;}
+.batchCon_Content{padding:20px}
+.batchCon_Content>div{margin:10px 0;}
+.batchCon_Content var{margin-right:20px;}
+.batchCon_foot{background-color:#efefef}
+.batchCon_foot a{float:right;padding:5px 15px;background-color: #2f96b4;color:#fff;margin:10px;}
+.batchCon_foot .close{background-color: #FF3816;margin-left:0; }
+.theXls_inner{width:300px;height:25px;border:1px solid #CDCDCD;float:left;line-height:25px;padding-left:10px;}
+.theXls a{float:left;margin-left:10px;display:inline-block;width:50px;height:25px;position:relative;border:1px solid #CDCDCD;line-height:25px;text-align:center;}
+.theXls input{width:60px;position:absolute;top:0;left:0;opacity:0;cursor:pointer}
+.theXls{margin:10px}
+.theWaring{color:#FF3816;display:none}
+.theForm .form-inline .form-control{width:150px;padding:0;padding-left:10px;border-radius: 0}
+#alwaysPhone li{float:left;margin:15px 200px;
+    overflow: hidden;}
+#alwaysPhone li input{width:164px;height:25px;padding-left:10px;margin:0 10px;float:left}
+#alwaysPhone li span{float:left}
+#alwaysPhone var{margin-left:60px;cursor: pointer}
+#alwaysPhone var:hover{color:#1AFA29}
+.theAdd{margin:10px 200px;color:#FF3816;display:inline-block;cursor: pointer}
+.theAdd img{margin-right:10px;}
+#theConLeft .bk_list{margin-left:0;margin-top:0;}
+#theConLeft .bk_list li{overflow:hidden;height:25px;}
+#theConLeft .bk_list var{margin-left:16px;float:left;height:33px;display:inline-block;overflow:hidden}
+#theConLeft .bk_list em{margin-left:25px;float:left}
+#theConLeft .bk_list span{padding:0;margin-top:4px;float:left}
+#theConLeft .bk_list span:hover{cursor:pointer}
+#theConLeft .con_box{height:570px;}
+.con_right_bar{height:40px;line-height:40px;border:1px solid #CDCDCD;border-bottom: none}
+.con_right_bar a{background-color: #00a0e9;color:#fff;padding:3px 8px;}
+.con_right_bar label{margin-left:10px;}
+.con_right_bar select{
+    color:#666;width:120px;height:30px;
+}
+.con_right_bar input[type=date]{width:120px;height:25px;}
+#theTab{;width:100%;}
+#theTab td{width:20%;height:30px;text-align:center;border:1px solid #CDCDCD;background-color:#EFEFEF}
+#theConRight{border:none;}
+.bk_head{display:inline-block}
+.con_right_bar select{
+    display:none;
+}

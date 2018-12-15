@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>报表中心投诉统计</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/property.css">
+    <style>
+        body{background-color:#F9F9F9}
+        header{z-index:100}
+        .chairFix:after{  content:"";  clear:both;  display:block;  }
+        #con_head a{  font-size:14px;  color: #666666;  }
+        .chooseIn_top{height:37px;line-height:37px;border-bottom:1px solid #CDCDCD;}
+        .chooseIn_top div{width:34px; text-align: center;border-right:1px solid #CDCDCD;  float: left;}
+        .chooseIn_top h5{ float: left;padding-left:20px;}
+        .touSu{border:1px solid #CDCDCD;width:97%;margin:20px auto}
+        .container1,.container2{  float: left;height:250px;width:50%}
+        .chooseDate{font-size:14px;position:absolute;top:10px;right:10px;}
+        .chooseDate input{width:57px;height:20px;}
+        .chooseIn_foot{width:100%;margin-top:20px;position:relative}
+    </style>
+</head>
+<body>
+<div >
+    <em><img src="../../images/H_form.png" alt=""></em><a href="#">报表中心</a><span>></span><a href="#">报修统计</a>
+</div>
+<div >
+    <div class="touSu">
+        <div class="chooseIn_top chairFix">
+            <div><img src="../../images/H_edit.png" alt=""></div>
+            <h5>报修统计</h5>
+        </div>
+        <div class="chooseIn_con chairFix">
+            <div class="container1"></div>
+            <div class="container2"></div>
+        </div>
+        <div class="chooseIn_foot">
+            <div class="chooseIn_fo" style="width: 100%; height: 400px; margin: 0px auto;"></div>
+            <p class="chooseDate">
+                <label for="">选择日期</label>
+                <input type="number" value="2017" id="theDate">
+            </p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+<script src="../../js/Highcharts111.js"></script>
+<script src="../../js/Reporting_baoXiu.js"></script>
+<script>
+    $('.hr_div1').click(function(){
+        var i=$('.hr_div1').index(this);
+        if($(".header_list").eq(i).get(0).style.display=="block"){
+            $(".header_list").eq(i).hide()
+        }else{
+            $(".header_list").hide()
+            $(".header_list").eq(i).show()
+        }
+    })
+    $('.hdl_select').click(function () {
+        var a=$(this).html();
+        $('.hr_show').html(a);
+    });
+    /*投诉概况双线图*/
+    $(document).ready(function() {
+        var title = {
+            text: '报修概况'
+        };
+        var xAxis = {
+            categories: ["2017/1","2017/2","2017/3","2017/4","2017/5","2017/6","2017/7","2017/8","2017/9","2017/10","2017/11","2017/12"]
+        };
+        var yAxis = {
+            title: {
+                text: ''
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        };
+        var tooltip = {
+            valueSuffix: ''
+        }
+        var legend = {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 1
+        };
+        var series =  [
+            {
+                name: '报修数量',
+                data: [1,5,7,11,3,1,0,5,8,9,3,8]
+            },
+            {
+                name: '已报修数量',
+                data: [1,4,6,9,2,1,0,5,8,6,2,7]
+            }
+        ];
+        var json = {};
+        json.title = title;
+        json.xAxis = xAxis;
+        json.yAxis = yAxis;
+        json.tooltip = tooltip;
+        json.legend = legend;
+        json.series = series;
+        $('.chooseIn_fo').highcharts(json);
+
+        $("#theDate").click(function(){
+            Dat=$("#theDate").get(0).value;
+            var title = {
+                text: '报修概况'
+            };
+            var xAxis = {
+                categories: [Dat+"/1",Dat+"/2",Dat+"/3",Dat+"/4",Dat+"/5",Dat+"/6",Dat+"/7",Dat+"/8",Dat+"/9",Dat+"/10",Dat+"/11",Dat+"/12"]
+            };
+            var yAxis = {
+                title: {
+                    text: ''
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            };
+            var tooltip = {
+                valueSuffix: ''
+            }
+            var legend = {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 1
+            };
+            var series =  [
+                {
+                    name: '报修数量',
+                    data: [1,5,7,11,3,1,0,5,8,9,3,8]
+                },
+                {
+                    name: '已报修数量',
+                    data: [1,4,6,9,2,1,0,5,8,6,2,7]
+                }
+            ];
+            var json = {};
+            json.title = title;
+            json.xAxis = xAxis;
+            json.yAxis = yAxis;
+            json.tooltip = tooltip;
+            json.legend = legend;
+            json.series = series;
+            $('.chooseIn_fo').highcharts(json);
+        })
+    });
+</script>
+</body>
+</html>

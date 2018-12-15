@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>报表中心计费报表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/property.css">
+    <link rel="stylesheet" href="../../css/Reporting_Charges_index.css">
+</head>
+<body>
+<div>
+    <em><img src="../../images/H_form.png" alt=""></em><a href="#">报表中心</a><span>></span><a href="#">收费统计</a>
+</div>
+<div>
+    <div id="chooseIn">
+        <div class="chooseIn_top chairFix">
+            <div><img src="../../images/H_ViewGallery.png" alt=""></div>
+            <h5>筛选条件</h5>
+        </div>
+        <div class="chooseIn_con">
+            <ul class="chairFix">
+                <li>
+                    <label for="">小区选择:</label>
+                    <select name="" id="" style="width:220px;height:30px;">
+                        <option value="">美景天城</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="">时间选择:</label>
+                    <input type="date">
+                        ---
+                    <input type="date" >
+                </li>
+                <li>
+                    <button>统计</button>
+                </li>
+                <li>
+                    <a href="Reporting_Charges_more.html" style="color:#08c">更多报表>></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="reporting_charge">
+        <div class="chooseIn_top chairFix">
+            <div><img src="../../images/H_ViewGallery.png" alt=""></div>
+            <h5>统计报表</h5>
+        </div>
+        <ul class="reporting_charge_con chairFix">
+            <li class="reporting_charge_con_same">
+                <div class="hed chairFix">
+                    <h5>收费概况统计</h5>
+                    <button><img src="../../images/H_3column.png" alt="" title="图标导出菜单"></button>
+                </div>
+                <!--没有数据-->
+                <div>没有数据</div>
+            </li>
+            <li class="reporting_charge_con_same">
+                <div class="hed chairFix">
+                    <h5>收费概况统计</h5>
+                    <button><img src="../../images/H_3column.png" alt="" title="图标导出菜单"></button>
+                </div>
+                <!--没有数据-->
+                <div>没有数据</div>
+            </li>
+            <li class="reporting_charge_con_same">
+                <div class="hed chairFix">
+                    <h5>收费概况统计</h5>
+                    <button><img src="../../images/H_3column.png" alt="" title="图标导出菜单"></button>
+                </div>
+                <!--没有数据-->
+                <div>没有数据</div>
+            </li>
+            <li class="reporting_charge_con_same">
+                <div class="hed chairFix">
+                    <h5>收费概况统计</h5>
+                    <button><img src="../../images/H_3column.png" alt="" title="图标导出菜单"></button>
+                </div>
+                <!--没有数据-->
+                <div>没有数据</div>
+            </li>
+        </ul>
+    </div>
+    <div id="payment_Statistics">
+        <div class="payment_Statistics_head">
+            <h5>缴费趋势统计</h5>
+            <button><img src="../../images/H_3column.png" alt="" title="图标导出菜单"></button>
+        </div>
+        <div class="payment_Statistics_con">
+            <div class="money">金额（元）</div>
+            <div class="shuzhou">
+                <div class="shuzhou_x"></div>
+                <ul class="shuzhou_dott">
+                    <li style="margin-left:0;"></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <div class="hideMoney">
+                        <span style="font-size:12px;margin-left:5px;">2017/01</span>
+                        <div>
+                            <p style="font-size:14px;margin-left:5px;"><em></em>收费金额：<var>0</var>元</p>
+                        </div>
+                        <strong class="theSan"></strong>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+<script>
+    $('.hr_div1').click(function(){
+        var i=$('.hr_div1').index(this);
+        if($(".header_list").eq(i).get(0).style.display=="block"){
+            $(".header_list").eq(i).hide()
+        }else{
+            $(".header_list").hide()
+            $(".header_list").eq(i).show()
+        }
+    })
+    $('.hdl_select').click(function () {
+        var a=$(this).html();
+        $('.hr_show').html(a);
+    });
+    /*缴费趋势统计*/
+    $(".shuzhou_dott li").mouseover(function(){
+        var arr1=["2017/01","2017/02","2017/03","2017/04","2017/05","2017/06","2017/07","2017/08","2017/09","2017/10","2017/11","2017/12"];
+        var i=$(".shuzhou_dott li").index(this)
+        $(".hideMoney span").html(arr1[i])
+        $(".hideMoney").animate({
+            left:i*95-59+'px'
+        },200,'linear')
+    })
+</script>
+</body>
+</html>

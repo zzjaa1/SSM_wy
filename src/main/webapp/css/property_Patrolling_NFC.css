@@ -1,0 +1,108 @@
+.con_head{
+    width:87.35%;
+    height:40px;
+    background-color: #fff;
+    font-size: 14px;
+    line-height: 40px;
+    box-sizing: border-box;
+    padding-left: 20px;
+    color: #333;
+    margin-top: 60px;
+    margin-left: 200px;
+    border-bottom: 1px solid #ccc;
+}
+.con_head a{
+    color: #666;
+}
+.con_head em{
+    display: inline-block;
+    width:20px;
+    height:20px;
+    vertical-align: sub;
+    margin-right: 10px;
+}
+.con_head em img{
+    width:100%;
+    height:100%;
+}
+.con_head span{
+    margin: 0 10px;
+}
+.con_head2{
+    width:100%;
+    height:40px;
+    background-color: #F0F0F0;
+    font-size: 15px;
+    color: #333;
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+.con_head2 em {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    vertical-align: sub;
+    margin-right: 10px;
+}
+.con_head2 a{
+    padding: 3px 8px;
+    color: #fff;
+    background-color: #00a0e9;
+    float: right;
+    margin-right: 20px;
+    margin-top: 2px;
+}
+.con_head2 em img{
+    width:100%;
+    height:100%;
+}
+.list{
+    width:100%;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 50px;
+}
+.list td{
+    padding: 8px 10px;
+    text-align: center;
+    border:1px solid #ccc;
+}
+.t_head{
+    font-weight: bold;
+    height:40px;
+}
+.fy{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+.fy li{
+    float: left;
+    border:1px solid #ccc;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    background-color: #fff;
+}
+.fy li:hover{
+    background-color: #e8e8e8;
+}
+.list button{
+    border:none;
+    padding: 3px 8px;
+    background-color: #ff3816;
+    color: #fff;
+    cursor: pointer;
+}
+.list button{
+    border-radius: 5px;
+}
+
+
+
+
+
+
+

@@ -8,10 +8,46 @@
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/property.css">
     <link rel="stylesheet" href="../../css/property_cost_management.css">
+    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
+    <script src="layui/layui.js" charset="utf-8"></script>
+    <script>
+        var data={};
+        var data1={};
+        layui.use(['tree', 'layer'], function(){
+            var layer = layui.layer
+                ,$ = layui.jquery;
+            $.ajax({
+                url: '/ssm_wy/queryHours',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                },
+                success: function (status) {
+                    $.each(status.li, function(key, val) {
+                        data.name=val.name;
+                        data.id=val.id;
+                        data.children=val.children;
+                        console.log(data)
+                        layui.tree({
+                            elem: '#demo1' //指定元素
+                            ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
+                            ,click: function(item){ //点击节点回调
+                                layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
+                                // console.log(item);
+                            }
+                            ,nodes:
+                                [data
+                                ]
+                        });
+                    });
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 <!--头部-->
-    <header>
+    <!--<header>
         <div class="logo">
             <em><img src="../../images/logo.png" alt=""></em>云联汇
         </div>
@@ -20,8 +56,8 @@
                 <em><img src="../../images/1.png" alt=""></em>郑州市德旺物业管理有限公司
                 <img src="../../images/2.png" alt="" class="right_top_img">
             </a>
-        </div>
-        <!--头部右侧-->
+        </div>-->
+      <!--  &lt;!&ndash;头部右侧&ndash;&gt;
         <div class="header_right">
             <div class="hr_div1">
                 <em class="hr_em1"><img src="../../images/3.png" alt=""></em>
@@ -36,8 +72,8 @@
                         美景天城二
                     </li>
                 </ul>
-            </div>
-            <div class="hr_div1" style="border-left: 1px solid #fff;">
+            </div>-->
+         <!--   <div class="hr_div1" style="border-left: 1px solid #fff;">
                 <em class="hr_em1" style="width: 15px;height: 15px;margin-left: 5px"><img src="../../images/5.png" alt=""></em>
                 <span>欢迎Admin</span>
                 <em class="hr_em2"><img src="../../images/4.png" alt=""class="hr1_img1"></em>
@@ -57,10 +93,10 @@
             <div class="clear"></div>
         </div>
         <div class="clear"></div>
-    </header>
+    </header>-->
 <!--页面左侧-->
     <div class="left">
-        <div class="left_list" id="left_list2">
+       <!-- <div class="left_list" id="left_list2">
                 <a href="javascript:;" class="li_a" name="2"><em><img src="../../images/bb.png" alt=""></em>报表中心<em class="left_em2"><img src="../../images/4.png" alt=""></em></a>
                 <div class="left_slide">
                     <span><a href="../报表中心/Reporting_Charges_index.html">计费报表</a></span>
@@ -131,7 +167,8 @@
                     <span><a href="../系统管理/systems_permission.html">角色权限</a></span>
                     <span><a href="../系统管理/systems_systemsLog.html">系统日志</a></span>
                 </div>
-        </div>
+        </div>-->
+        <ul id="demo1"></ul>
     </div>
     <div class="con_head" id="con_head">
         <em><img src="../../images/wy.png" alt=""></em><a href="#">费用设置</a><span>></span><a href="#">算费管理</a>
@@ -153,7 +190,7 @@
         <input type="submit" value="搜索"style="width: 60px;height: 28px;color: #fff;font-size: 14px;font-family: '微软雅黑', serif;margin-left: 15px;background-color: #00a0e9;border:none;border-radius: 5px;cursor: pointer;text-align: center">
     </div>
     <div class="con"  style="margin-top: 15px;margin-left: 220px;margin-right: 10px;">
-        <div class="con_left">
+      <!--  <div class="con_left">
             <div class="con_left_head">
                 <em><img src="../../images/qb.png" alt=""></em>套户费用记录
                 <a href="property_cost_management_8.html" class="con_left_a">统扣</a>
@@ -200,7 +237,7 @@
                 <li>前一页</li>
                 <li>后一页</li>
                 <li>尾页</li>
-            </ul>
+            </ul>-->
         </div>
 
     </div>

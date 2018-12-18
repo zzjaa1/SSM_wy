@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>物业后台</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/property.css">
+    <link rel="stylesheet" href="../../css/valueService.css">
+    <link rel="stylesheet" href="../../css/systemsManagement.css">
+    <style>
+        a:hover{text-decoration:none}
+    </style>
+</head>
+<body>
+<div>
+    <em><img src="../../images/Hxitong.png" alt="" style="vertical-align: sub"></em><a href="#">系统管理</a><span>></span><a href="#">小区管理</a>
+</div>
+<div >
+    <div class="equipment_index_biao">
+        <div class="equipment_index_top chairFix">
+            <div><img src="../../images/Hbi.png" alt=""></div>
+            <p>编辑小区名称</p>
+        </div>
+        <form action="" class="theForm equipmetn_theForm">
+            <div>
+                <label for=""><em>*</em>小区名称</label>
+                <input type="text" class="ipt1">
+            </div>
+            <div>
+                <label for=""><em>*</em>小区建筑面积</label>
+                <input type="text" class="ipt2">
+                <span>万m</span>
+                <sup>2</sup>
+            </div>
+            <div>
+                <label for=""><em>*</em>小区户数</label>
+                <input type="text" class="ipt3">
+                户
+            </div>
+            <div>
+                <label for=""><em>*</em>小区建成时间</label>
+                <input type="date" class="ipt4">
+            </div>
+            <div>
+                <label for=""><em>*</em>所属辖区</label>
+                <div class="form-inline">
+                    <div data-toggle="distpicker">
+                        <div class="form-group">
+                            <label class="sr-only" for="province2">Province</label>
+                            <select class="form-control" id="province2" data-province="---- 选择省 ----"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="city2">City</label>
+                            <select class="form-control" id="city2" data-city="---- 选择市 ----"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="district2">District</label>
+                            <select class="form-control" id="district2" data-district="---- 选择区 ----"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label for=""><em>*</em>小区详细地址</label>
+                <input type="text">
+            </div>
+        </form>
+    </div>
+
+    <div class="equipment_index_biao">
+        <div class="equipment_index_top chairFix">
+            <div><img src="../../images/Hbi.png" alt=""></div>
+            <p>物业常用电话</p>
+        </div>
+        <ul id="alwaysPhone" class="chairfix">
+            <li>
+                <span>电话名称</span>
+                <input type="text" value="物业管理处电话" disabled>
+                <span>电话号码</span>
+                <input type="text">
+            </li>
+            <li>
+                <span>电话名称</span>
+                <input type="text"  value="房屋租赁电话" disabled>
+                <span>电话号码</span>
+                <input type="text">
+            </li>
+            <li>
+                <span>电话名称</span>
+                <input type="text"  value="夜间值班电话" disabled>
+                <span>电话号码</span>
+                <input type="text">
+            </li><!--
+            <li>
+                <span>电话名称</span>
+                <input type="text">
+                <span>电话号码</span>
+                <input type="text">
+                <var><img src="../../images/Hdele1.png" alt="">删除</var>
+            </li>-->
+        </ul>
+        <strong class="theAdd"><img src="../../images/Hadd.png" alt="">添加服务项目</strong>
+        <div class="theForm_fot chairfix">
+            <a href="javascript:;" class="save">保存</a>
+        </div>
+    </div>
+</div>
+<div class="mask"></div>
+<div class="waring">请输入巡检内容</div>
+<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../../js/distpicker.data.js"></script>
+<script type="text/javascript" src="../../js/distpicker.js"></script>
+<script type="text/javascript" src="../../js/main.js"></script>
+<script>
+    /*左侧效果*/
+    $(".li_a").bind("click", function() {
+        $(this).next(".left_slide").slideToggle().siblings(".left_slide").slideUp();
+    });
+    /*头部右侧效果*/
+    $(document).click(function(ev){
+        var e=ev||window.event;
+        var target=e.target||e.srcElement;
+        if(target.parentNode.className!="hr_div1"){
+            $(".header_list").hide()
+        }
+    })
+    $('.hr_div1').click(function(){
+        var i=$('.hr_div1').index(this);
+        if($(".header_list").eq(i).get(0).style.display=="block"){
+            $(".header_list").eq(i).hide()
+        }else{
+            $(".header_list").hide()
+            $(".header_list").eq(i).show()
+        }
+    })
+    $('.hdl_select').click(function () {
+        var a=$(this).html();
+        $('.hr_show').html(a);
+    });
+    /*弹出效果*/
+    function alWar(){
+        setTimeout(function(){
+            $(".waring").show()
+            timer1=setInterval(function(){
+                a+=1/20;
+                if (a>=1) {
+                    a=1;
+                    clearInterval(timer1)
+                };
+                $(".waring").get(0).style.opacity=a
+            },50)
+        },100)
+        setTimeout(function(){
+            timer2= setInterval(function(){
+                a-=1/10;
+                if (a<=0) {
+                    a=0;
+                    $(".waring").hide()
+                    clearInterval(timer2)
+                }
+                $(".waring").get(0).style.opacity=a;
+            },50)
+        },2100)
+    }
+    var timer1=timer2=null;
+    var a=0;
+    $(".save").click(function(){
+        var a=0;
+        clearInterval(timer1);
+        clearInterval(timer2);
+        if($(".ipt1").val()==""){
+            $(".waring").html("小区名称")
+            $(".ipt1").css("border","1px solid #FF3816")
+            alWar()
+        }
+        else{
+            if($(".ipt2").val()==""){
+                $(".waring").html("小区建筑面积")
+                $(".ipt1").css("border","1px solid #CDCDCD")
+                $(".ipt2").css("border","1px solid #FF3816")
+                alWar()
+            }else{
+                if($(".ipt3").val()==""){
+                    $(".waring").html("小区户数")
+                    $(".ipt2").css("border","1px solid #CDCDCD")
+                    $(".ipt3").css("border","1px solid #FF3816")
+                    alWar()
+                }else{
+                    if($(".ipt4").val()==""){
+                        $(".waring").html("小区建成时间")
+                        $(".ipt3").css("border","1px solid #CDCDCD")
+                        $(".ipt4").css("border","1px solid #FF3816")
+                        alWar()
+                    }else{
+                        $(".ipt4").css("border","1px solid #CDCDCD")
+                    }
+                }
+            }
+        }
+    })
+    /*删除hover*/
+    $("#alwaysPhone").delegate("var","mouseover",function(){
+        var i=$("#alwaysPhone var").index(this);
+        $("#alwaysPhone var img").eq(i).get(0).src="../../images/Hdele2.png";
+    });
+    $("#alwaysPhone").delegate("var","mouseout",function(){
+        var i=$("#alwaysPhone var").index(this);
+        $("#alwaysPhone var img").eq(i).get(0).src="../../images/Hdele1.png";
+    });
+    $(".theAdd").click(function(){
+        $("#alwaysPhone").get(0).innerHTML+='<li><span>电话名称</span><input type="text"><span>电话号码</span><input type="text"><var><img src="../../images/Hdele1.png" alt="">删除</var></li>'
+    });
+    $("#alwaysPhone").delegate("var","click",function(){
+        $(this).parent().hide();
+    });
+    /*输入框聚焦效果*/
+    if($("input").parent().parent()!=$("#alwaysPhone")){
+        $("input").addClass("cr_ipt1")
+        $("input").css("border","1px solid #CDCDCD")
+    }
+    $('.cr_ipt1').focus(function () {
+        var i=$(this).index('.cr_ipt1');
+        $('.cr_ipt1').eq(i).css({'box-shadow':'0 0 5px #0599FB','border':'1px solid #5bc0de'});
+    });
+    $('.cr_ipt1').blur(function () {
+        var i=$(this).index('.cr_ipt1');
+        $('.cr_ipt1').eq(i).css({'box-shadow':'0 0 0 #fff','border':'1px solid #ccc'});
+    });
+</script>
+</body>
+</html>

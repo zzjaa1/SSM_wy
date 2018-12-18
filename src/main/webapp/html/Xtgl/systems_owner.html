@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>物业后台</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/property.css">
+    <link rel="stylesheet" href="../../css/valueService.css">
+    <link rel="stylesheet" href="../../css/systemsManagement.css">
+</head>
+<body>
+<div >
+    <em><img src="../../images/Hxitong.png" alt=""></em><a href="#">系统管理</a><span>></span><a href="#">业主信息</a>
+</div>
+<div >
+    <div class="equipment_list">
+        <div class="equipment_list_title chairfix">
+            <div><img src="../../images/H_ViewGallery.png" alt=""></div>
+            <span>住户信息</span>
+            <a href="javascript:;" style="width:80px;" class="batchIn">批量导入</a>
+            <a href="systems_owner_add.html">添加</a>
+        </div>
+        <div class="reacherInfor">
+            <p>
+                <input type="text" placeholder="请输入房号">
+                <input type="text" placeholder="请输入业主信息">
+                <input type="button" value="查询">
+            </p>
+            <p>
+                <span>房号说明！</span>房号查询输入格式如下：查询楼-输入xxx幢，查询单元-输入xxx单元，查询层-输入xxx层，查询房子-输入xxx室，精确查询-输入xxx幢-xxx单元xxx层xxx室
+            </p>
+        </div>
+        <div>
+            <ul class="equipment_list_mess sysOwner_mess chairfix">
+                <li>房号缩写</li>
+                <li>住户名称</li>
+                <li>住户电话</li>
+                <li  style="width:20%">住户类型</li>
+                <li>app用户</li>
+                <li style="width:20%">操作</li>
+            </ul>
+        </div>
+        <ul class="equipment_list_message">
+            <li>
+                <ul class="equipment_list_mess sysOwner_mess chairfix">
+                    <li><span>xxxx</span></li>
+                    <li><span>xxxx</span></li>
+                    <li><span>xxxx</span></li>
+                    <li style="width:20%"><span>xxxx</span></li>
+                    <li><span>xxxx</span></li>
+                    <li style="width:20%"><span><a href="" class="equipment_list_xiuG">修改</a></span></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="equipment_list_foot chairfix">
+            <p>从
+                <span class="equipment_list_footSpa1">1</span>到
+                <span class="equipment_list_footSpa2">1</span>/共
+                <span class="equipment_list_footSpa3">1</span>数据
+            </p>
+            <p>
+                <a href="">首页</a>
+                <a href="">前一页</a>
+                <span>1</span>
+                <a href="">后一页</a>
+                <a href="">尾页</a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="mask"></div>
+<div class="batchCon">
+    <div class="batchCon_top">
+        <h3>批量导入住户信息</h3>
+        <span>x</span>
+    </div>
+    <div class="batchCon_Content">
+        <div>
+            <var>第一步</var>
+            <span>下载 <a href="../../业主信息.xls">《下载住户信息导入数据模板》</a></span>
+        </div>
+        <div>
+            <var>第二步</var>
+            <span>根据模板修改文件后上传</span><br>
+            <div class="theXls chairfix">
+                <div class="theXls_inner">上传文件(*.xls)……</div>
+                <a href="">浏览
+                    <input type="file" class="theXlsUp" onchange="handleFile()">
+                </a>
+            </div>
+        </div>
+        <div>导入的住户信息，只对下载模板里已有的房屋信息进行住户的更新</div>
+        <div class="theWaring">还没有选择导入的文件</div>
+    </div>
+    <div class="batchCon_foot chairfix">
+        <a href="javascript:;" class="close">取消</a>
+        <a href="javascript:;" class="makeSure">确认</a>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+<script>
+    /*左侧效果*/
+    $(".li_a").bind("click", function() {
+        $(this).next(".left_slide").slideToggle().siblings(".left_slide").slideUp();
+    });
+    /*头部右侧效果*/
+    $(document).click(function(ev){
+        var e=ev||window.event;
+        var target=e.target||e.srcElement;
+        if(target.parentNode.className!="hr_div1"){
+            $(".header_list").hide()
+        }
+    })
+    $('.hr_div1').click(function(){
+        var i=$('.hr_div1').index(this);
+        if($(".header_list").eq(i).get(0).style.display=="block"){
+            $(".header_list").eq(i).hide()
+        }else{
+            $(".header_list").hide()
+            $(".header_list").eq(i).show()
+        }
+    })
+    $('.hdl_select').click(function () {
+        var a=$(this).html();
+        $('.hr_show').html(a);
+    });
+    /*批量导入*/
+    function handleFile(){
+        if($(".theXlsUp").val()!=""){
+            $(".theXls_inner").html( $(".theXlsUp").val());
+        }
+    }
+    $(".batchCon_top span").click(function(){
+        $(".batchCon").hide();
+        $(".mask").hide();
+    })
+    $(".close").click(function(){
+        $(".batchCon").hide();
+        $(".mask").hide();
+    })
+    $(".batchIn").click(function(){
+        $(".batchCon").show();
+        $(".mask").show();
+    })
+    $(".makeSure").click(function(){
+        if($(".theXls_inner").html()=="上传文件(*.xls)……"){
+            $(".theWaring").show()
+        }else{
+            $(".theWaring").hide()
+        }
+    })
+    /*输入框聚焦效果*/
+    $("input").addClass("cr_ipt1")
+    $("input").css("border","1px solid #CDCDCD")
+    $("input[type=button]").removeClass("cr_ipt1")
+    $('.cr_ipt1').focus(function () {
+        var i=$(this).index('.cr_ipt1');
+        $('.cr_ipt1').eq(i).css({'box-shadow':'0 0 5px #0599FB','border':'1px solid #5bc0de'});
+    });
+    $('.cr_ipt1').blur(function () {
+        var i=$(this).index('.cr_ipt1');
+        $('.cr_ipt1').eq(i).css({'box-shadow':'0 0 0 #fff','border':'1px solid #ccc'});
+    });
+</script>
+</body>
+</html>

@@ -9,8 +9,9 @@
         checkbox: ["&#xe626;", "&#xe627;"],
         radio: ["&#xe62b;", "&#xe62a;"],
         branch: ["<img src='/ssm_wy/images/y_xq.png' width='10px'>", "<img src='/ssm_wy/images/y_xq.png' width='20px'>"],
-        leaf: "&#xe621;",
+        leaf: "<img src='/ssm_wy/images/1.jpg' width='10px'>",
         leafs: "<img src='/ssm_wy/images/y_xq.png' width='10px'>",
+        leafss:"<img src='/ssm_wy/images/2.jpg' width='15px'>"
     };
     r.prototype.init = function (e) {
         var o = this;
@@ -31,9 +32,13 @@
                     // console.log(n.h_bulidingName);
                     if(n.h_bulidingName!=undefined){
                     if(n.h_bulidingName.search('室')!=-1){
-                        return '<a href="' + (n.href || "javascript:;") + '" ' + (r.target && n.href ? 'target="' + r.target + '"' : "") + ">" + ('<i class="layui-icon layui-tree-' + (l ? "branch" : "leafs") + '">' + (l ? n.spread ? t.branch[1] : t.branch[0] : t.leafs) + "</i>") + ("<cite>" + (n.name || "未命名") + "</cite></a>")
-                    }else{
+                        if(n.h_state=="未入住"){
                         return '<a href="' + (n.href || "javascript:;") + '" ' + (r.target && n.href ? 'target="' + r.target + '"' : "") + ">" + ('<i class="layui-icon layui-tree-' + (l ? "branch" : "leaf") + '">' + (l ? n.spread ? t.branch[1] : t.branch[0] : t.leaf) + "</i>") + ("<cite>" + (n.name || "未命名") + "</cite></a>")
+                        }else if(n.h_state=="已入住"){
+                            return '<a href="' + (n.href || "javascript:;") + '" ' + (r.target && n.href ? 'target="' + r.target + '"' : "") + ">" + ('<i class="layui-icon layui-tree-' + (l ? "branch" : "leafss") + '">' + (l ? n.spread ? t.branch[1] : t.branch[0] : t.leafss) + "</i>") + ("<cite>" + (n.name || "未命名") + "</cite></a>")
+                        }
+                    }else{
+                        return '<a href="' + (n.href || "javascript:;") + '" ' + (r.target && n.href ? 'target="' + r.target + '"' : "") + ">" + ('<i class="layui-icon layui-tree-' + (l ? "branch" : "leafs") + '">' + (l ? n.spread ? t.branch[1] : t.branch[0] : t.leafs) + "</i>") + ("<cite>" + (n.name || "未命名") + "</cite></a>")
                     }
                     }else{
                         return '<a href="' + (n.href || "javascript:;") + '" ' + (r.target && n.href ? 'target="' + r.target + '"' : "") + ">" + ('<i class="layui-icon layui-tree-' + (l ? "branch" : "leafs") + '">' + (l ? n.spread ? t.branch[1] : t.branch[0] : t.leafs) + "</i>") + ("<cite>" + (n.name || "未命名") + "</cite></a>")

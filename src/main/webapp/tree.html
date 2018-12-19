@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
+    <script src="layui/layui.js" charset="utf-8"></script>
+    <script>
+  var data={};
+  var data1={};
+        layui.use(['tree', 'layer'], function(){
+            var layer = layui.layer
+                ,$ = layui.jquery;
+            $.ajax({
+                url: '/ssm_wy/querytree',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                },
+                success: function (status) {
+                    $.each(status.li, function(key, val) {
+                          data.name=val.name;
+                           data.id=val.id;
+                           data.children=val.children;
+                        layui.tree({
+                            elem: '#demo1' //指定元素
+                            ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
+                            ,click: function(item){ //点击节点回调
+                                layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
+                                // console.log(item);
+                            }
+                            ,nodes:
+                                [data
+                                ]
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div >
+    <ul id="demo1"></ul>
+</div>
+</body>
+</html>

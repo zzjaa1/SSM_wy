@@ -19,12 +19,18 @@
         }
     </script>
 </head>
+<style type="text/css">
+    .layui-header  .layui-nav-item{
+        margin-left: 100px;
+    }
+</style>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo"> <img src="/ssm_wy/images/logo.png" style="width: 80px" alt=""></em>云联汇</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
-        <ul class="layui-nav layui-layout-left">
+        <ul class="layui-nav layui-bg-molv">
+            <li class="layui-nav-item"></li>
             <li class="layui-nav-item"><a href="">控制台</a></li>
             <li class="layui-nav-item"><a href="">商品管理</a></li>
             <li class="layui-nav-item"><a href="">用户</a></li>
@@ -37,8 +43,8 @@
                 </dl>
             </li>
         </ul>
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
+        <ul class="layui-nav layui-layout-right ">
+            <li class="layui-nav-item ">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                     贤心
@@ -52,11 +58,12 @@
         </ul>
     </div>
 
-    <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll" id="menu_style">
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test" >
+    <div class="layui-side layui-bg-black layui-bg-molv" >
+        <div class="layui-side-scroll layui-bg-molv" id="menu_style">
+            <ul class="layui-nav layui-nav-tree layui-bg-molv"  lay-filter="test" >
                 <li class="layui-nav-item"  v-for="(s,index) in sa">
-                    <a @click="dj(s.perid)">{{s.pername}}</a>
+                    <a  href="javascript:;">{{s.pername}}</a>
+                    <!--<a @click="dj(s.perid)">默认展开</a>-->
                     <dl  class="layui-nav-child" :id="s.perid" :style="sty"  :title="s.childs" >
                         <dd v-for="(ss,indexitem) in s.childs" t-model="asyncArray">
                             <a @click="href(ss.url,ss.perid,ss.pername)" >{{ss.pername}}</a></dd>
@@ -67,38 +74,35 @@
         </div>
     </div>
 
-
-
     <script>
         var a=new Vue({
             el: '#menu_style',
             data:{
                 sa:''
-                ,sty:"display:none"
+               // ,sty:"display:none"
             },
             created: function () {
                 $.get("/ssm_wy/sys/queryPermission",
                     function(result, state) {
                         a.sa=result.li;
                         localStorage.setItem('userName', result.li);
-                        layui.use('element', function() {
-                            var element = layui.element;
-                            element.init();
-                        });
                     });
             },
             methods:{
                 dj:function(chard){
-                    var a=$('#'+chard).css("display");
+                   /* layui.use('element', function() {
+                        var element = layui.element;
+                        element.init();
+                    });*/
+                  /*  var a=$('#'+chard).css("display");
                     if(a=="block"){
                         $('#'+chard).css("display","none");
                     }else{
                         $('#'+chard).css("display","block");
-                    }
+                    }*/
 
                 },
                 href:function(url,id,name){
-                    console.log("id="+id+"name="+name)
                     //触发事件
                     layui.use('element', function() {
                         var $ = layui.jquery;
@@ -135,11 +139,17 @@
                         active.tabChange(id);
                     });
                 },
-
-            }
+            },
+            updated: function () {
+                //生命周期更新完成 layui渲染
+                layui.use('element', function() {
+                    var element = layui.element;
+                    element.init();
+                });
+            },
         })
     </script>
-    <div class="layui-body" >
+    <div class="layui-body " >
         <div   class="layui-tab" lay-filter="demo" lay-allowclose="true" >
         <ul class="layui-tab-title" style="width: 100%;height: 100%">
         </ul>

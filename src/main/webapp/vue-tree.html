@@ -75,7 +75,7 @@
         },
         methods: {
             nodeClick: function(node, index) {
-                console.log("222");
+                console.log(node);
                 if (node.selected === 'full' || node.selected === 'half') {
                     Vue.set(node, 'selected', null);
                 } else {

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>物业后台</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/property.css">
+    <link rel="stylesheet" href="../../css/valueService.css">
+    <link rel="stylesheet" href="../../css/jeDate.css">
+</head>
+<body>
+<!--头部-->
+<header>
+    <div class="logo">
+        <em><img src="../../images/logo.png" alt=""></em>云联汇
+    </div>
+    <div class="header_left">
+        <a href="../首页/property_homePage.html" style="color: #fff;">
+            <em><img src="../../images/1.png" alt=""></em>郑州市德旺物业管理有限公司
+            <img src="../../images/2.png" alt="" class="right_top_img">
+        </a>
+    </div>
+    <!--头部右侧-->
+    <div class="header_right">
+        <div class="hr_div1">
+            <em class="hr_em1"><img src="../../images/3.png" alt=""></em>
+            <span class="hr_show">美景天城</span>
+            <em class="hr_em2"><img src="../../images/4.png" alt="" class="hr1_img1"></em>
+            <ul class="header_list" id="hdl_c">
+                <li style="position: relative" id="hl_li"><img src="../../images/42.png" alt="" class="hdl_img"></li>
+                <li class="hdl_select">
+                    美景天城
+                </li>
+                <li class="hdl_select">
+                    美景天城二
+                </li>
+            </ul>
+        </div>
+        <div class="hr_div1" style="border-left: 1px solid #fff;">
+            <em class="hr_em1" style="width: 15px;height: 15px;margin-left: 5px"><img src="../../images/5.png" alt=""></em>
+            <span>欢迎Admin</span>
+            <em class="hr_em2"><img src="../../images/4.png" alt="" class="hr1_img1"></em>
+            <ul class="header_list" style="right:0">
+                <li style="position: relative"  id="hl_li2"><img src="../../images/42.png" alt="" class="hdl_img"></li>
+                <li>
+                    <a href="#"><span><img src="../../images/sz.png" alt=""></span>我的设置</a>
+                </li>
+                <li>
+                    <a href="#"><span><img src="../../images/mm.png" alt=""></span>修改密码</a>
+                </li>
+                <li>
+                    <a href="../property_index.html"><span><img src="../../images/tc.png" alt=""></span>退出系统</a>
+                </li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</header>
+<!--页面左侧-->
+<div class="left">
+    <div class="left_list" id="left_list2">
+        <a href="javascript:;" class="li_a" name="2"><em><img src="../../images/bb.png" alt=""></em>报表中心<em class="left_em2"><img src="../../images/4.png" alt=""></em></a>
+        <div class="left_slide">
+            <span><a href="../报表中心/Reporting_Charges_index.html">计费报表</a></span>
+            <span><a href="../报表中心/Reporting_touShu.html">投诉统计</a></span>
+            <span><a href="../报表中心/Reporting_baoXiu.html">报修统计</a></span>
+        </div>
+        <a href="javascript:;" class="li_a" name="2"><em><img src="../../images/z1.png" alt=""></em>计费管理<em class="left_em2"><img src="../../images/4.png" alt=""></em></a>
+        <div class="left_slide">
+            <span><a href="../计费管理/property_Accounting_management.html">收费管理</a></span>
+            <span><a href="../计费管理/property_cars_management.html">车辆管理</a></span>
+            <span><a href="../计费管理/property_cost_management.html">算费管理</a></span>
+            <span><a href="../计费管理/property_Charge_Package.html">收费套餐</a></span>
+            <span><a href="../计费管理/property_cost_binding.html">套餐绑定</a></span>
+            <span><a href="../计费管理/property_Charge_configuration.html">计费配置</a></span>
+            <span><a href="../计费管理/property_Accounting_management_77.html">套户账户</a></span>
+        </div>
+        <a href="javascript:;" class="li_a"><em><img src="../../images/z2.png" alt=""></em>仪表管理<em class="left_em2"><img src="../../images/4.png" alt=""></em></a>
+        <div class="left_slide">
+            <span><a href="../仪表管理/meter_index.html">套户抄表</a></span>
+            <span><a href="../仪表管理/meter_taoHuY.html">套户仪表</a></span>
+            <span><a href="../仪表管理/mrter_board.html">仪表模板</a></span>
+            <span><a href="../仪表管理/meter_kings.html">仪表类型</a></span>
+            <span><a href="../仪表管理/meter_pricing.html">阶梯单价</a></span>
+        </div>
+        <a href="../通知公告/property_announcements.html" class="li_a2"><em><img src="../../images/z3.png" alt=""></em>通知公告</a>
+        <a href="../业主投诉/property_complaints.html" class="li_a2"><em><img src="../../images/z4.png" alt=""></em>业主投诉</a>
+        <a href="../业主报修/property_repair.html" class="li_a2"><em><img src="../../images/z5.png" alt=""></em>业主报修</a>
+        <a href="../管家IM/property_steward.html" class="li_a2"><em><img src="../../images/z6.png" alt=""></em>管家IM</a>
+        <a href="../呼叫中心/property_callcenter.html" class="li_a2"><em><img src="../../images/z7.png" alt=""></em>呼叫中心</a>
+        <a href="javascript:;" class="li_a"><em><img src="../../images/z8.png" alt=""></em>巡更管理<em class="left_em2"><img src="../../images/4.png" alt=""></em></a>
+        <div class="left_slide">
+            <span><a href="../巡更管理/property_ Patrolling.html">巡更信息</a></span>
+            <span><a href="../巡更管理/property_ Patrolling_setting.html">巡更设置</a></span>
+            <span><a href="../巡更管理/property_Patrolling_NFC.html">NFC订单</a></span>
+        </div>
+        <a href="javascript:;" class="li_a"><em><img src="../../images/z9.png" alt=""></em>设备巡检<em class="left_em2"><img src="../../images/4.png" alt=""></em></a>
+        <div class="left_slide">
+            <span ><a href="../设备巡检/equipment_index.html">内容模板</a></span>
+            <span><a href="../设备巡检/equipment_manage.html">设备管理</a></span>
+            <span><a href="../设备巡检/equipment_plan.html">巡检计划</a></span>
+            <span><a href="../设备巡检/equipment_message.html">巡检信息</a></span>
+            <span><a href="../设备巡检/equipment_NFC.html">NFC订单</a></span>
+        </div>
+        <a href="javascript:;" class="li_a"><em><img src="../../images/z10.png" alt=""></em>小区门禁<em class="left_em2"><img src="../../images/4.png" alt=""></em></a>
+        <div class="left_slide">
+            <span><a href="../小区门禁/property_community_guard.html">小区门禁</a></span>
+        </div>
+        <a href="javascript:;" class="li_a"><em><img src="../../images/z11.png" alt=""></em>增值服务<em class="left_em2"><img src="../../images/4.png" alt=""></em></a>
+        <div class="left_slide"  style="display:block">
+            <span><a href="valueService_life.html">生活黄页</a></span>
+            <span><a href="valueService_service.html">社区服务</a></span>
+            <span><a href="valueService_house.html">房屋租赁</a></span>
+            <span  style="background-color:#ff3816"><a href="valueService_activity.html">活动发布</a></span>
+        </div>
+        <a href="javascript:;" class="li_a"><em><img src="../../images/z12.png" alt=""></em>内部管理<em class="left_em2"><img src="../../images/4.png" alt=""></em></a>
+        <div class="left_slide">
+            <span><a href="../内部管理/property_Internal_notification.html">内部通知</a></span>
+        </div>
+        <a href="javascript:;" class="li_a"><em><img src="../../images/z13.png" alt=""></em>系统管理<em class="left_em2"><img src="../../images/4.png" alt=""></em></a>
+        <div class="left_slide" style="padding-bottom: 80px;">
+            <span><a href="../系统管理/property_system_company.html">物业公司</a></span>
+            <span><a href="../系统管理/property_payment_information.html">支付信息</a></span>
+            <span><a href="../系统管理/property_Personnel_group.html">人员群组</a></span>
+            <span><a href="../系统管理/systems_estate.html">物业管理处</a></span>
+            <span><a href="../系统管理/systems_villageManagement.html">小区管理</a></span>
+            <span><a href="../系统管理/property_Housing_information.html">房屋信息</a></span>
+            <span><a href="../系统管理/systems_owner.html">业主信息</a></span>
+            <span><a href="../系统管理/systems_permission.html">角色权限</a></span>
+            <span><a href="../系统管理/systems_systemsLog.html">系统日志</a></span>
+        </div>
+    </div>
+</div>
+<div class="con_head" id="con_head">
+    <em><img src="../../images/Hzengzhi.png" alt="" style="vertical-align:sub"></em><a href="#">增值服务</a><span>></span><a href="#">商家活动</a><span>></span><a href="#">新建活动</a>
+</div>
+<div class="con" style="margin-top:0;margin-left:200px;overflow:hidden">
+    <div class="equipment_index_biao valueService_biao">
+        <div class="equipment_index_top chairFix">
+            <div><img src="../../images/Hbi.png" alt=""></div>
+            <p>新建活动</p>
+        </div>
+        <div class="theBgImg">
+            <img src="../../images/HPoster.png" alt="" class="photo">
+            <a href="javascript:;" style="display:block;width:100px;height:30px;box-sizing:border-box;">更换海报
+                <input type='file' name='myFile' style="width:100px;height:30px;" size='29' onchange="showPicture0(this)">
+            </a>
+        </div>
+        <form action="" class="newForm">
+            <div>
+                <label for="">活动主题<em>*</em></label>
+                <input type="text" placeholder="活动主题" class="ipt1">
+            </div>
+            <div>
+                <label for="">活动时间<em>*</em></label>
+                <input type="text" class="datainp ipt2" id="dateinfo1" placeholder="请选择"  readonly>
+                -
+                <input type="text" class="datainp  ipt2" id="dateinfo2" placeholder="请选择"  readonly>
+            </div>
+            <div>
+                <label for="">咨询电话<em>*</em></label>
+                <input type="text" placeholder="咨询电话" class="ipt3">
+            </div>
+            <div>
+                <label for="">活动地点<em>*</em></label>
+                <input type="text" class="ipt4">
+            </div>
+            <div>
+                <label for="">活动描述</label>
+                <textarea name="" id="" cols="30" rows="10" placeholder="活动描述"></textarea>
+            </div>
+            <div>
+                <label for="">图片描述</label>
+                <div class="activity_add_bIg">
+                    <ul class="theImg chairfix">
+                        <!-- <li>
+                             <img src="" alt="">
+                             <span>X</span>
+                         </li>-->
+                    </ul>
+                    <p class="fileP">
+                        <input type="file" id="input" name="input" onchange="onc()" multiple="multiple" class="theFile">
+                        <a href="javascript:;" class="theTidai">选择图片</a><span>最多上传4张，图片大小建议为800*600</span>
+                    </p>
+                </div>
+            </div>
+            <div>
+                <label for=""><input type="checkbox" class="theMoney_check">添加活动经费</label>
+                <div class="theMoney">
+                    <label for="">活动价格</label>
+                    <select name="" id="">
+                        <option value="">免费</option>
+                        <option value="">其他</option>
+                    </select>
+                    <input type="text" placeholder="活动价格">
+                </div>
+            </div>
+            <div>
+                <label for=""><input type="checkbox" class="theName_check">添加报名信息</label>
+                <div class="theName">
+                    <label for="">报名信息</label>
+                    <ul class="chairfix">
+                        <li>
+                            <span>姓名*</span>
+                            <var></var>
+                        </li>
+                        <li>
+                            <span>电话*</span>
+                            <var></var>
+                        </li>
+                        <!--<li>
+                            <span>电话*</span>
+                            <var class="theDele">X</var>
+                        </li>-->
+                    </ul>
+                    <div class="addForm">
+                        <strong>添加表单项：</strong>
+                        <input type="text" placeholder="表单项名称" class="formName">
+                        <input type="checkbox" class="ifFou">
+                        <strong>必填项</strong>
+                        <a href="javascript:;" class="addThemss">添加</a>
+                    </div>
+                    <label for="">公开报名信息</label>
+                    <label for=""><input type="checkbox">公开</label>
+                </div>
+            </div>
+        </form>
+        <div class="theForm_fot">
+            <a href="javascript:;" class="save">保存</a>
+            <a href="valueService_activity.html" class="close">返回</a>
+        </div>
+    </div>
+</div>
+<div class="mask"></div>
+<div class="waring">请输入巡检内容</div>
+<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>\
+<script type="text/javascript" src="../../js/jeDate.js"></script>\
+<script>
+    /*左侧效果*/
+    $(".li_a").bind("click", function() {
+        $(this).next(".left_slide").slideToggle().siblings(".left_slide").slideUp();
+    });
+    /*头部右侧效果*/
+    $(document).click(function(ev){
+        var e=ev||window.event;
+        var target=e.target||e.srcElement;
+        if(target.parentNode.className!="hr_div1"){
+            $(".header_list").hide()
+        }
+    })
+    $('.hr_div1').click(function(){
+        var i=$('.hr_div1').index(this);
+        if($(".header_list").eq(i).get(0).style.display=="block"){
+            $(".header_list").eq(i).hide()
+        }else{
+            $(".header_list").hide()
+            $(".header_list").eq(i).show()
+        }
+    })
+    $('.hdl_select').click(function () {
+        var a=$(this).html();
+        $('.hr_show').html(a);
+    });
+    /*弹出效果*/
+    function alWar(){
+        setTimeout(function(){
+            $(".waring").show()
+            timer1=setInterval(function(){
+                a+=1/20;
+                if (a>=1) {
+                    a=1;
+                    clearInterval(timer1)
+                };
+                $(".waring").get(0).style.opacity=a
+            },50)
+        },100)
+        setTimeout(function(){
+            timer2= setInterval(function(){
+                a-=1/10;
+                if (a<=0) {
+                    a=0;
+                    $(".waring").hide()
+                    clearInterval(timer2)
+                }
+                $(".waring").get(0).style.opacity=a;
+            },50)
+        },2100)
+    }
+    var timer1=timer2=null;
+    var a=0;
+    $(".save").click(function(){
+        var a=0;
+        clearInterval(timer1);
+        clearInterval(timer2);
+        if($(".ipt1").val()==""){
+            $(".waring").html("请填写活动主题")
+            $(".ipt1").css("border","1px solid #FF3816")
+            alWar()
+        }
+        else{
+            if($(".ipt2").val()==""){
+                $(".waring").html("请填写时间")
+                $(".ipt1").css("border","1px solid #CDCDCD")
+                $(".ipt2").css("border","1px solid #FF3816")
+                alWar()
+            }else{
+                if($(".ipt3").val()==""){
+                    $(".waring").html("请填写咨询电话")
+                    $(".ipt2").css("border","1px solid #CDCDCD")
+                    $(".ipt3").css("border","1px solid #FF3816")
+                    alWar()
+                }else{
+                    $(".ipt3").css("border","1px solid #CDCDCD")
+                }
+            }
+        }
+    })
+    /*时间选择*/
+    jeDate({
+        dateCell:"#dateinfo1",
+        isinitVal:false,//是否初始化时间
+        isTime:true, //是否开启时点选择,
+        minDate:"2014-09-19 00:00:00",
+        format: 'YYYY年MM月DD日 hh:mm:ss'
+    });
+    jeDate({
+        dateCell:"#dateinfo2",
+        isinitVal:false,//是否初始化时间
+        isTime:true, //是否开启时点选择,
+        minDate:"2014-09-19 00:00:00",
+        format: 'YYYY年MM月DD日 hh:mm:ss'
+    });
+    /*上传图片1*/
+    function showPicture0(imgFile){
+        $(".photo").get(0).src = window.URL.createObjectURL(imgFile.files[0]);
+    }
+    /*上传图片2*/
+    function onc(){
+        var URL = window.URL || window.webkitURL;
+        var files = event.target.files, file;
+        var m=$('.theImg img').index(this);
+        for(var i=0; i< files.length; i++){
+            file = files[i];
+            var imgURL = URL.createObjectURL(file);
+            $('.theImg').get(0).innerHTML+='<li> <img src="" alt=""><span>X</span></li>';
+            $('.theImg img').eq(m).attr('src', imgURL);
+            //$('.theImg').append($('<img/>').attr('src', imgURL));
+        }
+    }
+    $(".theImg").delegate("span","click",function(){
+        $(this).parent().hide();
+    });
+    /*添加表单*/
+    $(".addThemss").click(function(){
+        if($(".formName").val()!=""){
+            if($(".ifFou").is(":checked")){
+                $(".theName ul").get(0).innerHTML+='<li><span>'+$(".formName").val()+'*</span><var class="theDele">X</var></li>'
+            }else{
+                $(".theName ul").get(0).innerHTML+='<li><span>'+$(".formName").val()+'</span><var class="theDele">X</var></li>'
+            }
+        }
+    })
+    $(".theName").delegate(".theDele","click",function(){
+        $(this).parent().hide()
+    })
+    /*两个复选框*/
+    $(".theMoney_check").click(function(){
+        if($(".theMoney_check").is(":checked")){
+            $(".theMoney").show()
+            console.log(11111)
+        }else{
+            $(".theMoney").hide()
+            console.log(2222)
+        }
+    })
+    $(".theName_check").click(function(){
+        if($(".theName_check").is(":checked")){
+            $(".theName").show()
+        }else{
+            $(".theName").hide()
+        }
+    })
+    /*输入框聚焦效果*/
+    $("input[type=text]").addClass("cr_ipt1")
+    $("textarea").addClass("cr_ipt1")
+    $("input[type=text]").css("border","1px solid #CDCDCD")
+    $("textarea").css("border","1px solid #CDCDCD")
+    $('.cr_ipt1').focus(function () {
+        var i=$(this).index('.cr_ipt1');
+        $('.cr_ipt1').eq(i).css({'box-shadow':'0 0 5px #0599FB','border':'1px solid #5bc0de'});
+    });
+    $('.cr_ipt1').blur(function () {
+        var i=$(this).index('.cr_ipt1');
+        $('.cr_ipt1').eq(i).css({'box-shadow':'0 0 0 #fff','border':'1px solid #ccc'});
+    });
+</script>
+</body>
+</html>

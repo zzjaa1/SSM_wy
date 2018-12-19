@@ -9,7 +9,7 @@
         checkbox: ["&#xe626;", "&#xe627;"],
         radio: ["&#xe62b;", "&#xe62a;"],
         branch: ["<img src='/ssm_wy/images/y_xq.png' width='10px'>", "<img src='/ssm_wy/images/y_xq.png' width='20px'>"],
-        leaf: "<img src='/ssm_wy/images/1.jpg' width='10px'>",
+        leaf: "<img src='/ssm_wy/images/1.jpg' width='15px'>",
         leafs: "<img src='/ssm_wy/images/y_xq.png' width='10px'>",
         leafss:"<img src='/ssm_wy/images/2.jpg' width='15px'>"
     };

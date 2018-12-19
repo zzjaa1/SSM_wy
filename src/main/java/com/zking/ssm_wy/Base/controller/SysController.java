@@ -19,8 +19,6 @@ public class SysController {
     @RequestMapping("/queryPermission")
     @ResponseBody
     public Map<String,Object> query(){
-
-
         Map<String,Object> map=new HashMap<>();
         List<Map<String, Object>> maps=querys("-1");
         map.put("li",maps);

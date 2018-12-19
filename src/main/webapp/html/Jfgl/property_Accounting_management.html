@@ -5,9 +5,72 @@
     <title>收费管理</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <link rel="stylesheet" href="../../css/reset.css">
-    <link rel="stylesheet" href="../../css/property.css">
-    <link rel="stylesheet" href="../../css/property_Accounting_management.css">
+    <link rel="stylesheet" href="/ssm_wy/css/reset.css">
+    <link rel="stylesheet" href="/ssm_wy/css/property.css">
+    <link rel="stylesheet" href="/ssm_wy/css/property_Accounting_management.css">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
+    <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+
+    <!--树形-->
+    <script>
+        var data={};
+        var data1={};
+        layui.use(['tree', 'layer'], function(){
+            var layer = layui.layer
+                ,$ = layui.jquery;
+            $.ajax({
+                url: '/ssm_wy/querytree',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                },
+                success: function (status) {
+                    $.each(status.li, function(key, val) {
+                        data.name=val.name;
+                        data.id=val.id;
+                        data.children=val.children;
+                        console.log(data)
+                        layui.tree({
+                            elem: '#demo1' //指定元素
+                            ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
+                            ,click: function(item){ //点击节点回调
+                                layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
+                                // console.log(item);
+                            }
+                            ,nodes:
+                                [data
+                                ]
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+    <!--&lt;!&ndash;切换&ndash;&gt;-->
+    <!--<script type="text/javascript">-->
+        <!--function change(ss){-->
+            <!--if(ss=="top1"){-->
+                <!--document.getElementById("treedd").style.display="block";-->
+                <!--document.getElementById("ta").style.display="none";-->
+            <!--}-->
+            <!--else{-->
+                <!--document.getElementById("treedd").style.display="none";-->
+                <!--document.getElementById("ta").style.display="block";-->
+            <!--}-->
+        <!--}-->
+    <!--</script>-->
+
+    <!--表格-->
+
+
+    <!---->
+    <script>
+        //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+        layui.use('element', function(){
+            var element = layui.element;
+        });
+    </script>
+
 </head>
 <body>
     <div>
@@ -28,22 +91,52 @@
                 <em><img src="../../images/xql.png" alt=""></em>小区信息
             </div>
             <div class="con_box">
-                <div class="bk_head" style="margin-top: 10px">
-                    <em><img src="../../images/jx_02.png" alt=""></em><span class="txs"><strong><img src="../../images/y_xq.png" alt=""></strong>美景天城</span>
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">简洁模式</li>
+                        <li >标准模式</li>
+                    </ul>
+                    <div class="layui-tab-content">
+
+                        <div class="layui-tab-item layui-show">
+                            <div class="layui-input-inline">
+                                <select name="modules" lay-verify="required" lay-search="" style="width: 200px">
+                                    <option value="">请选择</option>
+                                    <option value="1">layer</option>
+                                    <option value="2">form</option>
+                                    <option value="3">layim</option>
+                                    <option value="4">element</option>
+                                </select>
+                            </div>
+                            <ul id="demo1"></ul></div>
+                        <div class="layui-tab-item">
+                            <!--<div class="layui-inline">-->
+                                <!--<label class="layui-form-label">多规则验证</label>-->
+                                <!--<div class="layui-input-inline">-->
+                                    <!--<input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input">-->
+                                <!--</div>-->
+                            <table id="tab" >
+                                <tr>
+                                    <td>123</td>
+                                    <td>123</td>
+                                    <td>123</td>
+                                </tr>
+                                <tr>
+                                    <td>123</td>
+                                    <td>123</td>
+                                    <td>123</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <ul class="bk_list">
-                    <li>
-                        <em><img src="../../images/bk_03.png" alt=""></em><span class="txs"><strong><img src="../../images/y_xq.png" alt=""></strong>1栋</span>
-                    </li>
-                    <li>
-                        <em><img src="../../images/bk_03.png" alt=""></em><span class="txs"><strong><img src="../../images/y_xq.png" alt=""></strong>2栋</span>
-                    </li>
-                    <li>
-                        <em><img src="../../images/zz_02.png" alt=""></em><span class="txs"><strong><img src="../../images/y_xq.png" alt=""></strong>3栋</span>
-                    </li>
-                </ul>
             </div>
         </div>
+    </div>
+    <div>
+         111
+        <!--表格-->
+        <table class="layui-hide" id="test" lay-filter="test"></table>
     </div>
     <script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
     <script>

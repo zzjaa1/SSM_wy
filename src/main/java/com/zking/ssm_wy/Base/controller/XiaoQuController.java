@@ -67,40 +67,29 @@ public class XiaoQuController {
     @RequestMapping("/queryweizi")
     @ResponseBody
     public Map<String,Object> queryweizi(){
-        List<Map<String, Object>> querysf = iXiaoQuService.querysf();
         Map<String,Object> map=new HashMap<>();
-        Map<String,Object> map2=new HashMap<>();
-
-        String name="";
-        for (Map<String, Object> map1 : querysf) {
-            System.out.println(map1);
-            if(null!=map1.get("x_buliding").toString()){
-                name+=map1.get("x_buliding").toString();
-            }
-            if(null!=map1.get("b_buliding").toString()){
-                name+="#"+map1.get("b_buliding").toString();
-            }
-         /*   if(map1.get("dym").toString().length()!=0){
-                name+="#"+map1.get("dym").toString();
-            }else {
-                name+="";
-            }*/
-          if(map1.containsKey("dym")){
-             name+="#"+map1.get("dym").toString();
-          }
-            System.out.println("name"+name);
-//            map.put("mc",map1.get("x_buliding").toString()+
-//                    "#"+map1.get("b_buliding").toString()+
-//                    "#"+map1.get("dym").toString());
-//            System.out.println(map);
-            map2.put("mc",name);
-        }
-
-        map.put("li",map2);
-
-        return map;
+        Map<String,Object> map1=null;
+        List<Map<String, Object>> querysf = iXiaoQuService.querysf();
+//
+//        for (Map<String, Object> stringObjectMap : querysf) {
+//            System.out.println("stringObjectMap:"+stringObjectMap);
+//            map1=new HashMap<>();
+//            String x_buliding = stringObjectMap.get("x_buliding").toString();
+//            String b_buliding = stringObjectMap.get("b_buliding").toString();
+//            String dym ="";
+//            String fjmh ="";
+//            if (stringObjectMap.containsKey("dym")){
+//                dym=stringObjectMap.get("dym").toString();
+//            }
+//            if(stringObjectMap.containsKey("fjmh")){
+//                fjmh=stringObjectMap.get("fjmh").toString();
+//            }
+//            String name=x_buliding+"#"+b_buliding+"#"+dym+"#"+fjmh;
+//            map1.put("mz",name);
+//
+//        }
+        map.put("li",querysf);
+        return map1;
     }
-
-
 
 }

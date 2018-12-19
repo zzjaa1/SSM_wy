@@ -3,12 +3,14 @@
     "use strict";
     var o = layui.$, a = layui.hint(), i = "layui-tree-enter", r = function (e) {
         this.options = e
+
     }, t = {
-        arrow: ["&#xe623;", "&#xe625;"],
+        arrow: [ "<img src=\"/ssm_wy/images/jj_02.png\" width='10px' height='10px'> ","<img src=\"/ssm_wy/images/jx_02.png\"  width='10px'>"],
         checkbox: ["&#xe626;", "&#xe627;"],
         radio: ["&#xe62b;", "&#xe62a;"],
-        branch: ["&#xe622;", "&#xe624;"],
-        leaf: "&#xe621;"
+        branch: ["<img src='/ssm_wy/images/y_xq.png' width='10px'>", "<img src='/ssm_wy/images/y_xq.png' width='20px'>"],
+        leaf: "&#xe621;",
+        leafs: "<img src='/ssm_wy/images/y_xq.png' width='10px'>",
     };
     r.prototype.init = function (e) {
         var o = this;
@@ -23,13 +25,26 @@
                 }(), function () {
                     return r.check ? '<i class="layui-icon layui-tree-check">' + ("checkbox" === r.check ? t.checkbox[0] : "radio" === r.check ? t.radio[0] : "") + "</i>" : ""
                 }(), function () {
-                    return '<a href="' + (n.href || "javascript:;") + '" ' + (r.target && n.href ? 'target="' + r.target + '"' : "") + ">" + ('<i class="layui-icon layui-tree-' + (l ? "branch" : "leaf") + '">' + (l ? n.spread ? t.branch[1] : t.branch[0] : t.leaf) + "</i>") + ("<cite>" + (n.name || "未命名") + "</cite></a>")
+                    /*console.log("n");
+                    console.log(n);*/
+                    // console.log("11");
+                    // console.log(n.h_bulidingName);
+                    if(n.h_bulidingName!=undefined){
+                    if(n.h_bulidingName.search('室')!=-1){
+                        return '<a href="' + (n.href || "javascript:;") + '" ' + (r.target && n.href ? 'target="' + r.target + '"' : "") + ">" + ('<i class="layui-icon layui-tree-' + (l ? "branch" : "leafs") + '">' + (l ? n.spread ? t.branch[1] : t.branch[0] : t.leafs) + "</i>") + ("<cite>" + (n.name || "未命名") + "</cite></a>")
+                    }else{
+                        return '<a href="' + (n.href || "javascript:;") + '" ' + (r.target && n.href ? 'target="' + r.target + '"' : "") + ">" + ('<i class="layui-icon layui-tree-' + (l ? "branch" : "leaf") + '">' + (l ? n.spread ? t.branch[1] : t.branch[0] : t.leaf) + "</i>") + ("<cite>" + (n.name || "未命名") + "</cite></a>")
+                    }
+                    }else{
+                        return '<a href="' + (n.href || "javascript:;") + '" ' + (r.target && n.href ? 'target="' + r.target + '"' : "") + ">" + ('<i class="layui-icon layui-tree-' + (l ? "branch" : "leafs") + '">' + (l ? n.spread ? t.branch[1] : t.branch[0] : t.leafs) + "</i>") + ("<cite>" + (n.name || "未命名") + "</cite></a>")
+                    }
                 }(), "</li>"].join(""));
             l && (s.append(c), i.tree(c, n.children)), e.append(s), "function" == typeof r.click && i.click(s, n), i.spread(s, n), r.drag && i.drag(s, n)
         })
     }, r.prototype.click = function (e, o) {
         var a = this, i = a.options;
         e.children("a").on("click", function (e) {
+
             layui.stope(e), i.click(o)
         })
     }, r.prototype.spread = function (e, o) {

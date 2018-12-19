@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm_wy.Base.mapper.XiaoQuMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm_wy.Base.model.XiaoQu" >
+    <constructor >
+      <idArg column="x_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="x_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="x_buliding" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="x_mj" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="x_xuliding" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="x_unitNumber" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="x_Nuberj" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="x_hoursNumber" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="x_remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    x_id, x_number, x_buliding, x_mj, x_xuliding, x_unitNumber, x_Nuberj, x_hoursNumber, 
+    x_remarks
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from xiaoqu
+    where x_id = #{xId,jdbcType=INTEGER}
+  </select>
+    <select id="querysf" resultType="map">
+           SELECT xq.x_number,xq.x_buliding,b.b_buliding,b.b_number ,dy.h_number dyid ,dy.h_bulidingName dym,s.h_bulidingName fjmh,s.h_number fjbh FROM xiaoqu xq
+LEFT JOIN buliding b
+ON xq.x_number = b.x_number
+LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NOT NULL) dy
+ON b.b_number = dy.b_number
+LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NULL) s
+ON dy.h_number=s.b_number
+    </select>
+  <select id="queryxq" resultType="map">
+     SELECT x_number,x_buliding FROM xiaoqu;
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from xiaoqu
+    where x_id = #{xId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm_wy.Base.model.XiaoQu" >
+    insert into xiaoqu (x_id, x_number, x_buliding, 
+      x_mj, x_xuliding, x_unitNumber, 
+      x_Nuberj, x_hoursNumber, x_remarks
+      )
+    values (#{xId,jdbcType=INTEGER}, #{xNumber,jdbcType=VARCHAR}, #{xBuliding,jdbcType=VARCHAR}, 
+      #{xMj,jdbcType=INTEGER}, #{xXuliding,jdbcType=INTEGER}, #{xUnitnumber,jdbcType=INTEGER}, 
+      #{xNuberj,jdbcType=INTEGER}, #{xHoursnumber,jdbcType=INTEGER}, #{xRemarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm_wy.Base.model.XiaoQu" >
+    insert into xiaoqu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="xId != null" >
+        x_id,
+      </if>
+      <if test="xNumber != null" >
+        x_number,
+      </if>
+      <if test="xBuliding != null" >
+        x_buliding,
+      </if>
+      <if test="xMj != null" >
+        x_mj,
+      </if>
+      <if test="xXuliding != null" >
+        x_xuliding,
+      </if>
+      <if test="xUnitnumber != null" >
+        x_unitNumber,
+      </if>
+      <if test="xNuberj != null" >
+        x_Nuberj,
+      </if>
+      <if test="xHoursnumber != null" >
+        x_hoursNumber,
+      </if>
+      <if test="xRemarks != null" >
+        x_remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="xId != null" >
+        #{xId,jdbcType=INTEGER},
+      </if>
+      <if test="xNumber != null" >
+        #{xNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="xBuliding != null" >
+        #{xBuliding,jdbcType=VARCHAR},
+      </if>
+      <if test="xMj != null" >
+        #{xMj,jdbcType=INTEGER},
+      </if>
+      <if test="xXuliding != null" >
+        #{xXuliding,jdbcType=INTEGER},
+      </if>
+      <if test="xUnitnumber != null" >
+        #{xUnitnumber,jdbcType=INTEGER},
+      </if>
+      <if test="xNuberj != null" >
+        #{xNuberj,jdbcType=INTEGER},
+      </if>
+      <if test="xHoursnumber != null" >
+        #{xHoursnumber,jdbcType=INTEGER},
+      </if>
+      <if test="xRemarks != null" >
+        #{xRemarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm_wy.Base.model.XiaoQu" >
+    update xiaoqu
+    <set >
+      <if test="xNumber != null" >
+        x_number = #{xNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="xBuliding != null" >
+        x_buliding = #{xBuliding,jdbcType=VARCHAR},
+      </if>
+      <if test="xMj != null" >
+        x_mj = #{xMj,jdbcType=INTEGER},
+      </if>
+      <if test="xXuliding != null" >
+        x_xuliding = #{xXuliding,jdbcType=INTEGER},
+      </if>
+      <if test="xUnitnumber != null" >
+        x_unitNumber = #{xUnitnumber,jdbcType=INTEGER},
+      </if>
+      <if test="xNuberj != null" >
+        x_Nuberj = #{xNuberj,jdbcType=INTEGER},
+      </if>
+      <if test="xHoursnumber != null" >
+        x_hoursNumber = #{xHoursnumber,jdbcType=INTEGER},
+      </if>
+      <if test="xRemarks != null" >
+        x_remarks = #{xRemarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where x_id = #{xId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm_wy.Base.model.XiaoQu" >
+    update xiaoqu
+    set x_number = #{xNumber,jdbcType=VARCHAR},
+      x_buliding = #{xBuliding,jdbcType=VARCHAR},
+      x_mj = #{xMj,jdbcType=INTEGER},
+      x_xuliding = #{xXuliding,jdbcType=INTEGER},
+      x_unitNumber = #{xUnitnumber,jdbcType=INTEGER},
+      x_Nuberj = #{xNuberj,jdbcType=INTEGER},
+      x_hoursNumber = #{xHoursnumber,jdbcType=INTEGER},
+      x_remarks = #{xRemarks,jdbcType=VARCHAR}
+    where x_id = #{xId,jdbcType=INTEGER}
+  </update>
+</mapper>

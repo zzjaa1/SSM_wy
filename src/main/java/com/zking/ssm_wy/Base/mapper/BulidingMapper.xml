@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm_wy.Base.mapper.BulidingMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm_wy.Base.model.Buliding" >
+    <constructor >
+      <idArg column="b_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="b_buliding" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="b_hours" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="b_unitNumber" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="b_Nuberj" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="b_hoursNumber" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="cs_remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="x_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zking.ssm_wy.Base.model.Buliding" >
+    <constructor >
+      <idArg column="b_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="b_buliding" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="b_hours" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="b_unitNumber" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="b_Nuberj" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="b_hoursNumber" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="cs_remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="x_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="b_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    b_id, b_buliding, b_hours, b_unitNumber, b_Nuberj, b_hoursNumber, cs_remarks, x_number
+  </sql>
+  <sql id="Blob_Column_List" >
+    b_number
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from buliding
+    where b_id = #{bId,jdbcType=INTEGER}
+  </select>
+    <select id="queryBulid" resultType="map">
+      SELECT b_number,b_buliding,x_number FROM buliding WHERE x_number=#{x_number}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from buliding
+    where b_id = #{bId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm_wy.Base.model.Buliding" >
+    insert into buliding (b_id, b_buliding, b_hours, 
+      b_unitNumber, b_Nuberj, b_hoursNumber, 
+      cs_remarks, x_number, b_number
+      )
+    values (#{bId,jdbcType=INTEGER}, #{bBuliding,jdbcType=VARCHAR}, #{bHours,jdbcType=VARCHAR}, 
+      #{bUnitnumber,jdbcType=INTEGER}, #{bNuberj,jdbcType=INTEGER}, #{bHoursnumber,jdbcType=INTEGER}, 
+      #{csRemarks,jdbcType=VARCHAR}, #{xNumber,jdbcType=VARCHAR}, #{bNumber,jdbcType=VARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm_wy.Base.model.Buliding" >
+    insert into buliding
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bId != null" >
+        b_id,
+      </if>
+      <if test="bBuliding != null" >
+        b_buliding,
+      </if>
+      <if test="bHours != null" >
+        b_hours,
+      </if>
+      <if test="bUnitnumber != null" >
+        b_unitNumber,
+      </if>
+      <if test="bNuberj != null" >
+        b_Nuberj,
+      </if>
+      <if test="bHoursnumber != null" >
+        b_hoursNumber,
+      </if>
+      <if test="csRemarks != null" >
+        cs_remarks,
+      </if>
+      <if test="xNumber != null" >
+        x_number,
+      </if>
+      <if test="bNumber != null" >
+        b_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bId != null" >
+        #{bId,jdbcType=INTEGER},
+      </if>
+      <if test="bBuliding != null" >
+        #{bBuliding,jdbcType=VARCHAR},
+      </if>
+      <if test="bHours != null" >
+        #{bHours,jdbcType=VARCHAR},
+      </if>
+      <if test="bUnitnumber != null" >
+        #{bUnitnumber,jdbcType=INTEGER},
+      </if>
+      <if test="bNuberj != null" >
+        #{bNuberj,jdbcType=INTEGER},
+      </if>
+      <if test="bHoursnumber != null" >
+        #{bHoursnumber,jdbcType=INTEGER},
+      </if>
+      <if test="csRemarks != null" >
+        #{csRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="xNumber != null" >
+        #{xNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bNumber != null" >
+        #{bNumber,jdbcType=VARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm_wy.Base.model.Buliding" >
+    update buliding
+    <set >
+      <if test="bBuliding != null" >
+        b_buliding = #{bBuliding,jdbcType=VARCHAR},
+      </if>
+      <if test="bHours != null" >
+        b_hours = #{bHours,jdbcType=VARCHAR},
+      </if>
+      <if test="bUnitnumber != null" >
+        b_unitNumber = #{bUnitnumber,jdbcType=INTEGER},
+      </if>
+      <if test="bNuberj != null" >
+        b_Nuberj = #{bNuberj,jdbcType=INTEGER},
+      </if>
+      <if test="bHoursnumber != null" >
+        b_hoursNumber = #{bHoursnumber,jdbcType=INTEGER},
+      </if>
+      <if test="csRemarks != null" >
+        cs_remarks = #{csRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="xNumber != null" >
+        x_number = #{xNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bNumber != null" >
+        b_number = #{bNumber,jdbcType=VARBINARY},
+      </if>
+    </set>
+    where b_id = #{bId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zking.ssm_wy.Base.model.Buliding" >
+    update buliding
+    set b_buliding = #{bBuliding,jdbcType=VARCHAR},
+      b_hours = #{bHours,jdbcType=VARCHAR},
+      b_unitNumber = #{bUnitnumber,jdbcType=INTEGER},
+      b_Nuberj = #{bNuberj,jdbcType=INTEGER},
+      b_hoursNumber = #{bHoursnumber,jdbcType=INTEGER},
+      cs_remarks = #{csRemarks,jdbcType=VARCHAR},
+      x_number = #{xNumber,jdbcType=VARCHAR},
+      b_number = #{bNumber,jdbcType=VARBINARY}
+    where b_id = #{bId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm_wy.Base.model.Buliding" >
+    update buliding
+    set b_buliding = #{bBuliding,jdbcType=VARCHAR},
+      b_hours = #{bHours,jdbcType=VARCHAR},
+      b_unitNumber = #{bUnitnumber,jdbcType=INTEGER},
+      b_Nuberj = #{bNuberj,jdbcType=INTEGER},
+      b_hoursNumber = #{bHoursnumber,jdbcType=INTEGER},
+      cs_remarks = #{csRemarks,jdbcType=VARCHAR},
+      x_number = #{xNumber,jdbcType=VARCHAR}
+    where b_id = #{bId,jdbcType=INTEGER}
+  </update>
+</mapper>

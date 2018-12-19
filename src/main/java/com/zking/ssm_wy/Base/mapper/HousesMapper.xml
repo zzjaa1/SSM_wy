@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm_wy.Base.mapper.HousesMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm_wy.Base.model.Houses" >
+    <constructor >
+      <idArg column="h_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="h_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="h_state" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="h_bulidingName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="h_unitNumber" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="h_floor" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="h_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="h_direction" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="h_area" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="h_remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="b_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    h_id, h_number, h_state, h_bulidingName, h_unitNumber, h_floor, h_type, h_direction, 
+    h_area, h_remarks, b_number
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from houses
+    where h_id = #{hId,jdbcType=INTEGER}
+  </select>
+    <select id="queryHourse" resultType="map">
+      SELECT h_number,h_bulidingName, b_number FROM houses WHERE b_number =#{number}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from houses
+    where h_id = #{hId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm_wy.Base.model.Houses" >
+    insert into houses (h_id, h_number, h_state, 
+      h_bulidingName, h_unitNumber, h_floor, 
+      h_type, h_direction, h_area, 
+      h_remarks, b_number)
+    values (#{hId,jdbcType=INTEGER}, #{hNumber,jdbcType=VARCHAR}, #{hState,jdbcType=VARCHAR}, 
+      #{hBulidingname,jdbcType=VARCHAR}, #{hUnitnumber,jdbcType=INTEGER}, #{hFloor,jdbcType=INTEGER}, 
+      #{hType,jdbcType=VARCHAR}, #{hDirection,jdbcType=VARCHAR}, #{hArea,jdbcType=INTEGER}, 
+      #{hRemarks,jdbcType=VARCHAR}, #{bNumber,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm_wy.Base.model.Houses" >
+    insert into houses
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hId != null" >
+        h_id,
+      </if>
+      <if test="hNumber != null" >
+        h_number,
+      </if>
+      <if test="hState != null" >
+        h_state,
+      </if>
+      <if test="hBulidingname != null" >
+        h_bulidingName,
+      </if>
+      <if test="hUnitnumber != null" >
+        h_unitNumber,
+      </if>
+      <if test="hFloor != null" >
+        h_floor,
+      </if>
+      <if test="hType != null" >
+        h_type,
+      </if>
+      <if test="hDirection != null" >
+        h_direction,
+      </if>
+      <if test="hArea != null" >
+        h_area,
+      </if>
+      <if test="hRemarks != null" >
+        h_remarks,
+      </if>
+      <if test="bNumber != null" >
+        b_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hId != null" >
+        #{hId,jdbcType=INTEGER},
+      </if>
+      <if test="hNumber != null" >
+        #{hNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="hState != null" >
+        #{hState,jdbcType=VARCHAR},
+      </if>
+      <if test="hBulidingname != null" >
+        #{hBulidingname,jdbcType=VARCHAR},
+      </if>
+      <if test="hUnitnumber != null" >
+        #{hUnitnumber,jdbcType=INTEGER},
+      </if>
+      <if test="hFloor != null" >
+        #{hFloor,jdbcType=INTEGER},
+      </if>
+      <if test="hType != null" >
+        #{hType,jdbcType=VARCHAR},
+      </if>
+      <if test="hDirection != null" >
+        #{hDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="hArea != null" >
+        #{hArea,jdbcType=INTEGER},
+      </if>
+      <if test="hRemarks != null" >
+        #{hRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="bNumber != null" >
+        #{bNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm_wy.Base.model.Houses" >
+    update houses
+    <set >
+      <if test="hNumber != null" >
+        h_number = #{hNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="hState != null" >
+        h_state = #{hState,jdbcType=VARCHAR},
+      </if>
+      <if test="hBulidingname != null" >
+        h_bulidingName = #{hBulidingname,jdbcType=VARCHAR},
+      </if>
+      <if test="hUnitnumber != null" >
+        h_unitNumber = #{hUnitnumber,jdbcType=INTEGER},
+      </if>
+      <if test="hFloor != null" >
+        h_floor = #{hFloor,jdbcType=INTEGER},
+      </if>
+      <if test="hType != null" >
+        h_type = #{hType,jdbcType=VARCHAR},
+      </if>
+      <if test="hDirection != null" >
+        h_direction = #{hDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="hArea != null" >
+        h_area = #{hArea,jdbcType=INTEGER},
+      </if>
+      <if test="hRemarks != null" >
+        h_remarks = #{hRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="bNumber != null" >
+        b_number = #{bNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where h_id = #{hId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm_wy.Base.model.Houses" >
+    update houses
+    set h_number = #{hNumber,jdbcType=VARCHAR},
+      h_state = #{hState,jdbcType=VARCHAR},
+      h_bulidingName = #{hBulidingname,jdbcType=VARCHAR},
+      h_unitNumber = #{hUnitnumber,jdbcType=INTEGER},
+      h_floor = #{hFloor,jdbcType=INTEGER},
+      h_type = #{hType,jdbcType=VARCHAR},
+      h_direction = #{hDirection,jdbcType=VARCHAR},
+      h_area = #{hArea,jdbcType=INTEGER},
+      h_remarks = #{hRemarks,jdbcType=VARCHAR},
+      b_number = #{bNumber,jdbcType=VARCHAR}
+    where h_id = #{hId,jdbcType=INTEGER}
+  </update>
+</mapper>

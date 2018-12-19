@@ -1,9 +1,6 @@
 package com.zking.ssm_wy.Base.model;
 
 
-import lombok.ToString;
-
-@ToString
 public class SysPermission {
     private Integer perid;
 

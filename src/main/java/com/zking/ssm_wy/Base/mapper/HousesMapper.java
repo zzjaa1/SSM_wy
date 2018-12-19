@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface HousesMapper {
+
+    public interface HousesMapper {
     int deleteByPrimaryKey(Integer hId);
 
     int insert(Houses record);

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm_wy.Base.mapper.CostNameMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm_wy.Base.model.CostName" >
+    <constructor >
+      <idArg column="cn_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="cn_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cn_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cn_price" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="cn_cycle" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="cn_ remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cn_id, cn_name, cn_type, cn_price, cn_cycle, "cn_ remarks"
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from costname
+    where cn_id = #{cnId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from costname
+    where cn_id = #{cnId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm_wy.Base.model.CostName" >
+    insert into costname (cn_id, cn_name, cn_type, 
+      cn_price, cn_cycle, "cn_ remarks"
+      )
+    values (#{cnId,jdbcType=INTEGER}, #{cnName,jdbcType=VARCHAR}, #{cnType,jdbcType=VARCHAR}, 
+      #{cnPrice,jdbcType=REAL}, #{cnCycle,jdbcType=INTEGER}, #{cnRemarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm_wy.Base.model.CostName" >
+    insert into costname
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cnId != null" >
+        cn_id,
+      </if>
+      <if test="cnName != null" >
+        cn_name,
+      </if>
+      <if test="cnType != null" >
+        cn_type,
+      </if>
+      <if test="cnPrice != null" >
+        cn_price,
+      </if>
+      <if test="cnCycle != null" >
+        cn_cycle,
+      </if>
+      <if test="cnRemarks != null" >
+        "cn_ remarks",
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cnId != null" >
+        #{cnId,jdbcType=INTEGER},
+      </if>
+      <if test="cnName != null" >
+        #{cnName,jdbcType=VARCHAR},
+      </if>
+      <if test="cnType != null" >
+        #{cnType,jdbcType=VARCHAR},
+      </if>
+      <if test="cnPrice != null" >
+        #{cnPrice,jdbcType=REAL},
+      </if>
+      <if test="cnCycle != null" >
+        #{cnCycle,jdbcType=INTEGER},
+      </if>
+      <if test="cnRemarks != null" >
+        #{cnRemarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm_wy.Base.model.CostName" >
+    update costname
+    <set >
+      <if test="cnName != null" >
+        cn_name = #{cnName,jdbcType=VARCHAR},
+      </if>
+      <if test="cnType != null" >
+        cn_type = #{cnType,jdbcType=VARCHAR},
+      </if>
+      <if test="cnPrice != null" >
+        cn_price = #{cnPrice,jdbcType=REAL},
+      </if>
+      <if test="cnCycle != null" >
+        cn_cycle = #{cnCycle,jdbcType=INTEGER},
+      </if>
+      <if test="cnRemarks != null" >
+        "cn_ remarks" = #{cnRemarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cn_id = #{cnId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm_wy.Base.model.CostName" >
+    update costname
+    set cn_name = #{cnName,jdbcType=VARCHAR},
+      cn_type = #{cnType,jdbcType=VARCHAR},
+      cn_price = #{cnPrice,jdbcType=REAL},
+      cn_cycle = #{cnCycle,jdbcType=INTEGER},
+      "cn_ remarks" = #{cnRemarks,jdbcType=VARCHAR}
+    where cn_id = #{cnId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,24 @@
+package com.zking.ssm_wy.Base.service.imp;
+
+import com.zking.ssm_wy.Base.mapper.CostMapper;
+import com.zking.ssm_wy.Base.service.ICostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+
+@Transactional
+@Service
+public class CostServiceImpl implements ICostService {
+
+    @Autowired
+    private CostMapper costMapper;
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Map<String, Object>> queryCostPager(String h_number) {
+        return costMapper.queryCostPager(h_number);
+    }
+}

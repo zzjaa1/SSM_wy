@@ -25,16 +25,34 @@
     where x_id = #{xId,jdbcType=INTEGER}
   </select>
     <select id="querysf" resultType="map">
-           SELECT xq.x_number,xq.x_buliding,b.b_buliding,b.b_number ,dy.h_number dyid ,dy.h_bulidingName dym,s.h_bulidingName fjmh,s.h_number fjbh FROM xiaoqu xq
-LEFT JOIN buliding b
-ON xq.x_number = b.x_number
-LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NOT NULL) dy
-ON b.b_number = dy.b_number
-LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NULL) s
-ON dy.h_number=s.b_number
+      SELECT s.h_number, CONCAT(xq.x_buliding,'#',b.b_buliding,'#',dy.h_bulidingName,'#',s.h_bulidingName) AS mz ,rel.* FROM xiaoqu xq
+      LEFT JOIN buliding b
+      ON xq.x_number = b.x_number
+      LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NOT NULL) dy
+      ON b.b_number = dy.b_number
+      LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NULL) s
+      ON dy.h_number=s.b_number
+      LEFT JOIN real_estate rel
+      ON rel.h_number=s.h_number
+      WHERE s.h_number IS NOT NULL
+    <if test=" number=='O_phone'  and  null !=gjname">
+      AND rel.O_phone LIKE  CONCAT(CONCAT('%',#{gjname}),'%')
+    </if>
+      <if test=" number=='Re_card'  and  null !=gjname">
+        AND rel.Re_card LIKE  CONCAT(CONCAT('%',#{gjname}),'%')
+      </if>
+      <if test=" number=='O_name'  and  null !=gjname">
+        AND rel.O_name LIKE  CONCAT(CONCAT('%',#{gjname}),'%')
+      </if>
+
+
     </select>
   <select id="queryxq" resultType="map">
-     SELECT x_number,x_buliding FROM xiaoqu;
+     SELECT x_number,x_buliding FROM xiaoqu where 1=1
+     <if test="null!=xNumber and ''!=xNumber">
+       AND  x_number=#{xNumber}
+     </if>
+     
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from xiaoqu

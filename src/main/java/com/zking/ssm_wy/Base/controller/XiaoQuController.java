@@ -1,8 +1,10 @@
 package com.zking.ssm_wy.Base.controller;
 
+import com.zking.ssm_wy.Base.model.XiaoQu;
 import com.zking.ssm_wy.Base.service.IBulidingService;
 import com.zking.ssm_wy.Base.service.IHousesService;
 import com.zking.ssm_wy.Base.service.IXiaoQuService;
+import com.zking.ssm_wy.Base.vo.XiaoQuVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,70 +28,70 @@ public class XiaoQuController {
      */
     @RequestMapping("/querytree")
     @ResponseBody
-    public Map<String,Object> querytree(){
+    public Map<String,Object> querytree(XiaoQu xiaoQu){
+        System.out.println("x_number"+xiaoQu);
         Map<String,Object> map=new HashMap<>();
         Map<String,Object> map1=new HashMap<>();
         Map<String,Object> map2 =new HashMap<>();
         List<Map<String,Object>> map3 =null;
         List<Map<String,Object>> map4 =null;
         List<Map<String,Object>> map5 =null;
-
-        List<Map<String, Object>> queryxq = iXiaoQuService.queryxq();
-        for (Map<String, Object> stringObjectMap : queryxq) {
-            stringObjectMap.put("id",stringObjectMap.get("x_number").toString());
-            stringObjectMap.put("name",stringObjectMap.get("x_buliding").toString());
-            map3= iBulidingService.queryBulid(stringObjectMap.get("x_number").toString());
-            System.out.println("map3="+map3);
-            for (Map<String,Object> s : map3) {
-                s.put("id",s.get("b_number").toString());
-                s.put("name",s.get("b_buliding").toString());
-                System.out.println(s.get("b_number").toString());
-                map4 = iHousesService.queryHourse(s.get("b_number").toString());
-                System.out.println("map4"+map4);
-               for (Map<String,Object> objectMap : map4) {
-                    objectMap.put("id",objectMap.get("h_number").toString());
-                    objectMap.put("name",objectMap.get("h_bulidingName").toString());
-                    map5=iHousesService.queryHourse(objectMap.get("h_number").toString());
-                       for (Map<String, Object> map6 : map5) {
-                               map6.put("id",map6.get("h_number").toString());
-                               map6.put("name",map6.get("h_bulidingName").toString());
-                           }
-                    objectMap.put("children",map5);
+        List<Map<String, Object>> queryxq = iXiaoQuService.queryxq(xiaoQu);
+        System.out.println("queryxq"+queryxq);
+        if(queryxq.size()!=0){
+            for (Map<String, Object> stringObjectMap : queryxq) {
+                if (null!=stringObjectMap){
+                    stringObjectMap.put("id",stringObjectMap.get("x_number").toString());
+                    stringObjectMap.put("name",stringObjectMap.get("x_buliding").toString());
+                    map3= iBulidingService.queryBulid(stringObjectMap.get("x_number").toString());
+                    System.out.println("map3="+map3);
+                    for (Map<String,Object> s : map3) {
+                        if (null!=s){
+                            s.put("id",s.get("b_number").toString());
+                            s.put("name",s.get("b_buliding").toString());
+                            System.out.println(s.get("b_number").toString());
+                            map4 = iHousesService.queryHourse(s.get("b_number").toString());
+                            System.out.println("map4"+map4);
+                            for (Map<String,Object> objectMap : map4) {
+                                if (null!=objectMap){
+                                    objectMap.put("id",objectMap.get("h_number").toString());
+                                    objectMap.put("name",objectMap.get("h_bulidingName").toString());
+                                    map5=iHousesService.queryHourse(objectMap.get("h_number").toString());
+                                    for (Map<String, Object> map6 : map5) {
+                                        if (null!=map6){
+                                            map6.put("id",map6.get("h_number").toString());
+                                            map6.put("name",map6.get("h_bulidingName").toString());
+                                        }
+                                    }
+                                    objectMap.put("children",map5);
+                                }
+                            }
+                            s.put("children",map4);
+                        }
+                    }
+                    stringObjectMap.put("children",map3);
                 }
-                s.put("children",map4);
             }
-            stringObjectMap.put("children",map3);
         }
+
         map.put("li",queryxq);
         return map;
     }
 
     @RequestMapping("/queryweizi")
     @ResponseBody
-    public Map<String,Object> queryweizi(){
+    public Map<String,Object> queryweizi(XiaoQuVo xiaoQuVo){
+        System.out.println("number"+xiaoQuVo);
         Map<String,Object> map=new HashMap<>();
-        Map<String,Object> map1=null;
-        List<Map<String, Object>> querysf = iXiaoQuService.querysf();
-//
-//        for (Map<String, Object> stringObjectMap : querysf) {
-//            System.out.println("stringObjectMap:"+stringObjectMap);
-//            map1=new HashMap<>();
-//            String x_buliding = stringObjectMap.get("x_buliding").toString();
-//            String b_buliding = stringObjectMap.get("b_buliding").toString();
-//            String dym ="";
-//            String fjmh ="";
-//            if (stringObjectMap.containsKey("dym")){
-//                dym=stringObjectMap.get("dym").toString();
-//            }
-//            if(stringObjectMap.containsKey("fjmh")){
-//                fjmh=stringObjectMap.get("fjmh").toString();
-//            }
-//            String name=x_buliding+"#"+b_buliding+"#"+dym+"#"+fjmh;
-//            map1.put("mz",name);
-//
-//        }
-        map.put("li",querysf);
-        return map1;
+        List<Map<String,Object>> list=new ArrayList<>();
+        Map<String,Object> map1=new HashMap<>();
+
+        List<Map<String, Object>> querysf = iXiaoQuService.querysf(xiaoQuVo);
+        map.put("data",querysf);
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",0);
+        return map;
     }
 
 }

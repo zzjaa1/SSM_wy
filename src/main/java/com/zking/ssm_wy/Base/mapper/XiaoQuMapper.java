@@ -1,6 +1,7 @@
 package com.zking.ssm_wy.Base.mapper;
 
 import com.zking.ssm_wy.Base.model.XiaoQu;
+import com.zking.ssm_wy.Base.vo.XiaoQuVo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public interface XiaoQuMapper {
 
     int updateByPrimaryKey(XiaoQu record);
 
-    List<Map<String,Object>> querysf();
+    List<Map<String,Object>> querysf(XiaoQuVo xiaoQuVo);
 
-    List<Map<String,Object>> queryxq();
+    List<Map<String,Object>> queryxq(XiaoQu xiaoQu);
 
 }

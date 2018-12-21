@@ -15,54 +15,194 @@
     <script>
         var data={};
         var data1={};
-        layui.use(['tree', 'layer'], function(){
-            var layer = layui.layer
-                ,$ = layui.jquery;
-            $.ajax({
-                url: '/ssm_wy/querytree',
-                type: 'post',
-                dataType: 'json',
-                data: {
-                },
-                success: function (status) {
-                    $.each(status.li, function(key, val) {
-                        data.name=val.name;
-                        data.id=val.id;
-                        data.children=val.children;
-                        console.log(data)
-                        layui.tree({
-                            elem: '#demo1' //指定元素
-                            ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
-                            ,click: function(item){ //点击节点回调
-                                layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
-                                // console.log(item);
-                            }
-                            ,nodes:
-                                [data
-                                ]
+
+        data={}
+     layui.use( 'layer', function() {
+         var layer = layui.layer
+             , $ = layui.jquery;
+         $("#btuquery").click(function(){
+             //alert("点击了");
+             var val=   $("#seltree").find("option:selected").val();
+             ff(val);
+             $("#demo1").find("li").remove()
+         });
+     });
+        function ff(id){
+            layui.use(['tree', 'layer'], function(){
+                var layer = layui.layer
+                    ,$ = layui.jquery;
+                $.ajax({
+                    url: '/ssm_wy/querytree',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        xNumber:id
+                    },
+                    success: function (status) {
+                        $.each(status.li, function(key, val) {
+                            data.name=val.name;
+                            data.id=val.id;
+                            data.children=val.children;
+                            layui.tree({
+                                elem: '#demo1' //指定元素
+                                ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
+                                ,id:'demo1'
+                                ,click: function(item){ //点击节点回调
+                                    // layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
+                                  //  layer.msg(item.id);
+                                    layui.use('table', function(){
+                                        var table = layui.table;
+                                        //第一个实例
+                                        table.render({
+                                            elem: '#test1'
+                                            ,height: 312
+                                            ,url: '/ssm_wy/queryCost' //数据接口
+                                            ,where:{
+                                                hNumber:item.id
+                                            }
+                                            ,cols: [[ //表头
+                                                {field: 'c_costName', title: '费用名称'},
+                                                {field: 'c_real', title: '实际用量'},
+                                                {field: 'c_yjfy', title: '费用金额'},
+                                                {field: 'mz', title: '房产名称'},
+                                                {field: 'mz', title: '房产名称'},
+                                                {field: 'c_scfyzq_date', title: '上次费用止期',
+                                                    templet:function (d) {
+                                                        return showTime(d.c_scfyzq_date);
+                                                    }
+                                                },
+                                                {field: 'c_bcfyqq_date', title: '本次费用起期',
+                                                    templet:function (d) {
+                                                        return showTime(d.c_scfyzq_date);
+                                                    }
+                                                },
+                                                {field: 'c_bcfyzq_date', title: '本次费用止期',
+                                                    templet:function (d) {
+                                                        return showTime(d.c_bcfyzq_date);
+                                                    }},
+                                                {field: 'c_bcjfzq_date', title: '本次缴费止期',
+                                                    templet:function (d) {
+                                                        return showTime(d.c_bcjfzq_date);
+                                                    }
+                                                },
+                                                {field: 'cn_cycle', title: '费用周期'}
+                                            ]]
+                                        });
+                                    });
+                                }
+                                ,nodes:
+                                    [data
+                                    ]
+                            });
                         });
-                    });
-                }
+                    }
+                });
             });
-        });
+        }
     </script>
-    <!--&lt;!&ndash;切换&ndash;&gt;-->
-    <!--<script type="text/javascript">-->
-        <!--function change(ss){-->
-            <!--if(ss=="top1"){-->
-                <!--document.getElementById("treedd").style.display="block";-->
-                <!--document.getElementById("ta").style.display="none";-->
-            <!--}-->
-            <!--else{-->
-                <!--document.getElementById("treedd").style.display="none";-->
-                <!--document.getElementById("ta").style.display="block";-->
-            <!--}-->
-        <!--}-->
-    <!--</script>-->
-
     <!--表格-->
+    <script>
+        layui.use('table', function(){
+            var table = layui.table;
+            //第一个实例
+            table.render({
+                elem: '#bzdemo'
+                ,height: 312
+                ,id: 'test'
+                ,url: '/ssm_wy/queryweizi' //数据接口
+                ,cols: [[ //表头
+                    {field: 'h_number', title: '编号',width:'50%'},
+                    {field: 'mz', title: '房产名称', width:'50%'}
+                ]]
+            });
+            //监听行单击事件（单击事件为：rowDouble）
+            table.on('row(test)', function(obj){
+                // console.log(obj.tr) //得到当前行元素对象
+                console.log(obj.data.h_number) //得到当前行数据
+                layui.use('table', function(){
+                    var table = layui.table;
+                    //第一个实例
+                    table.render({
+                        elem: '#test1'
+                        ,height: 312
+                        ,url: '/ssm_wy/queryCost' //数据接口
+                        ,where:{
+                            hNumber:obj.data.h_number
+                        }
+                        ,cols: [[ //表头
+                            {field: 'c_costName', title: '费用名称'},
+                            {field: 'c_real', title: '实际用量'},
+                            {field: 'c_yjfy', title: '费用金额'},
+                            {field: 'c_scfyzq_date', title: '上次费用止期',
+                                templet:function (d) {
+                                    return showTime(d.c_scfyzq_date);
+                                }
+                                },
+                            {field: 'c_bcfyqq_date', title: '本次费用起期',
+                                templet:function (d) {
+                                    return showTime(d.c_bcfyqq_date);
+                                }
+                            },
+                            {field: 'c_bcfyzq_date', title: '本次费用止期',
+                                templet:function (d) {
+                                    return showTime(d.c_bcfyzq_date);
+                                }
+                                },
+                            {field: 'c_bcjfzq_date', title: '本次缴费止期',
+                                templet:function (d) {
+                                    return showTime(d.c_bcfyzq_date);
+                                }},
+                            {field: 'cn_cycle', title: '费用周期'}
+                        ]]
+                    });
+                });
+            });
 
-    <!---->
+            //点击查询业主信息
+            $("#btuyzxx").click(function(){
+                query();
+            });
+            function query(){
+                var val= $("#selyz").find("option:selected").val();
+                var gjname=$("#gjname").val();
+                alert(gjname);
+                table.reload('test', {
+                    url: '/ssm_wy/queryweizi'
+                    ,where:{
+                        number:val,
+                        gjname:gjname
+                    } //设定异步数据接口的额外参数
+                });
+            }
+            });
+
+
+        //时间转换函数
+        function showTime(tempDate)
+        {
+            var d = new Date(tempDate);
+            var year = d.getFullYear();
+            var month = d.getMonth();
+            month++;
+            var day = d.getDate();
+            var hours = d.getHours();
+
+            var minutes = d.getMinutes();
+            var seconds = d.getSeconds();
+            month = month<10 ? "0"+month:month;
+            day = day<10 ? "0"+day:day;
+            hours = hours<10 ? "0"+hours:hours;
+            minutes = minutes<10 ? "0"+minutes:minutes;
+            seconds = seconds<10 ? "0"+seconds:seconds;
+
+
+            var time = year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+            return time;
+        }
+
+    </script>
+
+    <!--内侧选项卡-->
     <script>
         //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
         layui.use('element', function(){
@@ -96,16 +236,14 @@
                         <li >标准模式</li>
                     </ul>
                     <div class="layui-tab-content">
-
                         <div class="layui-tab-item layui-show">
                             <div class="layui-input-inline">
-                                <select name="modules" lay-verify="required" lay-search="" style="width: 200px">
+                                <select name="modules" id="seltree" lay-verify="required" lay-search="" style="width: 150px">
                                     <option value="">请选择</option>
-                                    <option value="1">layer</option>
-                                    <option value="2">form</option>
-                                    <option value="3">layim</option>
-                                    <option value="4">element</option>
+                                    <option value="XQ4">浪琴湾小区</option>
+                                    <option value="XQ5">浪琴湾小区2</option>
                                 </select>
+                                <a class="layui-btn layui-btn-xs"  id="btuquery"><label>查询</label></a>
                             </div>
                            <div style="padding-left: 20px">未入住:&nbsp;
                                <img src="/ssm_wy/images/1.jpg" style="width: 15px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -114,21 +252,18 @@
                         <div class="layui-tab-item">
                             <!--<div class="layui-inline">-->
                                 <!--<label class="layui-form-label">多规则验证</label>-->
-                                <!--<div class="layui-input-inline">-->
-                                    <!--<input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input">-->
-                                <!--</div>-->
-                            <table id="tab" >
-                                <tr>
-                                    <td>123</td>
-                                    <td>123</td>
-                                    <td>123</td>
-                                </tr>
-                                <tr>
-                                    <td>123</td>
-                                    <td>123</td>
-                                    <td>123</td>
-                                </tr>
-                            </table>
+
+                            <select name="modules" id="selyz"  lay-verify="required" lay-search="" style="width: 200px">
+                                <option value="">请选择查询</option>
+                                <option value="O_name">业主姓名</option>
+                                <option value="Re_card">证件号</option>
+                                <option value="O_phone">手机号</option>
+                            </select>
+                            <div class="layui-input-inline">
+                              输入关键字:<input type="text" id="gjname"  class="layui-input" width="600px" height="80px" >
+                            </div>
+                            <a class="layui-btn layui-btn-xs"  id="btuyzxx"><label>查询</label></a>
+                            <table id="bzdemo" lay-filter="test"></table>
                         </div>
                     </div>
                 </div>
@@ -137,7 +272,8 @@
     </div>
     <div>
         <!--表格-->
-        <table class="layui-hide" id="test" lay-filter="test"></table>
+        <table class="layui-hide" id="test1" lay-filter="test"></table>
+        <!--<table class="layui-hide" id="test1" lay-filter="test"></table>-->
     </div>
     <script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
     <script>

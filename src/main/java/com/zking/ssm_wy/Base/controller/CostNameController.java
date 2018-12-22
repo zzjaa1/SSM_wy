@@ -20,7 +20,7 @@ import java.util.Map;
 public class CostNameController {
 
     @Autowired
-   private IcostnameService icostnameService;
+    private IcostnameService icostnameService;
 
     @RequestMapping("/queryCostName")
     @ResponseBody
@@ -73,5 +73,17 @@ public class CostNameController {
         int i = icostnameService.insertSelective(c);
         result.put("success", "保存成功");
         return result;
+    }
+
+    @RequestMapping("/queryCostname")
+    @ResponseBody
+    public Map<String,Object> queryCostname(){
+
+        List<Map<String, Object>> maps = icostnameService.queryName();
+
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("data",maps);
+
+        return map;
     }
 }

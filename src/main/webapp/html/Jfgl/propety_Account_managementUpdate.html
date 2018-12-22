@@ -33,7 +33,19 @@
         <div class="layui-input-block">
             <input type="text" id="c_dwjg" name="cDwjg" lay-verify="title" placeholder="请输入单位价格" autocomplete="off" class="layui-input" style="width: 300px" >
         </div>
+       <!--<label class="layui-form-label">费用名称</label>-->
+       <div class="layui-input-block">
+           <input type="text" id="c_costName" name="cCostname" lay-verify="title" placeholder="请输入费用名称" autocomplete="off" class="layui-input" style="width: 300px" >
+       </div>
     </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">费用类型</label>
+            <!--  <input type="hidden" id="cn_type">-->
+            <div class="layui-input-inline" id="fylx">
+                <select id="cn_id" name="cnId"  style="width: 200px">
+                    <option value="请选择">请选择</option>
+                </select>
+            </div>
   <div class="layui-form-item">
         <label class="layui-form-label">应交费用</label>
         <div class="layui-input-block">
@@ -74,11 +86,13 @@
        </div>
     </div>
    <!-- <button class="layui-btn tj" lay-submit lay-filter="formDemo">立即提交</button>-->
+    </div>
 </form>
 
 
 <script>
 function s() {
+
     var sdata=$('#ff');
     console.log("111");
     console.log(sdata);
@@ -98,6 +112,12 @@ function s() {
         laydate.render({
             elem: '#c_bcfyzq_date'
         });
+
+        laydate.render({
+            elem: '#c_scfyzq_date'
+        });
+
+
     });
 
 layui.use('form', function(){
@@ -108,7 +128,18 @@ layui.use('form', function(){
            return false;
        });
 
+    $.get("/ssm_wy/costName/queryCostname",
+        function(result, state) {
+            var names=result.data;
+            console.log(names);
+            for(var i = 0;i<names.length;i++) {
+                    $("#cn_id").append(new Option(names[i].cn_name,names[i].cn_type));
+                    form.render('select');
+               }
+        });
 });
+
+
 
 </script>
 

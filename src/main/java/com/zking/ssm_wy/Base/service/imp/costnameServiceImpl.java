@@ -36,5 +36,11 @@ public class costnameServiceImpl implements IcostnameService {
         return costnameMapper.insertSelective(record);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public List<Map<String,Object>> queryName() {
+        return costnameMapper.queryName();
+    }
+
 
 }

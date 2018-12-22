@@ -87,6 +87,73 @@ public class XiaoQuController {
         return map;
     }
 
-
+    /**
+     * 树形 Bootstraptree
+     * @return
+     */
+    @RequestMapping("/queryBootstraptree")
+    @ResponseBody
+    public Map<String,Object> queryBootstraptree(XiaoQu xiaoQu){
+        Map<String,Object> map=new HashMap<>();
+        List<Map<String,Object>> map3 =null;
+        List<Map<String,Object>> map4 =null;
+        List<Map<String,Object>> map5 =null;
+        List<Map<String, Object>> queryxq = iXiaoQuService.queryxq(xiaoQu);
+        if(queryxq.size()!=0){
+            for (Map<String, Object> stringObjectMap : queryxq) {
+                if (null!=stringObjectMap){
+                    stringObjectMap.put("id",stringObjectMap.get("x_number").toString());
+                    stringObjectMap.put("text",stringObjectMap.get("x_buliding").toString());
+                    stringObjectMap.put("icon", "glyphicon glyphicon-th");
+                    stringObjectMap.put("tags", Arrays.asList(new String[]{
+                            "楼宇数:"+stringObjectMap.get("x_xuliding").toString(),
+                         /*   "单元数:"+stringObjectMap.get("x_unitNumber").toString(),
+                            "楼层数:"+stringObjectMap.get("x_Nuberj").toString(),*/
+                            "房屋数:"+stringObjectMap.get("x_hoursNumber").toString(),
+                            stringObjectMap.get("x_mj").toString()+"㎡"}));
+                    map3= iBulidingService.queryBulid(stringObjectMap.get("x_number").toString());
+                    for (Map<String,Object> s : map3) {
+                        if (null!=s){
+                            s.put("id",s.get("b_number").toString());
+                            s.put("text",s.get("b_buliding").toString());
+                            s.put("icon", "glyphicon glyphicon-stop");
+                            s.put("tags", Arrays.asList(new String[]{
+                                    "单元数:"+s.get("b_unitNumber").toString(),
+                                    "楼层数:"+s.get("b_Nuberj").toString(),
+                                    "房屋数:"+s.get("b_hoursNumber").toString()}));
+                            map4 = iHousesService.queryHourse(s.get("b_number").toString());
+                            for (Map<String,Object> objectMap : map4) {
+                                if (null!=objectMap){
+                                    objectMap.put("id",objectMap.get("h_number").toString());
+                                    objectMap.put("text",objectMap.get("h_bulidingName").toString());
+                                    objectMap.put("icon", "glyphicon glyphicon-share-alt");
+                                    objectMap.put("tags", Arrays.asList(new String[]{
+                                            objectMap.get("h_bulidingName").toString()}));
+                                    map5=iHousesService.queryHourse(objectMap.get("h_number").toString());
+                                    for (Map<String, Object> map6 : map5) {
+                                        if (null!=map6){
+                                            map6.put("id",map6.get("h_number").toString());
+                                            map6.put("text",map6.get("h_bulidingName").toString());
+                                            map6.put("icon", "glyphicon glyphicon-home");
+                                            map6.put("tags", Arrays.asList(new String[]{
+                                                    map6.get("h_type").toString(),
+                                                    map6.get("h_direction").toString(),
+                                                    map6.get("h_area").toString()+"㎡"}));
+                                            map6.put("nodes", "");
+                                        }
+                                    }
+                                    objectMap.put("nodes",map5);
+                                }
+                            }
+                            s.put("nodes",map4);
+                        }
+                    }
+                    stringObjectMap.put("nodes",map3);
+                }
+            }
+        }
+        map.put("li",queryxq);
+        return map;
+    }
 
 }

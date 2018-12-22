@@ -12,7 +12,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    cn_id, cn_name, cn_type, cn_price, cn_cycle, "cn_ remarks"
+    cn_id, cn_name, cn_type, cn_price, cn_cycle, cn_ remarks
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -25,6 +25,9 @@
       <if test="''!=cnName and null!=cnName">
       where  cn_name LIKE #{cnName}
       </if>
+    </select>
+    <select id="queryName" resultType="map">
+      SELECT * from costname
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from costname

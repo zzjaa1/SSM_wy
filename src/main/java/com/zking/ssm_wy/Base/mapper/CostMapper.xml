@@ -150,7 +150,10 @@
     </trim>
   </insert>
   <insert id="insertCost" parameterType="com.zking.ssm_wy.Base.model.Cost">
-
+   INSERT INTO cost (c_fc,c_user,c_jfdw,c_dwjg,c_yjfy,c_scfyzq_date,c_bcfyqq_date,c_bcfyzq_date,c_bcjfzq_date,c_costName,c_real,c_remarks,h_number,cn_id)
+VALUES(#{cFc},#{cUser},#{cJfdw},#{cDwjg},#{cYjfy},
+#{cScfyzqDate},#{cBcfyqqDate}, #{cBcfyzqDate},#{cBcjfzqDate},
+#{cCostname},#{cReal},#{cRemarks},#{hNumber},#{cnId}) ;
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm_wy.Base.model.Cost" >
     update cost

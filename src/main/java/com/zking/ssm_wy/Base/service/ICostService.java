@@ -12,4 +12,6 @@ public interface ICostService {
     int updateCost(Cost cost);
 
     int deleteCost(Cost cost);
+
+    int insertCost(Cost cost);
 }

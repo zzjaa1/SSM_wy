@@ -33,4 +33,9 @@ public class CostServiceImpl implements ICostService {
     public int deleteCost(Cost cost) {
         return costMapper.deleteCost(cost);
     }
+
+    @Override
+    public int insertCost(Cost cost) {
+        return costMapper.insertCost(cost);
+    }
 }

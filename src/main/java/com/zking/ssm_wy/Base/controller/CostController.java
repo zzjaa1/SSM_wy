@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/Cost")
 public class CostController {
 
     @Autowired
@@ -41,8 +42,8 @@ public class CostController {
         System.out.println("111");
         System.out.println(cost);
 
-        Map<String,Object> map =new HashMap<>();
             iCostService.updateCost(cost);
+        Map<String,Object> map =new HashMap<>();
             map.put("success",true);
             map.put("msg","成功");
 
@@ -50,10 +51,26 @@ public class CostController {
     }
 
 
+    @RequestMapping("/DeleteCost")
+    @ResponseBody
     public Map<String,Object> DeleteCost(Cost cost){
 
+        iCostService.deleteCost(cost);
+        Map<String,Object> map =new HashMap<>();
+        map.put("success",true);
+        map.put("msg","成功");
+        return map;
+    }
 
-        return null;
+    @RequestMapping("/insertCost")
+    @ResponseBody
+    public Map<String,Object> insertCost(Cost cost){
+        System.out.println(cost);
+        iCostService.insertCost(cost);
+        Map<String,Object> map =new HashMap<>();
+        map.put("success",true);
+        map.put("msg","成功");
+        return map;
     }
 
 }

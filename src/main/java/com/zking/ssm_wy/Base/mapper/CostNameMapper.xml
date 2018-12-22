@@ -20,7 +20,13 @@
     from costname
     where cn_id = #{cnId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="queryCostNamePage" resultType="map" parameterType="com.zking.ssm_wy.Base.model.CostName">
+      SELECT * FROM costname
+      <if test="''!=cnName and null!=cnName">
+      where  cn_name LIKE #{cnName}
+      </if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from costname
     where cn_id = #{cnId,jdbcType=INTEGER}
   </delete>
@@ -91,7 +97,7 @@
         cn_cycle = #{cnCycle,jdbcType=INTEGER},
       </if>
       <if test="cnRemarks != null" >
-        "cn_ remarks" = #{cnRemarks,jdbcType=VARCHAR},
+        cn_remarks = #{cnRemarks,jdbcType=VARCHAR},
       </if>
     </set>
     where cn_id = #{cnId,jdbcType=INTEGER}

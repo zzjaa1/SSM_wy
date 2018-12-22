@@ -29,27 +29,21 @@ public class XiaoQuController {
     @RequestMapping("/querytree")
     @ResponseBody
     public Map<String,Object> querytree(XiaoQu xiaoQu){
-        System.out.println("x_number"+xiaoQu);
         Map<String,Object> map=new HashMap<>();
-        Map<String,Object> map1=new HashMap<>();
-        Map<String,Object> map2 =new HashMap<>();
         List<Map<String,Object>> map3 =null;
         List<Map<String,Object>> map4 =null;
         List<Map<String,Object>> map5 =null;
         List<Map<String, Object>> queryxq = iXiaoQuService.queryxq(xiaoQu);
-        System.out.println("queryxq"+queryxq);
         if(queryxq.size()!=0){
             for (Map<String, Object> stringObjectMap : queryxq) {
                 if (null!=stringObjectMap){
                     stringObjectMap.put("id",stringObjectMap.get("x_number").toString());
                     stringObjectMap.put("name",stringObjectMap.get("x_buliding").toString());
                     map3= iBulidingService.queryBulid(stringObjectMap.get("x_number").toString());
-                    System.out.println("map3="+map3);
                     for (Map<String,Object> s : map3) {
                         if (null!=s){
                             s.put("id",s.get("b_number").toString());
                             s.put("name",s.get("b_buliding").toString());
-                            System.out.println(s.get("b_number").toString());
                             map4 = iHousesService.queryHourse(s.get("b_number").toString());
                             for (Map<String,Object> objectMap : map4) {
                                 if (null!=objectMap){
@@ -92,5 +86,7 @@ public class XiaoQuController {
         map.put("count",0);
         return map;
     }
+
+    
 
 }

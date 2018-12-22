@@ -48,7 +48,7 @@
 
     </select>
   <select id="queryxq" resultType="map">
-     SELECT x_number,x_buliding FROM xiaoqu where 1=1
+     SELECT * FROM xiaoqu where 1=1
      <if test="null!=xNumber and ''!=xNumber">
        AND  x_number=#{xNumber}
      </if>

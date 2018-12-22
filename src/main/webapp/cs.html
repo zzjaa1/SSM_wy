@@ -148,11 +148,11 @@
     }
 
 
-    var data = [{
+  /*  var data = [{
         text: "Node 1", //节点显示的文本值  string
         icon: "glyphicon glyphicon-home", //节点上显示的图标，支持bootstrap的图标  string
         //selectedIcon: "/ssm_wy/images/y_xq.png", //节点被选中时显示的图标       string
-       /* color: "#ff0000", //节点的前景色      string
+       /!* color: "#ff0000", //节点的前景色      string
         backColor: "#1606ec", //节点的背景色      string
         href: "#http://www.baidu.com", //节点上的超链接
         selectable: true, //标记节点是否可以选择。false表示节点应该作为扩展标题，不会触发选择事件。  string
@@ -161,7 +161,7 @@
             /!*disabled: true,*!/ //是否禁用节点
             expanded: true, //是否展开节点
             selected: true //是否选中节点
-        },*/
+        },*!/
         tags: ['标签信息1', '标签信息2'], //向节点的右侧添加附加信息（类似与boostrap的徽章）    Array of Strings
         nodes: [{
             text: "Child 1",
@@ -193,8 +193,11 @@
         text: "Parent 4"
     }, {
         text: "Parent 5"
-    }];
+    }];*/
    // .glyphicon .glyphicon-home
+
+    var data="";
+
     var options = {
         data: data, //data属性是必须的，是一个对象数组    Array of Objects.
         color: "", //所有节点使用的默认前景色，这个颜色会被节点数据上的backColor属性覆盖.        String
@@ -224,15 +227,8 @@
         onNodeUnchecked: nodeUnchecked
     }
 
-    $('#searchTree').treeview(options);
+   // $('#searchTree').treeview(options);
 
-   /* $('#searchTree').treeview({
-        data: treeData,
-        showIcon: false,
-        showCheckbox: true,
-        onNodeChecked: nodeChecked,
-        onNodeUnchecked: nodeUnchecked
-    });*/
 
     /*  $('#searchTree').treeview("getNode","1").state.checked = true;//.selectable=true
        var node = $('#searchTree').treeview("getNode","1");

@@ -87,6 +87,6 @@ public class XiaoQuController {
         return map;
     }
 
-    
+
 
 }

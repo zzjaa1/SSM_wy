@@ -51,7 +51,6 @@ public class XiaoQuController {
                             s.put("name",s.get("b_buliding").toString());
                             System.out.println(s.get("b_number").toString());
                             map4 = iHousesService.queryHourse(s.get("b_number").toString());
-                            System.out.println("map4"+map4);
                             for (Map<String,Object> objectMap : map4) {
                                 if (null!=objectMap){
                                     objectMap.put("id",objectMap.get("h_number").toString());

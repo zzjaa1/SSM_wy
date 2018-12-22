@@ -1,6 +1,7 @@
 package com.zking.ssm_wy.Base.model;
 
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -18,12 +19,13 @@ public class Cost {
 
     private Float cYjfy;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date cScfyzqDate;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date cBcfyqqDate;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date cBcfyzqDate;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date cBcjfzqDate;
 
     private String cCostname;

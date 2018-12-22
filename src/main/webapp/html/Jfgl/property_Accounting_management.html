@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="/ssm_wy/css/property_Accounting_management.css">
     <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
     <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+    <script src="/ssm_wy/js/jquery.serializejson.js"></script>
 
     <!--树形-->
     <script>
@@ -20,7 +22,6 @@
          var layer = layui.layer
              , $ = layui.jquery;
          $("#btuquery").click(function(){
-             //alert("点击了");
              var val=   $("#seltree").find("option:selected").val();
              ff(val);
              $("#demo1").find("li").remove()
@@ -48,7 +49,8 @@
                                 ,id:'demo1'
                                 ,click: function(item){ //点击节点回调
                                     // layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
-                                    layer.msg(item.id);
+                                    // console.log(JSON.stringify(item));
+                                    $('#dd').html(item.name);
                                     layui.use('table', function(){
                                         var table = layui.table;
                                         //第一个实例
@@ -60,33 +62,61 @@
                                                 hNumber:item.id
                                             }
                                             ,cols: [[ //表头
-                                                {field: 'c_costName', title: '费用名称'},
-                                                {field: 'c_real', title: '实际用量'},
-                                                {field: 'c_yjfy', title: '费用金额'},
-                                                {field: 'mz', title: '房产名称'},
-                                                {field: 'mz', title: '房产名称'},
+                                                {field: 'c_fc', title: '房屋信息',width:'25%'},
+                                                {field: 'c_costName', title: '费用名称',width:'15%'},
+                                                {field: 'c_real', title: '实际用量',width:'15%'},
+                                                {field: 'c_yjfy', title: '费用金额',width:'15%'},
                                                 {field: 'c_scfyzq_date', title: '上次费用止期',
                                                     templet:function (d) {
                                                         return showTime(d.c_scfyzq_date);
-                                                    }
+                                                    },width:'15%'
                                                 },
                                                 {field: 'c_bcfyqq_date', title: '本次费用起期',
                                                     templet:function (d) {
                                                         return showTime(d.c_scfyzq_date);
-                                                    }
+                                                    },width:'15%'
                                                 },
                                                 {field: 'c_bcfyzq_date', title: '本次费用止期',
                                                     templet:function (d) {
                                                         return showTime(d.c_bcfyzq_date);
-                                                    }},
+                                                    },width:'15%'},
                                                 {field: 'c_bcjfzq_date', title: '本次缴费止期',
                                                     templet:function (d) {
                                                         return showTime(d.c_bcjfzq_date);
-                                                    }
+                                                    },width:'15%'
                                                 },
-                                                {field: 'cn_cycle', title: '费用周期'}
+                                                {field: 'cn_cycle', title: '费用周期',width:'15%'},
+                                                {field: '', title: '操作' ,sort: true ,templet:function(value){
+                                                        var obj = JSON.stringify(value);
+                                                        return " <button class=\"layui-btn layui-btn-sm\" value='编辑' onclick='member_edit("+obj+")'>\n" +
+                                                            "   <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                                            "   </button>" +
+                                                            "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete("+value.id+")\">\n" +
+                                                            "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                                            "  </button>";
+                                                    },width:'15%'}
                                             ]]
                                         });
+                                        // //监听行工具事件
+                                        // table.on('tool(test)', function(obj){
+                                        //     alert(11);
+                                        //     var data = obj.data;
+                                        //     //console.log(obj)
+                                        //     if(obj.event === 'del'){
+                                        //         layer.confirm('真的删除行么', function(index){
+                                        //             obj.del();
+                                        //             layer.close(index);
+                                        //         });
+                                        //     } else if(obj.event === 'edit'){
+                                        //         layer.open({
+                                        //             type: 2,
+                                        //             area: ['800px', '550px'],
+                                        //             fixed: false, //不固定
+                                        //             maxmin: true,
+                                        //             content: 'propety_Account_managementUpdate.html'
+                                        //         });
+                                        //     }
+                                        // });
                                     });
                                 }
                                 ,nodes:
@@ -129,30 +159,49 @@
                             hNumber:obj.data.h_number
                         }
                         ,cols: [[ //表头
-                            {field: 'c_costName', title: '费用名称'},
-                            {field: 'c_real', title: '实际用量'},
-                            {field: 'c_yjfy', title: '费用金额'},
+                            {field: 'c_fc', title: '房屋信息',width:'25%'},
+                            {field: 'c_costName', title: '费用名称',width:'15%'},
+                            {field: 'c_real', title: '实际用量',width:'15%'},
+                            {field: 'c_yjfy', title: '费用金额',width:'15%'},
                             {field: 'c_scfyzq_date', title: '上次费用止期',
                                 templet:function (d) {
                                     return showTime(d.c_scfyzq_date);
-                                }
+                                },width:'15%'
                                 },
                             {field: 'c_bcfyqq_date', title: '本次费用起期',
                                 templet:function (d) {
                                     return showTime(d.c_bcfyqq_date);
-                                }
+                                },width:'15%'
                             },
                             {field: 'c_bcfyzq_date', title: '本次费用止期',
                                 templet:function (d) {
                                     return showTime(d.c_bcfyzq_date);
-                                }
+                                },width:'15%'
                                 },
                             {field: 'c_bcjfzq_date', title: '本次缴费止期',
                                 templet:function (d) {
                                     return showTime(d.c_bcfyzq_date);
-                                }},
-                            {field: 'cn_cycle', title: '费用周期'}
+                                },width:'15%'},
+                            {field: 'cn_cycle', title: '费用周期',width:'15%'},
+                            {field: '', title: '操作' ,sort: true ,
+                                templet:function(value){
+                                    showTime(value.c_scfyzq_date);
+                                    showTime(value.c_bcfyzq_date);
+                                    var obj = JSON.stringify(value);
+
+                                    return " <button class=\"layui-btn layui-btn-sm\" value='编辑' onclick='member_edit("+obj+")'>\n" +
+                                        "   <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                        "   </button>" +
+                                        "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete("+value.id+")\">\n" +
+                                        "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                        "  </button>";
+                                }
+                                ,width:'15%'}
                         ]]
+                    });
+                    $('#tj').on('click', function(){
+                        var type = $(this).data('type');
+                        active[type] ? active[type].call(this) : '';
                     });
                 });
             });
@@ -162,18 +211,18 @@
                 query();
             });
             function query(){
-                var val= $("#selyz").find("option:selected").val();
-                var gjname=$("#gjname").val();
-                alert(gjname);
-                table.reload('test', {
-                    url: '/ssm_wy/queryweizi'
-                    ,where:{
-                        number:val,
-                        gjname:gjname
-                    } //设定异步数据接口的额外参数
-                });
-            }
+            var val= $("#selyz").find("option:selected").val();
+            var gjname=$("#gjname").val();
+            alert(gjname);
+            table.reload('test', {
+                url: '/ssm_wy/queryweizi'
+                ,where:{
+                    number:val,
+                    gjname:gjname
+                } //设定异步数据接口的额外参数
             });
+        }
+        });
 
 
         //时间转换函数
@@ -190,13 +239,97 @@
             var seconds = d.getSeconds();
             month = month<10 ? "0"+month:month;
             day = day<10 ? "0"+day:day;
-            hours = hours<10 ? "0"+hours:hours;
-            minutes = minutes<10 ? "0"+minutes:minutes;
-            seconds = seconds<10 ? "0"+seconds:seconds;
+            // hours = hours<10 ? "0"+hours:hours;
+            // minutes = minutes<10 ? "0"+minutes:minutes;
+            // seconds = seconds<10 ? "0"+seconds:seconds;
 
 
-            var time = year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+            var time = year+"-"+month+"-"+day;
             return time;
+        }
+        
+        
+        function  member_edit(data) {
+            data.c_bcfyzq_date=showTime(data.c_bcfyzq_date);
+            data.c_bcfyqq_date=showTime(data.c_bcfyqq_date);
+            data.c_bcjfzq_date=showTime(data.c_bcjfzq_date);
+            data.c_scfyzq_date=showTime(data.c_scfyzq_date);
+            var body;
+            layer.open({
+                type: 2,
+                title: '修改信息',
+                maxmin: true,
+                shadeClose:true, //点击遮罩关闭层
+                shade: 1 ,   //遮罩
+                anim:4,
+                area : ['920px' , '500px'],
+                content:'propety_Account_managementUpdate.html',
+                btn:['提交','取消'],
+                success: function (layero, index) {
+                    if(data!='新增'){
+                    body= layer.getChildFrame('body', index);  //巧妙的地方在这里哦
+                    for(var i=1;Object.entries(data).length>i;i++) {
+                        var id = '#' + Object.entries(data)[i][0];
+                        var text = Object.entries(data)[i][1];
+                        body.contents().find(id).val(text);
+                     // datas=  body.contents().find('#ff').serialize()
+                    }
+                    }else{
+                        alert(1);
+                    }
+                    },
+                yes:function(index,layero){
+                    if(data=="新增"){
+                         url='';
+                    }else{
+                        url='/ssm_wy/UpdateCost';
+                    }
+                   var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
+                    var ss=iframeWin.s().serializeJSON();
+                   console.log(ss)
+                    // var companyId=iframeWin.document.getElementById("companyId").value;
+                    // console.log(companyId)
+                    // var grade=iframeWin.document.getElementById("grade").value;
+                    // console.log(grade)
+                    $.ajax({
+                        url:url,
+                        method:'post',
+                        data:ss,
+                        dataType:'JSON',
+                        success:function(res){
+                            // $('#tj').click();
+                            layer.alert(data.suucess, {icon: 1});
+                        },
+                        error:function (data) {
+                        }
+                    }) ;
+                   // body.contents().find('#tj').click();
+                    layer.alert('ccc', {icon: 1});
+                    layer.close(index);
+                } ,btn2: function(index, layero){
+                    layer.close(index);
+                }
+
+            });
+        }
+
+        function del(id) {
+            layer.confirm('确定删除?', {icon: 3, title:'提示'}, function(index){
+                //do something
+                $.ajax({
+                    url:'/ssm_wy/costName/delCostName',
+                    method:'post',
+                    data:{'cnId':id},
+                    dataType:'JSON',
+                    success:function(data){
+                        $('#tj').click();
+                        layer.alert(data.suucess, {icon: 1});
+                    },
+                    error:function (data) {
+                    }
+                }) ;
+                layer.close(index);
+            });
         }
 
     </script>
@@ -228,7 +361,7 @@
             <div class="con_left_head">
                 <em><img src="../../images/xql.png" alt=""></em>小区信息
             </div>
-            <div class="con_box">
+            <div class="con_box" >
                 <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
                     <ul class="layui-tab-title">
                         <li class="layui-this">简洁模式</li>
@@ -251,7 +384,6 @@
                         <div class="layui-tab-item">
                             <!--<div class="layui-inline">-->
                                 <!--<label class="layui-form-label">多规则验证</label>-->
-
                             <select name="modules" id="selyz"  lay-verify="required" lay-search="" style="width: 200px">
                                 <option value="">请选择查询</option>
                                 <option value="O_name">业主姓名</option>
@@ -271,7 +403,16 @@
     </div>
     <div>
         <!--表格-->
+        <div id="dd"></div>
+        <div class="layui-inline">
+            <button class="layui-btn" data-type="reload" onclick="member_edit('新增')">新增费用项</button>
+        </div>
         <table class="layui-hide" id="test1" lay-filter="test"></table>
+        <!--<script type="text/html" id="barDemo">-->
+            <!--<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+            <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+        <!--</script>-->
+
         <!--<table class="layui-hide" id="test1" lay-filter="test"></table>-->
     </div>
     <script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>

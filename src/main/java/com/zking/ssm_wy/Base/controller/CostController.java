@@ -35,4 +35,25 @@ public class CostController {
         return map;
     }
 
+    @ResponseBody
+    @RequestMapping("/UpdateCost")
+    public Map<String,Object> UpdateCost(Cost cost){
+        System.out.println("111");
+        System.out.println(cost);
+
+        Map<String,Object> map =new HashMap<>();
+            iCostService.updateCost(cost);
+            map.put("success",true);
+            map.put("msg","成功");
+
+        return map;
+    }
+
+
+    public Map<String,Object> DeleteCost(Cost cost){
+
+
+        return null;
+    }
+
 }

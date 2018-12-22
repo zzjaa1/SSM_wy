@@ -21,12 +21,11 @@
                 , $ = layui.jquery;
             $("#btuquery").click(function () {
                 var val = $("#seltree").find("option:selected").val();
-
                 ff(val);
                 $("#demo1").find("li").remove()
             });
         });
-
+        //tree
         function ff(id) {
             layui.use(['tree', 'layer'], function () {
                 var layer = layui.layer
@@ -64,7 +63,7 @@
                                             }
                                             , cols: [[ //表头
                                                 {field: 'c_fc', title: '房屋信息', width: '25%'},
-                                                {field: 'c_costName', title: '费用名称', width: '15%'},
+                                                {field: 'cn_name', title: '费用名称', width: '15%'},
                                                 {field: 'c_real', title: '实际用量', width: '15%'},
                                                 {field: 'c_yjfy', title: '费用金额', width: '15%'},
                                                 {
@@ -169,7 +168,7 @@
                         }
                         , cols: [[ //表头
                             {field: 'c_fc', title: '房屋信息', width: '25%'},
-                            {field: 'c_costName', title: '费用名称', width: '15%'},
+                            {field: 'cn_name', title: '费用名称', width: '15%'},
                             {field: 'c_real', title: '实际用量', width: '15%'},
                             {field: 'c_yjfy', title: '费用金额', width: '15%'},
                             {
@@ -215,10 +214,6 @@
                             }
                         ]]
                     });
-                    $('#tj').on('click', function () {
-                        var type = $(this).data('type');
-                        active[type] ? active[type].call(this) : '';
-                    });
                 });
             });
 
@@ -227,6 +222,7 @@
                 query();
             });
 
+            //点击添加
             $("#add").click(function () {
                 var gybh = $("#fybh").val();
                 alert(gybh);
@@ -236,12 +232,10 @@
                     alert("请选择房屋在进行新增")
                 }
             })
-
-
+            //查询
             function query() {
                 var val = $("#selyz").find("option:selected").val();
                 var gjname = $("#gjname").val();
-                alert(gjname);
                 table.reload('testfc', {
                     url: '/ssm_wy/queryweizi'
                     , where: {
@@ -251,6 +245,8 @@
                 });
             }
         });
+
+        //删除
         function del(id) {
             layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index) {
                 //do something
@@ -300,9 +296,9 @@
             data.c_bcfyqq_date = showTime(data.c_bcfyqq_date);
             data.c_bcjfzq_date = showTime(data.c_bcjfzq_date);
             data.c_scfyzq_date = showTime(data.c_scfyzq_date);
-            var val = $("#cn_id").find("option:selected").text();
+            // var val = $("#cn_id").find("option:selected").text();
             // $('#c_costNames').val(val);
-            data.c_costName = val;
+            // data.c_costName = val;
             var body;
             layer.open({
                 type: 2,
@@ -315,7 +311,6 @@
                 content: 'propety_Account_managementUpdate.html',
                 btn: ['提交', '取消'],
                 success: function (layero, index) {
-
                     body = layer.getChildFrame('body', index);  //巧妙的地方在这里哦
                     if (data != '新增') {
                         for (var i = 1; Object.entries(data).length > i; i++) {
@@ -336,7 +331,6 @@
                     }
                     var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
                     var ss = iframeWin.s().serializeJSON();
-
                     console.log(ss)
                     // var companyId=iframeWin.document.getElementById("companyId").value;
                     // console.log(companyId)
@@ -364,8 +358,6 @@
 
             });
         }
-
-
     </script>
 
     <!--内侧选项卡-->

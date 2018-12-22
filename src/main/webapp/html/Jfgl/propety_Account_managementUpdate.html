@@ -34,9 +34,9 @@
             <input type="text" id="c_dwjg" name="cDwjg" lay-verify="title" placeholder="请输入单位价格" autocomplete="off" class="layui-input" style="width: 300px" >
         </div>
        <!--<label class="layui-form-label">费用名称</label>-->
-       <div class="layui-input-block">
-           <input type="text" id="c_costName" name="cCostname" lay-verify="title" placeholder="请输入费用名称" autocomplete="off" class="layui-input" style="width: 300px" >
-       </div>
+       <!--<div class="layui-input-block">-->
+           <!--<input type="text" id="c_costName" name="cCostname" lay-verify="title" placeholder="请输入费用名称" autocomplete="off" class="layui-input" style="width: 300px" >-->
+       <!--</div>-->
     </div>
         <div class="layui-form-item">
             <label class="layui-form-label">费用类型</label>
@@ -92,7 +92,6 @@
 
 <script>
 function s() {
-
     var sdata=$('#ff');
     console.log("111");
     console.log(sdata);
@@ -112,12 +111,9 @@ function s() {
         laydate.render({
             elem: '#c_bcfyzq_date'
         });
-
         laydate.render({
             elem: '#c_scfyzq_date'
         });
-
-
     });
 
 layui.use('form', function(){
@@ -127,19 +123,16 @@ layui.use('form', function(){
            layer.msg(JSON.stringify(data.field));
            return false;
        });
-
     $.get("/ssm_wy/costName/queryCostname",
         function(result, state) {
             var names=result.data;
             console.log(names);
             for(var i = 0;i<names.length;i++) {
-                    $("#cn_id").append(new Option(names[i].cn_name,names[i].cn_type));
+                    $("#cn_id").append(new Option(names[i].cn_name,names[i].cn_id));
                     form.render('select');
                }
         });
 });
-
-
 
 </script>
 

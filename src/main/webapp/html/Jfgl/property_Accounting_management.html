@@ -226,10 +226,10 @@
             //点击添加
             $("#add").click(function () {
                 var gybh = $("#fybh").val();
-                if (gybh != "") {
+                if (gybh.search('S')!=-1) {
                     member_edit('新增', gybh);
                 } else {
-                    alert("请选择房屋在进行新增")
+                    alert("请选择房间在进行新增")
                 }
             })
             //查询

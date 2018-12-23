@@ -10,10 +10,46 @@
     <link rel="stylesheet" href="../../css/property.css">
     <link rel="stylesheet" href="../../css/valueService.css">
     <link rel="stylesheet" href="../../css/systemsManagement.css">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css" media="all">
+    <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+    <script src="/ssm_wy/js/jquery.serializejson.js"></script>
     <style>
         a:hover{text-decoration:none}
     </style>
 </head>
+<script>
+    layui.use(['form','jquery'], function() {
+            var form = layui.form;
+            var $ = layui.jquery;
+            // $('#loudong').css('display','block');
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                // console.log(data);/ssm_wy/BulidIng/insertBulid
+                // layer.msg(JSON.stringify(data.field));
+                console.log(111);
+                data.field.xBuliding=$('#xBuliding').val();
+                data.field.xMj=$('#xMj').val();
+                data.field.xRemarks=$('#xRemarks').val();
+                // data.field.shstate = 1;
+                // console.log(JSON.stringify(data.field));
+                $.ajax({
+                    url: '/ssm_wy/insertXiaoqu',
+                    data: data.field,
+                    // dataType: 'JSON',
+                    method: 'post',
+                    success: function (obj) {
+                        // alert(obj);
+                        console.log(obj);
+                        alert(222);
+                        //layer.msg("提交成功");
+
+                    }
+                });
+            });
+        });
+
+</script>
 <body>
 <div>
     <em><img src="../../images/Hxitong.png" alt="" style="vertical-align: sub"></em><a href="#">系统管理</a><span>></span><a href="#">小区管理</a>
@@ -22,92 +58,65 @@
     <div class="equipment_index_biao">
         <div class="equipment_index_top chairFix">
             <div><img src="../../images/Hbi.png" alt=""></div>
-            <p>编辑小区名称</p>
+            <p>添加小区</p>
         </div>
-        <form action="" class="theForm equipmetn_theForm">
+        <form action="" class="theForm equipmetn_theForm" method="post">
             <div>
                 <label for=""><em>*</em>小区名称</label>
-                <input type="text" class="ipt1">
+                <input type="text" class="ipt1" name="xBuliding" id="xBuliding">
             </div>
             <div>
                 <label for=""><em>*</em>小区建筑面积</label>
-                <input type="text" class="ipt2">
+                <input type="text" class="ipt2" name="xMj" id="xMj">
                 <span>万m</span>
                 <sup>2</sup>
             </div>
             <div>
-                <label for=""><em>*</em>小区户数</label>
-                <input type="text" class="ipt3">
-                户
-            </div>
-            <div>
-                <label for=""><em>*</em>小区建成时间</label>
-                <input type="date" class="ipt4">
-            </div>
-            <div>
-                <label for=""><em>*</em>所属辖区</label>
-                <div class="form-inline">
-                    <div data-toggle="distpicker">
-                        <div class="form-group">
-                            <label class="sr-only" for="province2">Province</label>
-                            <select class="form-control" id="province2" data-province="---- 选择省 ----"></select>
-                        </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="city2">City</label>
-                            <select class="form-control" id="city2" data-city="---- 选择市 ----"></select>
-                        </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="district2">District</label>
-                            <select class="form-control" id="district2" data-district="---- 选择区 ----"></select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <label for=""><em>*</em>小区详细地址</label>
-                <input type="text">
+                <label for=""><em>*</em>备注</label>
+                <textarea placeholder="请输入内容" id="xRemarks"  class="layui-textarea" name="xRemarks"></textarea>
             </div>
         </form>
     </div>
 
-    <div class="equipment_index_biao">
-        <div class="equipment_index_top chairFix">
-            <div><img src="../../images/Hbi.png" alt=""></div>
-            <p>物业常用电话</p>
-        </div>
-        <ul id="alwaysPhone" class="chairfix">
-            <li>
-                <span>电话名称</span>
-                <input type="text" value="物业管理处电话" disabled>
-                <span>电话号码</span>
-                <input type="text">
-            </li>
-            <li>
-                <span>电话名称</span>
-                <input type="text"  value="房屋租赁电话" disabled>
-                <span>电话号码</span>
-                <input type="text">
-            </li>
-            <li>
-                <span>电话名称</span>
-                <input type="text"  value="夜间值班电话" disabled>
-                <span>电话号码</span>
-                <input type="text">
-            </li><!--
-            <li>
-                <span>电话名称</span>
-                <input type="text">
-                <span>电话号码</span>
-                <input type="text">
-                <var><img src="../../images/Hdele1.png" alt="">删除</var>
-            </li>-->
-        </ul>
-        <strong class="theAdd"><img src="../../images/Hadd.png" alt="">添加服务项目</strong>
-        <div class="theForm_fot chairfix">
-            <a href="javascript:;" class="save">保存</a>
-        </div>
-    </div>
-</div>
+    <!--<div class="equipment_index_biao">-->
+        <!--<div class="equipment_index_top chairFix">-->
+            <!--<div><img src="../../images/Hbi.png" alt=""></div>-->
+            <!--<p>物业常用电话</p>-->
+        <!--</div>-->
+        <!--<ul id="alwaysPhone" class="chairfix">-->
+            <!--<li>-->
+                <!--<span>电话名称</span>-->
+                <!--<input type="text" value="物业管理处电话" disabled>-->
+                <!--<span>电话号码</span>-->
+                <!--<input type="text">-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<span>电话名称</span>-->
+                <!--<input type="text"  value="房屋租赁电话" disabled>-->
+                <!--<span>电话号码</span>-->
+                <!--<input type="text">-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<span>电话名称</span>-->
+                <!--<input type="text"  value="夜间值班电话" disabled>-->
+                <!--<span>电话号码</span>-->
+                <!--<input type="text">-->
+            <!--</li>&lt;!&ndash;-->
+            <!--<li>-->
+                <!--<span>电话名称</span>-->
+                <!--<input type="text">-->
+                <!--<span>电话号码</span>-->
+                <!--<input type="text">-->
+                <!--<var><img src="../../images/Hdele1.png" alt="">删除</var>-->
+            <!--</li>&ndash;&gt;-->
+        <!--</ul>-->
+        <!--<strong class="theAdd"><img src="../../images/Hadd.png" alt="">添加服务项目</strong>-->
+            <!--<a href="javascript:;" class="save">保存</a>-->
+            <div class="btn">
+                <button class="layui-btn tj" lay-submit lay-filter="formDemo">保存并继续添加</button>
+            </div>
+    <!--</div>-->
+<!--</div>-->
 <div class="mask"></div>
 <div class="waring">请输入巡检内容</div>
 <script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>

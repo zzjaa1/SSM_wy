@@ -23,6 +23,10 @@ public class Houses {
 
     private String bNumber;
 
+    private String zt;
+
+    private  Float price;
+
     public Houses(Integer hId, String hNumber, String hState, String hBulidingname, Integer hUnitnumber, Integer hFloor, String hType, String hDirection, Integer hArea, String hRemarks, String bNumber) {
         this.hId = hId;
         this.hNumber = hNumber;
@@ -35,6 +39,22 @@ public class Houses {
         this.hArea = hArea;
         this.hRemarks = hRemarks;
         this.bNumber = bNumber;
+    }
+
+    public Houses(Integer hId, String hNumber, String hState, String hBulidingname, Integer hUnitnumber, Integer hFloor, String hType, String hDirection, Integer hArea, String hRemarks, String bNumber, String zt, Float price) {
+        this.hId = hId;
+        this.hNumber = hNumber;
+        this.hState = hState;
+        this.hBulidingname = hBulidingname;
+        this.hUnitnumber = hUnitnumber;
+        this.hFloor = hFloor;
+        this.hType = hType;
+        this.hDirection = hDirection;
+        this.hArea = hArea;
+        this.hRemarks = hRemarks;
+        this.bNumber = bNumber;
+        this.zt = zt;
+        this.price = price;
     }
 
     public Houses() {
@@ -127,5 +147,21 @@ public class Houses {
 
     public void setbNumber(String bNumber) {
         this.bNumber = bNumber;
+    }
+
+    public String getZt() {
+        return zt;
+    }
+
+    public void setZt(String zt) {
+        this.zt = zt;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }

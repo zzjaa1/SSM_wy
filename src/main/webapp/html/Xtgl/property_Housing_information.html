@@ -8,6 +8,114 @@
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/property.css">
     <link rel="stylesheet" href="../../css/property_Housing_information.css">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css" media="all">
+    <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+    <script src="/ssm_wy/js/jquery.serializejson.js"></script>
+    <script>
+        var data = {};
+        layui.use(['tree', 'layer'], function () {
+            var layer = layui.layer
+                , $ = layui.jquery;
+            $.ajax({
+                url: '/ssm_wy/querytree',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    xNumber: ""
+                },
+                success: function (status) {
+                    $.each(status.li, function (key, val) {
+                        data.name = val.name;
+                        data.id = val.id;
+                        data.children = val.children;
+                        layui.tree({
+                            elem: '#demo1' //指定元素
+                            , target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
+                            , id: 'demo1'
+                            , click: function (item) { //点击节点回调
+                                // layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
+                                // console.log(JSON.stringify(item));
+                                // $('#dd').html(item.name);
+                                if(item.id.length<4){
+                                    $("#xqmc").html("小区名称："+item.name);
+                                    $("#xqid").val(item.id);
+                                    $('#xNumber').val(item.id);
+                                }else {
+                                    alert("请点击选择小区！");
+                                }
+                            }
+                            , nodes:
+                                [data
+                                ]
+                        });
+                    });
+                }
+            });
+
+            $('#cr_btn').on('click', function(){
+                alert(11);
+               // $('#louff').style.display.block;
+                if($("#xqid").val()!=""){
+                    $('#louff').css('display','block');
+                   // $('#loudong').css('display','none');
+                }else {
+                    alert("请点击添加楼层的小区！");
+                    $('#louff').css('display','none');
+                   // $('#loudong').css('display','none');
+                }
+
+
+            });
+
+            // $('#fj_btn').on('click', function(){
+            //     $('#loudong').css('display','block');
+            //     $('#louff').css('display','none');
+            // });
+
+        });
+
+    </script>
+    <script>
+       layui.use(['form','jquery'], function(){
+           var form = layui.form;
+           var $=layui.jquery;
+           // $('#loudong').css('display','block');
+           //监听提交
+           form.on('submit(formDemo)', function(data){
+               // console.log(data);/ssm_wy/BulidIng/insertBulid
+               // layer.msg(JSON.stringify(data.field));
+               console.log(111);
+                   // data.field.shstate = 1;
+               data.field.xNumber=$('#xNumber').val();
+               data.field.bBuliding=$('#bBuliding').val();
+               data.field.bHours=$('#bHours').val();
+               data.field.csRemarks=$('#csRemarks').val();
+               console.log(JSON.stringify(data.field));
+                   $.ajax({
+                       url: '/ssm_wy/BulidIng/insertBulid',
+                       data: data.field,
+                       dataType: 'JSON',
+                       method: 'post',
+                       success: function (obj) {
+                         // alert(obj);
+                           console.log(obj);
+                           console.log(222);
+                           //layer.msg("提交成功");
+                           //layer.msg("提交成功");
+                       //  $('#loudong').css('display','block');
+                            c();
+                       }
+                   });
+           });
+
+       });
+       function c() {
+           console.log("1");
+           // $('#louff').css('display','none');
+           $('#loudong').css('display','block');
+       }
+    </script>
 </head>
 <body>
     <div >
@@ -17,51 +125,52 @@
         <!--左侧信息-->
         <div class="con_left">
             <div class="con_left_head">
-                <em><img src="../../images/qb.png" alt=""></em>小区楼栋信息
-            </div>
-            <div class="con_box">
-                <div class="bk_head" style="margin-top: 10px">
-                    <em><img src="../../images/jx_02.png" alt=""></em><span class="txs l_xq"><strong><img src="../../images/y_xq.png" alt=""></strong>美景天城</span>
+                    <em><img src="../../images/qb.png" alt=""></em>小区楼栋信息
                 </div>
-                <ul class="bk_list">
-                    <li>
-                        <em class="bk_head2"><img src="../../images/jj_02.png" alt=""></em><span class="txs l_ld"><strong><img src="../../images/y_xq.png" alt=""></strong>1栋</span>
-                        <ul class="bkl_list" style="display: none">
-                            <li>
-                                <em><img src="../../images/zz_02.png" alt=""></em><span class="txs l_dy"><strong><img src="../../images/y_xq.png" alt=""></strong>1单元</span>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+            <ul id="demo1" style="padding-left: 20px"></ul>
             </div>
         </div>
         <!--小区-->
         <div class="con_right2" style="padding-top: 0;display: block">
             <div class="con_right_head">
-                <em><img src="../../images/Hbi.png" alt="" style="width: 100%;height: 100%;"></em>小区名称：美景天城
+                <em><img src="../../images/Hbi.png" alt="" style="width: 100%;height: 100%;"></em>
+                <label id="xqmc"></label><input type="hidden" id="xqid">
                 <a href="#" id="crh_dr">批量导入房屋信息</a>
                 <a href="#" id="crh_tj">批量添加楼栋信息</a>
                 <!--<a href="#">批量修改房屋信息</a>-->
             </div>
             <div class="con_right_con">
                 <button class="cr_btn" id="cr_btn">添加楼栋信息</button>
+                <!--<button class="cr_btn" id="fj_btn">添加单元房间信息</button>-->
             </div>
-            <div class="ld_add" style="display: none;border-bottom: 1px solid #ddd;">
+            <div class="ld_add" style="display: none;border-bottom: 1px solid #ddd;" id="louff">
                 <div class="figs" style="font-weight: bold;padding-left: 22px">
                     添加楼栋信息
                 </div>
-                <div class="figs">
-                    <span>楼/栋名称：</span><input style="width: 300px" type="text" class="cr_ipt1"> 栋
-                </div>
-                <div class="figs" style="height: 130px;overflow: hidden;padding-top: 15px;">
-                    <span style="float: left">备注：</span>
-                    <textarea name="" class="cr_ipt1"  style="width: 500px;height: 100px;float: left;color: #666;padding: 10px;box-sizing: border-box;font-family: '微软雅黑', serif;font-size: 14px;border: 1px solid #ddd;"></textarea>
-                </div>
-                <div class="btn">
-                    <button style="margin-left: 60px;background-color: #2f96b4">保存并继续添加</button>
-                </div>
+              <form method="post" action="" >
+                  <div class="figs">
+                      <span>小区编号:</span><input style="width: 300px" name="xNumber" id="xNumber" type="text" class="cr_ipt1">
+                  </div>
+                  <div class="figs">
+                      <span>楼/栋名称：</span><input style="width: 300px" id="bBuliding" name="bBuliding" type="text" class="cr_ipt1"> 栋
+                  </div>
+                  <div class="figs">
+                      <span>房屋结构：</span><input style="width: 300px" id="bHours" name="bHours" type="text" class="cr_ipt1">
+                  </div>
+                  <div class="figs" style="height: 130px;overflow: hidden;padding-top: 15px;">
+                  <span style="float: left">备注：</span>
+                  <textarea name="csRemarks" id="csRemarks" class="cr_ipt1"
+                            style="width: 500px;height: 100px;float: left;color: #666;
+                            padding: 10px;box-sizing: border-box;font-family: '微软雅黑',
+                             serif;font-size: 14px;border: 1px solid #ddd;"></textarea>
+              </div>
+                  <div class="btn">
+                  <button class="layui-btn tj" lay-submit lay-filter="formDemo">保存并继续添加</button>
+                  <!--<button type="submit" style="margin-left: 60px;background-color: #2f96b4" onclick="tjlou();"></button>-->
+              </div>
+              </form>
             </div>
-            <div class="ld_add" style="display: none;border-bottom: 1px solid #ddd;">
+            <div class="ld_add" style="display: none;border-bottom: 1px solid #ddd;" id="loudong">
                 <div class="figs" style="font-weight: bold;padding-left: 22px">
                     添加楼栋信息
                 </div>
@@ -305,249 +414,227 @@
 <!--蒙层-->
     <div class="zhezhao" id="zhezhao"></div>
     <script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
-    <script>
-        /*添加后删除*/
-        $('#tjdys').on('click','.plsc',function () {
-            $(this).parent().remove();
-        });
-        /*批量添加效果*/
-        $('#tjdy').click(function () {
-            $('#tjdys').append("<div class="+"'"+'pltj'+"'"+"style="+"'"+"float: left;width: 80%;border: 1px solid #ddd;"+"'"+'>'+'<div class='+"'"+"figs"+"'"+'><span>单元名称</span><input type='+"'"+'text'+"'"+'>'+' 单元</div><div class='+"'"+'figs'+"'"+'><span>电梯</span><select><option value='+"'"+"'"+'>有</option><option value='+"'"+"'"+'>无</option></select></div><div class='+"'"+"figs"+"'"+'><span>楼层总数</span><input type='+"'"+"text"+"'"+'></div><div class='+"'"+"figs"+"'"+'><span>每层房间数</span><input type='+"'"+"text"+"'"+'></div><div class='+"'"+"figs"+"'"+'><span>房间起始编号</span><input type='+"'"+"text"+"'"+'value='+"'"+"'"+'></div><div class='+"'"+"figs"+"'"+'style='+"'"+"height: 80px;"+"'"+'><span>房间编号类型</span><select><option value='+"'"+"'"+'>楼层和房间号</option><option value='+"'"+"'"+'>楼层和房间号带字母</option><option value='+"'"+"'"+'>楼层和字母</option></select></div><button class='+"'"+'plsc'+"'"+'>删除</button></div>')});
-        /*上传文件名绑定*/
-        $('#photo').change(function () {
-            if($('#photo').val()==''){
-                $('#myfile2')[0].value='上传文件(*.xls)......';
-            }else{
-                $('#myfile2')[0].value=$('#photo').val();
-            }
-        });
+    <!--<script>-->
+        <!--/*添加后删除*/-->
+        <!--$('#tjdys').on('click','.plsc',function () {-->
+            <!--$(this).parent().remove();-->
+        <!--});-->
+        <!--/*批量添加效果*/-->
+        <!--$('#tjdy').click(function () {-->
+            <!--$('#tjdys').append("<div class="+"'"+'pltj'+"'"+"style="+"'"+"float: left;width: 80%;border: 1px solid #ddd;"+"'"+'>'+'<div class='+"'"+"figs"+"'"+'><span>单元名称</span><input type='+"'"+'text'+"'"+'>'+' 单元</div><div class='+"'"+'figs'+"'"+'><span>电梯</span><select><option value='+"'"+"'"+'>有</option><option value='+"'"+"'"+'>无</option></select></div><div class='+"'"+"figs"+"'"+'><span>楼层总数</span><input type='+"'"+"text"+"'"+'></div><div class='+"'"+"figs"+"'"+'><span>每层房间数</span><input type='+"'"+"text"+"'"+'></div><div class='+"'"+"figs"+"'"+'><span>房间起始编号</span><input type='+"'"+"text"+"'"+'value='+"'"+"'"+'></div><div class='+"'"+"figs"+"'"+'style='+"'"+"height: 80px;"+"'"+'><span>房间编号类型</span><select><option value='+"'"+"'"+'>楼层和房间号</option><option value='+"'"+"'"+'>楼层和房间号带字母</option><option value='+"'"+"'"+'>楼层和字母</option></select></div><button class='+"'"+'plsc'+"'"+'>删除</button></div>')});-->
+        <!--/*上传文件名绑定*/-->
+        <!--$('#photo').change(function () {-->
+            <!--if($('#photo').val()==''){-->
+                <!--$('#myfile2')[0].value='上传文件(*.xls)......';-->
+            <!--}else{-->
+                <!--$('#myfile2')[0].value=$('#photo').val();-->
+            <!--}-->
+        <!--});-->
 
-        /*小区 楼栋 单元切换*/
-        $('.l_xq').click(function () {
-            for(var i=0;i<$('.con_right2').length;i++){
-                $('.con_right2').eq(i).css('display','none');
-            }
-            $('.con_right2').eq(0).css('display','block');
-        });
+        <!--/*小区 楼栋 单元切换*/-->
+        <!--$('.l_xq').click(function () {-->
+            <!--for(var i=0;i<$('.con_right2').length;i++){-->
+                <!--$('.con_right2').eq(i).css('display','none');-->
+            <!--}-->
+            <!--$('.con_right2').eq(0).css('display','block');-->
+        <!--});-->
 
-        $('.l_ld').click(function () {
-            for(var i=0;i<$('.con_right2').length;i++){
-                $('.con_right2').eq(i).css('display','none');
-            }
-            $('.con_right2').eq(1).css('display','block');
-        });
+        <!--$('.l_ld').click(function () {-->
+            <!--for(var i=0;i<$('.con_right2').length;i++){-->
+                <!--$('.con_right2').eq(i).css('display','none');-->
+            <!--}-->
+            <!--$('.con_right2').eq(1).css('display','block');-->
+        <!--});-->
 
-        $('.l_dy').click(function () {
-            for(var i=0;i<$('.con_right2').length;i++){
-                $('.con_right2').eq(i).css('display','none');
-            }
-            $('.con_right2').eq(2).css('display','block');
-        });
-
-
-        /*房屋列表切换*/
-        $('.txs').click(function () {
-            var i=$(this).index('.txs');
-            for(var j=0; j<$('.txs').length;j++){
-                $('.txs').eq(j).css('background','transparent');
-            }
-            $('.txs').eq(i).css('background','#beebff');
-            $('.con_right_box').eq(i).show().siblings().hide();
-        });
-
-        /*删除楼栋效果*/
-        $('#crc_btn4').click(function()
-        {
-            $('#zhezhao').show();
-            $('#login3').show();
-            $('#login3').animate({'top':'200px'},300);
-        });
-        $('#btclose7').click(function()
-        {
-            $('#login3').animate({'top':'-200px'},200,function () {
-                $('#login3').hide();
-                $('#zhezhao').hide();
-            });
-        });
-        $('#btclose8').click(function()
-        {
-            $('#login3').animate({'top':'-200px'},200,function () {
-                $('#login3').hide();
-                $('#zhezhao').hide();
-            });
-        });
-        $('#btclose9').click(function()
-        {
-            $('#login3').animate({'top':'-200px'},200,function () {
-                $('#login3').hide();
-                $('#zhezhao').hide();
-            });
-
-        });
-        /*删除单元效果*/
-        $('#crc_btn8').click(function()
-        {
-            $('#zhezhao').show();
-            $('#login2').show();
-            $('#login2').animate({'top':'200px'},300);
-        });
-        $('#btclose4').click(function()
-        {
-            $('#login2').animate({'top':'-200px'},200,function () {
-                $('#login2').hide();
-                $('#zhezhao').hide();
-            });
-        });
-        $('#btclose5').click(function()
-        {
-            $('#login2').animate({'top':'-200px'},200,function () {
-                $('#login2').hide();
-                $('#zhezhao').hide();
-            });
-        });
-        $('#btclose6').click(function()
-        {
-            $('#login2').animate({'top':'-200px'},200,function () {
-                $('#login2').hide();
-                $('#zhezhao').hide();
-            });
-
-        });
-
-        /*批量导入效果*/
-        $('#crh_dr').click(function()
-        {
-            $('#zhezhao').show();
-            $('#login').show();
-            $('#login').animate({'top':'200px'},300);
-        });
-        $('#btclose').click(function()
-        {
-            $('#login').animate({'top':'-200px'},200,function () {
-                $('#login').hide();
-                $('#zhezhao').hide();
-            });
-        });
-        $('#btclose2').click(function()
-        {
-            $('#login').animate({'top':'-200px'},200,function () {
-                $('#login').hide();
-                $('#zhezhao').hide();
-            });
-        });
-        $('#btclose3').click(function()
-        {
-            $('#login').animate({'top':'-200px'},200,function () {
-                $('#login').hide();
-                $('#zhezhao').hide();
-            });
-
-        });
-        /*楼栋4个按钮效果*/
-        $('#crc_btn1').click(function () {
-            for(var i=0;i<$('.ld_add2').length;i++){
-                $('.ld_add2').eq(i).css('display','none');
-            }
-            $('.ld_add2').eq(0).css('display','block');
-        });
-        $('#crc_btn2').click(function () {
-            for(var i=0;i<$('.ld_add2').length;i++){
-                $('.ld_add2').eq(i).css('display','none');
-            }
-            $('.ld_add2').eq(1).css('display','block');
-        });
-        $('#crc_btn3').click(function () {
-            for(var i=0;i<$('.ld_add2').length;i++){
-                $('.ld_add2').eq(i).css('display','none');
-            }
-            $('.ld_add2').eq(2).css('display','block');
-        });
-
-        /*单元4个按钮效果*/
-        $('#crc_btn5').click(function () {
-            for(var i=0;i<$('.ld_add3').length;i++){
-                $('.ld_add3').eq(i).css('display','none');
-            }
-            $('.ld_add3').eq(0).css('display','block');
-        });
-        $('#crc_btn6').click(function () {
-            for(var i=0;i<$('.ld_add3').length;i++){
-                $('.ld_add3').eq(i).css('display','none');
-            }
-            $('.ld_add3').eq(1).css('display','block');
-        });
-        $('#crc_btn7').click(function () {
-            for(var i=0;i<$('.ld_add3').length;i++){
-                $('.ld_add3').eq(i).css('display','none');
-            }
-            $('.ld_add3').eq(2).css('display','block');
-        });
-
-        /*添加楼栋效果*/
-        $('#cr_btn').click(function () {
-            $('.ld_add').eq(0).css('display','block')
-        });
-
-        /*批量添加楼栋*/
-        $('#crh_tj').click(function () {
-            $('.ld_add').eq(1).css('display','block')
-        });
-
-        /*左侧菜单效果*/
-        $('.bk_head em').toggle(function () {
-            $('.bk_list').slideUp(100);
-            $('.bk_head img').get(0).src='../../images/jj_02.png';
-        },function () {
-            $('.bk_list').slideDown(100);
-            $('.bk_head img').get(0).src='../../images/jx_02.png';
-        });
-
-        $('.bk_head2').toggle(function () {
-            $('.bkl_list').slideDown(100);
-            $('.bk_head2 img').get(0).src='../../images/jx_02.png';
-        },function () {
-            $('.bkl_list').slideUp(100);
-            $('.bk_head2 img').get(0).src='../../images/jj_02.png';
-        });
+        <!--$('.l_dy').click(function () {-->
+            <!--for(var i=0;i<$('.con_right2').length;i++){-->
+                <!--$('.con_right2').eq(i).css('display','none');-->
+            <!--}-->
+            <!--$('.con_right2').eq(2).css('display','block');-->
+        <!--});-->
 
 
-        /*输入框聚焦效果*/
-        $('.cr_ipt1').focus(function () {
-            var i=$(this).index('.cr_ipt1');
-            $('.cr_ipt1').eq(i).css({'box-shadow':'0 0 5px #0599FB','border':'1px solid #5bc0de'});
-        });
-        $('.cr_ipt1').blur(function () {
-            var i=$(this).index('.cr_ipt1');
-            $('.cr_ipt1').eq(i).css({'box-shadow':'0 0 0 #fff','border':'1px solid #ccc'});
-        });
+        <!--/*房屋列表切换*/-->
+        <!--$('.txs').click(function () {-->
+            <!--var i=$(this).index('.txs');-->
+            <!--for(var j=0; j<$('.txs').length;j++){-->
+                <!--$('.txs').eq(j).css('background','transparent');-->
+            <!--}-->
+            <!--$('.txs').eq(i).css('background','#beebff');-->
+            <!--$('.con_right_box').eq(i).show().siblings().hide();-->
+        <!--});-->
 
-        /*左侧效果*/
-        $(".li_a").bind("click", function() {
-           $(this).next(".left_slide").slideToggle(250).siblings(".left_slide").slideUp(250);
-        });
+        <!--/*删除楼栋效果*/-->
+        <!--$('#crc_btn4').click(function()-->
+        <!--{-->
+            <!--$('#zhezhao').show();-->
+            <!--$('#login3').show();-->
+            <!--$('#login3').animate({'top':'200px'},300);-->
+        <!--});-->
+        <!--$('#btclose7').click(function()-->
+        <!--{-->
+            <!--$('#login3').animate({'top':'-200px'},200,function () {-->
+                <!--$('#login3').hide();-->
+                <!--$('#zhezhao').hide();-->
+            <!--});-->
+        <!--});-->
+        <!--$('#btclose8').click(function()-->
+        <!--{-->
+            <!--$('#login3').animate({'top':'-200px'},200,function () {-->
+                <!--$('#login3').hide();-->
+                <!--$('#zhezhao').hide();-->
+            <!--});-->
+        <!--});-->
+        <!--$('#btclose9').click(function()-->
+        <!--{-->
+            <!--$('#login3').animate({'top':'-200px'},200,function () {-->
+                <!--$('#login3').hide();-->
+                <!--$('#zhezhao').hide();-->
+            <!--});-->
 
-        /*头部右侧效果*/
-        $(document).click(function(ev){
-            var e=ev||window.event;
-            var target=e.target||e.srcElement;
-            if(target.parentNode.className!="hr_div1"){
-                $(".header_list").hide()
-            }
-        })
-        $('.hr_div1').click(function(){
-            var i=$('.hr_div1').index(this);
-            if($(".header_list").eq(i).get(0).style.display=="block"){
-                $(".header_list").eq(i).hide()
-            }else{
-                $(".header_list").hide()
-                $(".header_list").eq(i).show()
-            }
-        })
-        $('.hdl_select').click(function () {
-            var a=$(this).html();
-            $('.hr_show').html(a);
-        });
+        <!--});-->
+        <!--/*删除单元效果*/-->
+        <!--$('#crc_btn8').click(function()-->
+        <!--{-->
+            <!--$('#zhezhao').show();-->
+            <!--$('#login2').show();-->
+            <!--$('#login2').animate({'top':'200px'},300);-->
+        <!--});-->
+        <!--$('#btclose4').click(function()-->
+        <!--{-->
+            <!--$('#login2').animate({'top':'-200px'},200,function () {-->
+                <!--$('#login2').hide();-->
+                <!--$('#zhezhao').hide();-->
+            <!--});-->
+        <!--});-->
+        <!--$('#btclose5').click(function()-->
+        <!--{-->
+            <!--$('#login2').animate({'top':'-200px'},200,function () {-->
+                <!--$('#login2').hide();-->
+                <!--$('#zhezhao').hide();-->
+            <!--});-->
+        <!--});-->
+        <!--$('#btclose6').click(function()-->
+        <!--{-->
+            <!--$('#login2').animate({'top':'-200px'},200,function () {-->
+                <!--$('#login2').hide();-->
+                <!--$('#zhezhao').hide();-->
+            <!--});-->
 
-    </script>
+        <!--});-->
+
+        <!--/*批量导入效果*/-->
+        <!--$('#crh_dr').click(function()-->
+        <!--{-->
+            <!--$('#zhezhao').show();-->
+            <!--$('#login').show();-->
+            <!--$('#login').animate({'top':'200px'},300);-->
+        <!--});-->
+        <!--$('#btclose').click(function()-->
+        <!--{-->
+            <!--$('#login').animate({'top':'-200px'},200,function () {-->
+                <!--$('#login').hide();-->
+                <!--$('#zhezhao').hide();-->
+            <!--});-->
+        <!--});-->
+        <!--$('#btclose2').click(function()-->
+        <!--{-->
+            <!--$('#login').animate({'top':'-200px'},200,function () {-->
+                <!--$('#login').hide();-->
+                <!--$('#zhezhao').hide();-->
+            <!--});-->
+        <!--});-->
+        <!--$('#btclose3').click(function()-->
+        <!--{-->
+            <!--$('#login').animate({'top':'-200px'},200,function () {-->
+                <!--$('#login').hide();-->
+                <!--$('#zhezhao').hide();-->
+            <!--});-->
+
+        <!--});-->
+        <!--/*楼栋4个按钮效果*/-->
+        <!--$('#crc_btn1').click(function () {-->
+            <!--for(var i=0;i<$('.ld_add2').length;i++){-->
+                <!--$('.ld_add2').eq(i).css('display','none');-->
+            <!--}-->
+            <!--$('.ld_add2').eq(0).css('display','block');-->
+        <!--});-->
+        <!--$('#crc_btn2').click(function () {-->
+            <!--for(var i=0;i<$('.ld_add2').length;i++){-->
+                <!--$('.ld_add2').eq(i).css('display','none');-->
+            <!--}-->
+            <!--$('.ld_add2').eq(1).css('display','block');-->
+        <!--});-->
+        <!--$('#crc_btn3').click(function () {-->
+            <!--for(var i=0;i<$('.ld_add2').length;i++){-->
+                <!--$('.ld_add2').eq(i).css('display','none');-->
+            <!--}-->
+            <!--$('.ld_add2').eq(2).css('display','block');-->
+        <!--});-->
+
+        <!--/*单元4个按钮效果*/-->
+        <!--$('#crc_btn5').click(function () {-->
+            <!--for(var i=0;i<$('.ld_add3').length;i++){-->
+                <!--$('.ld_add3').eq(i).css('display','none');-->
+            <!--}-->
+            <!--$('.ld_add3').eq(0).css('display','block');-->
+        <!--});-->
+        <!--$('#crc_btn6').click(function () {-->
+            <!--for(var i=0;i<$('.ld_add3').length;i++){-->
+                <!--$('.ld_add3').eq(i).css('display','none');-->
+            <!--}-->
+            <!--$('.ld_add3').eq(1).css('display','block');-->
+        <!--});-->
+        <!--$('#crc_btn7').click(function () {-->
+            <!--for(var i=0;i<$('.ld_add3').length;i++){-->
+                <!--$('.ld_add3').eq(i).css('display','none');-->
+            <!--}-->
+            <!--$('.ld_add3').eq(2).css('display','block');-->
+        <!--});-->
+
+        <!--/*添加楼栋效果*/-->
+        <!--$('#cr_btn').click(function () {-->
+            <!--$('.ld_add').eq(0).css('display','block')-->
+        <!--});-->
+
+        <!--/*批量添加楼栋*/-->
+        <!--$('#crh_tj').click(function () {-->
+            <!--$('.ld_add').eq(1).css('display','block')-->
+        <!--});-->
+
+        <!--/*左侧菜单效果*/-->
+        <!--$('.bk_head em').toggle(function () {-->
+            <!--$('.bk_list').slideUp(100);-->
+            <!--$('.bk_head img').get(0).src='../../images/jj_02.png';-->
+        <!--},function () {-->
+            <!--$('.bk_list').slideDown(100);-->
+            <!--$('.bk_head img').get(0).src='../../images/jx_02.png';-->
+        <!--});-->
+
+        <!--$('.bk_head2').toggle(function () {-->
+            <!--$('.bkl_list').slideDown(100);-->
+            <!--$('.bk_head2 img').get(0).src='../../images/jx_02.png';-->
+        <!--},function () {-->
+            <!--$('.bkl_list').slideUp(100);-->
+            <!--$('.bk_head2 img').get(0).src='../../images/jj_02.png';-->
+        <!--});-->
+
+
+        <!--/*输入框聚焦效果*/-->
+        <!--$('.cr_ipt1').focus(function () {-->
+            <!--var i=$(this).index('.cr_ipt1');-->
+            <!--$('.cr_ipt1').eq(i).css({'box-shadow':'0 0 5px #0599FB','border':'1px solid #5bc0de'});-->
+        <!--});-->
+        <!--$('.cr_ipt1').blur(function () {-->
+            <!--var i=$(this).index('.cr_ipt1');-->
+            <!--$('.cr_ipt1').eq(i).css({'box-shadow':'0 0 0 #fff','border':'1px solid #ccc'});-->
+        <!--});-->
+
+        <!--/*左侧效果*/-->
+        <!--$(".li_a").bind("click", function() {-->
+           <!--$(this).next(".left_slide").slideToggle(250).siblings(".left_slide").slideUp(250);-->
+        <!--});-->
+
+    <!--</script>-->
 </body>
 </html>

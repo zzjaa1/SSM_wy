@@ -154,4 +154,22 @@ public class XiaoQuController {
         return map;
     }
 
+
+    @RequestMapping("/insertXiaoqu")
+    @ResponseBody
+    public Map<String,Object> insertXiaoqu(XiaoQu xiaoQu){
+        System.out.println(xiaoQu);
+
+        String s = iXiaoQuService.queryXId();
+        int d=Integer.parseInt(s)+1;
+        xiaoQu.setxNumber("XQ"+d);
+        int i = iXiaoQuService.insertSelective(xiaoQu);
+
+        Map<String,Object> map=new HashMap<>();
+        map.put("success",true);
+        map.put("msg","成功");
+
+        return map;
+    }
+
 }

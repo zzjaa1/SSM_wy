@@ -1,5 +1,8 @@
 package com.zking.ssm_wy.Base.model;
 
+import lombok.ToString;
+
+@ToString
 public class Buliding {
     private Integer bId;
 
@@ -17,9 +20,9 @@ public class Buliding {
 
     private String xNumber;
 
-    private byte[] bNumber;
+    private String bNumber;
 
-    public Buliding(Integer bId, String bBuliding, String bHours, Integer bUnitnumber, Integer bNuberj, Integer bHoursnumber, String csRemarks, String xNumber, byte[] bNumber) {
+    public Buliding(Integer bId, String bBuliding, String bHours, Integer bUnitnumber, Integer bNuberj, Integer bHoursnumber, String csRemarks, String xNumber, String bNumber) {
         this.bId = bId;
         this.bBuliding = bBuliding;
         this.bHours = bHours;
@@ -99,11 +102,11 @@ public class Buliding {
         this.xNumber = xNumber;
     }
 
-    public byte[] getbNumber() {
+    public String getbNumber() {
         return bNumber;
     }
 
-    public void setbNumber(byte[] bNumber) {
+    public void setbNumber(String bNumber) {
         this.bNumber = bNumber;
     }
 }

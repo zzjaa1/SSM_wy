@@ -11,4 +11,8 @@ public interface IXiaoQuService {
 
     List<Map<String,Object>> queryxq(XiaoQu xiaoQu);
 
+    int insertSelective(XiaoQu record);
+
+    String queryXId();
+
 }

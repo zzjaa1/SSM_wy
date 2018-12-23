@@ -25,4 +25,6 @@ public interface XiaoQuMapper {
 
     List<Map<String,Object>> queryxq(XiaoQu xiaoQu);
 
+    String queryXId();
+
 }

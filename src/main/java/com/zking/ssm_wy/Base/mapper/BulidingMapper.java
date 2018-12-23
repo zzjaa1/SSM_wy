@@ -23,4 +23,10 @@ public interface BulidingMapper {
     int updateByPrimaryKey(Buliding record);
 
     List<Map<String,Object>> queryBulid(String x_number);
+
+    String QueryId();
+
+
+
+
 }

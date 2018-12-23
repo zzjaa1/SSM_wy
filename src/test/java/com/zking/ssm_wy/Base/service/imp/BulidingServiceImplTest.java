@@ -1,5 +1,6 @@
 package com.zking.ssm_wy.Base.service.imp;
 
+import com.zking.ssm_wy.Base.model.Buliding;
 import com.zking.ssm_wy.Base.service.IBulidingService;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +29,27 @@ public class BulidingServiceImplTest extends BaseTestCase {
 
             System.out.println(map);
         }
+    }
+
+
+    @Test
+    public void insert(){
+
+        Buliding buliding =new Buliding();
+        buliding.setbNumber("XQ4-B3");
+        buliding.setbBuliding("三号楼");
+        buliding.setbHours("混泥土");
+        buliding.setCsRemarks("123");
+        buliding.setxNumber("XQ4");
+        iBulidingService.insertSelective(buliding);
+
+    }
+
+    @Test
+    public  void QueryID(){
+        String s = iBulidingService.QueryId();
+        System.out.println(s);
+        System.out.println(Integer.parseInt(s)+1);
     }
 
 }

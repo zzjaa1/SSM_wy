@@ -7,4 +7,8 @@ import java.util.Map;
 
 public interface IBulidingService {
     List<Map<String,Object>> queryBulid(String x_number);
+
+    int insertSelective(Buliding record);
+
+    String QueryId();
 }

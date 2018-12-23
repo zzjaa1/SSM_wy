@@ -30,4 +30,14 @@ public class XiaoQuServiceImpl implements IXiaoQuService {
     public List<Map<String, Object>> queryxq(XiaoQu xiaoQur) {
         return xiaoQuMapper.queryxq(xiaoQur);
     }
+
+    @Override
+    public int insertSelective(XiaoQu record) {
+        return xiaoQuMapper.insertSelective(record);
+    }
+
+    @Override
+    public String queryXId() {
+        return xiaoQuMapper.queryXId();
+    }
 }

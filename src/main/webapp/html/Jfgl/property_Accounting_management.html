@@ -226,7 +226,6 @@
             //点击添加
             $("#add").click(function () {
                 var gybh = $("#fybh").val();
-                alert(gybh);
                 if (gybh != "") {
                     member_edit('新增', gybh);
                 } else {
@@ -293,6 +292,7 @@
 
 
         function member_edit(data, gybh) {
+            console.log(data);
             data.c_bcfyzq_date = showTime(data.c_bcfyzq_date);
             data.c_bcfyqq_date = showTime(data.c_bcfyqq_date);
             data.c_bcjfzq_date = showTime(data.c_bcjfzq_date);
@@ -320,6 +320,8 @@
                             body.contents().find(id).val(text);
                             // datas=  body.contents().find('#ff').serialize()
                         }
+                        var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
+                        iframeWin.ss(data.cn_id);
                     } else {
                         body.contents().find("#h_number").val(gybh);
                     }

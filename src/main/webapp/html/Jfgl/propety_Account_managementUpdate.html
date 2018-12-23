@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
     <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
     <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
-    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+
     <script src="/ssm_wy/js/jquery.serializejson.js"></script>
 </head>
 <body>
@@ -43,7 +44,7 @@
             <!--  <input type="hidden" id="cn_type">-->
             <div class="layui-input-inline" id="fylx">
                 <select id="cn_id" name="cnId"  style="width: 200px">
-                    <option value="请选择">请选择</option>
+                    <option value="0">请选择</option>
                 </select>
             </div>
   <div class="layui-form-item">
@@ -123,16 +124,23 @@ layui.use('form', function(){
            layer.msg(JSON.stringify(data.field));
            return false;
        });
+
+
+});
+
+function ss(a) {
+    // console.log("zx="+a);
     $.get("/ssm_wy/costName/queryCostname",
         function(result, state) {
             var names=result.data;
-            console.log(names);
             for(var i = 0;i<names.length;i++) {
-                    $("#cn_id").append(new Option(names[i].cn_name,names[i].cn_id));
-                    form.render('select');
-               }
+                $("#cn_id").append(new Option(names[i].cn_name,names[i].cn_id));
+                layui.form.render('select');
+            }
+            $("#cn_id").val(a);
+            layui.form.render('select');
         });
-});
+}
 
 </script>
 

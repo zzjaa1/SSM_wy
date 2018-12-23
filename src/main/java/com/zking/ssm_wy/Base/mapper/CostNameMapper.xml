@@ -26,7 +26,10 @@
       where  cn_name LIKE #{cnName}
       </if>
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <select id="queryName" resultType="map">
+    SELECT  * from costname
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from costname
     where cn_id = #{cnId,jdbcType=INTEGER}
   </delete>

@@ -2,9 +2,206 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>房屋出租</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="/ssm_wy/css/reset.css">
+    <link rel="stylesheet" href="/ssm_wy/css/property.css">
+    <link rel="stylesheet" href="/ssm_wy/css/property_Accounting_management.css">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/form.css" media="all">
+    <script type="text/javascript" src="/ssm_wy/html/xsgl/xsgl.js"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/lay/modules/element.js"></script>
+    <!--树形-->
+    <script>
+        var data={};
+        var data1={};
+        layui.use(['tree', 'layer'], function(){
+            var layer = layui.layer
+                ,$ = layui.jquery;
+            $.ajax({
+                url: '/ssm_wy/querytree',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                },
+                success: function (status) {
+                    $.each(status.li, function(key, val) {
+                        data.name=val.name;
+                        data.id=val.id;
+                        data.children=val.children;
+                        console.log(data)
+                        layui.tree({
+                            elem: '#demo1' //指定元素
+                            ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
+                            ,click: function(item){ //点击节点回调
+                                layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
+                                // console.log(item);
+                            }
+                            ,nodes:
+                                [data
+                                ]
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+    <script>
+        //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+        layui.use('element', function(){
+            var element = layui.element;
+        });
+    </script>
+
 </head>
 <body>
+<div>
+    <em><img src="../../images/wy.png" alt=""></em><a href="#">收费管理</a><span>></span><a href="#">收费</a>
+</div>
+<div  style="padding-top: 20px;">
+    <div class="con_left">
+        <div class="con_left_head">
+            <em><img src="../../images/xql.png" alt=""></em>小区信息
+        </div>
+        <div class="con_box">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">简洁模式</li>
+                    <li >标准模式</li>
+                </ul>
+                <div class="layui-tab-content">
+
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-input-inline">
+                            <select name="modules" lay-verify="required" lay-search="" style="width: 200px">
+                                <option value="">请选择</option>
+                                <option value="1">layer</option>
+                                <option value="2">form</option>
+                                <option value="3">layim</option>
+                                <option value="4">element</option>
+                            </select>
+                        </div>
+                        <div style="padding-left: 20px">未入住:&nbsp;
+                            <img src="/ssm_wy/images/1.jpg" style="width: 15px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            已入住:&nbsp;<img src="/ssm_wy/images/2.jpg" style="width: 30px"/></div>
+                        <ul id="demo1" style="padding-left: 20px"></ul></div>
+                    <div class="layui-tab-item">
+                        <!--<div class="layui-inline">-->
+                        <!--<label class="layui-form-label">多规则验证</label>-->
+                        <!--<div class="layui-input-inline">-->
+                        <!--<input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input">-->
+                        <!--</div>-->
+                        <table id="tab" >
+                            <tr>
+                                <td>123</td>
+                                <td>123</td>
+                                <td>123</td>
+                            </tr>
+                            <tr>
+                                <td>123</td>
+                                <td>123</td>
+                                <td>123</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    /*报修列表切换*/
+    $('.txs').click(function () {
+        var i=$(this).index('.txs');
+        for(var j=0; j<$('.txs').length;j++){
+            $('.txs').eq(j).css('background','transparent');
+        }
+        $('.txs').eq(i).css('background','#beebff');
+        $('.con_right_box').eq(i).show().siblings().hide();
+    });
+
+    $('.hr_div1').click(function(){
+        var i=$('.hr_div1').index(this);
+        if($(".header_list").eq(i).get(0).style.display=="block"){
+            $(".header_list").eq(i).hide()
+        }else{
+            $(".header_list").hide()
+            $(".header_list").eq(i).show()
+        }
+    })
+    $('.hdl_select').click(function () {
+        var a=$(this).html();
+        $('.hr_show').html(a);
+    });
+
+</script>
+<div >
+    <form>
+        <div class="layui-inline">
+        <label class="layui-form-label">选择框</label>
+        <select name="city" lay-filter="filter" style="width: 200px">
+            <option value="全部">全部</option>
+            <option value="已出售">已出售</option>
+            <option value="未出售">未出售</option>
+        </select>
+        </div>
+        <div class="layui-inline">
+            <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline">
+            <button class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
+        </div>
+    </form>
+    <table id="demo" lay-filter="test" >
+    </table></div>
+<script>
+    form.on('select(filter)', function(data){
+
+        category = data.value;
+
+        categoryName = data.elem[data.elem.selectedIndex].text
+
+        form.render('select')
+
+    });
+</script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: 312
+            ,url: '' //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'id', title: '编号', width:80, sort: true, fixed: 'left'}
+                ,{field: 'username', title: '所属公司', width:100}
+                ,{field: 'sex', title: '姓名', width:80, sort: true}
+                ,{field: 'city', title: '性别', width:80}
+                ,{field: 'sign', title: '出生日期', width: 177}
+                ,{field: 'experience', title: '证件号码', width: 120, sort: true}
+                ,{field: 'score', title: '手机号码', width: 120, sort: true}
+                ,{field: 'classify', title: '状态', width: 80}
+                ,{field: 'wealth', title: '操作', width: 135, sort: true},
+                {title: '操作', minWidth:175, templet:function(value){
+                        var obj = JSON.stringify(value);
+                        return " <button class=\"layui-btn layui-btn-sm\" value='编辑' onclick='member_edit("+obj+")'>\n" +
+                            "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
+                            "   </button>" +
+                            "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete("+value.id+")\">\n" +
+                            "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                            "  </button>";
+                    }}
+            ]]
+        });
+
+    });
+</script>
 
 </body>
 </html>

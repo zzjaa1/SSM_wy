@@ -8,4 +8,8 @@ import java.util.Map;
 public interface IHousesService {
     List<Map<String,Object>> queryHourse(String number);
 
+    List<Map<String,Object>> queryBulidingName(String bulidingName);
+
+    List<Map<String,Object>> queryState(String state);
+
 }

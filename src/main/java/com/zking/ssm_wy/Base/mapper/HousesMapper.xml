@@ -29,7 +29,13 @@
     <select id="queryHourse" resultType="map">
         SELECT h_number,h_bulidingName,h_state, b_number  FROM houses  WHERE b_number =#{number}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <select id="queryBulidingName" resultType="map">
+    SELECT * FROM houses WHERE h_number like #{bulidingName}
+  </select>
+  <select id="queryState" resultType="map">
+    SELECT * FROM houses WHERE h_number like #{bulidingName} AND h_state="未入住"
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from houses
     where h_id = #{hId,jdbcType=INTEGER}
   </delete>

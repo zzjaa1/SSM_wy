@@ -14,7 +14,6 @@ public class Houses {
     private Integer hFloor;
 
     private String hType;
-
     private String hDirection;
 
     private Integer hArea;

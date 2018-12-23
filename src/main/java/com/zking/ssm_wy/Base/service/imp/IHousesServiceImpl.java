@@ -22,4 +22,14 @@ public class IHousesServiceImpl implements IHousesService {
     public List<Map<String, Object>> queryHourse(String number) {
         return housesMapper.queryHourse(number);
     }
+
+    @Override
+    public List<Map<String, Object>> queryBulidingName(String bulidingName) {
+        return housesMapper.queryBulidingName(bulidingName);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryState(String bulidingName) {
+        return housesMapper.queryState(bulidingName);
+    }
 }

@@ -41,9 +41,12 @@
     where b_id = #{bId,jdbcType=INTEGER}
   </select>
     <select id="queryBulid" resultType="map">
-      SELECT b_number,b_buliding,x_number FROM buliding WHERE x_number=#{x_number}
+      SELECT * FROM buliding WHERE x_number=#{x_number}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <select id="QueryId" resultType="string">
+    SELECT MAX(b_id)b_id FROM buliding;
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from buliding
     where b_id = #{bId,jdbcType=INTEGER}
   </delete>

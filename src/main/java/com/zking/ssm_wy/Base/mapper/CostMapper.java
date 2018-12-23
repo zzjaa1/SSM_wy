@@ -21,4 +21,10 @@ public interface CostMapper {
     int updateByPrimaryKey(Cost record);
 
     List<Map<String,Object>> queryCostPager(String h_number);
+
+    int updateCost(Cost cost);
+
+    int insertCost(Cost cost);
+
+    int deleteCost(Cost cost);
 }

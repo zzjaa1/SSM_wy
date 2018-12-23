@@ -37,6 +37,9 @@
     delete from cost
     where c_id = #{cId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteCost" parameterType="com.zking.ssm_wy.Base.model.Cost">
+    DELETE FROM cost WHERE c_id=#{cId}
+  </delete>
   <insert id="insert" parameterType="com.zking.ssm_wy.Base.model.Cost" >
     insert into cost (c_id, c_fc, c_user, 
       c_jfdw, c_dwjg, c_yjfy, c_scfyzq_date, 
@@ -89,7 +92,7 @@
         c_real,
       </if>
       <if test="cRemarks != null" >
-        "c_ remarks",
+        c_remarks,
       </if>
       <if test="hNumber != null" >
         h_number,
@@ -146,6 +149,12 @@
       </if>
     </trim>
   </insert>
+  <insert id="insertCost" parameterType="com.zking.ssm_wy.Base.model.Cost">
+   INSERT INTO cost (c_fc,c_user,c_jfdw,c_dwjg,c_yjfy,c_scfyzq_date,c_bcfyqq_date,c_bcfyzq_date,c_bcjfzq_date,c_costName,c_real,c_remarks,h_number,cn_id)
+VALUES(#{cFc},#{cUser},#{cJfdw},#{cDwjg},#{cYjfy},
+#{cScfyzqDate},#{cBcfyqqDate}, #{cBcfyzqDate},#{cBcjfzqDate},
+#{cCostname},#{cReal},#{cRemarks},#{hNumber},#{cnId}) ;
+  </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm_wy.Base.model.Cost" >
     update cost
     <set >
@@ -183,7 +192,7 @@
         c_real = #{cReal,jdbcType=INTEGER},
       </if>
       <if test="cRemarks != null" >
-        "c_ remarks" = #{cRemarks,jdbcType=VARCHAR},
+        c_remarks = #{cRemarks,jdbcType=VARCHAR},
       </if>
       <if test="hNumber != null" >
         h_number = #{hNumber,jdbcType=VARCHAR},
@@ -207,9 +216,15 @@
       c_bcjfzq_date = #{cBcjfzqDate,jdbcType=DATE},
       c_costName = #{cCostname,jdbcType=VARCHAR},
       c_real = #{cReal,jdbcType=INTEGER},
-      "c_ remarks" = #{cRemarks,jdbcType=VARCHAR},
+      c_remarks = #{cRemarks,jdbcType=VARCHAR},
       h_number = #{hNumber,jdbcType=VARCHAR},
       cn_id = #{cnId,jdbcType=INTEGER}
     where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateCost" parameterType="com.zking.ssm_wy.Base.model.Cost">
+        UPDATE  cost
+    SET  c_fc = #{cFc}, c_user = #{cUser},c_jfdw = #{cJfdw},c_dwjg= #{cDwjg},c_yjfy = #{cYjfy},c_scfyzq_date = #{cScfyzqDate},c_bcfyqq_date = #{cBcfyqqDate},
+  c_bcfyzq_date = #{cBcfyzqDate},c_bcjfzq_date = #{cBcjfzqDate},c_costName = #{cCostname},c_real = #{cReal},c_remarks =#{cRemarks},cn_id=#{cnId}
+    WHERE c_id =#{cId}
   </update>
 </mapper>

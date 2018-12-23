@@ -10,9 +10,10 @@
     <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript">
         function changeFrameHeight(id){
-            console.log("id="+id);
             var ifm= document.getElementById(id);
-            ifm.height=document.documentElement.clientHeight;
+            if(ifm.height!=null){
+                ifm.height=document.documentElement.clientHeight;
+            }
         }
         window.onresize=function(){
             changeFrameHeight();
@@ -77,7 +78,6 @@
             el: '#menu_style',
             data:{
                 sa:''
-               // ,sty:"display:none"
             },
             created: function () {
                 $.get("/ssm_wy/sys/queryPermission",

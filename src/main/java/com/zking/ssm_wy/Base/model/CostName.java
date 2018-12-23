@@ -1,5 +1,9 @@
 package com.zking.ssm_wy.Base.model;
 
+
+import lombok.ToString;
+
+@ToString
 public class CostName {
     private Integer cnId;
 

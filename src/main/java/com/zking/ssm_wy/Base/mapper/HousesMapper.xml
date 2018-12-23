@@ -27,7 +27,7 @@
     where h_id = #{hId,jdbcType=INTEGER}
   </select>
     <select id="queryHourse" resultType="map">
-        SELECT h_number,h_bulidingName,h_state, b_number  FROM houses  WHERE b_number =#{number}
+        SELECT *  FROM houses  WHERE b_number =#{number}
     </select>
   <select id="queryBulidingName" resultType="map">
     SELECT * FROM houses WHERE h_number like #{bulidingName}

@@ -48,11 +48,14 @@
 
     </select>
   <select id="queryxq" resultType="map">
-     SELECT x_number,x_buliding FROM xiaoqu where 1=1
+     SELECT * FROM xiaoqu where 1=1
      <if test="null!=xNumber and ''!=xNumber">
        AND  x_number=#{xNumber}
      </if>
      
+  </select>
+  <select id="queryXId" resultType="string">
+    SELECT  MAX(x_id)x_id FROM xiaoqu
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from xiaoqu

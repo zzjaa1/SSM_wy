@@ -8,4 +8,10 @@ import java.util.Map;
 
 public interface ICostService {
     List<Map<String,Object>> queryCostPager(String h_number);
+
+    int updateCost(Cost cost);
+
+    int deleteCost(Cost cost);
+
+    int insertCost(Cost cost);
 }

@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
     <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
     <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
-    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+
     <script src="/ssm_wy/js/jquery.serializejson.js"></script>
 </head>
 <body>
@@ -34,16 +35,16 @@
             <input type="text" id="c_dwjg" name="cDwjg" lay-verify="title" placeholder="请输入单位价格" autocomplete="off" class="layui-input" style="width: 300px" >
         </div>
        <!--<label class="layui-form-label">费用名称</label>-->
-       <div class="layui-input-block">
-           <input type="text" id="c_costName" name="cCostname" lay-verify="title" placeholder="请输入费用名称" autocomplete="off" class="layui-input" style="width: 300px" >
-       </div>
+       <!--<div class="layui-input-block">-->
+           <!--<input type="text" id="c_costName" name="cCostname" lay-verify="title" placeholder="请输入费用名称" autocomplete="off" class="layui-input" style="width: 300px" >-->
+       <!--</div>-->
     </div>
         <div class="layui-form-item">
             <label class="layui-form-label">费用类型</label>
             <!--  <input type="hidden" id="cn_type">-->
             <div class="layui-input-inline" id="fylx">
                 <select id="cn_id" name="cnId"  style="width: 200px">
-                    <option value="请选择">请选择</option>
+                    <option value="0">请选择</option>
                 </select>
             </div>
   <div class="layui-form-item">
@@ -92,7 +93,6 @@
 
 <script>
 function s() {
-
     var sdata=$('#ff');
     console.log("111");
     console.log(sdata);
@@ -112,12 +112,9 @@ function s() {
         laydate.render({
             elem: '#c_bcfyzq_date'
         });
-
         laydate.render({
             elem: '#c_scfyzq_date'
         });
-
-
     });
 
 layui.use('form', function(){
@@ -128,18 +125,22 @@ layui.use('form', function(){
            return false;
        });
 
+
+});
+
+function ss(a) {
+    // console.log("zx="+a);
     $.get("/ssm_wy/costName/queryCostname",
         function(result, state) {
             var names=result.data;
-            console.log(names);
             for(var i = 0;i<names.length;i++) {
-                    $("#cn_id").append(new Option(names[i].cn_name,names[i].cn_type));
-                    form.render('select');
-               }
+                $("#cn_id").append(new Option(names[i].cn_name,names[i].cn_id));
+                layui.form.render('select');
+            }
+            $("#cn_id").val(a);
+            layui.form.render('select');
         });
-});
-
-
+}
 
 </script>
 

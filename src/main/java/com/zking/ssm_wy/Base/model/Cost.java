@@ -1,5 +1,6 @@
 package com.zking.ssm_wy.Base.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,13 +20,17 @@ public class Cost {
 
     private Float cYjfy;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date cScfyzqDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date cBcfyqqDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date cBcfyzqDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date cBcjfzqDate;
 
     private String cCostname;

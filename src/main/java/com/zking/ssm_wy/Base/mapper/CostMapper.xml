@@ -224,7 +224,7 @@ VALUES(#{cFc},#{cUser},#{cJfdw},#{cDwjg},#{cYjfy},
   <update id="updateCost" parameterType="com.zking.ssm_wy.Base.model.Cost">
         UPDATE  cost
     SET  c_fc = #{cFc}, c_user = #{cUser},c_jfdw = #{cJfdw},c_dwjg= #{cDwjg},c_yjfy = #{cYjfy},c_scfyzq_date = #{cScfyzqDate},c_bcfyqq_date = #{cBcfyqqDate},
-  c_bcfyzq_date = #{cBcfyzqDate},c_bcjfzq_date = #{cBcjfzqDate},c_costName = #{cCostname},c_real = #{cReal},c_remarks =#{cRemarks}
+  c_bcfyzq_date = #{cBcfyzqDate},c_bcjfzq_date = #{cBcjfzqDate},c_costName = #{cCostname},c_real = #{cReal},c_remarks =#{cRemarks},cn_id=#{cnId}
     WHERE c_id =#{cId}
   </update>
 </mapper>

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +23,7 @@ public class CostNameController {
 
     @RequestMapping("/queryCostName")
     @ResponseBody
-    public Map<String,Object> query(HttpServletRequest req, CostName costn, int page, int limit){
+    public Map<String,Object> query(HttpServletRequest req,CostName costn, int page, int limit){
         PageBean pb=new PageBean();
 
             pb.setPage(page);
@@ -50,7 +49,7 @@ public class CostNameController {
 
     @RequestMapping("/updCostName")
     @ResponseBody
-    public Map<String,Object> update(CostName c){
+    public Map<String,Object> updates(CostName c){
         Map<String, Object> result = new HashMap<String, Object>();
         int i = icostnameService.updateByPrimaryKeySelective(c);
         result.put("success", "保存成功");
@@ -70,7 +69,7 @@ public class CostNameController {
     @ResponseBody
     public Map<String,Object> add(CostName c){
         Map<String, Object> result = new HashMap<String, Object>();
-        int i = icostnameService.insertSelective(c);
+        int i = icostnameService.insert(c);
         result.put("success", "保存成功");
         return result;
     }
@@ -78,12 +77,9 @@ public class CostNameController {
     @RequestMapping("/queryCostname")
     @ResponseBody
     public Map<String,Object> queryCostname(){
-
         List<Map<String, Object>> maps = icostnameService.queryName();
-
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("data",maps);
-
         return map;
     }
 }

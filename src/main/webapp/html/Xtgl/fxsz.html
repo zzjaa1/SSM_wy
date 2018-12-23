@@ -27,11 +27,13 @@
 <!--<script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-mini" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-mini" lay-event="edit">编辑 </a>
+  <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
 </script>-->
 <div id="dd" style="display: none">
     <form class="layui-form" id="ff" method="post" action="/ssm_wy/costName/updCostName" id="fr">
         <input type="hidden" id="cn_id" name="cnId">
+
         <div class="layui-form-item">
             <label class="layui-form-label">费用名称：</label>
             <div class="layui-input-block">
@@ -67,7 +69,7 @@
             <label class="layui-form-label">备注：</label>
             <div class="layui-input-block">
                 <input type="text" id="cn_remarks" name="cnRemarks" required  lay-verify="required" style="width: 200px"
-                       placeholder="请输入费用周期" autocomplete="off" class="layui-input">
+                       placeholder="请输入备注" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item" style="display: none" >
@@ -122,7 +124,7 @@
                         return " <button class=\"layui-btn layui-btn-sm\" value='编辑' onclick='edit("+obj+")'>\n" +
                             "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                             "   </button>" +
-                            "<button class=\"layui-btn layui-btn-sm\" onclick='del("+value.cn_id+")'>\n" +
+                            "<button class=\"layui-btn layui-btn-sm\" oclick=\"del("+value.id+")\">\n" +
                             "    <i class=\"layui-icon\">&#xe640;</i>\n" +
                             "  </button>";
                     }}
@@ -162,10 +164,9 @@
                     var id = '#' + Object.entries(data)[i][0];
                     var text = Object.entries(data)[i][1];
                     $(id).val(text);
-                }
+                }}
                 //$("#cn_types").val($('#cn_type').val());
                 layui.form.render('select');
-                }
             },
             yes:function(index,layero){
                 if(data=="新增"){
@@ -180,6 +181,8 @@
                     data:sdata,
                     dataType:'JSON',
                     success:function(res){
+                        layer.alert(data.suucess, {icon: 1});
+
                         $('#tj').click();
                         layer.alert(data.suucess, {icon: 1});
                     },
@@ -213,6 +216,11 @@
             }) ;
             layer.close(index);
         });
+
+    }
+
+    function del() {
+
     }
 </script>
 </body>

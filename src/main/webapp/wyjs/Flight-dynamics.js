@@ -89,6 +89,14 @@ function member_edit(data){
                  body.contents().find(id).val(text);
              }
             var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
+            }
+            //ifram
+            /*var body = layer.getChildFrame('body', index);  //巧妙的地方在这里哦
+             for(var i=1;Object.entries(data).length>i;i++) {
+                 var id = '#' + Object.entries(data)[i][0];
+                 var text = Object.entries(data)[i][1];
+                 body.contents().find(id).val(text);
+             }*/
         },
         yes:function(index,layero){
             var num=0;
@@ -154,34 +162,3 @@ layer.open({
 }
 
 */
-//putForm = $(window.frames["layui-layer-iframe" + index].document).contents().find("#userForm");
-//layui.use('form', function(){
-//$('.tj').click();
-
-/* console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
-            console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
-            console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。*/
-/* layui.form.on('submit(formDemo)', function(data){
-     $.ajax({
-         url:'/ssm_wy/costName/updCostName',
-         method:'post',
-         //data:data.field,
-         dataType:'JSON',
-         success:function(res){
-           console.log("成功"+res);
-         },
-         error:function (data) {
-         }
-     }) ;
- });*/
-// });
-/* var iframeWindow = window['layui-layer-iframe' + index]
-     , submitID = 'LAY-user-front-submit'
-     , submit = layero.find('iframe').contents().find('#' + submitID);*/
-
-
-/* layui.form.on('submit(formDemo)', function(data){
-                       console.log("111");
-                       console.log(data);
-                   });   $('.tj').click();*/

@@ -32,7 +32,6 @@ public class CostController {
         map.put("code",0);
         map.put("msg","");
         map.put("count",0);
-
         return map;
     }
 

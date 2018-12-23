@@ -64,9 +64,7 @@ public class XiaoQuController {
                     }
                     stringObjectMap.put("children",map3);
                 }
-            }
-        }
-
+            }}
         map.put("li",queryxq);
         return map;
     }

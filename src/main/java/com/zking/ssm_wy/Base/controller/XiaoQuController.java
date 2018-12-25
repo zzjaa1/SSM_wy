@@ -40,7 +40,7 @@ public class XiaoQuController {
                     stringObjectMap.put("id",stringObjectMap.get("x_number").toString());
                     stringObjectMap.put("name",stringObjectMap.get("x_buliding").toString());
                     map3= iBulidingService.queryBulid(stringObjectMap.get("x_number").toString());
-                    for (Map<String,Object> s : map3) {
+                        for (Map<String,Object> s : map3) {
                         if (null!=s){
                             s.put("id",s.get("b_number").toString());
                             s.put("name",s.get("b_buliding").toString());
@@ -66,6 +66,7 @@ public class XiaoQuController {
                 }
             }}
         map.put("li",queryxq);
+        System.out.println("map======"+queryxq);
         return map;
     }
 

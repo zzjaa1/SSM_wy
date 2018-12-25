@@ -1,5 +1,8 @@
 package com.zking.ssm_wy.Base.model;
 
+import lombok.ToString;
+
+@ToString
 public class Houses {
     private Integer hId;
 
@@ -14,7 +17,6 @@ public class Houses {
     private Integer hFloor;
 
     private String hType;
-
     private String hDirection;
 
     private Integer hArea;

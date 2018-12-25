@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="/ssm_wy/layui/css/layui.css" media="all">
+<script src="/ssm_wy/layui/layui.js"></script>
+<!--vue-->
+<script src="/ssm_wy/vue/vue.js"></script>
+<script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+<script src="/ssm_wy/js/jquery.serializejson.js"></script>
+<body>
+<div>
+    <div class="layui-inline">
+            <label class="layui-form-label">费项名称：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="" placeholder="请输入费项名称" id="cn_names" autocomplete="off" class="layui-input" style="width: 200px">
+            </div>
+            <button class="layui-btn" data-type="reload" id="tj">立即提交</button>
+    </div>
+    <div class="layui-inline">
+        <button class="layui-btn" data-type="reload" onclick="edit('新增')">新增费用项</button>
+    </div>
+</div>
+<div id="demo"></div>
+<!--<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-mini" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-mini" lay-event="edit">编辑 </a>
+    <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+</script>-->
+<div id="dd" style="display: none">
+    <form class="layui-form" id="ff" method="post" action="/ssm_wy/costName/updCostName" id="fr">
+        <input type="hidden" id="cn_id" name="cnId">
+        <div class="layui-form-item">
+            <label class="layui-form-label">费用名称：</label>
+            <div class="layui-input-block">
+                <input id="cn_name" type="text" name="cnName" required  lay-verify="required" style="width: 200px"
+                       placeholder="请输入费用名称" autocomplete="off" class="layui-input" value="111">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">费用类型：</label>
+          <!--  <input type="hidden" id="cn_type">-->
+            <div class="layui-input-inline" id="fylx">
+                <select id="cn_type" name="cnType"  style="width: 200px">
+                    <option value="请选择">请选择</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">字典数据</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">费用单价：</label>
+            <div class="layui-input-block" style="width: 200px">
+                <input type="text" id="cn_price" name="cnPrice" required  lay-verify="required" style="width: 200px"
+                       placeholder="请输入费用单价" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">费用周期：</label>
+            <div class="layui-input-block">
+                <input type="text" id="cn_cycle" name="cnCycle" required  lay-verify="required" style="width: 200px"
+                       placeholder="请输入费用周期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-block">
+                <input type="text" id="cn_remarks" name="cnRemarks" required  lay-verify="required" style="width: 200px"
+                       placeholder="请输入费用周期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="display: none" >
+            <div class="layui-input-block">
+                <button class="layui-btn tj" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    <script>
+
+        //Demo
+        layui.use('form', function(){
+            var form = layui.form;
+         /*   //监听提交
+            form.on('submit(formDemo)', function(data){
+                layer.msg(JSON.stringify(data.field));
+                return false;
+            });*/
+            $.get("/ssm_wy/basDict/querybasDict",
+                function(result, state) {
+                    var names=result.data;
+                    for(var i = 0;i<names.length;i++) {
+                        $("#cn_type").append(new Option(names[i].dict_value,names[i].dict_item));
+                        form.render('select');
+                    }
+                });
+        });
+
+    </script>
+</div>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: 440
+            ,url: '/ssm_wy/costName/queryCostName' //数据接口
+           // ,where:{'cnName':cn_name}
+            ,id:'cn_id'
+            ,page: true //开启分页
+            ,limit:10
+            ,cols: [[ //表头
+                {field: 'cn_id', title: 'ID', width:100, sort: true, fixed: 'left'}
+                ,{field: 'cn_name', title: '费项名称', width:100}
+                ,{field: 'cn_type', title: '费项类型', width:100, sort: true}
+                ,{field: 'cn_price', title: '单位价格', width:100}
+                ,{field: 'cn_cycle', title: '缴费周期(月)', width: 120}
+                ,{field: 'cn_remarks', title: '备注', width: 100, sort: true}
+                ,{title: '操作', minWidth:175, templet:function(value){
+                        var obj = JSON.stringify(value);
+                        return " <button class=\"layui-btn layui-btn-sm\" value='编辑' onclick='edit("+obj+")'>\n" +
+                            "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
+                            "   </button>" +
+                            "<button class=\"layui-btn layui-btn-sm\" onclick='del("+value.cn_id+")'>\n" +
+                            "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                            "  </button>";
+                    }}
+            ]]
+        });
+        var $ = layui.$, active = {
+            reload: function(){
+                var demoReload = $('#cn_names').val();
+                table.reload('cn_id', {
+                    where: {
+                        cnName:demoReload
+                    }
+                });
+            }
+        };
+        $('#tj').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        //$('#tj').click();
+    });
+
+    function edit(data) {
+        layer.open({
+            type: 1,
+            title: '修改费项信息',
+            maxmin: true,
+            shadeClose:true, //点击遮罩关闭层
+            shade: 1 ,   //遮罩
+            anim:4,
+            area : ['600px' , '400px'],
+            content:$('#dd'),
+            btn:['保存','取消'],
+            success: function (layero, index) {
+                if(data!="新增"){
+                for(var i=1;Object.entries(data).length>i;i++) {
+                    var id = '#' + Object.entries(data)[i][0];
+                    var text = Object.entries(data)[i][1];
+                    $(id).val(text);
+                }
+                //$("#cn_types").val($('#cn_type').val());
+                layui.form.render('select');
+                }
+            },
+            yes:function(index,layero){
+                if(data=="新增"){
+                    url='/ssm_wy/costName/addCostName';
+                }else{
+                    url='/ssm_wy/costName/updCostName';
+                }
+                var sdata=$('#ff').serializeJSON();
+                $.ajax({
+                    url:url,
+                    method:'post',
+                    data:sdata,
+                    dataType:'JSON',
+                    success:function(res){
+                        $('#tj').click();
+                        layer.alert(data.suucess, {icon: 1});
+                    },
+                    error:function (data) {
+                    }
+
+                }) ;
+                layer.close(index);
+            } ,btn2: function(index, layero){
+                layer.close(index);
+            }
+
+        });
+
+    }
+
+    function del(id) {
+        layer.confirm('确定删除?', {icon: 3, title:'提示'}, function(index){
+            //do something
+            $.ajax({
+                url:'/ssm_wy/costName/delCostName',
+                method:'post',
+                data:{'cnId':id},
+                dataType:'JSON',
+                success:function(data){
+                    $('#tj').click();
+                    layer.alert(data.suucess, {icon: 1});
+                },
+                error:function (data) {
+                }
+            }) ;
+            layer.close(index);
+        });
+    }
+</script>
+</body>
+</html>

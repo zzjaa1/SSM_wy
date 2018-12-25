@@ -8,68 +8,64 @@
     <link rel="stylesheet" href="/ssm_wy/css/reset.css">
     <link rel="stylesheet" href="/ssm_wy/css/property.css">
     <link rel="stylesheet" href="/ssm_wy/css/property_Accounting_management.css">
-    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
     <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
-    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
-    <script src="/ssm_wy/js/jquery.serializejson.js"></script>
-
 
     <!--树形-->
     <script>
-        var data = {};
-        layui.use('layer', function () {
-            var layer = layui.layer
-                , $ = layui.jquery;
-            $("#btuquery").click(function () {
-                var val = $("#seltree").find("option:selected").val();
-                ff(val);
-                $("#demo1").find("li").remove()
-            });
-        });
-        //tree
-        function ff(id) {
-            layui.use(['tree', 'layer'], function () {
+     layui.use( 'layer', function() {
+         var layer = layui.layer
+             , $ = layui.jquery;
+         $("#btuquery").click(function(){
+             //alert("点击了");
+             var val=   $("#seltree").find("option:selected").val();
+             ff(val);
+             $("#demo1").find("li").remove()
+         });
+     });
+        function ff(id){
+            layui.use(['tree', 'layer'], function(){
+
                 var layer = layui.layer
-                    , $ = layui.jquery;
+                    ,$ = layui.jquery;
                 $.ajax({
                     url: '/ssm_wy/querytree',
                     type: 'post',
                     dataType: 'json',
                     data: {
-                        xNumber: id
+                        xNumber:id
                     },
                     success: function (status) {
-                        $.each(status.li, function (key, val) {
-                            data.name = val.name;
-                            data.id = val.id;
-                            data.children = val.children;
+                        $.each(status.li, function(key, val) {
+                            var data={};
+                            data.name=val.name;
+                            data.id=val.id;
+                            data.children=val.children;
                             layui.tree({
                                 elem: '#demo1' //指定元素
-                                , target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
-                                , id: 'demo1'
-                                , click: function (item) { //点击节点回调
+                                ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
+                                ,id:'demo1'
+                                ,click: function(item){ //点击节点回调
                                     // layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
-                                    // console.log(JSON.stringify(item));
-                                    // $('#dd').html(item.name);
-                                    $("#fybh").val(item.id);
-                                    layui.use('table', function () {
+                                    layer.msg(item.id);
+                                    layui.use('table', function(){
                                         var table = layui.table;
                                         //第一个实例
                                         table.render({
-                                            elem: '#testbiao'
-                                            , height: 312
-                                            , url: '/ssm_wy/Cost/queryCost' //数据接口
-                                            , where: {
-                                                hNumber: item.id
+                                            elem: '#test1'
+                                            ,height: 312
+                                            ,url: '/ssm_wy/Cost/queryCost' //数据接口
+                                            ,where:{
+                                                hNumber:item.id
                                             }
-                                            , cols: [[ //表头
-                                                {field: 'c_fc', title: '房屋信息', width: '25%'},
-                                                {field: 'cn_name', title: '费用名称', width: '15%'},
-                                                {field: 'c_real', title: '实际用量', width: '15%'},
-                                                {field: 'c_yjfy', title: '费用金额', width: '15%'},
-                                                {
-                                                    field: 'c_scfyzq_date', title: '上次费用止期',
-                                                    templet: function (d) {
+                                            ,cols: [[ //表头
+                                                {field: 'cn_name', title: '费用名称'},
+                                                {field: 'c_real', title: '实际用量'},
+                                                {field: 'c_yjfy', title: '费用金额'},
+                                                {field: 'mz', title: '房产名称'},
+                                                {field: 'mz', title: '房产名称'},
+                                                {field: 'c_scfyzq_date', title: '上次费用止期',
+                                                    templet:function (d) {
                                                         return showTime(d.c_scfyzq_date);
                                                     }, width: '15%'
                                                 },
@@ -264,6 +260,8 @@
             // hours = hours<10 ? "0"+hours:hours;
             // minutes = minutes<10 ? "0"+minutes:minutes;
             // seconds = seconds<10 ? "0"+seconds:seconds;
+
+
             var time = year + "-" + month + "-" + day;
             return time;
         }

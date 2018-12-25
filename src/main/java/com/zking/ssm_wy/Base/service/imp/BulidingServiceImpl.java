@@ -33,4 +33,14 @@ public class BulidingServiceImpl implements IBulidingService {
     public String QueryId() {
         return bulidingMapper.QueryId();
     }
+
+    @Override
+    public int updateunitname(Buliding buliding) {
+        return bulidingMapper.updateunitname(buliding);
+    }
+
+    @Override
+    public int update(Buliding buliding) {
+        return bulidingMapper.update(buliding);
+    }
 }

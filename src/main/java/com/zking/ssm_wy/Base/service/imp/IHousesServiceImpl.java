@@ -1,6 +1,7 @@
 package com.zking.ssm_wy.Base.service.imp;
 
 import com.zking.ssm_wy.Base.mapper.HousesMapper;
+import com.zking.ssm_wy.Base.model.Houses;
 import com.zking.ssm_wy.Base.service.IHousesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,32 @@ public class IHousesServiceImpl implements IHousesService {
     @Override
     public List<Map<String, Object>> queryHourse(String number) {
         return housesMapper.queryHourse(number);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryBulidingName(String bulidingName) {
+        return housesMapper.queryBulidingName(bulidingName);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryState(String bulidingName) {
+        return housesMapper.queryState(bulidingName);
+    }
+
+    @Transactional
+    @Override
+    public int insertSelective(Houses record) {
+        return housesMapper.insertSelective(record);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public String queryHourId() {
+        return housesMapper.queryHourId();
+    }
+
+    @Override
+    public int Updatequery(String bnumber) {
+        return housesMapper.Updatequery(bnumber);
     }
 }

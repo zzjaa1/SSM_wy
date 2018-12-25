@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>layer-更懂你的web弹窗解决方案</title>
+    <link rel="stylesheet" href="/ssm_wy/css/reset.css">
+    <link rel="stylesheet" href="/ssm_wy/css/property.css">
+    <link rel="stylesheet" href="/ssm_wy/css/property_Accounting_management.css">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/lay/modules/form.js"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/lay/modules/element.js"></script>
+</head>
+<script>
+    layui.use('table', function() {
+        var table = layui.table;
+
+        var $ = layui.$, active = {
+            getCheckData: function () { //获取选中数据
+                var checkStatus = table.checkStatus('idTest')
+                    , data = checkStatus.data;
+                layer.alert(JSON.stringify(data));
+            }
+        };
+        function sj() {
+            table.render({
+                elem: '#demo'
+                ,data: [
+                    {
+                        "match_name": "澳维超",
+                        "match_time_beijing": "2018-03-02 16:30:00",
+                        "match_master": "墨尔本骑士",
+                        "match_guest": "帕斯科华伦",
+                        "jingcai": "墨尔本骑士",
+                        "num": 35
+                    },
+                    {
+                        "match_name": "葡超",
+                        "match_time_beijing": "2018-03-03 04:30:00",
+                        "match_master": "波尔图",
+                        "match_guest": "里斯本竞技",
+                        "jingcai": "里斯本竞技",
+                        "num": 5
+                    }
+                ],
+            });
+        }
+    });
+</script>
+<body>
+<div class="layui-btn-group demoTable">
+    <button class="layui-btn" onclick="sj();">插入数据</button>
+    <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
+    <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
+    <button class="layui-btn" data-type="isAll">验证是否全选</button>
+</div>
+<table class="layui-table" lay-data="{width: 892, height:332, url:'', page:true, id:'idTest'}" lay-filter="demo" id="demo">
+    <thead>
+    <tr>
+        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+        <th lay-data="{field:'match_name', width:80, sort: true, fixed: true}">ID</th>
+        <th lay-data="{field:'match_time_beijing', width:80}">用户名</th>
+        <th lay-data="{field:'match_master', width:80, sort: true}">性别</th>
+        <th lay-data="{field:'match_guest', width:80}">城市</th>
+        <th lay-data="{field:'jingcai', width:160}">签名</th>
+        <th lay-data="{field:'num', width:80, sort: true}">积分</th>
+        <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}"></th>
+    </tr>
+    </thead>
+</table>
+
+</body>
+</html>

@@ -2,12 +2,14 @@ package com.zking.ssm_wy.Base.controller;
 
 import com.zking.ssm_wy.Base.model.Cost;
 import com.zking.ssm_wy.Base.service.ICostService;
+import com.zking.ssm_wy.Base.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +23,13 @@ public class CostController {
 
     @RequestMapping("/queryCost")
     @ResponseBody
-    public Map<String, Object> queryCost(String hNumber){
+    public Map<String, Object> queryCost(String hNumber, HttpServletRequest request,int page,int limit){
         System.out.println(hNumber);
-        List<Map<String, Object>> maps = iCostService.queryCostPager(hNumber);
+        PageBean pageBean =new PageBean();
+        pageBean.setRows(limit);
+        pageBean.setPage(page);
+        pageBean.setRequest(request);
+        List<Map<String, Object>> maps = iCostService.queryCostPage(hNumber,pageBean);
         for (Map<String, Object> map : maps) {
             System.out.println(map);
         }
@@ -31,7 +37,8 @@ public class CostController {
         map.put("data",maps);
         map.put("code",0);
         map.put("msg","");
-        map.put("count",0);
+        map.put("count",pageBean.getTotal());
+
         return map;
     }
 

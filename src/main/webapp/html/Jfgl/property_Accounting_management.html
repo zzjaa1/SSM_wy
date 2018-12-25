@@ -25,7 +25,6 @@
      });
         function ff(id){
             layui.use(['tree', 'layer'], function(){
-
                 var layer = layui.layer
                     ,$ = layui.jquery;
                 $.ajax({
@@ -48,22 +47,22 @@
                                 ,click: function(item){ //点击节点回调
                                     // layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
                                     layer.msg(item.id);
+                                    $("#fybh").val(item.id)
                                     layui.use('table', function(){
                                         var table = layui.table;
+
                                         //第一个实例
                                         table.render({
-                                            elem: '#test1'
+                                            elem: '#testbiao'
                                             ,height: 312
                                             ,url: '/ssm_wy/Cost/queryCost' //数据接口
                                             ,where:{
                                                 hNumber:item.id
-                                            }
+                                            },page:true
                                             ,cols: [[ //表头
-                                                {field: 'cn_name', title: '费用名称'},
-                                                {field: 'c_real', title: '实际用量'},
-                                                {field: 'c_yjfy', title: '费用金额'},
-                                                {field: 'mz', title: '房产名称'},
-                                                {field: 'mz', title: '房产名称'},
+                                                {field: 'cn_name', title: '费用名称',width:'15%'},
+                                                {field: 'c_real', title: '实际用量',width:'15%'},
+                                                {field: 'c_yjfy', title: '费用金额',width:'15%'},
                                                 {field: 'c_scfyzq_date', title: '上次费用止期',
                                                     templet:function (d) {
                                                         return showTime(d.c_scfyzq_date);
@@ -142,7 +141,7 @@
                         , url: '/ssm_wy/Cost/queryCost' //数据接口
                         , where: {
                             hNumber: obj.data.h_number
-                        }
+                        },page:true
                         , cols: [[ //表头
                             {field: 'c_fc', title: '房屋信息', width: '25%'},
                             {field: 'cn_name', title: '费用名称', width: '15%'},

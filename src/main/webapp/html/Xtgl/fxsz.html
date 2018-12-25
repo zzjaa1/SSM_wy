@@ -112,6 +112,7 @@
             ,id:'cn_id'
             ,page: true //开启分页
             ,limit:10
+            ,count:10
             ,cols: [[ //表头
                 {field: 'cn_id', title: 'ID', width:100, sort: true, fixed: 'left'}
                 ,{field: 'cn_name', title: '费项名称', width:100}
@@ -144,7 +145,6 @@
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
-        //$('#tj').click();
     });
 
     function edit(data) {
@@ -165,7 +165,6 @@
                     var text = Object.entries(data)[i][1];
                     $(id).val(text);
                 }}
-                //$("#cn_types").val($('#cn_type').val());
                 layui.form.render('select');
             },
             yes:function(index,layero){

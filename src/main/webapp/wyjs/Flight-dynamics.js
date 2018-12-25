@@ -162,3 +162,15 @@ layer.open({
 }
 
 */
+/*   $.ajax({
+                         url:'/ssm_wy/queryCost',
+                         method: 'post',
+                         data:JSON.stringify(li),//"cBcfyzqDate":fyzq,"cBjfyzqDate":fyxq},
+                         dataType: 'JSON',
+                         contentType:"application/json",
+                         success: function (res) {
+                          },
+                         error: function (data) {
+                         }
+                     });
+                    */

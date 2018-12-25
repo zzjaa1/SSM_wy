@@ -36,4 +36,9 @@ public class CostServiceImpl implements ICostService {
     public int insertCost(Cost cost) {
         return costMapper.insertCost(cost);
     }
+
+    @Override
+    public List<Map<String, Object>> queryCostfwPage(List<String> lifj, String qq, String zq, List<String> lify, PageBean pb) {
+        return costMapper.queryCostfwPage(lifj,qq,zq,lify);
+    }
 }

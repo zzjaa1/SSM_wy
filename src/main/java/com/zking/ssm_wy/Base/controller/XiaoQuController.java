@@ -4,6 +4,7 @@ import com.zking.ssm_wy.Base.model.XiaoQu;
 import com.zking.ssm_wy.Base.service.IBulidingService;
 import com.zking.ssm_wy.Base.service.IHousesService;
 import com.zking.ssm_wy.Base.service.IXiaoQuService;
+import com.zking.ssm_wy.Base.service.IcostnameService;
 import com.zking.ssm_wy.Base.vo.XiaoQuVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class XiaoQuController {
     private IBulidingService iBulidingService;
     @Autowired
     private IHousesService iHousesService;
+
+    @Autowired
+    private IcostnameService icostnameService;
 
     /**
      * 树形
@@ -151,7 +155,23 @@ public class XiaoQuController {
                 }
             }
         }
+        List<Map<String, Object>> maps = icostnameService.queryName();
+        for (Map<String, Object> stringObjectMap : maps) {
+            stringObjectMap.put("id",stringObjectMap.get("cn_id").toString());
+            stringObjectMap.put("text",stringObjectMap.get("cn_name").toString());
+            stringObjectMap.put("icon", "glyphicon glyphicon-folder-open");
+            stringObjectMap.put("tags", Arrays.asList(new String[]{
+                    stringObjectMap.get("cn_type").toString(),
+                    "每过"+stringObjectMap.get("cn_cycle").toString()+"月缴费"}));
+        }
+        List<Map<String, Object>> lis=new ArrayList<>();
+        Map<String, Object> ma=new HashMap<>();
+        ma.put("id","fyxx");
+        ma.put("text","费用信息");
+        ma.put("nodes",maps);
+        lis.add(ma);
         map.put("li",queryxq);
+        map.put("lis",lis);
         return map;
     }
 

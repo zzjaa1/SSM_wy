@@ -25,7 +25,6 @@ public class CostNameController {
     @ResponseBody
     public Map<String,Object> query(HttpServletRequest req,CostName costn, int page, int limit){
         PageBean pb=new PageBean();
-
             pb.setPage(page);
             pb.setRows(limit);
         costn.setCnName("%"+costn.getCnName()+"%");

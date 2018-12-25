@@ -33,7 +33,30 @@
     <select id="queryCostPager" resultType="map">
       SELECT c.*,so.* FROM  costname c, cost so WHERE c.cn_id=so.cn_id AND so.h_number LIKE CONCAT(CONCAT('%',#{h_number}),'%')
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <select id="queryCostfwPage" resultType="map">
+      SELECT c.*,so.* FROM  costname c, cost so WHERE c.cn_id=so.cn_id
+      <if test="null!= lifj and lifj.size()>0">
+          AND   so.h_number in (
+          <foreach collection="lifj" item="li">
+              '${li}',
+          </foreach>
+          '')
+     </if>
+      <if test="null!=qq and ''!=qq">
+          AND so.c_bcfyqq_date>=#{qq}
+      </if>
+      <if test="null!=zq and ''!=zq">
+          AND #{zq}>=so.c_bcfyzq_date
+      </if>
+      <if test="null!=lify and lify.size()>0">
+          AND so.cn_id in (
+          <foreach collection="lify" item="lis">
+              '${lis}',
+          </foreach>
+          '')
+      </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from cost
     where c_id = #{cId,jdbcType=INTEGER}
   </delete>

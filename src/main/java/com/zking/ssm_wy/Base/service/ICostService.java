@@ -15,4 +15,6 @@ public interface ICostService {
     int deleteCost(Cost cost);
 
     int insertCost(Cost cost);
+
+    List<Map<String,Object>> queryCostfwPage(List<String> lifj,String qq,String zq,List<String> lify,PageBean pb);
 }

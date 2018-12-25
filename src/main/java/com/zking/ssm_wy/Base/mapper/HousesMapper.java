@@ -22,11 +22,11 @@ import java.util.Map;
     int updateByPrimaryKey(Houses record);
 
     List<Map<String,Object>> queryHourse(String number);
-
     List<Map<String,Object>> queryBulidingName(String bulidingName);
-
     List<Map<String,Object>> queryState(String bulidingName);
 
+    String queryHourId();
 
+    int Updatequery(String bnumber);
 
 }

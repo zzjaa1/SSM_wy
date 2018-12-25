@@ -12,4 +12,10 @@ public interface IHousesService {
 
     List<Map<String,Object>> queryState(String state);
 
+    int insertSelective(Houses record);
+
+    String queryHourId();
+
+    int Updatequery(String bnumber);
+
 }

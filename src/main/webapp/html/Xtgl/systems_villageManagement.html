@@ -36,14 +36,15 @@
                 $.ajax({
                     url: '/ssm_wy/insertXiaoqu',
                     data: data.field,
-                    // dataType: 'JSON',
+                    dataType: 'JSON',
                     method: 'post',
                     success: function (obj) {
                         // alert(obj);
                         console.log(obj);
-                        alert(222);
-                        //layer.msg("提交成功");
-
+                        layer.msg(obj.msg);
+                        if(obj.success){
+                            history.go(0);
+                        }
                     }
                 });
             });
@@ -113,7 +114,7 @@
         <!--<strong class="theAdd"><img src="../../images/Hadd.png" alt="">添加服务项目</strong>-->
             <!--<a href="javascript:;" class="save">保存</a>-->
             <div class="btn">
-                <button class="layui-btn tj" lay-submit lay-filter="formDemo">保存并继续添加</button>
+                <button class="layui-btn tj" type="button" lay-submit lay-filter="formDemo">保存并继续添加</button>
             </div>
     <!--</div>-->
 <!--</div>-->

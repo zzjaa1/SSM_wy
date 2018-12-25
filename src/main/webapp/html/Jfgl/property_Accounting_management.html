@@ -13,9 +13,6 @@
 
     <!--树形-->
     <script>
-        var data={};
-        var data1={};
-
      layui.use( 'layer', function() {
          var layer = layui.layer
              , $ = layui.jquery;
@@ -28,6 +25,7 @@
      });
         function ff(id){
             layui.use(['tree', 'layer'], function(){
+
                 var layer = layui.layer
                     ,$ = layui.jquery;
                 $.ajax({
@@ -39,6 +37,7 @@
                     },
                     success: function (status) {
                         $.each(status.li, function(key, val) {
+                            var data={};
                             data.name=val.name;
                             data.id=val.id;
                             data.children=val.children;
@@ -55,12 +54,12 @@
                                         table.render({
                                             elem: '#test1'
                                             ,height: 312
-                                            ,url: '/ssm_wy/queryCost' //数据接口
+                                            ,url: '/ssm_wy/Cost/queryCost' //数据接口
                                             ,where:{
                                                 hNumber:item.id
                                             }
                                             ,cols: [[ //表头
-                                                {field: 'c_costName', title: '费用名称'},
+                                                {field: 'cn_name', title: '费用名称'},
                                                 {field: 'c_real', title: '实际用量'},
                                                 {field: 'c_yjfy', title: '费用金额'},
                                                 {field: 'mz', title: '房产名称'},
@@ -124,12 +123,12 @@
                     table.render({
                         elem: '#test1'
                         ,height: 312
-                        ,url: '/ssm_wy/queryCost' //数据接口
+                        ,url: '/ssm_wy/Cost/queryCost' //数据接口
                         ,where:{
                             hNumber:obj.data.h_number
                         }
                         ,cols: [[ //表头
-                            {field: 'c_costName', title: '费用名称'},
+                            {field: 'cn_name', title: '费用名称'},
                             {field: 'c_real', title: '实际用量'},
                             {field: 'c_yjfy', title: '费用金额'},
                             {field: 'c_scfyzq_date', title: '上次费用止期',

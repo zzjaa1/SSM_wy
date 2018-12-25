@@ -25,6 +25,8 @@ public class BulidIngController {
         buliding.setbNumber(buliding.getxNumber()+"-B"+id);
         int i = iBulidingService.insertSelective(buliding);
         Map<String,Object> map=new HashMap<>();
+        map.put("bnumber",buliding.getbNumber());
+        map.put("xbuliding",buliding.getbBuliding());
         map.put("success",true);
         map.put("msg","成功");
         return map;

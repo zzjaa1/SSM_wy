@@ -174,4 +174,10 @@
       x_number = #{xNumber,jdbcType=VARCHAR}
     where b_id = #{bId,jdbcType=INTEGER}
   </update>
+    <update id="updateunitname">
+      UPDATE buliding SET b_unitNumber=#{bUnitnumber} WHERE b_number =#{bNumber}
+    </update>
+  <update id="update" parameterType="com.zking.ssm_wy.Base.model.Buliding">
+    UPDATE buliding SET b_hoursNumber= #{bHoursnumber} WHERE b_number=#{bNumber}
+  </update>
 </mapper>

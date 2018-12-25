@@ -11,4 +11,8 @@ public interface IBulidingService {
     int insertSelective(Buliding record);
 
     String QueryId();
+
+    int updateunitname(Buliding buliding);
+
+    int update(Buliding buliding);
 }

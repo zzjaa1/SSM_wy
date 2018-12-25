@@ -26,6 +26,10 @@ public interface BulidingMapper {
 
     String QueryId();
 
+    int updateunitname(Buliding buliding);
+
+    int update(Buliding buliding);
+
 
 
 

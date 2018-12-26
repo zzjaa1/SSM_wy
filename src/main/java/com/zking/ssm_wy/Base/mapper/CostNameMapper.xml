@@ -34,19 +34,16 @@
     where cn_id = #{cnId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zking.ssm_wy.Base.model.CostName" >
-    insert into costname (cn_id, cn_name, cn_type, 
+    insert into costname ( cn_name, cn_type,
       cn_price, cn_cycle, "cn_ remarks"
       )
-    values (#{cnId,jdbcType=INTEGER}, #{cnName,jdbcType=VARCHAR}, #{cnType,jdbcType=VARCHAR}, 
+    values ( #{cnName,jdbcType=VARCHAR}, #{cnType,jdbcType=VARCHAR},
       #{cnPrice,jdbcType=REAL}, #{cnCycle,jdbcType=INTEGER}, #{cnRemarks,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zking.ssm_wy.Base.model.CostName" >
     insert into costname
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="cnId != null" >
-        cn_id,
-      </if>
       <if test="cnName != null" >
         cn_name,
       </if>
@@ -60,7 +57,7 @@
         cn_cycle,
       </if>
       <if test="cnRemarks != null" >
-        "cn_ remarks",
+        "cn_remarks",
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >

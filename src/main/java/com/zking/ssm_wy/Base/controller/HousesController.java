@@ -50,4 +50,5 @@ public class HousesController {
         map.put("msg","");
         return map;
     }
+
 }

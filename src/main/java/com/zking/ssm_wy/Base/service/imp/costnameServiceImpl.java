@@ -7,6 +7,7 @@ import com.zking.ssm_wy.Base.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Map;
 @Transactional
@@ -32,9 +33,10 @@ public class costnameServiceImpl implements IcostnameService {
     }
 
     @Override
-    public int insertSelective(CostName record) {
-        return costnameMapper.insertSelective(record);
+    public int insert(CostName record) {
+        return costnameMapper.insert(record);
     }
+
 
     @Transactional(readOnly = true)
     @Override

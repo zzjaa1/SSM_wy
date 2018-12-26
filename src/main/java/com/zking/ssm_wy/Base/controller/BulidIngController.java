@@ -25,8 +25,20 @@ public class BulidIngController {
         buliding.setbNumber(buliding.getxNumber()+"-B"+id);
         int i = iBulidingService.insertSelective(buliding);
         Map<String,Object> map=new HashMap<>();
+        map.put("bnumber",buliding.getbNumber());
+        map.put("xbuliding",buliding.getbBuliding());
         map.put("success",true);
         map.put("msg","成功");
+        return map;
+    }
+    @RequestMapping("/updateBulid")
+    @ResponseBody
+    public Map<String,Object> updateBulid(Buliding buliding){
+        System.out.println(buliding);
+        int i = iBulidingService.updateByPrimaryKeySelective(buliding);
+        Map<String,Object> map =new HashMap<>();
+        map.put("msg","编辑成功");
+        map.put("success",true);
         return map;
     }
 

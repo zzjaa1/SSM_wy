@@ -20,7 +20,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     h_id, h_number, h_state, h_bulidingName, h_unitNumber, h_floor, h_type, h_direction, 
-    h_area, h_remarks, b_number,zt,price
+    h_area, h_remarks, b_number
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -43,9 +43,19 @@
   <select id="queryStatePage" resultType="map">
     SELECT * FROM houses WHERE h_number like #{bulidingName} AND h_state="未入住"
   </select>
+  <select id="queryHourId" resultType="string">
+    SELECT MAX(h_id)h_id  FROM houses WHERE h_unitNumber IS NOT NULL
+  </select>
+  <select id="Updatequery" resultType="int">
+     SELECT COUNT(b_number)b_number FROM houses WHERE b_number =#{bnumber}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from houses
     where h_id = #{hId,jdbcType=INTEGER}
+  </delete>
+  <delete id="DeleteHours">
+    DELETE FROM houses WHERE h_number=#{hnamber}
   </delete>
   <insert id="insert" parameterType="com.zking.ssm_wy.Base.model.Houses" >
     insert into houses (h_id, h_number, h_state, 

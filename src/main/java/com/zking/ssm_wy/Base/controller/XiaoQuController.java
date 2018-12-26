@@ -4,6 +4,7 @@ import com.zking.ssm_wy.Base.model.XiaoQu;
 import com.zking.ssm_wy.Base.service.IBulidingService;
 import com.zking.ssm_wy.Base.service.IHousesService;
 import com.zking.ssm_wy.Base.service.IXiaoQuService;
+import com.zking.ssm_wy.Base.service.IcostnameService;
 import com.zking.ssm_wy.Base.vo.XiaoQuVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class XiaoQuController {
     private IBulidingService iBulidingService;
     @Autowired
     private IHousesService iHousesService;
+
+    @Autowired
+    private IcostnameService icostnameService;
 
     /**
      * 树形
@@ -40,7 +44,7 @@ public class XiaoQuController {
                     stringObjectMap.put("id",stringObjectMap.get("x_number").toString());
                     stringObjectMap.put("name",stringObjectMap.get("x_buliding").toString());
                     map3= iBulidingService.queryBulid(stringObjectMap.get("x_number").toString());
-                    for (Map<String,Object> s : map3) {
+                        for (Map<String,Object> s : map3) {
                         if (null!=s){
                             s.put("id",s.get("b_number").toString());
                             s.put("name",s.get("b_buliding").toString());
@@ -64,10 +68,9 @@ public class XiaoQuController {
                     }
                     stringObjectMap.put("children",map3);
                 }
-            }
-        }
-
+            }}
         map.put("li",queryxq);
+        System.out.println("map======"+queryxq);
         return map;
     }
 
@@ -152,7 +155,23 @@ public class XiaoQuController {
                 }
             }
         }
+        List<Map<String, Object>> maps = icostnameService.queryName();
+        for (Map<String, Object> stringObjectMap : maps) {
+            stringObjectMap.put("id",stringObjectMap.get("cn_id").toString());
+            stringObjectMap.put("text",stringObjectMap.get("cn_name").toString());
+            stringObjectMap.put("icon", "glyphicon glyphicon-folder-open");
+            stringObjectMap.put("tags", Arrays.asList(new String[]{
+                    stringObjectMap.get("cn_type").toString(),
+                    "每过"+stringObjectMap.get("cn_cycle").toString()+"月缴费"}));
+        }
+        List<Map<String, Object>> lis=new ArrayList<>();
+        Map<String, Object> ma=new HashMap<>();
+        ma.put("id","fyxx");
+        ma.put("text","费用信息");
+        ma.put("nodes",maps);
+        lis.add(ma);
         map.put("li",queryxq);
+        map.put("lis",lis);
         return map;
     }
 

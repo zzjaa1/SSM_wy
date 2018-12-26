@@ -1,6 +1,7 @@
 package com.zking.ssm_wy.Base.mapper;
 
 import com.zking.ssm_wy.Base.model.Cost;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,4 +28,6 @@ public interface CostMapper {
     int insertCost(Cost cost);
 
     int deleteCost(Cost cost);
+
+    List<Map<String,Object>> queryCostfwPage(@Param("lifj") List<String> lifj,@Param("qq")String qq,@Param("zq")String zq,@Param("lify")List<String> lify);
 }

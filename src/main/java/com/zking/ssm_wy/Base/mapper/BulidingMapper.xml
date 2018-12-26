@@ -142,14 +142,8 @@
       <if test="csRemarks != null" >
         cs_remarks = #{csRemarks,jdbcType=VARCHAR},
       </if>
-      <if test="xNumber != null" >
-        x_number = #{xNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="bNumber != null" >
-        b_number = #{bNumber,jdbcType=VARBINARY},
-      </if>
     </set>
-    where b_id = #{bId,jdbcType=INTEGER}
+    where b_number = #{bNumber}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zking.ssm_wy.Base.model.Buliding" >
     update buliding
@@ -173,5 +167,11 @@
       cs_remarks = #{csRemarks,jdbcType=VARCHAR},
       x_number = #{xNumber,jdbcType=VARCHAR}
     where b_id = #{bId,jdbcType=INTEGER}
+  </update>
+    <update id="updateunitname">
+      UPDATE buliding SET b_unitNumber=#{bUnitnumber} WHERE b_number =#{bNumber}
+    </update>
+  <update id="update" parameterType="com.zking.ssm_wy.Base.model.Buliding">
+    UPDATE buliding SET b_hoursNumber= #{bHoursnumber} WHERE b_number=#{bNumber}
   </update>
 </mapper>

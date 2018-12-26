@@ -12,6 +12,14 @@ public interface IHousesService {
 
     List<Map<String,Object>> queryState(String state);
 
-    void UpdateState(String hun);
+    int insertSelective(Houses record);
+
+    String queryHourId();
+
+    int Updatequery(String bnumber);
+
+    int DeleteHours(String hnamber);
+
+    int updateByPrimaryKeySelective(Houses record);
 
 }

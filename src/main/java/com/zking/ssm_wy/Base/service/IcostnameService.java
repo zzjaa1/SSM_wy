@@ -4,6 +4,7 @@ import com.zking.ssm_wy.Base.model.CostName;
 import com.zking.ssm_wy.Base.util.PageBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.zking.ssm_wy.Base.util.PageBean;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,8 @@ public interface IcostnameService {
 
     int deleteByPrimaryKey(Integer cnId);
 
-    int insertSelective(CostName record);
+    int insert(CostName record);
 
     List<Map<String,Object>> queryName();
+
 }

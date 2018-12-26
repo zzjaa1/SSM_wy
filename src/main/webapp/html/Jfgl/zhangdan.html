@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" href="/ssm_wy/layui/css/layui.css" media="all">
+<script src="/ssm_wy/layui/layui.js"></script>
+<link href="/ssm_wy/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+<link href="/ssm_wy/bootstrap-treeview/src/css/bootstrap-treeview.css" rel="stylesheet">
+<script src="/ssm_wy/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/ssm_wy/bootstrap-treeview/src/js/bootstrap-treeview.js"></script>
+<body>
+<div id="dd">
+<!--<div>
+    <div class="layui-inline">
+        <label class="layui-form-label" style="width: 100px" >当前费项：</label>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label" style="width: 100px">单价：</label>
+        <div class="layui-inline"> &lt;!&ndash; 注意：这一层元素并不是必须的 &ndash;&gt;
+            <input type="text" class="layui-input" id="price" style="width: 70px">
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label" style="width: 160px">收费周期(月)：</label>
+    </div>
+</div>-->
+</div>
+<script>
+    function zd(fj,fy) {
+        var html="";
+            for(var i=1;i<fy.length;i++){
+                html+="<div>\n" +
+                    "    <div class=\"layui-inline\" style='padding-left: 0px'>\n" +
+                    "        <label class=\"layui-form-label\" style=\"width: 220px;\" >当前费项："+fy[i].cn_name+"</label>\n" +
+                    "    </div>\n" +
+                    "    <div class=\"layui-inline\">\n" +
+                    "        <label class=\"layui-form-label\" style=\"width: 100px\" >单价：</label>\n" +
+                    "        <div class=\"layui-inline\"> <!-- 注意：这一层元素并不是必须的 -->\n" +
+                    "            <input type=\"text\" class=\"layui-input\" id=\"price\" style=\"width: 70px\" value='"+fy[i].cn_price+"'>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "    <div class=\"layui-inline\">\n" +
+                    "        <label class=\"layui-form-label\" style=\"width: 160px\">每"+fy[i].cn_cycle+"月收费一次：</label>\n" +
+                    "    </div>\n" +
+                    "</div>"
+            }
+            $("#dd").html(html);
+    }
+</script>
+</body>
+</html>

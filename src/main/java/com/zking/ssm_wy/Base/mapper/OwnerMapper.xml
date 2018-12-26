@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm_wy.Base.mapper.OwnerMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm_wy.Base.model.Owner" >
+    <constructor >
+      <idArg column="o_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="o_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="o_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="o_state" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="o_phone" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="o_jdata" jdbcType="INTEGER" javaType="java.util.Date" />
+      <arg column="o_carder" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="o_ownership" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="o_before" jdbcType="INTEGER" javaType="java.lang.Double" />
+      <arg column="o_remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+    <sql id="Base_Column_List" >
+      o_id, o_number, o_name, o_state, o_phone, o_jdata, o_carder, o_ownership,
+      o_before, o_remarks
+    </sql>
+  <select id="queryOwner" resultType="map">
+    select * from owner where o_name=#{oname}
+  </select>
+
+</mapper>

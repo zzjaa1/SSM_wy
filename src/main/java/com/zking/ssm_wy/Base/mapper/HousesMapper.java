@@ -27,6 +27,10 @@ import java.util.Map;
 
     List<Map<String,Object>> queryState(String bulidingName);
 
+    void UpdateState(String hun);
+
+    List<Map<String,Object>> queryStatePage(String bulidingName);
+
 
 
 }

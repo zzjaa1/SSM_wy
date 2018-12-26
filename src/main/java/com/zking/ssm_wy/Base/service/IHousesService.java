@@ -12,4 +12,6 @@ public interface IHousesService {
 
     List<Map<String,Object>> queryState(String state);
 
+    void UpdateState(String hun);
+
 }

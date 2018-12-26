@@ -14,11 +14,13 @@
       <arg column="h_area" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="h_remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="b_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="zt" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="price" jdbcType="FLOAT" javaType="java.lang.Double" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     h_id, h_number, h_state, h_bulidingName, h_unitNumber, h_floor, h_type, h_direction, 
-    h_area, h_remarks, b_number
+    h_area, h_remarks, b_number,zt,price
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -33,6 +35,12 @@
     SELECT * FROM houses WHERE h_number like #{bulidingName}
   </select>
   <select id="queryState" resultType="map">
+    SELECT * FROM houses WHERE h_number like #{bulidingName} AND h_state="未入住"
+  </select>
+  <select id="UpdateState">
+    UPDATE houses SET zt='已售' AND h_state='已入住' WHERE h_number=#{hun,jdbcType=VARCHAR}
+  </select>
+  <select id="queryStatePage" resultType="map">
     SELECT * FROM houses WHERE h_number like #{bulidingName} AND h_state="未入住"
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

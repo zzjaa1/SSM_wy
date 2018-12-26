@@ -32,4 +32,11 @@ public class IHousesServiceImpl implements IHousesService {
     public List<Map<String, Object>> queryState(String bulidingName) {
         return housesMapper.queryState(bulidingName);
     }
+
+    @Override
+    public void UpdateState(String hun) {
+        housesMapper.UpdateState(hun);
+    }
+
+
 }

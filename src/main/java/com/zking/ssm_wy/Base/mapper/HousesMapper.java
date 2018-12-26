@@ -29,4 +29,9 @@ import java.util.Map;
 
     int Updatequery(String bnumber);
 
+    int DeleteHours(String hnamber);
+
+
+
+
 }

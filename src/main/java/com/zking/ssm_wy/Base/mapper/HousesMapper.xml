@@ -46,6 +46,9 @@
     delete from houses
     where h_id = #{hId,jdbcType=INTEGER}
   </delete>
+  <delete id="DeleteHours">
+    DELETE FROM houses WHERE h_number=#{hnamber}
+  </delete>
   <insert id="insert" parameterType="com.zking.ssm_wy.Base.model.Houses" >
     insert into houses (h_id, h_number, h_state, 
       h_bulidingName, h_unitNumber, h_floor, 
@@ -132,9 +135,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm_wy.Base.model.Houses" >
     update houses
     <set >
-      <if test="hNumber != null" >
-        h_number = #{hNumber,jdbcType=VARCHAR},
-      </if>
       <if test="hState != null" >
         h_state = #{hState,jdbcType=VARCHAR},
       </if>
@@ -159,11 +159,8 @@
       <if test="hRemarks != null" >
         h_remarks = #{hRemarks,jdbcType=VARCHAR},
       </if>
-      <if test="bNumber != null" >
-        b_number = #{bNumber,jdbcType=VARCHAR},
-      </if>
     </set>
-    where h_id = #{hId,jdbcType=INTEGER}
+    where h_number = #{hNumber}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zking.ssm_wy.Base.model.Houses" >
     update houses

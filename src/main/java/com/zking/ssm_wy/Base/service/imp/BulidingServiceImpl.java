@@ -43,4 +43,10 @@ public class BulidingServiceImpl implements IBulidingService {
     public int update(Buliding buliding) {
         return bulidingMapper.update(buliding);
     }
+
+    @Transactional
+    @Override
+    public int updateByPrimaryKeySelective(Buliding record) {
+        return bulidingMapper.updateByPrimaryKeySelective(record);
+    }
 }

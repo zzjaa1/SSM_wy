@@ -110,4 +110,43 @@ public class HousesController {
         return map;
     }
 
+    @RequestMapping("/deleteHours")
+    @ResponseBody
+    public Map<String,Object> deleteHours(String hnumber){
+        System.out.println(hnumber);
+        int i = iHousesService.DeleteHours(hnumber);
+        Map<String,Object> map =new HashMap<>();
+        map.put("msg","成功");
+        map.put("success",true);
+        return map;
+    }
+
+    @RequestMapping("/updateHours")
+    @ResponseBody
+    public Map<String,Object> updateHours(Houses houses){
+        System.out.println(houses);
+        if(!houses.gethBulidingname().contains("室")){
+            houses.sethBulidingname(houses.gethBulidingname()+"室");
+        }
+        int i = iHousesService.updateByPrimaryKeySelective(houses);
+
+        Map<String,Object> map =new HashMap<>();
+        map.put("msg","成功");
+        map.put("success",true);
+        return map;
+    }
+
+    @RequestMapping("/updateHours2")
+    @ResponseBody
+    public Map<String,Object> updateHours2(Houses houses){
+        System.out.println(houses);
+        int i = iHousesService.updateByPrimaryKeySelective(houses);
+
+        Map<String,Object> map =new HashMap<>();
+        map.put("msg","成功");
+        map.put("success",true);
+        return map;
+    }
+
+
 }

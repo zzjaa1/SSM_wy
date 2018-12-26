@@ -18,4 +18,8 @@ public interface IHousesService {
 
     int Updatequery(String bnumber);
 
+    int DeleteHours(String hnamber);
+
+    int updateByPrimaryKeySelective(Houses record);
+
 }

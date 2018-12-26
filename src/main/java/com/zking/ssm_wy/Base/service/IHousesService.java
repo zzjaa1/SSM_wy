@@ -22,4 +22,6 @@ public interface IHousesService {
 
     int updateByPrimaryKeySelective(Houses record);
 
+    void UpdateState(String hun);
+
 }

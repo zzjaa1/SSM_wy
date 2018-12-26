@@ -31,6 +31,10 @@ import java.util.Map;
 
     int DeleteHours(String hnamber);
 
+    void UpdateState(String hun);
+
+    List<Map<String,Object>> queryStatePage(String bulidingName);
+
 
 
 

@@ -17,7 +17,6 @@
          var layer = layui.layer
              , $ = layui.jquery;
          $("#btuquery").click(function(){
-             //alert("点击了");
              var val=   $("#seltree").find("option:selected").val();
              ff(val);
              $("#demo1").find("li").remove()
@@ -50,7 +49,6 @@
                                     $("#fybh").val(item.id)
                                     layui.use('table', function(){
                                         var table = layui.table;
-
                                         //第一个实例
                                         table.render({
                                             elem: '#testbiao'

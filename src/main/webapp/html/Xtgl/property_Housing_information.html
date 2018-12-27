@@ -14,8 +14,20 @@
     <script src="/ssm_wy/js/jquery.serializejson.js"></script>
     <script>
         layui.use(['tree', 'layer'], function () {
-            var layer = layui.layer
-                , $ = layui.jquery;
+                var layer = layui.layer
+                    , $ = layui.jquery;
+            trees();
+             $('#fj_btn').on('click', function(){
+                $('#loudong').css('display','block');
+                $('#louff').css('display','none');
+            });
+
+        });
+        
+        function trees() {
+            layui.use(['tree', 'layer'], function () {
+                var layer = layui.layer
+                    , $ = layui.jquery;
             $.ajax({
                 url: '/ssm_wy/querytree',
                 type: 'post',
@@ -37,7 +49,7 @@
                                 //layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
                                 // console.log(JSON.stringify(item));
                                 var idlen= item.id.split('-').length;
-                                 $('#lodiv').css('display','block');
+                                $('#lodiv').css('display','block');
                                 $('#cr_btn1').on('click', function(){
                                     if(idlen==1){
                                         $('#bj').css('display','block');
@@ -69,8 +81,8 @@
                                     if(item.id.search("-S")!=-1){
                                         del(item.id);
                                     }else {
-                                     alert("只能选择未入住的房间删除！")
-                                }
+                                        alert("只能选择未入住的房间删除！")
+                                    }
                                 });
                                 $('#sc_btn').on('click', function(){
                                     $('#fangjian').css('display','none');
@@ -116,29 +128,25 @@
                     });
                 }
             });
-             $('#fj_btn').on('click', function(){
-                $('#loudong').css('display','block');
-                $('#louff').css('display','none');
             });
-            function del(id) {
-                layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index) {
-                    $.ajax({
-                        url: '/ssm_wy/deleteHours',
-                        method: 'post',
-                        data: {'hnumber': id},
-                        dataType: 'JSON',
-                        success: function (data) {
-                            layer.alert(data.suucess, {icon: 1});
-                        },
-                        error: function (data) {
-                        }
-                    });
-                    layer.close(index);
+        }
+        function del(id) {
+            layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index) {
+                $.ajax({
+                    url: '/ssm_wy/deleteHours',
+                    method: 'post',
+                    data: {'hnumber': id},
+                    dataType: 'JSON',
+                    success: function (data) {
+                        layer.alert(data.suucess, {icon: 1});
+                        trees();
+                    },
+                    error: function (data) {
+                    }
                 });
-            }
-        });
-        
-
+                layer.close(index);
+            });
+        }
 
     </script>
     <script>
@@ -184,10 +192,7 @@
                                c();
                            }
                        }else{
-                          // location.reload();
-                           $(".tree").load("/ssm_wy/querytree");
-                           // $(".tree").reader;
-                           // $("#demo1").render('tree');
+                           trees();
                        }
 
                    }
@@ -227,7 +232,8 @@
                        }
                        }else{
                            // location.reload();
-                           $(".tree").load(location.href+"/ssm_wy/querytree");
+                           //$(".tree").load(location.href+"/ssm_wy/querytree");
+                           trees();
                        }
                    }
                });
@@ -295,7 +301,7 @@
                 <em><img src="../../images/Hbi.png" alt="" style="width: 100%;height: 100%;"></em>
                 <label id="xqmc"></label><input type="hidden" id="xqid">
                 <a href="#" id="crh_dr">批量导入房屋信息</a>
-                <a href="#" id="bj" style="display: none">编辑楼栋信息</a>
+                <!--<a href="#" id="bj" style="display: none">编辑楼栋信息</a>-->
                 <!--<a href="#">批量修改房屋信息</a>-->
             </div>
             <div class="con_right_con" id="lodiv" style="display: none">

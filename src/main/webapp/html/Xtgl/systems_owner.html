@@ -9,66 +9,120 @@
     <link rel="stylesheet" href="../../css/property.css">
     <link rel="stylesheet" href="../../css/valueService.css">
     <link rel="stylesheet" href="../../css/systemsManagement.css">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
+    <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+            //第一个实例
+            table.render({
+                elem: '#bzdemo'
+                , height: 312
+                , url: '/ssm_wy/queryPage' //数据接口
+                , where: {
+                   // hNumber: obj.data.h_number
+                },page:true
+                ,id:'bzdemo1'
+                , cols: [[ //表头
+                    {field: 'o_number', title: '住户编号', width: '25%'},
+                    {field: 'o_name', title: '业主名', width: '15%'},
+                    {field: 'h_number', title: '房间编号', width: '15%'},
+                    {field: 'o_phone', title: '业主号码', width: '15%'},
+                    {field: 'o_ownership', title: '住户类型', width: '15%'},
+                    {field: 'o_carder', title: '身份证号', width: '25%'},
+                    {field: '', title: '操作', width: '15%',
+                    templet: function (value) {
+                            var obj = JSON.stringify(value);
+                            return " <button class=\"layui-btn layui-btn-sm\" value='编辑' onclick='member_edit(" + obj + ")'>\n" +
+                                "   <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                "   </button>"+
+                                "<button class=\"layui-btn layui-btn-sm\" value='删除' onclick='del(" + value.c_id + ")'>\n" +
+                                "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                "  </button>";
+                        }
+                    }
+                ]]
+            });
+
+            //点击查询业主信息
+            $("#btn_qu").click(function () {
+                query();
+            });
+            //查询
+            function query() {
+                var h_number = $("#h_number").val();
+                var o_name=$('#o_name').val();
+                alert(h_number);
+                alert(o_name);
+                table.reload('bzdemo1', {
+                    url: '/ssm_wy/queryPage'
+                    , where: {
+                        o_name: o_name,
+                        h_number: h_number
+                    } //设定异步数据接口的额外参数
+                });
+            }
+
+        });
+    </script>
 </head>
 <body>
 <div >
     <em><img src="../../images/Hxitong.png" alt=""></em><a href="#">系统管理</a><span>></span><a href="#">业主信息</a>
 </div>
 <div>
-    <div class="equipment_list">
+    <div class="equipment_list" >
         <div class="equipment_list_title chairfix">
             <div><img src="../../images/H_ViewGallery.png" alt=""></div>
             <span>住户信息</span>
             <a href="javascript:;" style="width:80px;" class="batchIn">批量导入</a>
-            <a href="systems_owner_add.html">添加</a>
         </div>
         <div class="reacherInfor">
             <p>
-                <input type="text" placeholder="请输入房号">
-                <input type="text" placeholder="请输入业主信息">
-                <input type="button" value="查询">
+                <input type="text" id="h_number" placeholder="请输入房号">
+                <input type="text" id="o_name"  placeholder="请输入业主名称">
+                <input type="button" id="btn_qu" value="查询">
             </p>
             <p>
                 <span>房号说明！</span>房号查询输入格式如下：查询楼-输入xxx幢，查询单元-输入xxx单元，查询层-输入xxx层，查询房子-输入xxx室，精确查询-输入xxx幢-xxx单元xxx层xxx室
             </p>
         </div>
-        <div>
-            <ul class="equipment_list_mess sysOwner_mess chairfix">
-                <li>房号缩写</li>
-                <li>住户名称</li>
-                <li>住户电话</li>
-                <li  style="width:20%">住户类型</li>
-                <li>app用户</li>
-                <li style="width:20%">操作</li>
-            </ul>
-        </div>
-        <ul class="equipment_list_message">
-            <li>
-                <ul class="equipment_list_mess sysOwner_mess chairfix">
-                    <li><span>xxxx</span></li>
-                    <li><span>xxxx</span></li>
-                    <li><span>xxxx</span></li>
-                    <li style="width:20%"><span>xxxx</span></li>
-                    <li><span>xxxx</span></li>
-                    <li style="width:20%"><span><a href="" class="equipment_list_xiuG">修改</a></span></li>
-                </ul>
-            </li>
-        </ul>
-        <div class="equipment_list_foot chairfix">
-            <p>从
-                <span class="equipment_list_footSpa1">1</span>到
-                <span class="equipment_list_footSpa2">1</span>/共
-                <span class="equipment_list_footSpa3">1</span>数据
-            </p>
-            <p>
-                <a href="">首页</a>
-                <a href="">前一页</a>
-                <span>1</span>
-                <a href="">后一页</a>
-                <a href="">尾页</a>
-            </p>
-        </div>
-    </div>
+            <!--<ul class="equipment_list_mess sysOwner_mess chairfix">-->
+                <!--<li>房号缩写</li>-->
+                <!--<li>住户名称</li>-->
+                <!--<li>住户电话</li>-->
+                <!--<li  style="width:20%">住户类型</li>-->
+                <!--<li>app用户</li>-->
+                <!--<li style="width:20%">操作</li>-->
+            <!--</ul>-->
+            <table id="bzdemo" lay-filter="testdj"></table>
+        <!--<ul class="equipment_list_message">-->
+            <!--<li>-->
+                <!--<ul class="equipment_list_mess sysOwner_mess chairfix">-->
+                    <!--<li><span>xxxx</span></li>-->
+                    <!--<li><span>xxxx</span></li>-->
+                    <!--<li><span>xxxx</span></li>-->
+                    <!--<li style="width:20%"><span>xxxx</span></li>-->
+                    <!--<li><span>xxxx</span></li>-->
+                    <!--<li style="width:20%"><span><a href="" class="equipment_list_xiuG">修改</a></span></li>-->
+                <!--</ul>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <!--<div class="equipment_list_foot chairfix">-->
+            <!--<p>从-->
+                <!--<span class="equipment_list_footSpa1">1</span>到-->
+                <!--<span class="equipment_list_footSpa2">1</span>/共-->
+                <!--<span class="equipment_list_footSpa3">1</span>数据-->
+            <!--</p>-->
+            <!--<p>-->
+                <!--<a href="">首页</a>-->
+                <!--<a href="">前一页</a>-->
+                <!--<span>1</span>-->
+                <!--<a href="">后一页</a>-->
+                <!--<a href="">尾页</a>-->
+            <!--</p>-->
+        <!--</div>-->
+    <!--</div>-->
 </div>
 <div class="mask"></div>
 <div class="batchCon">

@@ -143,9 +143,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm_wy.Base.model.Houses" >
     update houses
     <set >
-      <if test="hNumber != null" >
-        h_number = #{hNumber,jdbcType=VARCHAR},
-      </if>
       <if test="hState != null" >
         h_state = #{hState,jdbcType=VARCHAR},
       </if>
@@ -170,24 +167,8 @@
       <if test="hRemarks != null" >
         h_remarks = #{hRemarks,jdbcType=VARCHAR},
       </if>
-      <if test="bNumber != null" >
-        b_number = #{bNumber,jdbcType=VARCHAR},
-      </if>
     </set>
-    where h_id = #{hId,jdbcType=INTEGER}
+    where h_number = #{hNumber}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zking.ssm_wy.Base.model.Houses" >
-    update houses
-    set h_number = #{hNumber,jdbcType=VARCHAR},
-      h_state = #{hState,jdbcType=VARCHAR},
-      h_bulidingName = #{hBulidingname,jdbcType=VARCHAR},
-      h_unitNumber = #{hUnitnumber,jdbcType=INTEGER},
-      h_floor = #{hFloor,jdbcType=INTEGER},
-      h_type = #{hType,jdbcType=VARCHAR},
-      h_direction = #{hDirection,jdbcType=VARCHAR},
-      h_area = #{hArea,jdbcType=INTEGER},
-      h_remarks = #{hRemarks,jdbcType=VARCHAR},
-      b_number = #{bNumber,jdbcType=VARCHAR}
-    where h_id = #{hId,jdbcType=INTEGER}
-  </update>
+
 </mapper>

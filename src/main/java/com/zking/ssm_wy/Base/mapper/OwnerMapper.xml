@@ -22,5 +22,16 @@
   <select id="queryOwner" resultType="map">
     select * from owner where o_name=#{oname}
   </select>
+  <select id="queryowenPage" resultType="map">
+  SELECT orwn.*,rea.*,le.* FROM OWNER orwn LEFT JOIN Real_estate rea ON orwn.o_number=rea.o_number
+  LEFT JOIN lease le ON rea.h_number =le.h_number WHERE 1=1
+    <if test="null!=o_name and ''!=o_name">
+      AND orwn.o_name LIKE CONCAT(CONCAT('%',#{o_name}),'%')
+  </if>
+    <if test="null!=h_number and ''!=h_number">
+      AND rea.`h_number` LIKE CONCAT(CONCAT('%',#{h_number}),'%')
+    </if>
+  </select>
+
 
 </mapper>

@@ -24,4 +24,8 @@ public interface IHousesService {
 
     void UpdateState(String hun);
 
+    List<Map<String,Object>> queryPricePage(Float price,String hState);
+
+    List<Map<String,Object>> queryPriceScopePage(Float price,Float price2);
+
 }

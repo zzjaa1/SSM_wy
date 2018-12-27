@@ -51,4 +51,31 @@ public class HousesController {
         return map;
     }
 
+    @RequestMapping("/queryPricePage")
+    @ResponseBody
+    public Map<String,Object> queryPricePage(Houses houses){
+        System.out.println("houses=="+houses);
+        Map<String,Object> map = new HashMap<>();
+        List<Map<String, Object>> maps = iHousesService.queryPricePage(houses.getPrice(),houses.gethType());
+
+        map.put("data",maps);
+        map.put("code",0);
+        map.put("count",0);
+        map.put("msg","");
+        return map;
+    }
+    @RequestMapping("/queryPriceScopePage")
+    @ResponseBody
+    public Map<String,Object> queryPriceScopePage(Float price,Float price2){
+        System.out.println(price);
+        System.out.println(price2);
+        Map<String,Object> map=new HashMap<>();
+        List<Map<String, Object>> maps = iHousesService.queryPriceScopePage(price, price2);
+
+        map.put("data",maps);
+        map.put("code",0);
+        map.put("count",0);
+        map.put("msg","");
+        return map;
+    }
 }

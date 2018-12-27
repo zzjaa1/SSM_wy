@@ -67,5 +67,15 @@ public class IHousesServiceImpl implements IHousesService {
         housesMapper.UpdateState(hun);
     }
 
+    @Override
+    public List<Map<String, Object>> queryPricePage(Float price, String hState) {
+        return housesMapper.queryPricePage(price,hState);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryPriceScopePage(Float price, Float price2) {
+        return housesMapper.queryPriceScopePage(price,price2);
+    }
+
 
 }

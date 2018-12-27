@@ -1,6 +1,7 @@
 package com.zking.ssm_wy.Base.mapper;
 
 import com.zking.ssm_wy.Base.model.Houses;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,8 +34,9 @@ import java.util.Map;
 
     void UpdateState(String hun);
 
-    List<Map<String,Object>> queryStatePage(String bulidingName);
+    List<Map<String,Object>> queryPricePage(@Param("price")Float price,@Param("hState") String hState);
 
+    List<Map<String,Object>> queryPriceScopePage(@Param("price")Float price,@Param("price2")Float price2);
 
 
 

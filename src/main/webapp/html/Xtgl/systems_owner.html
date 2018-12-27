@@ -17,7 +17,7 @@
             //第一个实例
             table.render({
                 elem: '#bzdemo'
-                , height: 312
+                , height: 500
                 , url: '/ssm_wy/queryPage' //数据接口
                 , where: {
                    // hNumber: obj.data.h_number
@@ -62,7 +62,6 @@
                     } //设定异步数据接口的额外参数
                 });
             }
-
         });
     </script>
 </head>
@@ -83,9 +82,6 @@
                 <input type="text" id="o_name"  placeholder="请输入业主名称">
                 <input type="button" id="btn_qu" value="查询">
             </p>
-            <p>
-                <span>房号说明！</span>房号查询输入格式如下：查询楼-输入xxx幢，查询单元-输入xxx单元，查询层-输入xxx层，查询房子-输入xxx室，精确查询-输入xxx幢-xxx单元xxx层xxx室
-            </p>
         </div>
             <!--<ul class="equipment_list_mess sysOwner_mess chairfix">-->
                 <!--<li>房号缩写</li>-->
@@ -95,7 +91,7 @@
                 <!--<li>app用户</li>-->
                 <!--<li style="width:20%">操作</li>-->
             <!--</ul>-->
-            <table id="bzdemo" lay-filter="testdj"></table>
+            <table id="bzdemo" lay-filter="testdj" ></table>
         <!--<ul class="equipment_list_message">-->
             <!--<li>-->
                 <!--<ul class="equipment_list_mess sysOwner_mess chairfix">-->

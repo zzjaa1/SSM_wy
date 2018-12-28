@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm_wy.Base.mapper.LeaseMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm_wy.Base.model.Lease" >
+    <constructor >
+      <idArg column="l_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="l_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="l_zh" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="l_date" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="l_htzt" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="L_frdb" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="L_lxr" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="l_qzrq" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="L_tzrq" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="L_bzj" jdbcType="FLOAT" javaType="java.lang.Float" />
+      <arg column="L_sfmj" jdbcType="FLOAT" javaType="java.lang.Float" />
+      <arg column="L_sfsq" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="L_zjze" jdbcType="FLOAT" javaType="java.lang.Float" />
+      <arg column="l_remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="h_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    l_id, l_number, l_zh, l_date, l_htzt, L_frdb, L_lxr, l_qzrq,
+    L_tzrq, L_bzj, L_sfmj,L_sfsq,L_zjze,l_remarks,h_number
+</sql>
+  <select id="addLease" resultType="string" parameterType="com.zking.ssm_wy.Base.model.Lease">
+        INSERT INTO real_estate (l_id, l_number, l_zh, l_date, l_htzt, L_frdb, L_lxr, l_qzrq, L_tzrq, L_bzj, L_sfmj,L_sfsq,L_zjze,l_remarks,h_number)
+        VALUES
+        (#{lid},#{lnumber},#{lzh},#{ldate},#{lhtzt},#{lfrdb},#{llxr},#{lqzrq},#{ltzrq},#{lbzj},#{lsfmj},#{lsfsq},#{lzjze},#{lremarks},#{hnumber})
+  </select>
+
+</mapper>

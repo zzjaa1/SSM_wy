@@ -30,10 +30,10 @@
     <select id="queryHourse" resultType="map">
         SELECT *  FROM houses  WHERE b_number =#{number}
     </select>
-  <select id="queryBulidingName" resultType="map">
+  <select id="queryBulidingNamePage" resultType="map">
     SELECT * FROM houses WHERE h_number like #{bulidingName}
   </select>
-  <select id="queryState" resultType="map">
+  <select id="queryStatePage" resultType="map">
     SELECT * FROM houses WHERE h_number like #{bulidingName} AND h_state="未入住"
   </select>
   <select id="UpdateState">

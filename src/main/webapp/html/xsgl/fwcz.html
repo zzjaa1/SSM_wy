@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>房屋出租</title>
+    <title>销售管理</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link rel="stylesheet" href="/ssm_wy/css/reset.css">
     <link rel="stylesheet" href="/ssm_wy/css/property.css">
     <link rel="stylesheet" href="/ssm_wy/css/property_Accounting_management.css">
     <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
-    <link rel="stylesheet" href="/ssm_wy/layui/css/form.css" media="all">
-    <script type="text/javascript" src="/ssm_wy/html/xsgl/xsgl.js"></script>
-    <script type="text/javascript" src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/lay/modules/form.js"></script>
     <script type="text/javascript" src="/ssm_wy/layui/lay/modules/element.js"></script>
+    <script type="text/javascript" src="/ssm_wy/js/jquery.serializejson.js"></script>
     <!--树形-->
     <script>
         var data={};
         var data1={};
-        layui.use(['tree', 'layer'], function(){
+        var itemName=null;
+
+        layui.use(['tree', 'layer','table'], function(){
             var layer = layui.layer
                 ,$ = layui.jquery;
+            var table=layui.table;
             $.ajax({
                 url: '/ssm_wy/querytree',
                 type: 'post',
@@ -37,8 +39,40 @@
                             elem: '#demo1' //指定元素
                             ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
                             ,click: function(item){ //点击节点回调
-                                layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
-                                // console.log(item);
+                                //layer.msg('当前节名称：'+ item.id + '<br>全部参数：'+ JSON.stringify(item));
+                                table.render({
+                                    elem: '#demo2'
+                                    , height: 400
+                                    ,id: 'idTest'
+                                    , url: '/ssm_wy/queryStatePage' //数据接口
+                                    , where: {
+                                        'hBulidingname': item.id
+                                    }
+                                    , page: true //开启分页
+                                    , cols: [[ //表头
+                                        {field: 'h_id', title: '房屋编号', width: 100, sort: true, fixed: 'left'}
+                                        , {field: 'h_state', title: '房屋状态', width: 95, sort: true}
+                                        , {field: 'h_bulidingName', title: '楼宇名称', width: 95}
+                                        , {field: 'h_unitNumber', title: '单元号', width: 80}
+                                        , {field: 'h_floor', title: '所属楼层', width: 100, sort: true}
+                                        , {field: 'h_type', title: '所属户型', width: 100, sort: true}
+                                        , {field: 'h_direction', title: '房屋朝向', width: 95}
+                                        , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
+                                        , {field: 'price', title: '价格', width: 70, sort: true}
+                                        , {title: '操作', minWidth: 175, templet: function (value) {
+                                                var obj = JSON.stringify(value);
+                                                var checkStatus=table.checkStatus("idTest");
+                                                var rowvalue=checkStatus.date;
+                                                return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tk("+obj+")';>\n" +
+                                                    "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                                    "   </button>" +
+                                                    "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
+                                                    "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                                    "  </button>";
+                                            }
+                                        }
+                                    ]]
+                                });
                             }
                             ,nodes:
                                 [data
@@ -47,7 +81,146 @@
                     });
                 }
             });
+
+
+            $("#cxbutton").click(function() {
+                var price=document.getElementById("price");
+                var htype=document.getElementById("setype");
+                table.render({
+                    elem: '#demo2'
+                    , height: 400
+                    ,id: 'idTest'
+                    , url: '/ssm_wy/queryPricePage' //数据接口
+                    , where: {
+                        'price': price.value,'hType':htype.value
+                    }
+                    , page: true //开启分页
+                    , cols: [[ //表头
+                        {field: 'h_id', title: '房屋编号', width: 100, sort: true, fixed: 'left'}
+                        , {field: 'h_state', title: '房屋状态', width: 95, sort: true}
+                        , {field: 'h_bulidingName', title: '楼宇名称', width: 95}
+                        , {field: 'h_unitNumber', title: '单元号', width: 80}
+                        , {field: 'h_floor', title: '所属楼层', width: 100, sort: true}
+                        , {field: 'h_type', title: '所属户型', width: 100, sort: true}
+                        , {field: 'h_direction', title: '房屋朝向', width: 95}
+                        , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
+                        , {field: 'h_remarks', title: '备注', width: 70, sort: true}
+                        , {title: '操作', minWidth: 175, templet: function (value) {
+                                var obj = JSON.stringify(value);
+                                var checkStatus=table.checkStatus("idTest");
+                                var rowvalue=checkStatus.date;
+                                return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tk("+obj+")';>\n" +
+                                    "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                    "   </button>" +
+                                    "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
+                                    "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                    "  </button>";
+                            }
+                        }
+                    ]]
+                });
+            });
+
+            //30-50======================================================================================================
+
         });
+        function tk(data) {
+            var url="/ssm_wy/html/xsgl/czht.html";
+            layer.open({
+                type: 2,
+                area:['800px','550px'],
+                title:"出租合同",
+                maxmin:true,
+                content: url,//这里content是一个普通的String
+                success : function(layero, index){
+                    var body = layui.layer.getChildFrame('body', index);
+                   var iframeWin = window[layero.find('iframe')[0]['name']];
+                        for (var i = 1; Object.entries(data).length > i; i++) {
+                            var id = '#' + Object.entries(data)[i][0];
+                            var text = Object.entries(data)[i][1];
+                            body.contents().find(id).val(text);
+                        }
+                }
+                ,btn: ['确定', '关闭','自动填充']
+                ,yes: function(index, layero){
+                    //按钮【按钮一】的回调
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    //var sdata=body.contents().find('#ff').serializeJSON();
+                    var sdata=iframeWin.sasa();
+                    var redate=new Date();
+                   // redate=sdata.re_date;
+                    $.ajax({
+                        url: '/ssm_wy/addLease',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {"lid": sdata.l_id,"lnumber":sdata.l_number,"lzh":sdata.l_zh,"ldate":redate,"lhtzt":sdata.l_htzt,"lfrdb":sdata.L_frdb
+                            ,"llxr":sdata.L_lxr,"lqzrq":redate,"ltzrq":redate,"lbzj":sdata.L_bzj,"lsfmj":sdata.L_sfmj,"lsfsq":sdata.L_sfsq
+                            ,"lzjze":sdata.L_zjze,"lremarks":sdata.l_remarks,"hnumber":sdata.h_number
+                        },
+                        success: function (status) {
+                           if(status=="成功"){
+                               layer.msg('添加成功', function(){
+                                   layer.close(layer.index);
+                               });
+                           }
+                        }
+                    })
+                },btn2: function(index, layero){
+                    //按钮【按钮二】的回调
+                    layer.msg('我是按钮二', function(){
+                        //do something
+                    });
+                    // 开启该代码可禁止点击该按钮关闭
+                },btn3: function (index,layero) {
+                    layer.prompt(
+                        {
+                            formType:0,
+                            title: '请输入业主姓名',
+                        },function(value, index, elem){
+
+                            alert(value); //得到value
+                            zdtc(value);
+                            layer.close(index);
+                        });
+                            return false;
+                }
+            });
+        }
+    </script>
+    <script>
+    function sa(a,b) {
+        console.log(a+"--"+b);
+                        layui.table.render({
+                        elem: '#demo2'
+                        , height: 400
+                        ,id: 'idTest'
+                        , url: '/ssm_wy/queryPriceScopePage' //数据接口
+                        , where: {
+                        'price': a,'price2':b
+                        }
+                        , page: true //开启分页
+                        , cols: [[ //表头
+                        {field: 'h_id', title: '房屋编号', width: 100, sort: true, fixed: 'left'}
+                        , {field: 'h_state', title: '房屋状态', width: 95, sort: true}
+                        , {field: 'h_bulidingName', title: '楼宇名称', width: 95}
+                        , {field: 'h_unitNumber', title: '单元号', width: 80}
+                        , {field: 'h_floor', title: '所属楼层', width: 100, sort: true}
+                        , {field: 'h_type', title: '所属户型', width: 100, sort: true}
+                        , {field: 'h_direction', title: '房屋朝向', width: 95}
+                        , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
+                        , {field: 'h_remarks', title: '备注', width: 70, sort: true}
+                        , {title: '操作', minWidth: 175, templet: function (value) {
+                        var obj = JSON.stringify(value);
+                        return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tk("+obj+")';>\n" +
+                        "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
+                        "   </button>" +
+                        "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
+                        "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                        "  </button>";
+                        }
+                        }
+                        ]]
+                        });  }
     </script>
     <script>
         //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
@@ -59,9 +232,6 @@
 </head>
 <body>
 <div>
-    <em><img src="../../images/wy.png" alt=""></em><a href="#">收费管理</a><span>></span><a href="#">收费</a>
-</div>
-<div  style="padding-top: 20px;">
     <div class="con_left">
         <div class="con_left_head">
             <em><img src="../../images/xql.png" alt=""></em>小区信息
@@ -73,16 +243,14 @@
                     <li >标准模式</li>
                 </ul>
                 <div class="layui-tab-content">
-
                     <div class="layui-tab-item layui-show">
                         <div class="layui-input-inline">
-                            <select name="modules" lay-verify="required" lay-search="" style="width: 200px">
+                            <select name="modules" id="seltree" lay-verify="required" lay-search="" style="width: 150px">
                                 <option value="">请选择</option>
-                                <option value="1">layer</option>
-                                <option value="2">form</option>
-                                <option value="3">layim</option>
-                                <option value="4">element</option>
+                                <option value="XQ4">浪琴湾小区</option>
+                                <option value="XQ5">浪琴湾小区2</option>
                             </select>
+                            <a class="layui-btn layui-btn-xs"  id="btuquery"><label>查询</label></a>
                         </div>
                         <div style="padding-left: 20px">未入住:&nbsp;
                             <img src="/ssm_wy/images/1.jpg" style="width: 15px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -91,27 +259,28 @@
                     <div class="layui-tab-item">
                         <!--<div class="layui-inline">-->
                         <!--<label class="layui-form-label">多规则验证</label>-->
-                        <!--<div class="layui-input-inline">-->
-                        <!--<input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input">-->
-                        <!--</div>-->
-                        <table id="tab" >
-                            <tr>
-                                <td>123</td>
-                                <td>123</td>
-                                <td>123</td>
-                            </tr>
-                            <tr>
-                                <td>123</td>
-                                <td>123</td>
-                                <td>123</td>
-                            </tr>
-                        </table>
+
+                        <select name="modules" id="selyz"  lay-verify="required" lay-search="" style="width: 200px">
+                            <option value="">请选择查询</option>
+                            <option value="O_name">业主姓名</option>
+                            <option value="Re_card">证件号</option>
+                            <option value="O_phone">手机号</option>
+                        </select>
+                        <div class="layui-input-inline">
+                            输入关键字:<input type="text" id="gjname"  class="layui-input" width="600px" height="80px" >
+                        </div>
+                        <a class="layui-btn layui-btn-xs"  id="btuyzxx"><label>查询</label></a>
+                        <table id="bzdemo" lay-filter="test"></table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+    <!--表格-->
+    <table class="layui-hide" id="test1" lay-filter="test" ></table>
+    <!--<table class="layui-hide" id="test1" lay-filter="test"></table>-->
+<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
 <script>
     /*报修列表切换*/
     $('.txs').click(function () {
@@ -138,69 +307,65 @@
     });
 
 </script>
-<div >
-    <form>
-        <div class="layui-inline">
-        <label class="layui-form-label">选择框</label>
-        <select name="city" lay-filter="filter" style="width: 200px">
-            <option value="全部">全部</option>
-            <option value="已出售">已出售</option>
-            <option value="未出售">未出售</option>
-        </select>
+
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">房屋出租</li>
+        <li>权限分配</li>
+        <li>商品管理</li>
+        <li>订单管理</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <div class="layui-inline">
+                <button id="30-50" class="layui-btn layui-btn-radius layui-btn-normal price" onclick="sa('299999','500001')">30万-50万</button>
+                <button id="50-80" class="layui-btn layui-btn-radius layui-btn-normal price" onclick="sa('499999','800001')">50万-80万</button>
+                <button id="100-150" class="layui-btn layui-btn-radius layui-btn-normal price" onclick="sa('999999','1500001')">100万-150万</button>
+                <button id="200-500" class="layui-btn layui-btn-radius layui-btn-normal price" onclick="sa('1999999','5000001')">200万-500万</button>
+            </div>
+            <div class="layui-inline">
+                <select id="setype" name="city" lay-filter="filter" style="width: 80px">
+                    <option value="">全部</option>
+                    <option value="二室一厅">二室一厅</option>
+                    <option value="三室一厅">三室一厅</option>
+                    <option value="四室一厅">四室一厅</option>
+                </select>
+            </div>
+            <div class="layui-inline">
+                <input type="text" id="price" name="title" required lay-verify="required" placeholder="请输入能接受的价位" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-inline">
+                <button id="cxbutton" class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
+            </div>
+            <table id="demo2" lay-filter="test" style="height: 100%">
+            </table>
         </div>
-        <div class="layui-inline">
-            <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-        </div>
-        <div class="layui-inline">
-            <button class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
-        </div>
-    </form>
-    <table id="demo" lay-filter="test" >
-    </table></div>
+            <div class="layui-tab-item">
+            </div>
+        <div class="layui-tab-item">内容4</div>
+        <div class="layui-tab-item">内容5</div>
+    </div>
+</div>
+
 <script>
-    form.on('select(filter)', function(data){
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
 
-        category = data.value;
+    layui.use('select',function () {
+        var form=latui.form;
 
-        categoryName = data.elem[data.elem.selectedIndex].text
+        form.on('select(filter)', function(data){
+            console.log(data.elem); //得到select原始DOM对象
+            console.log(data.value); //得到被选中的值
+            console.log(data.othis); //得到美化后的DOM对象
+        });
+    })
 
-        form.render('select')
-
+    layui.use('element', function(){
+        var element = layui.element;
     });
 </script>
+       </div>
 <script>
-    layui.use('table', function(){
-        var table = layui.table;
-
-        //第一个实例
-        table.render({
-            elem: '#demo'
-            ,height: 312
-            ,url: '' //数据接口
-            ,page: true //开启分页
-            ,cols: [[ //表头
-                {field: 'id', title: '编号', width:80, sort: true, fixed: 'left'}
-                ,{field: 'username', title: '所属公司', width:100}
-                ,{field: 'sex', title: '姓名', width:80, sort: true}
-                ,{field: 'city', title: '性别', width:80}
-                ,{field: 'sign', title: '出生日期', width: 177}
-                ,{field: 'experience', title: '证件号码', width: 120, sort: true}
-                ,{field: 'score', title: '手机号码', width: 120, sort: true}
-                ,{field: 'classify', title: '状态', width: 80}
-                ,{field: 'wealth', title: '操作', width: 135, sort: true},
-                {title: '操作', minWidth:175, templet:function(value){
-                        var obj = JSON.stringify(value);
-                        return " <button class=\"layui-btn layui-btn-sm\" value='编辑' onclick='member_edit("+obj+")'>\n" +
-                            "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
-                            "   </button>" +
-                            "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete("+value.id+")\">\n" +
-                            "    <i class=\"layui-icon\">&#xe640;</i>\n" +
-                            "  </button>";
-                    }}
-            ]]
-        });
-
-    });
 </script>
 
 </body>

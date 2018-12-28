@@ -13,6 +13,7 @@
     <script type="text/javascript" src="/ssm_wy/layui/lay/modules/form.js"></script>
     <script type="text/javascript" src="/ssm_wy/layui/lay/modules/element.js"></script>
     <script type="text/javascript" src="/ssm_wy/js/jquery.serializejson.js"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/lay/modules/upload.js"></script>
     <!--树形-->
     <script>
         var data={};
@@ -44,7 +45,7 @@
                                 table.render({
                                     elem: '#demo'
                                     , height: 400
-                                    , url: '/ssm_wy/queryBulidingName' //数据接口
+                                    , url: '/ssm_wy/queryBulidingNamePage' //数据接口
                                     , where: {
                                         'hBulidingname': item.id                                }
                                     , page: true //开启分页
@@ -77,7 +78,7 @@
                                     elem: '#demo2'
                                     , height: 400
                                     ,id: 'idTest'
-                                    , url: '/ssm_wy/queryState' //数据接口
+                                    , url: '/ssm_wy/queryStatePage' //数据接口
                                     , where: {
                                         'hBulidingname': item.id
                                     }
@@ -174,7 +175,7 @@
                             body.contents().find(id).val(text);
                         }
                 }
-                ,btn: ['确定', '关闭','自动填充']
+                ,btn: ['确定', '关闭']
                 ,yes: function(index, layero){
                     //按钮【按钮一】的回调
                     var iframeWin = window[layero.find('iframe')[0]['name']];
@@ -204,18 +205,6 @@
                         //do something
                     });
                     // 开启该代码可禁止点击该按钮关闭
-                },btn3: function (index,layero) {
-                    layer.prompt(
-                        {
-                            formType:0,
-                            title: '请输入业主姓名',
-                        },function(value, index, elem){
-
-                            alert(value); //得到value
-                            zdtc(value);
-                            layer.close(index);
-                        });
-                            return false;
                 }
             });
         }
@@ -372,8 +361,8 @@
                 </select>
             </div>
             <div class="layui-inline">
-                <input type="text" id="price" name="title" required lay-verify="required" placeholder="请输入能接受的价位" autocomplete="off" class="layui-input">
-            </div>
+            <input type="text" id="price" name="title" required lay-verify="required" placeholder="请输入能接受的价位" autocomplete="off" class="layui-input">
+        </div>
             <div class="layui-inline">
                 <button id="cxbutton" class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
             </div>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/ssm_wy/css/reset.css">
+    <link rel="stylesheet" href="/ssm_wy/css/property.css">
+    <link rel="stylesheet" href="/ssm_wy/css/property_Accounting_management.css">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/lay/modules/form.js"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/lay/modules/element.js"></script>
+    <script type="text/javascript" src="/ssm_wy/js/jquery.serializejson.js"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/lay/modules/upload.js"></script>
+</head>
+<body>
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">待处理报修</li>
+        <li>正在处理报修</li>
+        <li>处理结束报修</li>
+        <li>已完成报修</li>
+        <li>无效报修</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <div class="layui-inline">
+                <input type="text" id="c_name" name="title" required lay-verify="required" placeholder="请输入报修人" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-inline">
+                <button id="cxbutton" class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
+            </div>
+            <div >
+                <table id="demo" lay-table="test" style="height: 100%" >
+                </table>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+        <div class="layui-inline">
+            <input type="text" id="c_name2" name="title" required lay-verify="required" placeholder="请输入报修人" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline">
+            <button id="cxbutton2" class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
+        </div>
+        <div >
+            <table id="demo2" lay-table="test" style="height: 100%" >
+            </table>
+        </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-inline">
+                <input type="text" id="c_name3" name="title" required lay-verify="required" placeholder="请输入报修人" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-inline">
+                <button id="cxbutton3" class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
+            </div>
+            <div >
+                <table id="demo3" lay-table="test" style="height: 100%" >
+                </table>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-inline">
+                <input type="text" id="c_name4" name="title" required lay-verify="required" placeholder="请输入报修人" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-inline">
+                <button id="cxbutton4" class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
+            </div>
+            <div >
+                <table id="demo4" lay-table="test" style="height: 100%" >
+                </table>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-inline">
+                <input type="text" id="c_name5" name="title" required lay-verify="required" placeholder="请输入报修人" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-inline">
+                <button id="cxbutton5" class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
+            </div>
+            <div >
+                <table id="demo5" lay-table="test" style="height: 100%" >
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script>
+    layui.use('table',function () {
+
+        var table=layui.table;
+
+        $("#cxbutton").click(function() {
+            var cname=document.getElementById("c_name");
+            console.log("cname=="+cname.value);
+            table.render({
+                elem: '#demo'
+                , height: 400
+                ,id: 'idTest'
+                , url: '/ssm_wy/queryRepairsPage' //数据接口
+                , where: {
+                    'cname': cname.value
+                }
+                , page: true //开启分页
+                , cols: [[ //表头
+                    {field: 'rp_id', title: '投诉编号', width: 100, sort: true, fixed: 'left'}
+                    , {field: 'rp_odd', title: '投诉单号', width: 95, sort: true}
+                    , {field: 'h_number', title: '房屋编号', width: 95}
+                    , {field: 'rp_name', title: '投诉人', width: 80}
+                    , {field: 'rp_phone', title: '投诉人电话', width: 100, sort: true}
+                    , {field: 'rp_date', title: '投诉日期', width: 100, sort: true}
+                    , {field: 'rp_state', title: '投诉状态', width: 95}
+                    , {title: '操作', minWidth: 175, templet: function (value) {
+                            var obj = JSON.stringify(value);
+                            var checkStatus=table.checkStatus("idTest");
+                            var rowvalue=checkStatus.date;
+                            return " <button class=\"layui-btn layui-btn-sm\" value='查看详情' onclick='tk("+obj+")';>\n" +
+                                "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                "   </button>" +
+                                "<button class=\"layui-btn layui-btn-sm\"  onclick='del("+obj+")';>\n" +
+                                "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                "  </button>";
+                        }
+                    }
+                ]]
+            });
+        });
+
+        $("#cxbutton2").click(function() {
+            var cname=document.getElementById("c_name2");
+            console.log("cname=="+cname.value);
+            table.render({
+                elem: '#demo2'
+                , height: 400
+                ,id: 'idTest'
+                , url: '/ssm_wy/queryRepairs2Page' //数据接口
+                , where: {
+                    'cname': cname.value
+                }
+                , page: true //开启分页
+                , cols: [[ //表头
+                    {field: 'rp_id', title: '投诉编号', width: 100, sort: true, fixed: 'left'}
+                    , {field: 'rp_odd', title: '投诉单号', width: 95, sort: true}
+                    , {field: 'h_number', title: '房屋编号', width: 95}
+                    , {field: 'rp_name', title: '投诉人', width: 80}
+                    , {field: 'rp_phone', title: '投诉人电话', width: 100, sort: true}
+                    , {field: 'rp_date', title: '投诉日期', width: 100, sort: true}
+                    , {field: 'rp_state', title: '投诉状态', width: 95}
+                    , {title: '操作', minWidth: 175, templet: function (value) {
+                            var obj = JSON.stringify(value);
+                            var checkStatus=table.checkStatus("idTest");
+                            var rowvalue=checkStatus.date;
+                            return " <button class=\"layui-btn layui-btn-sm\" value='查看详情' onclick='tk("+obj+")';>\n" +
+                                "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                "   </button>" +
+                                "<button class=\"layui-btn layui-btn-sm\"  onclick='del("+obj+")';>\n" +
+                                "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                "  </button>";
+                        }
+                    }
+                ]]
+            });
+        });
+
+        $("#cxbutton3").click(function() {
+            var cname=document.getElementById("c_name3");
+            console.log("cname=="+cname.value);
+            table.render({
+                elem: '#demo3'
+                , height: 400
+                ,id: 'idTest'
+                , url: '/ssm_wy/queryRepairs3Page' //数据接口
+                , where: {
+                    'cname': cname.value
+                }
+                , page: true //开启分页
+                , cols: [[ //表头
+                    {field: 'rp_id', title: '投诉编号', width: 100, sort: true, fixed: 'left'}
+                    , {field: 'rp_odd', title: '投诉单号', width: 95, sort: true}
+                    , {field: 'h_number', title: '房屋编号', width: 95}
+                    , {field: 'rp_name', title: '投诉人', width: 80}
+                    , {field: 'rp_phone', title: '投诉人电话', width: 100, sort: true}
+                    , {field: 'rp_date', title: '投诉日期', width: 100, sort: true}
+                    , {field: 'rp_state', title: '投诉状态', width: 95}
+                    , {title: '操作', minWidth: 175, templet: function (value) {
+                            var obj = JSON.stringify(value);
+                            var checkStatus=table.checkStatus("idTest");
+                            var rowvalue=checkStatus.date;
+                            return " <button class=\"layui-btn layui-btn-sm\" value='查看详情' onclick='tk("+obj+")';>\n" +
+                                "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                "   </button>" +
+                                "<button class=\"layui-btn layui-btn-sm\"  onclick='del("+obj+")';>\n" +
+                                "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                "  </button>";
+                        }
+                    }
+                ]]
+            });
+        });
+
+        $("#cxbutton4").click(function() {
+            var cname=document.getElementById("c_name4");
+            console.log("cname=="+cname.value);
+            table.render({
+                elem: '#demo4'
+                , height: 400
+                ,id: 'idTest'
+                , url: '/ssm_wy/queryRepairs4Page' //数据接口
+                , where: {
+                    'cname': cname.value
+                }
+                , page: true //开启分页
+                , cols: [[ //表头
+                    {field: 'rp_id', title: '投诉编号', width: 100, sort: true, fixed: 'left'}
+                    , {field: 'rp_odd', title: '投诉单号', width: 95, sort: true}
+                    , {field: 'h_number', title: '房屋编号', width: 95}
+                    , {field: 'rp_name', title: '投诉人', width: 80}
+                    , {field: 'rp_phone', title: '投诉人电话', width: 100, sort: true}
+                    , {field: 'rp_date', title: '投诉日期', width: 100, sort: true}
+                    , {field: 'rp_state', title: '投诉状态', width: 95}
+                    , {title: '操作', minWidth: 175, templet: function (value) {
+                            var obj = JSON.stringify(value);
+                            var checkStatus=table.checkStatus("idTest");
+                            var rowvalue=checkStatus.date;
+                            return " <button class=\"layui-btn layui-btn-sm\" value='查看详情' onclick='tk("+obj+")';>\n" +
+                                "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                "   </button>" +
+                                "<button class=\"layui-btn layui-btn-sm\"  onclick='del("+obj+")';>\n" +
+                                "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                "  </button>";
+                        }
+                    }
+                ]]
+            });
+        });
+
+        $("#cxbutton5").click(function() {
+            var cname=document.getElementById("c_name5");
+            console.log("cname=="+cname.value);
+            table.render({
+                elem: '#demo5'
+                , height: 400
+                ,id: 'idTest'
+                , url: '/ssm_wy/queryRepairs5Page' //数据接口
+                , where: {
+                    'cname': cname.value
+                }
+                , page: true //开启分页
+                , cols: [[ //表头
+                    {field: 'rp_id', title: '投诉编号', width: 100, sort: true, fixed: 'left'}
+                    , {field: 'rp_odd', title: '投诉单号', width: 95, sort: true}
+                    , {field: 'h_number', title: '房屋编号', width: 95}
+                    , {field: 'rp_name', title: '投诉人', width: 80}
+                    , {field: 'rp_phone', title: '投诉人电话', width: 100, sort: true}
+                    , {field: 'rp_date', title: '投诉日期', width: 100, sort: true}
+                    , {field: 'rp_state', title: '投诉状态', width: 95}
+                    , {title: '操作', minWidth: 175, templet: function (value) {
+                            var obj = JSON.stringify(value);
+                            var checkStatus=table.checkStatus("idTest");
+                            var rowvalue=checkStatus.date;
+                            return " <button class=\"layui-btn layui-btn-sm\" value='查看详情' onclick='tk("+obj+")';>\n" +
+                                "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                "   </button>" +
+                                "<button class=\"layui-btn layui-btn-sm\"  onclick='del("+obj+")';>\n" +
+                                "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                "  </button>";
+                        }
+                    }
+                ]]
+            });
+        });
+    });
+    function tk(data) {
+        var url="/ssm_wy/html/Yzbx/bxxq.html";
+        layer.open({
+            type: 2,
+            area:['600px','500px'],
+            title:"详情",
+            maxmin:true,
+            content: url,//这里content是一个普通的String
+            success : function(layero, index){
+                var body = layui.layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                for (var i = 1; Object.entries(data).length > i; i++) {
+                    var id = '#' + Object.entries(data)[i][0];
+                    var text = Object.entries(data)[i][1];
+                    body.contents().find(id).val(text);
+                }
+            }
+            ,btn: ['确定', '关闭']
+            ,yes: function(index, layero){
+                //按钮【按钮一】的回调
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                //var sdata=body.contents().find('#ff').serializeJSON();
+                var sdata=iframeWin.sasa();
+                var redate=new Date();
+                // redate=sdata.re_date;
+                console.log(redate)
+                $.ajax({
+                    url: '/ssm_wy/addReall',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {"renumber": sdata.re_number,"reprice":sdata.re_price,"redate":redate,"refkfs":sdata.re_fkfs,"oname":sdata.o_name,"recard":sdata.re_card
+                        ,"rephone":sdata.re_phone,"ophone":sdata.o_phone,"reremarks":sdata.re_remarks,"hnumber":sdata.h_number,"onumber":sdata.o_number
+                    },
+                    success: function (status) {
+                        if(status=="成功"){
+                            layer.msg('添加成功', function(){
+                                layer.close(layer.index);
+                            });
+                        }
+                    }
+                })
+            },btn2: function(index, layero){
+                //按钮【按钮二】的回调
+                // 开启该代码可禁止点击该按钮关闭
+            }
+        });
+    }
+    function del(obj) {
+        console.log("cid==="+obj.c_id)
+        $.ajax({
+            url: '/ssm_wy/delComplaint',
+            type: 'post',
+            dataType: 'json',
+            data: {"cid":obj.c_id},
+            success: function (status) {
+                console.log("status==="+status)
+                if(status=="成功"){
+                    layui.layer.msg('删除成功!!!', function(){
+                        //do something
+                    });
+                }
+            }
+        });
+    }
+</script>
+</html>

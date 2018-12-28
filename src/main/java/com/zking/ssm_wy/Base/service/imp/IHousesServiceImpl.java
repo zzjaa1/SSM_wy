@@ -3,6 +3,7 @@ package com.zking.ssm_wy.Base.service.imp;
 import com.zking.ssm_wy.Base.mapper.HousesMapper;
 import com.zking.ssm_wy.Base.model.Houses;
 import com.zking.ssm_wy.Base.service.IHousesService;
+import com.zking.ssm_wy.Base.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,13 +26,13 @@ public class IHousesServiceImpl implements IHousesService {
     }
 
     @Override
-    public List<Map<String, Object>> queryBulidingName(String bulidingName) {
-        return housesMapper.queryBulidingName(bulidingName);
+    public List<Map<String, Object>> queryBulidingNamePage(String bulidingName,PageBean pd) {
+        return housesMapper.queryBulidingNamePage(bulidingName);
     }
 
     @Override
-    public List<Map<String, Object>> queryState(String bulidingName) {
-        return housesMapper.queryState(bulidingName);
+    public List<Map<String, Object>> queryStatePage(String bulidingName,PageBean pd) {
+        return housesMapper.queryStatePage(bulidingName);
     }
 
     @Transactional
@@ -68,12 +69,12 @@ public class IHousesServiceImpl implements IHousesService {
     }
 
     @Override
-    public List<Map<String, Object>> queryPricePage(Float price, String hState) {
+    public List<Map<String, Object>> queryPricePage(Float price, String hState,PageBean pd) {
         return housesMapper.queryPricePage(price,hState);
     }
 
     @Override
-    public List<Map<String, Object>> queryPriceScopePage(Float price, Float price2) {
+    public List<Map<String, Object>> queryPriceScopePage(Float price, Float price2,PageBean pd) {
         return housesMapper.queryPriceScopePage(price,price2);
     }
 

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/property.css">
     <link rel="stylesheet" href="../../css/Reporting_Charges_index.css">
+    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
 <div>
@@ -37,109 +38,198 @@
                     <button>统计</button>
                 </li>
                 <li>
-                    <a href="Reporting_Charges_more.html" style="color:#08c">更多报表>></a>
+                    <!--<a href="Reporting_Charges_more.html" style="color:#08c">更多报表>></a>-->
                 </li>
             </ul>
         </div>
     </div>
-    <div id="reporting_charge">
-        <div class="chooseIn_top chairFix">
-            <div><img src="../../images/H_ViewGallery.png" alt=""></div>
-            <h5>统计报表</h5>
-        </div>
-        <ul class="reporting_charge_con chairFix">
-            <li class="reporting_charge_con_same">
-                <div class="hed chairFix">
-                    <h5>收费概况统计</h5>
-                    <button><img src="../../images/H_3column.png" alt="" title="图标导出菜单"></button>
-                </div>
-                <!--没有数据-->
-                <div>没有数据</div>
-            </li>
-            <li class="reporting_charge_con_same">
-                <div class="hed chairFix">
-                    <h5>收费概况统计</h5>
-                    <button><img src="../../images/H_3column.png" alt="" title="图标导出菜单"></button>
-                </div>
-                <!--没有数据-->
-                <div>没有数据</div>
-            </li>
-            <li class="reporting_charge_con_same">
-                <div class="hed chairFix">
-                    <h5>收费概况统计</h5>
-                    <button><img src="../../images/H_3column.png" alt="" title="图标导出菜单"></button>
-                </div>
-                <!--没有数据-->
-                <div>没有数据</div>
-            </li>
-            <li class="reporting_charge_con_same">
-                <div class="hed chairFix">
-                    <h5>收费概况统计</h5>
-                    <button><img src="../../images/H_3column.png" alt="" title="图标导出菜单"></button>
-                </div>
-                <!--没有数据-->
-                <div>没有数据</div>
-            </li>
-        </ul>
-    </div>
-    <div id="payment_Statistics">
-        <div class="payment_Statistics_head">
-            <h5>缴费趋势统计</h5>
-            <button><img src="../../images/H_3column.png" alt="" title="图标导出菜单"></button>
-        </div>
-        <div class="payment_Statistics_con">
-            <div class="money">金额（元）</div>
-            <div class="shuzhou">
-                <div class="shuzhou_x"></div>
-                <ul class="shuzhou_dott">
-                    <li style="margin-left:0;"></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <div class="hideMoney">
-                        <span style="font-size:12px;margin-left:5px;">2017/01</span>
-                        <div>
-                            <p style="font-size:14px;margin-left:5px;"><em></em>收费金额：<var>0</var>元</p>
-                        </div>
-                        <strong class="theSan"></strong>
-                    </div>
-                </ul>
-            </div>
-        </div>
-    </div>
 </div>
-<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+
+<script src="/ssm_wy/Echarts/echarts.js"></script>
+<!--<script src="/ssm_wy/Echarts/echarts.simple.min.js"></script>
+<script src="/ssm_wy/Echarts/echarts.common.min.js"></script>
+<script src="/ssm_wy/Echarts/echarts.min.js"></script>-->
+
+<div id="main" style="width: 500px;height:800px;"></div>
+<!--<script>-->
+    <!--// 基于准备好的dom，初始化echarts实例-->
+    <!--var myChart = echarts.init(document.getElemeddntById('main'));-->
+
+    <!--$.ajax({-->
+        <!--url: '/ssm_wy/querytj',-->
+        <!--method: 'post',-->
+        <!--data: {},-->
+        <!--dataType: 'JSON',-->
+        <!--success: function (data) {-->
+
+           <!--// datas=data.li;-->
+            <!--console.log(data.li);-->
+            <!--var option;-->
+            <!--$.each(data.li,function (idex,em) {-->
+                <!--var datas={};-->
+                <!--datas.value=em.value;-->
+                <!--datas.name=em.name;-->
+                <!--option = {-->
+                <!--backgroundColor: '#2c343c',-->
+
+                <!--title: {-->
+                    <!--text: 'Customized Pie',-->
+                    <!--left: 'center',-->
+                    <!--top: 20,-->
+                    <!--textStyle: {-->
+                        <!--color: '#ccc'-->
+                    <!--}-->
+                <!--},-->
+                <!--tooltip : {-->
+                    <!--trigger: 'item',-->
+                    <!--formatter: "{a} <br/>{b} : {c} ({d}%)"-->
+                <!--},-->
+                <!--visualMap: {-->
+                    <!--show: false,-->
+                    <!--min: 80,-->
+                    <!--max: 600,-->
+                    <!--inRange: {-->
+                        <!--colorLightness: [0, 1]-->
+                    <!--}-->
+                <!--},-->
+                <!--series : [-->
+                    <!--{-->
+                        <!--name:'访问来源',-->
+                        <!--type:'pie',-->
+                        <!--radius : '55%',-->
+                        <!--center: ['50%', '50%'],-->
+                        <!--data:[-->
+                            <!--// {value:335, name:'直接访问'},-->
+                            <!--// {value:310, name:'邮件营销'},-->
+                            <!--// {value:274, name:'联盟广告'},-->
+                            <!--// {value:235, name:'视频广告'},-->
+                            <!--// {value:400, name:'搜索引擎'}-->
+                            <!--datas-->
+                        <!--].sort(function (a, b) { return a.value - b.value; }),-->
+                        <!--roseType: 'radius',-->
+                        <!--label: {-->
+                            <!--normal: {-->
+                                <!--textStyle: {-->
+                                    <!--color: 'rgba(255, 255, 255, 0.3)'-->
+                                <!--}-->
+                            <!--}-->
+                        <!--},-->
+                        <!--labelLine: {-->
+                            <!--normal: {-->
+                                <!--lineStyle: {-->
+                                    <!--color: 'rgba(255, 255, 255, 0.3)'-->
+                                <!--},-->
+                                <!--smooth: 0.2,-->
+                                <!--length: 10,-->
+                                <!--length2: 20-->
+                            <!--}-->
+                        <!--},-->
+                        <!--itemStyle: {-->
+                            <!--normal: {-->
+                                <!--color: '#c23531',-->
+                                <!--shadowBlur: 200,-->
+                                <!--shadowColor: 'rgba(0, 0, 0, 0.5)'-->
+                            <!--}-->
+                        <!--},-->
+
+                        <!--animationType: 'scale',-->
+                        <!--animationEasing: 'elasticOut',-->
+                        <!--animationDelay: function (idx) {-->
+                            <!--return Math.random() * 200;-->
+                        <!--}-->
+                    <!--}-->
+
+                <!--]-->
+            <!--};-->
+                <!--myChart.setOption(option);-->
+            <!--})-->
+
+        <!--},-->
+        <!--error: function (data) {-->
+        <!--}-->
+    <!--});-->
+
+<!--</script>-->
 <script>
-    $('.hr_div1').click(function(){
-        var i=$('.hr_div1').index(this);
-        if($(".header_list").eq(i).get(0).style.display=="block"){
-            $(".header_list").eq(i).hide()
-        }else{
-            $(".header_list").hide()
-            $(".header_list").eq(i).show()
-        }
-    })
-    $('.hdl_select').click(function () {
-        var a=$(this).html();
-        $('.hr_show').html(a);
-    });
-    /*缴费趋势统计*/
-    $(".shuzhou_dott li").mouseover(function(){
-        var arr1=["2017/01","2017/02","2017/03","2017/04","2017/05","2017/06","2017/07","2017/08","2017/09","2017/10","2017/11","2017/12"];
-        var i=$(".shuzhou_dott li").index(this)
-        $(".hideMoney span").html(arr1[i])
-        $(".hideMoney").animate({
-            left:i*95-59+'px'
-        },200,'linear')
-    })
+    var myChart = echarts.init(document.getElementById('main'));
+    var hours = ['12a', '1a', '2a', '3a', '4a', '5a', '6a',
+        '7a', '8a', '9a','10a','11a',
+        '12p', '1p', '2p', '3p', '4p', '5p',
+        '6p', '7p', '8p', '9p', '10p', '11p'];
+    var days = ['Saturday', 'Friday', 'Thursday',
+        'Wednesday', 'Tuesday', 'Monday', 'Sunday'];
+    let earth = {};
+    var data = [[0,0,5],[0,1,1],[0,2,0],[0,3,0],[0,4,0],[0,5,0],[0,6,0],[0,7,0],[0,8,0],[0,9,0],[0,10,0],[0,11,2],[0,12,4],[0,13,1],[0,14,1],[0,15,3],[0,16,4],[0,17,6],[0,18,4],[0,19,4],[0,20,3],[0,21,3],[0,22,2],[0,23,5],[1,0,7],[1,1,0],[1,2,0],[1,3,0],[1,4,0],[1,5,0],[1,6,0],[1,7,0],[1,8,0],[1,9,0],[1,10,5],[1,11,2],[1,12,2],[1,13,6],[1,14,9],[1,15,11],[1,16,6],[1,17,7],[1,18,8],[1,19,12],[1,20,5],[1,21,5],[1,22,7],[1,23,2],[2,0,1],[2,1,1],[2,2,0],[2,3,0],[2,4,0],[2,5,0],[2,6,0],[2,7,0],[2,8,0],[2,9,0],[2,10,3],[2,11,2],[2,12,1],[2,13,9],[2,14,8],[2,15,10],[2,16,6],[2,17,5],[2,18,5],[2,19,5],[2,20,7],[2,21,4],[2,22,2],[2,23,4],[3,0,7],[3,1,3],[3,2,0],[3,3,0],[3,4,0],[3,5,0],[3,6,0],[3,7,0],[3,8,1],[3,9,0],[3,10,5],[3,11,4],[3,12,7],[3,13,14],[3,14,13],[3,15,12],[3,16,9],[3,17,5],[3,18,5],[3,19,10],[3,20,6],[3,21,4],[3,22,4],[3,23,1],[4,0,1],[4,1,3],[4,2,0],[4,3,0],[4,4,0],[4,5,1],[4,6,0],[4,7,0],[4,8,0],[4,9,2],[4,10,4],[4,11,4],[4,12,2],[4,13,4],[4,14,4],[4,15,14],[4,16,12],[4,17,1],[4,18,8],[4,19,5],[4,20,3],[4,21,7],[4,22,3],[4,23,0],[5,0,2],[5,1,1],[5,2,0],[5,3,3],[5,4,0],[5,5,0],[5,6,0],[5,7,0],[5,8,2],[5,9,0],[5,10,4],[5,11,1],[5,12,5],[5,13,10],[5,14,5],[5,15,7],[5,16,11],[5,17,6],[5,18,0],[5,19,5],[5,20,3],[5,21,4],[5,22,2],[5,23,0],[6,0,1],[6,1,0],[6,2,0],[6,3,0],[6,4,0],[6,5,0],[6,6,0],[6,7,0],[6,8,0],[6,9,0],[6,10,1],[6,11,0],[6,12,2],[6,13,1],[6,14,3],[6,15,4],[6,16,0],[6,17,0],[6,18,0],[6,19,0],[6,20,1],[6,21,2],[6,22,2],[6,23,6]];
+   var option = {
+        tooltip: {},
+        visualMap: {
+            max: 20,
+            inRange: {
+                color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+            }
+        },
+        xAxis3D: {
+            type: 'category',
+            data: hours
+        },
+        yAxis3D: {
+            type: 'category',
+            data: days
+        },
+        zAxis3D: {
+            type: 'value'
+        },
+        grid3D: {
+            boxWidth: 200,
+            boxDepth: 80,
+            viewControl: {
+                // projection: 'orthographic'
+            },
+            light: {
+                main: {
+                    intensity: 1.2,
+                    shadow: true
+                },
+                ambient: {
+                    intensity: 0.3
+                }
+            }
+        },
+        series: [{
+            type: 'bar3D',
+            data: data.map(function (item) {
+                return {
+                    value: [item[1], item[0], item[2]],
+                }
+            }),
+            shading: 'lambert',
+
+            label: {
+                textStyle: {
+                    fontSize: 16,
+                    borderWidth: 1
+                }
+            },
+
+            emphasis: {
+                label: {
+                    textStyle: {
+                        fontSize: 20,
+                        color: '#900'
+                    }
+                },
+                itemStyle: {
+                    color: '#900'
+                }
+            }
+        }]
+    }
+    // earth.init = function (id,Data) {
+    //     earth.chart = echarts.init(document.getElementById(id));
+    //     earth.chart.setOption(option);
+    // }
+    myChart.setOption(option);
 </script>
+<script type="text/javascript" src="/ssm_wy/js/jquery-1.8.3.min.js"></script>
 </body>
 </html>

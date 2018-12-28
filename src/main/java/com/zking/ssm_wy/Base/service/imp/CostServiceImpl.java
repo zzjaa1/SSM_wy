@@ -47,5 +47,10 @@ public class CostServiceImpl implements ICostService {
         return costMapper.queryrq(qq,zq);
     }
 
+    @Override
+    public int Updacostate(Integer cid) {
+        return costMapper.Updacostate(cid);
+    }
+
 
 }

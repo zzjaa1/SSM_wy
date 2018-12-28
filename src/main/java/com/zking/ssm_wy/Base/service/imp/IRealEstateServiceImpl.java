@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Map;
+
 @Transactional
 @Service
 public class IRealEstateServiceImpl implements IRealEstateService{
@@ -16,5 +19,10 @@ public class IRealEstateServiceImpl implements IRealEstateService{
     @Override
     public String addReal(RealEstate realEstate) {
         return realEstateMapper.addReal(realEstate);
+    }
+
+    @Override
+    public List<Map<String, Object>> querytj(String year) {
+        return realEstateMapper.querytj(year);
     }
 }

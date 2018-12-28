@@ -84,4 +84,20 @@ public class CostController {
         return map;
     }
 
+    @ResponseBody
+    @RequestMapping("/updateCoststate")
+    public Map<String,Object> updateCoststate(String cid){
+
+        String[] split = cid.split(",");
+        for (String s : split) {
+            System.out.println(s);
+            iCostService.Updacostate(Integer.parseInt(s));
+        }
+
+        Map<String,Object> map =new HashMap<>();
+        map.put("success",true);
+        map.put("msg","成功");
+        return map;
+    }
+
 }

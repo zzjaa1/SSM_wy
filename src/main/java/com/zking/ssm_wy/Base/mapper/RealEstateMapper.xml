@@ -29,6 +29,14 @@
     (#{reid},#{renumber},#{reprice},#{redate},#{refkfs},#{oname},
     #{recard},#{rephone},#{ophone},#{reremarks},#{hnumber},#{onumber})
   </select>
+    <select id="querytj" resultType="map">
+      SELECT DATE_FORMAT(Re_date,'%Y-%m')name,SUM(Re_price)value FROM real_estate rel,houses h
+      WHERE rel.h_number=h.h_number  AND  DATE_FORMAT(Re_date,'%Y')
+   <if test="null!=year and ''!=year">
+     AND  DATE_FORMAT(Re_date,'%Y') LIKE CONCAT(CONCAT('%',#{year}),'%')
+   </if>
+    GROUP BY DATE_FORMAT(Re_date,'%Y-%m')
+    </select>
 
 
 </mapper>

@@ -203,20 +203,39 @@
                 });
             });
 
+
             table.on('checkbox(test)', function(obj){
-                var checkStatus = table.checkStatus('testbiao');
-                var data = checkStatus.data;
-                console.log(11);
-                console.log(data);
+                    var checkStatus = table.checkStatus('testbiao');
+                    var data = checkStatus.data;
+                    var a="";
+                    $.each(data,function (idex,em) {
+                        a+=em.c_id+",";
+                    })
+                console.log(a)
+                $("#jiaofei").click(function () {
+                    //alert(1);
+                    $.ajax({
+                        url: '/ssm_wy/Cost/updateCoststate',
+                        method: 'post',
+                        data: {'cid': a},
+                        dataType: 'JSON',
+                        success: function (data) {
+                            // $('#tj').click();
+                            layer.alert(data.suucess, {icon: 1});
+                            layer.alert(data.msg);
+                            //location.reload();
+                        },
+                        error: function (data) {
+                        }
+                    });
+                });
             });
 
             //点击查询业主信息
             $("#btuyzxx").click(function () {
                 query();
             });
-            $("#jiaofei").click(function () {
-                alert(1);
-            });
+
             //点击添加
             $("#add").click(function () {
                 var gybh = $("#fybh").val();

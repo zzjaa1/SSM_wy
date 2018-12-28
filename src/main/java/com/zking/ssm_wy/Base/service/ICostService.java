@@ -18,4 +18,6 @@ public interface ICostService {
     List<Map<String,Object>> queryCostfwPage(List<String> lifj,String qq,String zq,List<String> lify,PageBean pb);
 
     List<Map<String,Object>> queryrq(String qq, String zq);
+
+    int Updacostate(Integer cid);
 }

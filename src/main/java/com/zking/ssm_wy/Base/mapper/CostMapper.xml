@@ -255,4 +255,12 @@ VALUES(#{cFc},#{cUser},#{cJfdw},#{cDwjg},#{cYjfy},
   c_bcfyzq_date = #{cBcfyzqDate},c_bcjfzq_date = #{cBcjfzqDate},c_costName = #{cCostname},c_real = #{cReal},c_remarks =#{cRemarks},cn_id=#{cnId}
     WHERE c_id =#{cId}
   </update>
+  <update id="Updacostate" >
+      update cost
+      <set>
+        state=1
+      </set>
+      where c_id = #{list}
+  </update>
+
 </mapper>

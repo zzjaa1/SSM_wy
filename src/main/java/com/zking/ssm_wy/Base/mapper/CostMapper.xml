@@ -56,7 +56,11 @@
           '')
       </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="queryrq" resultType="map">
+      SELECT * FROM `cost` WHERE  #{qq} &lt; c_bcfyzq_date AND c_bcfyqq_date &lt;  #{qq}
+      OR  #{zq}   &lt;  c_bcfyzq_date AND c_bcfyqq_date &lt;  #{zq}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from cost
     where c_id = #{cId,jdbcType=INTEGER}
   </delete>

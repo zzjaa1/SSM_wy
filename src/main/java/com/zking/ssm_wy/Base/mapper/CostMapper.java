@@ -30,4 +30,6 @@ public interface CostMapper {
     int deleteCost(Cost cost);
 
     List<Map<String,Object>> queryCostfwPage(@Param("lifj") List<String> lifj,@Param("qq")String qq,@Param("zq")String zq,@Param("lify")List<String> lify);
+
+    List<Map<String,Object>> queryrq(@Param("qq")String qq,@Param("zq")String zq);
 }

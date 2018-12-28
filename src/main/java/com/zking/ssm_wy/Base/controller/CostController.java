@@ -24,7 +24,6 @@ public class CostController {
     @RequestMapping("/queryCost")
     @ResponseBody
     public Map<String, Object> queryCost(String hNumber, HttpServletRequest request,int page,int limit){
-        System.out.println(hNumber);
         PageBean pageBean =new PageBean();
         pageBean.setRows(limit);
         pageBean.setPage(page);

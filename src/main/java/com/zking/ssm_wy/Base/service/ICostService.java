@@ -2,6 +2,7 @@ package com.zking.ssm_wy.Base.service;
 
 import com.zking.ssm_wy.Base.model.Cost;
 import com.zking.ssm_wy.Base.util.PageBean;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface ICostService {
     int insertCost(Cost cost);
 
     List<Map<String,Object>> queryCostfwPage(List<String> lifj,String qq,String zq,List<String> lify,PageBean pb);
+
+    List<Map<String,Object>> queryrq(String qq, String zq);
 }

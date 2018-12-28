@@ -1,7 +1,9 @@
 package com.zking.ssm_wy.Base.controller;
 
+import com.zking.ssm_wy.Base.model.Buliding;
 import com.github.pagehelper.PageHelper;
 import com.zking.ssm_wy.Base.model.Houses;
+import com.zking.ssm_wy.Base.service.IBulidingService;
 import com.zking.ssm_wy.Base.service.IHousesService;
 import com.zking.ssm_wy.Base.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,10 @@ public class HousesController {
     private IHousesService iHousesService;
 
     @RequestMapping("/queryBulidingNamePage")
+    @Autowired
+    private IBulidingService bulidingService;
+
+    @RequestMapping("/queryBulidingName")
     @ResponseBody
     public Map<String,Object> queryBulidingNamePage(Houses houses,int page,int limit){
         System.out.println(houses.gethBulidingname());
@@ -46,9 +52,9 @@ public class HousesController {
         return map;
     }
 
-    @RequestMapping("/queryStatePage")
+    @RequestMapping("/queryState")
     @ResponseBody
-    public Map<String,Object> queryStatePage(Houses houses,int page,int limit){
+    public Map<String,Object> queryState(Houses houses){
 
         houses.sethBulidingname("%"+houses.gethBulidingname()+"%");
         String bulidingname=houses.gethBulidingname();
@@ -126,4 +132,100 @@ public class HousesController {
         map.put("page", page);
         return map;
     }
+    /**
+     * 添加单元
+     * @param houses
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/insertHouse")
+    public Map<String,Object> insertHouse(Houses houses){
+        String s = iHousesService.queryHourId();
+        int d=Integer.parseInt(s)+1;
+        houses.sethNumber(houses.getbNumber()+"-DY"+d);
+        int updatequery = iHousesService.Updatequery(houses.getbNumber());
+        Buliding buliding =new Buliding();
+        buliding.setbUnitnumber(updatequery+1);
+        buliding.setbNumber(houses.getbNumber());
+        bulidingService.updateunitname(buliding);
+        houses.sethUnitnumber(1);
+        System.out.println(houses);
+        int i = iHousesService.insertSelective(houses);
+
+        Map<String,Object> map =new HashMap<>();
+        map.put("homename",houses.gethBulidingname());
+        map.put("bh",houses.gethNumber());
+        map.put("success",true);
+        map.put("msg","成功");
+        return map;
+    }
+
+    /**
+     * 添加房间
+     * @param houses
+     * @return
+     */
+    @RequestMapping("/inserthome")
+    @ResponseBody
+    public  Map<String,Object> inserthome(Houses houses){
+        houses.sethNumber(houses.getbNumber()+"-S"+houses.gethBulidingname());
+        houses.sethBulidingname(houses.gethBulidingname()+"室");
+        String h= houses.getbNumber().substring(0,houses.getbNumber().lastIndexOf("-"));
+        int updatequery = iHousesService.Updatequery(h);
+        System.out.println(h);
+        Buliding buliding =new Buliding();
+        buliding.setbHoursnumber(updatequery+1);
+        buliding.setbNumber(h);
+        int update = bulidingService.update(buliding);
+        System.out.println(houses);
+        int i = iHousesService.insertSelective(houses);
+        Map<String,Object> map =new HashMap<>();
+        map.put("success",true);
+        map.put("msg","成功");
+        return map;
+    }
+
+    @RequestMapping("/updateHours2")
+    @ResponseBody
+    public Map<String ,Object> updateHours2(Houses houses){
+        System.out.println(houses);
+        houses.sethUnitnumber(1);
+        iHousesService.updateByPrimaryKeySelective(houses);
+
+        Map<String,Object> map =new HashMap<>();
+        map.put("success",true);
+        map.put("msg","成功");
+        return map;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/updateHours")
+    public Map<String,Object> updateHours(Houses houses){
+
+
+        System.out.println(houses);
+        if (!houses.gethBulidingname().contains("室")){
+            houses.sethBulidingname(houses.gethBulidingname()+"室");
+        }
+       int i = iHousesService.updateByPrimaryKeySelective(houses);
+
+        Map<String,Object> map =new HashMap<>();
+        map.put("success",true);
+        map.put("msg","成功");
+        return map;
+    }
+
+
+    @RequestMapping("/deleteHours")
+    @ResponseBody
+    public Map<String,Object> deleteHours(String hnumber){
+
+        int i = iHousesService.DeleteHours(hnumber);
+        Map<String,Object> map =new HashMap<>();
+        map.put("success",true);
+        map.put("msg","成功");
+        return map;
+    }
+
 }

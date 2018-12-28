@@ -17,10 +17,16 @@
             <div class="layui-input-inline">
                 <input type="text" name="" placeholder="请输入费项名称" id="cn_names" autocomplete="off" class="layui-input" style="width: 200px">
             </div>
-            <button class="layui-btn" data-type="reload" id="tj">立即提交</button>
+            <button class="layui-btn" data-type="reload" id="tj">立即查询</button>
     </div>
     <div class="layui-inline">
         <button class="layui-btn" data-type="reload" onclick="edit('新增')">新增费用项</button>
+    </div>
+    <div class="layui-inline">
+        <button class="layui-btn" data-type="reload"   id="dels">删除选中行</button>
+    </div>
+    <div class="layui-inline">
+        <button class="layui-btn" data-type="reload"   id="bc">保存行数据</button>
     </div>
 </div>
 <div id="demo"></div>
@@ -31,7 +37,7 @@
     <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
 </script>-->
 <div id="dd" style="display: none">
-    <form class="layui-form" id="ff" method="post" action="/ssm_wy/costName/updCostName" id="fr">
+    <form class="layui-form" id="ff" method="post" action="/ssm_wy/costName/updCostName">
         <input type="hidden" id="cn_id" name="cnId">
 
         <div class="layui-form-item">
@@ -75,7 +81,7 @@
         <div class="layui-form-item" style="display: none" >
             <div class="layui-input-block">
                 <button class="layui-btn tj" lay-submit lay-filter="formDemo">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <button type="reset" id="cz" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
     </form>
@@ -108,44 +114,80 @@
             elem: '#demo'
             ,height: 440
             ,url: '/ssm_wy/costName/queryCostName' //数据接口
-           // ,where:{'cnName':cn_name}
-            ,id:'cn_id'
+            ,id:'demo'
             ,page: true //开启分页
-            ,limit:10
-            ,count:10
+            ,title: '费用项表'
+            ,toolbar: '#toolbarDemo'
+            ,totalRow: true
             ,cols: [[ //表头
-                {field: 'cn_id', title: 'ID', width:100, sort: true, fixed: 'left'}
-                ,{field: 'cn_name', title: '费项名称', width:100}
-                ,{field: 'cn_type', title: '费项类型', width:100, sort: true}
-                ,{field: 'cn_price', title: '单位价格', width:100}
-                ,{field: 'cn_cycle', title: '缴费周期(月)', width: 120}
-                ,{field: 'cn_remarks', title: '备注', width: 100, sort: true}
+                {type:'checkbox'},
+                {field: 'cn_id', title: 'ID', width:100, sort: true}
+                ,{field: 'cn_name', title: '费项名称', width:100, edit: 'text'}
+                ,{field: 'cn_type', title: '费项类型', width:100, edit: 'text'}
+                ,{field: 'cn_price', title: '单位价格', sort: true, width:100}
+                ,{field: 'cn_cycle', title: '缴费周期(月)', sort: true, width: 120}
+                ,{field: 'cn_remarks', title: '备注', width: 100}
                 ,{title: '操作', minWidth:175, templet:function(value){
                         var obj = JSON.stringify(value);
                         return " <button class=\"layui-btn layui-btn-sm\" value='编辑' onclick='edit("+obj+")'>\n" +
                             "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
                             "   </button>" +
-                            "<button class=\"layui-btn layui-btn-sm\" oclick=\"del("+value.id+")\">\n" +
+                            "<button class=\"layui-btn layui-btn-sm\" onclick='del("+value.cn_id+")'>\n" +
                             "    <i class=\"layui-icon\">&#xe640;</i>\n" +
                             "  </button>";
                     }}
             ]]
         });
-        var $ = layui.$, active = {
-            reload: function(){
-                var demoReload = $('#cn_names').val();
-                table.reload('cn_id', {
-                    where: {
-                        cnName:demoReload
-                    }
-                });
-            }
-        };
         $('#tj').on('click', function(){
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
+            var demoReload = $('#cn_names').val();
+            table.reload('demo', {
+                where: {
+                    cnName:demoReload
+                    ,toolbar: '#toolbarDemo'
+                    ,totalRow: true
+                }
+            });
+        });
+        $('#dels').on('click', function(){
+            var checkStatus = table.checkStatus('demo')
+                ,data = checkStatus.data;
+            $.ajax({
+                url:'/ssm_wy/basDict/delbasDictpl',
+                method: 'post',
+                data:JSON.stringify(data),//"cBcfyzqDate":fyzq,"cBjfyzqDate":fyxq},
+                dataType: 'JSON',
+                contentType:"application/json",
+                success: function (res) {
+                    var suc=res.success;
+                    layer.msg(suc, {icon: 1});
+                    $('#tj').click();
+                },
+                error: function (data) {
+                }
+            });
+            //layer.alert(JSON.stringify(data));
+        });
+
+        $('#bc').on('click', function(){
+            var checkStatus = table.checkStatus('demo')
+                ,data = checkStatus.data;
+            $.ajax({
+                url:'/ssm_wy/basDict/updbasDictpl',
+                method: 'post',
+                data:JSON.stringify(data),//"cBcfyzqDate":fyzq,"cBjfyzqDate":fyxq},
+                dataType: 'JSON',
+                contentType:"application/json",
+                success: function (res) {
+                    var suc=res.success;
+                    layer.msg(suc, {icon: 1});
+                    $('#tj').click();
+                },
+                error: function (data) {
+                }
+            });
         });
     });
+
 
     function edit(data) {
         layer.open({
@@ -164,7 +206,9 @@
                     var id = '#' + Object.entries(data)[i][0];
                     var text = Object.entries(data)[i][1];
                     $(id).val(text);
-                }}
+                }}else {
+                    $('#cz').click();
+                }
                 layui.form.render('select');
             },
             yes:function(index,layero){
@@ -215,10 +259,6 @@
             }) ;
             layer.close(index);
         });
-
-    }
-
-    function del() {
 
     }
 </script>

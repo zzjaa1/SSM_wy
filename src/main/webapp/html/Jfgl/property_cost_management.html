@@ -47,6 +47,11 @@
                             生成账单
                         </button>
                     </div>
+                    <div class="layui-inline" style="padding-left: 80px">
+                        <button   class="layui-btn layui-btn-lg layui-btn-radius layui-btn-normal layui-btn-warm" id="">
+                            导入抄表数据
+                        </button>
+                    </div>
                     <script>
                         var fyqq="";
                         var fyzq="";
@@ -100,7 +105,6 @@
                     </script>
                 </div>
                 <div style="height: 20px;"></div>
-
             </div>
                 </div>
             </div>
@@ -482,7 +486,8 @@
                             ,url: '/ssm_wy/queryCost' //数据接口
                             ,id:'c_id'
                             ,page: true //开启分页
-                            ,limit:10
+                            ,toolbar: '#toolbarDemo'
+                            ,totalRow: true
                             , cols: [[ //表头
                                 {field: 'c_fc', title: '房屋信息', width: '35%'},
                                 {field: 'cn_name', title: '费用名称', width: '12%'},
@@ -715,12 +720,27 @@
                             shadeClose: true, //点击遮罩关闭层
                             shade: 1,   //遮罩
                             anim: 4,
-                            area: ['920px', '500px'],
+                            area: ['1000px', '500px'],
                             content: 'zhangdan.html',
                             btn: ['提交', '取消'],
                             success: function (layero, index) {
                                 var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
-                                iframeWin.zd(a,aa);
+                                var fj=new Array();
+                                for(var i=0;i<a.length;i++){
+                                    var s=a[i].id;
+                                    if(s.search('S')!=-1){
+                                        fj[fj.length]=a[i];
+                                    }
+                                }
+                                var fy=new Array();
+                                for(var i=0;i<aa.length;i++){
+                                    var s=aa[i].id;
+                                    if(s.search('fyxx')!=-1){
+                                    }else{
+                                        fy[fy.length]=aa[i];
+                                    }
+                                }
+                                iframeWin.zd(fj,fy,fyqq,fyzq,fyxq);
                             },
                             yes: function (index, layero) {
 
@@ -732,12 +752,12 @@
             <!--<div class="layui-col-xs4 layui-col-sm12 layui-col-md4">
               ss
             </div>-->
-            <div class="layui-col-xs4 layui-col-sm7 layui-col-md8">
+           <!-- <div class="layui-col-xs4 layui-col-sm7 layui-col-md8">
                 移动：4/12 | 平板：7/12 | 桌面：8/12
             </div>
             <div class="layui-col-xs4 layui-col-sm5 layui-col-md4">
                 移动：4/12 | 平板：5/12 | 桌面：4/12
-            </div>
+            </div>-->
         </div>
     </div>
 </body>

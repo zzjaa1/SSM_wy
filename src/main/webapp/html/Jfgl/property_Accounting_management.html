@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/ssm_wy/css/property_Accounting_management.css">
     <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
     <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
 
     <!--树形-->
     <script>
@@ -17,10 +18,9 @@
          var layer = layui.layer
              , $ = layui.jquery;
          $("#btuquery").click(function(){
-             //alert("点击了");
              var val=   $("#seltree").find("option:selected").val();
              ff(val);
-             $("#demo1").find("li").remove()
+              $("#demo1").find("li").remove()
          });
      });
         function ff(id){
@@ -43,23 +43,28 @@
                             layui.tree({
                                 elem: '#demo1' //指定元素
                                 ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
-                                ,id:'demo1'
+                                // ,id:'demo1'
                                 ,click: function(item){ //点击节点回调
                                     // layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
                                     layer.msg(item.id);
                                     $("#fybh").val(item.id)
                                     layui.use('table', function(){
                                         var table = layui.table;
-
                                         //第一个实例
                                         table.render({
                                             elem: '#testbiao'
-                                            ,height: 312
+                                            ,height: 350
                                             ,url: '/ssm_wy/Cost/queryCost' //数据接口
                                             ,where:{
                                                 hNumber:item.id
-                                            },page:true
+                                            },page:true,
+                                            id:'testbiao'
+                                            //,toolbar: true
+                                            // ,title: '基础数据表'
+                                            //,totalRow: true
                                             ,cols: [[ //表头
+                                                {type: 'checkbox', fixed: 'left'},
+                                                {field: 'c_fc', title: '房屋信息', width: '30%'},
                                                 {field: 'cn_name', title: '费用名称',width:'15%'},
                                                 {field: 'c_real', title: '实际用量',width:'15%'},
                                                 {field: 'c_yjfy', title: '费用金额',width:'15%'},
@@ -136,17 +141,22 @@
                     var table = layui.table;
                     //第一个实例
                     table.render({
-                        elem: '#testbiao'
-                        , height: 312
+                        elem: '#testbiao',
+                        id:'testbiao'
+                        , height: 350
                         , url: '/ssm_wy/Cost/queryCost' //数据接口
                         , where: {
                             hNumber: obj.data.h_number
                         },page:true
+                        //,toolbar: true
+                        // ,title: '基础数据表'
+                        //,totalRow: true
                         , cols: [[ //表头
-                            {field: 'c_fc', title: '房屋信息', width: '25%'},
+                            {type: 'checkbox', fixed: 'left'},
+                            {field: 'c_fc', title: '房屋信息', width: '30%',fixed: 'left',unresize: true, sort: true, totalRowText: '合计'},
                             {field: 'cn_name', title: '费用名称', width: '15%'},
-                            {field: 'c_real', title: '实际用量', width: '15%'},
-                            {field: 'c_yjfy', title: '费用金额', width: '15%'},
+                            {field: 'c_real', title: '实际用量', width: '15%',totalRow: true},
+                            {field: 'c_yjfy', title: '费用金额', width: '15%',totalRow: true},
                             {
                                 field: 'c_scfyzq_date', title: '上次费用止期',
                                 templet: function (d) {
@@ -181,7 +191,7 @@
                                     return " <button class=\"layui-btn layui-btn-sm\" value='编辑' onclick='member_edit(" + obj + ")'>\n" +
                                         "   <i class=\"layui-icon\">&#xe642;</i>\n" +
                                         "   </button>"+
-                                        "<button class=\"layui-btn layui-btn-sm\" value='删除' onclick='del(" + value.c_id + ")'>\n" +
+                                        "<button class=\"layui-btn layui-btn-sm\" value='删除' onclick='del('" + value.c_id + "')'>\n" +
                                         "    <i class=\"layui-icon\">&#xe640;</i>\n" +
                                         "  </button>";
 
@@ -193,10 +203,39 @@
                 });
             });
 
+
+            table.on('checkbox(test)', function(obj){
+                    var checkStatus = table.checkStatus('testbiao');
+                    var data = checkStatus.data;
+                    var a="";
+                    $.each(data,function (idex,em) {
+                        a+=em.c_id+",";
+                    })
+                console.log(a)
+                $("#jiaofei").click(function () {
+                    //alert(1);
+                    $.ajax({
+                        url: '/ssm_wy/Cost/updateCoststate',
+                        method: 'post',
+                        data: {'cid': a},
+                        dataType: 'JSON',
+                        success: function (data) {
+                            // $('#tj').click();
+                            layer.alert(data.suucess, {icon: 1});
+                            layer.alert(data.msg);
+                            //location.reload();
+                        },
+                        error: function (data) {
+                        }
+                    });
+                });
+            });
+
             //点击查询业主信息
             $("#btuyzxx").click(function () {
                 query();
             });
+
             //点击添加
             $("#add").click(function () {
                 var gybh = $("#fybh").val();
@@ -219,7 +258,6 @@
                 });
             }
         });
-
         //删除
         function del(id) {
             layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index) {
@@ -240,8 +278,6 @@
                 layer.close(index);
             });
         }
-
-
         //时间转换函数
         function showTime(tempDate) {
             var d = new Date(tempDate);
@@ -263,15 +299,12 @@
             var time = year + "-" + month + "-" + day;
             return time;
         }
-
-
         function member_edit(data, gybh) {
             console.log(data);
             data.c_bcfyzq_date = showTime(data.c_bcfyzq_date);
             data.c_bcfyqq_date = showTime(data.c_bcfyqq_date);
             data.c_bcjfzq_date = showTime(data.c_bcjfzq_date);
             data.c_scfyzq_date = showTime(data.c_scfyzq_date);
-
             var body;
             layer.open({
                 type: 2,
@@ -295,6 +328,8 @@
                         var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
                         iframeWin.ss(data.cn_id);
                     } else {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
+                        iframeWin.ss(data.cn_id);
                         body.contents().find("#h_number").val(gybh);
                     }
                 },
@@ -333,6 +368,7 @@
 
             });
         }
+
     </script>
 
     <!--内侧选项卡-->
@@ -348,22 +384,14 @@
 <div>
     <em><img src="../../images/wy.png" alt=""></em><a href="#">收费管理</a><span>></span><a href="#">收费</a>
 </div>
-<div class="con_head" id="con_head2">
-    <a href="property_Accounting_management_1.html">无房号收费</a>
-    <a href="property_Accounting_management_2.html">无房号收费历史</a>
-    <a href="property_Accounting_management_3.html">前欠费用录入</a>
-    <a href="property_Accounting_management_4.html">预存</a>
-    <a href="property_Accounting_management_5.html">台账</a>
-    <a href="property_Accounting_management_6.html">停车费</a>
-    <a href="property_Accounting_management_7.html">停车费历史</a>
-</div>
+
 <div>
     <div class="con_left">
         <div class="con_left_head">
             <em><img src="../../images/xql.png" alt=""></em>小区信息
         </div>
         <div class="con_box">
-            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" >
                 <ul class="layui-tab-title">
                     <li class="layui-this">简洁模式</li>
                     <li>标准模式</li>
@@ -371,15 +399,26 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         <div class="layui-input-inline">
+                            <script>
+                                $.get("/ssm_wy/selectXiaoqu",
+                                    function(result, state) {
+                                        var names=result.data;
+                                        for(var i = 0;i<names.length;i++) {
+                                            $("#seltree").append(new Option(names[i].x_buliding,names[i].x_number));
+                                            // layui.form.render('select');
+                                        }
+                                        // layui.form.render('select');
+                                    });
+                            </script>
                             <select name="modules" id="seltree" lay-verify="required" lay-search=""
                                     style="width: 150px">
                                 <option value="">请选择</option>
-                                <option value="XQ4">浪琴湾小区</option>
-                                <option value="XQ5">浪琴湾小区2</option>
+                                <!--<option value="XQ4">浪琴湾小区</option>-->
+                                <!--<option value="XQ5">浪琴湾小区2</option>-->
                             </select>
                             <a class="layui-btn layui-btn-xs" id="btuquery"><label>查询</label></a>
                         </div>
-                        <div style="padding-left: 20px">未入住:&nbsp;
+                        <div style="padding-left: 20px" >未入住:&nbsp;
                             <img src="/ssm_wy/images/1.jpg" style="width: 15px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             已入住:&nbsp;<img src="/ssm_wy/images/2.jpg" style="width: 30px"/></div>
                         <ul id="demo1" style="padding-left: 20px"></ul>
@@ -387,6 +426,7 @@
                     <div class="layui-tab-item">
                         <!--<div class="layui-inline">-->
                         <!--<label class="layui-form-label">多规则验证</label>-->
+
                         <select name="modules" id="selyz" lay-verify="required" lay-search="" style="width: 200px">
                             <option value="">请选择查询</option>
                             <option value="O_name">业主姓名</option>
@@ -408,12 +448,13 @@
     <!--表格-->
     <div id="dd">
         <input type="hidden" id="fybh">
+
     </div>
-    <div class="layui-inline">
-        <button class="layui-btn" data-type="reload" id="add">新增费用项</button>
-    </div>
-   <div>
+   <div style="float: left;width: 900px">
+       <button class="layui-btn" data-type="reload" id="jiaofei">缴费</button>
+       <button class="layui-btn" data-type="reload" id="add">新增费用项</button>
        <table class="layui-hide" id="testbiao" lay-filter="test"></table>
+
    </div>
 </div>
 <script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>

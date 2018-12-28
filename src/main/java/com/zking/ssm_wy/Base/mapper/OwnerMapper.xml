@@ -7,7 +7,7 @@
       <arg column="o_number" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="o_name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="o_state" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="o_phone" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="o_phone" jdbcType="INTEGER" javaType="java.lang.String" />
       <arg column="o_jdata" jdbcType="INTEGER" javaType="java.util.Date" />
       <arg column="o_carder" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="o_ownership" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -19,8 +19,30 @@
       o_id, o_number, o_name, o_state, o_phone, o_jdata, o_carder, o_ownership,
       o_before, o_remarks
     </sql>
+  <update id="UpdateOwen" parameterType="com.zking.ssm_wy.Base.model.Owner">
+    UPDATE  owner  SET  o_name = #{oname},o_phone = #{ophone},
+ o_carder = #{ocarder},o_ownership = #{ownership},o_before =#{obefore},o_remarks = #{oremarks} WHERE o_number = #{onumber} ;
+  </update>
+  <delete id="deleteOwen">
+      DELETE FROM OWNER WHERE o_number=#{O_number}
+  </delete>
   <select id="queryOwner" resultType="map">
     select * from owner where o_name=#{oname}
   </select>
+  <select id="queryowenPage" resultType="map">
+    SELECT oo.* ,l.*  FROM
+    (SELECT o.o_name,o.o_number,re.h_number,o.o_jdata,o.o_before,o.o_phone,o.o_remarks,o.o_ownership,o.o_carder,re.Re_date,re.Re_price,re.Re_fkfs FROM OWNER o
+    LEFT JOIN real_estate re
+    ON o.o_number=re.o_number)  oo
+    LEFT JOIN lease l
+    ON oo.o_number=l.o_number WHERE 1=1
+    <if test="null!=o_name and ''!=o_name">
+      AND oo.o_name LIKE CONCAT(CONCAT('%',#{o_name}),'%')
+  </if>
+    <if test="null!=h_number and ''!=h_number">
+      AND oo.h_number LIKE CONCAT(CONCAT('%',#{h_number}),'%')
+    </if>
+  </select>
+
 
 </mapper>

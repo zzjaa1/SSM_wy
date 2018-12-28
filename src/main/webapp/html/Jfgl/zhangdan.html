@@ -12,29 +12,57 @@
 <script src="/ssm_wy/bootstrap/dist/js/bootstrap.js"></script>
 <script src="/ssm_wy/bootstrap-treeview/src/js/bootstrap-treeview.js"></script>
 <body>
+<div></div>
 <div id="dd">
-<!--<div>
-    <div class="layui-inline">
-        <label class="layui-form-label" style="width: 100px" >当前费项：</label>
-    </div>
-    <div class="layui-inline">
-        <label class="layui-form-label" style="width: 100px">单价：</label>
-        <div class="layui-inline"> &lt;!&ndash; 注意：这一层元素并不是必须的 &ndash;&gt;
-            <input type="text" class="layui-input" id="price" style="width: 70px">
-        </div>
-    </div>
-    <div class="layui-inline">
-        <label class="layui-form-label" style="width: 160px">收费周期(月)：</label>
-    </div>
-</div>-->
 </div>
+<div style="height: 20px;">
+</div>
+<div id="d1">
+</div>
+<table id="demo"></table>
+<div id="demo20"></div>
 <script>
-    function zd(fj,fy) {
+    layui.use('table', function(){
+        var table = layui.table;
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: 440
+            //,data:[{"fyid":"1","fjid":"2"}]
+            // ,url: '/ssm_wy/costName/queryCostName' //数据接口
+            // ,where:{'cnName':cn_name}
+            ,id:'demo'
+            //,page: true //开启分页
+            //,limit:10
+            //,count:10
+            ,cellMinWidth: 80
+            ,cols: [[ //表头
+                {type: 'checkbox', fixed: 'left'},
+                {field: 'h_number', title: '房屋编号', width: '15%'},
+                {field: 'c_fc', title: '房屋信息', width: '12%'},
+                {field: 'c_costName',title: '费用名称', width: '15%'},
+                {field: 'c_yjfy', title: '费用金额', width: '15%'},
+                {field: 'c_jfdw', title: '计费单位', width: '15%'},
+              /*  {field: 'c_scfyzq_date', title: '上次费用止期', width: '15%'},*/
+                {field: 'c_bcfyqq_date', title: '本次费用起期', width: '15%'},
+                {field: 'c_bcfyzq_date', title: '本次费用止期', width: '15%'},
+                {field: 'c_bcjfzq_date', title: '本次缴费止期', width: '15%'},
+             /*   {field: 'c_real', title: '实际用量', width: '15%'},*/
+              /*  {field: 'cn_id', title: '费项ID', width: '15%'},*/
+                {field: 'c_user', title: '业主', width: '15%'},
+            ]]
+        });
+    });
+</script>
+
+<script>
+    var arr="";
+    function zd(fj,fy,qq,zq,xq) {
         var html="";
-            for(var i=1;i<fy.length;i++){
+            for(var i=0;i<fy.length;i++){
                 html+="<div>\n" +
                     "    <div class=\"layui-inline\" style='padding-left: 0px'>\n" +
-                    "        <label class=\"layui-form-label\" style=\"width: 220px;\" >当前费项："+fy[i].cn_name+"</label>\n" +
+                    "        <label class=\"layui-form-label\" style=\"width: 200px;\" >费项"+(i+1)+"："+fy[i].cn_name+"</label>\n" +
                     "    </div>\n" +
                     "    <div class=\"layui-inline\">\n" +
                     "        <label class=\"layui-form-label\" style=\"width: 100px\" >单价：</label>\n" +
@@ -45,10 +73,144 @@
                     "    <div class=\"layui-inline\">\n" +
                     "        <label class=\"layui-form-label\" style=\"width: 160px\">每"+fy[i].cn_cycle+"月收费一次：</label>\n" +
                     "    </div>\n" +
-                    "</div>"
-            }
+                    "    <div class=\"layui-inline\">\n" +
+                    "        <label class=\"layui-form-label\" style=\"width: 160px\">"+fy[i].cn_type+"</label>\n" +
+                    "    </div>\n" ;
+                        if(fy[i].cn_type=="按使用量"){
+                            html+= "<div class=\"layui-inline\">\n" +
+                            "        <label class=\"layui-form-label\" style=\"width: 160px\">"+fy[i].cn_price+"￥/度(吨)</label>\n" +
+                            " <input type=\"text\" class=\"layui-input\" id='syl"+fy[i].cn_id+"' style=\"width: 100px\" >   </div>";
+                        }else if (fy[i].cn_type=="按房屋面积"){
+                            html+="<div class=\"layui-inline\">\n" +
+                                "        <label class=\"layui-form-label\" style=\"width: 160px\">"+fy[i].cn_price+"￥/㎡</label>\n" +
+                                "    </div>";
+                        }else {
+                            html+="<div class=\"layui-inline\">\n" +
+                                "        <label class=\"layui-form-label\" style=\"width: 160px\">"+fy[i].cn_price+"￥/月</label>\n" +
+                                "    </div>";
+                        }
+                            html+= "</div>"
+                        }
+                html+="<div class=\"layui-inline\" style='padding-left: 100px'>\n" +
+                    "        <label class=\"layui-form-label\" style=\"width: 400px;color: red\">您选中了"+fy.length+"个费用项，包含"+fj.length+"个房间" +
+                    "，预计产生"+fy.length*fj.length+"个明细账单</label>\n" +
+                    "    </div>" +
+                    "<div class=\"layui-inline\" style=\"padding-left: 20px\"><div class=\"layui-inline\">" +
+                    "<button  class=\"layui-btn layui-btn-lg layui-btn-radius layui-btn-normal\" id=\"btuyzxx\">" +
+                    " 查看欲加入数据" +
+                    "            </button>" +
+                    "            </div>" +
+                    "            </div>";
+
             $("#dd").html(html);
+            var html1="";
+            html1+="  <div class=\"layui-inline\" style=\"padding-left: 0px\">\n" +
+                "        <label class=\"layui-form-label\" style=\"width: 220px;\" >费用起期："+qq+"</label>\n" +
+                "    </div>\n" +
+                "    <div class=\"layui-inline\" style=\"padding-left: 0px\">\n" +
+                "        <label class=\"layui-form-label\" style=\"width: 220px;\" >费用止期："+zq+"</label>\n" +
+                "    </div>\n" +
+                "    <div class=\"layui-inline\" style=\"padding-left: 0px\">\n" +
+                "        <label class=\"layui-form-label\" style=\"width: 220px;\" >费用限期："+xq+"</label>\n" +
+                "    </div>\n"+
+                "<div class=\"layui-inline\" style=\"padding-left: 0px\">\n" +
+                "<button  class=\"layui-btn layui-btn-lg layui-btn-radius layui-btn-normal\" id='sczdss'>" +
+        " 生成账单" +
+        "            </button>"+
+                    "    </div>"
+        $("#d1").html(html1);
+        $('#btuyzxx').on('click', function(){
+            var newArry=new Array();
+            for(var i=0;i<fy.length;i++){
+                for(var j=0;j<fj.length;j++){
+                    var dw="";  //单位
+                    var price=0;//应付金额
+                    var sjyl=0; //使用量
+                    if(fy[i].cn_type=="按使用量"){
+                        dw="￥/度(吨)";
+                        sjyl=$('#syl'+fy[i].cn_id).val();
+                        console.log(fy[i].c_dwjg);
+                        parseInt(sjyl);
+                        price=fy[i].cn_price*sjyl;
+                    }else if (fy[i].cn_type=="按房屋面积"){
+                        dw="￥/㎡";
+                        price=fj[j].h_area*fy[i].cn_price;
+                    }else {
+                        dw="￥/月";
+                        price=fj[j].h_area*fy[i].cn_price;
+                    }
+                    newArry.push({
+                        'c_fc':fj[j].h_bulidingName
+                        ,'c_dwjg':fy[i].cn_price
+                        ,'c_yjfy':price
+                        ,'c_bcjfzq_date':xq
+                        ,'c_bcfyqq_date':qq
+                        ,'c_bcfyzq_date':zq
+                        ,'c_costName':fy[i].cn_name
+                        ,'h_number':fj[j].id
+                        ,'cn_id':fy[i].cn_id
+                        ,'c_jfdw':dw
+                        ,'c_real':sjyl
+                    });
+                }
+            }
+            arr=newArry;
+                fys();
+        });
+    }
+
+
+    function fys() {
+    layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage
+            ,layer = layui.layer;
+        var data =arr;
+        //调用分页
+        laypage.render({
+            elem: 'demo20'
+            ,count: data.length
+            ,limit: 10
+            ,limits: [5,10,20,50,100,500,1000]
+            ,jump: function(obj){
+                //模拟渲染
+                    var thisData = data.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
+                    /*  layui.each(thisData, function(index, item){
+                          arr.push('<li>'+ item +'</li>');
+                      });*/
+                    console.log(thisData);
+                     layui.use('table', function(){
+                     var table = layui.table;
+                     table.reload('demo', {
+                         data:thisData
+                     });
+                    });
+            }
+        });
+    });
+
+        $('#sczdss').on('click', function(){
+            console.log("111");
+            $.ajax({
+                url:'/ssm_wy/sczd',
+                method: 'post',
+                data:JSON.stringify(arr),//"cBcfyzqDate":fyzq,"cBjfyzqDate":fyxq},
+                dataType: 'JSON',
+                contentType:"application/json",
+                success: function (res) {
+                    var han=res.han;
+                    if(han!=0){
+                        layer.alert('成功,失败行：'+han, {icon: 1});
+                    }else{
+                        layer.msg('失败,失败行:'+han, {icon: 5});
+
+                    }
+                },
+                error: function (data) {
+                }
+            });
+        });
     }
 </script>
+
 </body>
 </html>

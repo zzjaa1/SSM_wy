@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="/ssm_wy/layui/css/layui.css" media="all">
+<script src="/ssm_wy/layui/layui.js"></script>
+<!--vue-->
+<script src="/ssm_wy/vue/vue.js"></script>
+<script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+<script src="/ssm_wy/js/jquery.serializejson.js"></script>
+<body>
+<div>
+    <div class="layui-inline">
+        <label class="layui-form-label">费项名称：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="" placeholder="请输入费项名称" id="cn_names" autocomplete="off" class="layui-input" style="width: 200px">
+        </div>
+        <button class="layui-btn" data-type="reload" id="tj">立即查询</button>
+    </div>
+    <div class="layui-inline">
+        <button class="layui-btn" data-type="reload" onclick="edit('新增')">新增</button>
+    </div>
+</div>
+<div id="demo"></div>
+<!--<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-mini" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-mini" lay-event="edit">编辑 </a>
+  <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+</script>-->
+<div id="dd" style="display: none">
+    <form class="layui-form" id="ff" method="post" action="/ssm_wy/costName/updCostName">
+        <input type="hidden" id="dict_id" name="dictId">
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型：</label>
+            <div class="layui-input-block">
+                <input id="dict_type" type="text" name="dictType" required  lay-verify="required" style="width: 200px"
+                       placeholder="请输入类型" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称：</label>
+            <div class="layui-input-block" style="width: 200px">
+                <input type="text" id="dict_item" name="dictItem" required  lay-verify="required" style="width: 200px"
+                       placeholder="请输入类型名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型值：</label>
+            <div class="layui-input-block">
+                <input type="text" id="dict_value" name="dictValue" required  lay-verify="required" style="width: 200px"
+                       placeholder="请输入类型值" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" >
+            <label class="layui-form-label">可否编辑</label>
+            <div class="layui-input-block">
+                <input type="radio" name="dictIsEditable" value="0" title="可编辑">
+                <input type="radio" name="dictIsEditable" value="1" title="不可编辑" checked>
+            </div>
+        </div>
+        <div class="layui-form-item" style="display: none" >
+            <div class="layui-input-block">
+                <button class="layui-btn tj" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" id="cz" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: 440
+            ,url: '/ssm_wy/basDict/querybasDictPage' //数据接口
+            // ,where:{'cnName':cn_name}
+            ,id:'demo'
+            ,page: true //开启分页
+            ,title: '基础数据表'
+            ,cols: [[ //表头
+                {field: 'dict_id', title: 'ID', width:100, sort: true}
+                ,{field: 'dict_type', title: '类型', width:100}
+                ,{field: 'dict_item', title: '类型名称', width:100, templet: '#sexTpl'}
+                ,{field: 'dict_value', title: '类型值', width:100}
+                ,{field: 'dict_is_editable', title: '可否编辑', sort: true, width: 120, templet:function(value){
+                        if(value.dict_is_editable==0){
+                            return "可编辑";
+                        }else {
+                            return "不可编辑";
+                        }
+                }
+                }
+                ,{title: '操作', minWidth:175,fixed: 'right', templet:function(value){
+                        var obj = JSON.stringify(value);
+                        if(value.dict_is_editable==0){
+                            return " <button class=\"layui-btn layui-btn-sm\" value='编辑' onclick='edit("+obj+")'>\n" +
+                                "                            <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                "   </button>" +
+                                "<button class=\"layui-btn layui-btn-sm\" onclick='del("+value.dict_id+")'>\n" +
+                                "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                "  </button>";
+                        }else{
+                            return "";
+                        }
+
+                    }}
+            ]]
+        });
+        //工具栏事件
+
+        $('#del').on('click', function(){
+            var checkStatus = table.checkStatus('demo')
+                ,data = checkStatus.data;
+            layer.alert(JSON.stringify(data));
+        });
+
+        $('#tj').on('click', function(){
+            var dictType=$('#cn_names').val();
+            table.reload('demo', {
+                where: {
+                    dictType:dictType,
+                }
+            });
+        });
+    });
+
+
+    function edit(data) {
+        layer.open({
+            type: 1,
+            title: '修改信息',
+            maxmin: true,
+            shadeClose:true, //点击遮罩关闭层
+            shade: 1 ,   //遮罩
+            anim:4,
+            area : ['600px' , '400px'],
+            content:$('#dd'),
+            btn:['保存','取消'],
+            success: function (layero, index) {
+                if(data!="新增"){
+                    for(var i=1;Object.entries(data).length>i;i++) {
+                        var id = '#' + Object.entries(data)[i][0];
+                        var text = Object.entries(data)[i][1];
+                        $(id).val(text);
+                    }
+                    $("input[type=radio][name=dictIsEditable][value='"+data.dict_is_editable+"']").attr("checked",'checked')
+                    layui.form.render();
+                }else {
+                    $('#cz').click();
+                }
+                layui.form.render('select');
+            },
+            yes:function(index,layero){
+                if(data=="新增"){
+                    url='/ssm_wy/basDict/addbasDict';
+                }else{
+                    url='/ssm_wy/basDict/updbasDict';
+                }
+                var sdata=$('#ff').serializeJSON();
+                $.ajax({
+                    url:url,
+                    method:'post',
+                    data:sdata,
+                    dataType:'JSON',
+                    success:function(res){
+                        layer.alert(data.suucess, {icon: 1});
+
+                        $('#tj').click();
+                        layer.alert(data.suucess, {icon: 1});
+                    },
+                    error:function (data) {
+                    }
+
+                }) ;
+                layer.close(index);
+            } ,btn2: function(index, layero){
+                layer.close(index);
+            }
+
+        });
+
+    }
+
+
+    function del(id) {
+        layer.confirm('确定删除?', {icon: 3, title:'提示'}, function(index){
+            $.ajax({
+                url:'/ssm_wy/basDict/delbasDict',
+                method:'post',
+                data:{'dictId':id},
+                dataType:'JSON',
+                success:function(data){
+                    $('#tj').click();
+                    layer.alert(data.suucess, {icon: 1});
+                },
+                error:function (data) {
+                }
+            }) ;
+            layer.close(index);
+        });
+
+    }
+</script>
+</body>
+</html>

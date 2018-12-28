@@ -41,4 +41,16 @@ public class CostServiceImpl implements ICostService {
     public List<Map<String, Object>> queryCostfwPage(List<String> lifj, String qq, String zq, List<String> lify, PageBean pb) {
         return costMapper.queryCostfwPage(lifj,qq,zq,lify);
     }
+
+    @Override
+    public List<Map<String, Object>> queryrq(String qq, String zq) {
+        return costMapper.queryrq(qq,zq);
+    }
+
+    @Override
+    public int Updacostate(Integer cid) {
+        return costMapper.Updacostate(cid);
+    }
+
+
 }

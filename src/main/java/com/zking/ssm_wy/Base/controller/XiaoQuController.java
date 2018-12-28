@@ -43,21 +43,26 @@ public class XiaoQuController {
                 if (null!=stringObjectMap){
                     stringObjectMap.put("id",stringObjectMap.get("x_number").toString());
                     stringObjectMap.put("name",stringObjectMap.get("x_buliding").toString());
+                    stringObjectMap.put("parant",stringObjectMap.get("name"));
+
                     map3= iBulidingService.queryBulid(stringObjectMap.get("x_number").toString());
                         for (Map<String,Object> s : map3) {
                         if (null!=s){
                             s.put("id",s.get("b_number").toString());
                             s.put("name",s.get("b_buliding").toString());
+                            s.put("parant",stringObjectMap.get("parant")+"-"+s.get("name"));
                             map4 = iHousesService.queryHourse(s.get("b_number").toString());
                             for (Map<String,Object> objectMap : map4) {
                                 if (null!=objectMap){
                                     objectMap.put("id",objectMap.get("h_number").toString());
                                     objectMap.put("name",objectMap.get("h_bulidingName").toString());
+                                    objectMap.put("parant",s.get("parant")+"-"+objectMap.get("name"));
                                     map5=iHousesService.queryHourse(objectMap.get("h_number").toString());
                                     for (Map<String, Object> map6 : map5) {
                                         if (null!=map6){
                                             map6.put("id",map6.get("h_number").toString());
                                             map6.put("name",map6.get("h_bulidingName").toString());
+                                            map6.put("parant",objectMap.get("parant")+"-"+map6.get("name"));
                                         }
                                     }
                                     objectMap.put("children",map5);
@@ -190,6 +195,16 @@ public class XiaoQuController {
         map.put("success",true);
         map.put("msg","成功");
 
+        return map;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/selectXiaoqu")
+    public Map<String,Object> selectXiaoqu(){
+        List<Map<String, Object>> queryxq = iXiaoQuService.queryxq(null);
+        Map<String,Object> map =new HashMap<>();
+        map.put("data",queryxq);
         return map;
     }
 

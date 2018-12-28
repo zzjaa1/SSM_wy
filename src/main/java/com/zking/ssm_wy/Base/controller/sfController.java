@@ -74,4 +74,36 @@ public class sfController {
         Map<String,Object> map =new HashMap<>();
         return map;
     }
+
+    @RequestMapping("/sczd")
+    @ResponseBody
+    public Map<String, Object> sczd(@RequestBody List<Map<String,Object>> li){
+        Map<String,Object> map =new HashMap<>();
+        String c_bcfyqq_date = li.get(0).get("c_bcfyqq_date").toString();
+        String c_bcfyzq_date = li.get(0).get("c_bcfyzq_date").toString();
+        List<Map<String, Object>> queryrq = iCostService.queryrq(c_bcfyqq_date, c_bcfyzq_date);
+        if(queryrq==null){
+            map.put("han",0);
+        }else{
+            int han=0;//冲突行
+            List<Map<String,Object>> sbsjy=new ArrayList<>();
+            List<Map<String,Object>> sbsj=new ArrayList<>();
+            for (Map<String, Object> rq : queryrq) {
+                System.out.println("cn_id="+rq.get("cn_id")+"h_number="+rq.get("h_number"));
+                for (Map<String, Object> lis : li) {
+                    System.out.println("cn_id="+lis.get("cn_id")+"h_number="+lis.get("h_number"));
+                    if(rq.get("cn_id").equals(lis.get("cn_id"))&&rq.get("h_number").equals(lis.get("h_number"))){
+                        han++;
+                        sbsjy.add(rq);
+                        sbsj.add(lis);
+                    }
+                }
+            }
+            map.put("sbsjy",sbsjy);
+            map.put("sbsj",sbsjy);
+            map.put("han",han);
+        }
+
+        return map;
+    }
 }

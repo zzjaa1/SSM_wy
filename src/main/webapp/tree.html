@@ -1,215 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
-    <script src="layui/layui.js" charset="utf-8"></script>
-    <script>
-  var data={};
-  var data1={};
-        layui.use(['tree', 'layer'], function(){
-            var layer = layui.layer
-                ,$ = layui.jquery;
-            $.ajax({
-                url: '/ssm_wy/querytree',
-                type: 'post',
-                dataType: 'json',
-                data: {
-                },
-                success: function (status) {
-                    $.each(status.li, function(key, val) {
-                          data.name=val.name;
-                           data.id=val.id;
-                           data.children=val.children;
-                        layui.tree({
-                            elem: '#demo1' //指定元素
-                            ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
-                            ,click: function(item){ //点击节点回调
-                                layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
-                                // console.log(item);
-                            }
-                            ,nodes:
-                                [data
-                                ]
-                        });
-                    });
-                }
-            });
-        });
-    </script>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style type="text/css">
+        .downpanel .layui-select-title span {
+            line-height: 38px;
+        }
 
-    <!--<script type="text/javascript">-->
-        <!--layui.use(['jquery','layer','element','form','tree'],function(){-->
-            <!--window.jQuery = window.$ = layui.jquery;-->
-            <!--window.layer = layui.layer;-->
-            <!--var form  =  layui.form;-->
-            <!--var elem = layui.element;-->
-            <!--var topcateid=0;  //为模拟顶级分类id用-->
+        /*继承父类颜色*/
+        .downpanel dl dd:hover {
+            background-color: inherit;
+        }
+    </style>
+    <style type="text/css">
+        body {
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            margin: 0 auto;
+        }
+        td {
+            font-size: 12px !important;
+        }
 
-            <!--//初始化layer.tree-->
-            <!--var tree = layui.tree({-->
-                <!--elem: '#demo',-->
-                <!--nodes:[]     //这里可以通过后台获取（如ThinkPHP框架则可以通过后台拼接好，再生成模板变量类似{$tree}就可以）-->
-            <!--});-->
+        .layui-form-checkbox span {
+            height: 30px;
+        }
+        .layui-field-title {
+            border-top: 1px solid white;
+        }
+        table {
+            width: 100% !important;
+        }
 
-            <!--window.onload=function(){-->
-
-                <!--//删除layui-tree 自带的样式-->
-                <!--$("i.layui-tree-branch").remove();-->
-                <!--$("i.layui-tree-leaf").remove();-->
-                <!--//添加操作的图标(即鼠标划过时显示的添加，修改，删除的按钮组)-->
-                <!--$("ul#demo").find("a").after("<i class='layui-icon add select hide ' )'></i>"+-->
-                    <!--"<i class='layui-icon edit select hide'></i>"+-->
-                    <!--"<i class='layui-icon del select hide'></i>");-->
-            <!--}-->
-
-<!--//添加顶级分类-->
-            <!--$("#addcate").on("click",function(){-->
-                <!--layer.prompt({title: '输入分类名称，并确认', formType:0}, function(text, index){-->
-                    <!--layer.close(index);-->
-                    <!--//TODO 可以ajax到后台操作，这里只做模拟-->
-                    <!--layer.load(2);-->
-                    <!--setTimeout(function(){-->
-                        <!--layer.closeAll("loading");-->
-                        <!--//手动添加节点，肯定有更好的方法=.=！这里的方法感觉有点LOW-->
-                        <!--// li里面的pid属性为父级类目的id,顶级分类的pid为0-->
-                        <!--topcateid= topcateid+1;-->
-                        <!--$("ul#demo").append("<li  pid='0' id="+(topcateid)+">"+-->
-                            <!--"<a ><cite>"+text+"</cite> </a>"+-->
-                            <!--"<i class='layui-icon select hide add'></i>"+-->
-                            <!--"<i class='layui-icon edit select hide'></i>"+-->
-                            <!--"<i class='layui-icon del select hide'></i>"+-->
-                            <!--"</li>");-->
-                    <!--},1000)-->
-                <!--});-->
-            <!--})-->
-
-<!--//显示/隐藏 分类的操作栏-->
-            <!--$("ul#demo").on({-->
-                <!--mouseover: function(event) {-->
-                    <!--event.stopPropagation();-->
-                    <!--$(this).children(".select").removeClass("hide")-->
-                <!--},-->
-                <!--mouseout: function(event) {-->
-                    <!--event.stopPropagation();-->
-                    <!--$(this).children(".select").addClass("hide")-->
-                <!--},-->
-            <!--},"li","a")-->
-
-<!--//添加子分类-->
-            <!--$("ul#demo ").on("click","li .add",function(){-->
-
-                <!--var pid = $(this).closest("li").attr("id");//将父级类目的id作为父类id-->
-                <!--var that= $(this).closest("li");-->
-                <!--layer.prompt({title: '输入子分类名称，并确认', formType:0}, function(text, index){-->
-                    <!--layer.close(index);-->
-
-                    <!--//TODO 可以ajax到后台操作，这里只做模拟-->
-                    <!--layer.load(2);-->
-                    <!--setTimeout(function(){-->
-                        <!--layer.closeAll("loading");-->
-                        <!--topcateid= topcateid+1;-->
-                        <!--if(that.children("ul").length == 0){-->
-                            <!--//表示要新增   i 以及 ul 标签-->
-                            <!--that.prepend('<i class="layui-icon layui-tree-spread"></i>')-->
-                            <!--that.append("<ul class='layui-show'><li  pid="+pid+"   id="+(topcateid)+"><a    ><cite>"+text+"</cite> </a><i  class='layui-icon select hide add' )'></i> <i    class='layui-icon edit select hide'></i> <i    class='layui-icon del select hide'></i></li></ul>")-->
-                        <!--}else{-->
-                            <!--that.children("ul").append("<li pid="+pid+"    id="+(topcateid)+"><a  ><cite>"+text+"</cite> </a><i  class='layui-icon select hide add' )'></i> <i    class='layui-icon edit select hide'></i> <i    class='layui-icon del select hide'></i></li>");-->
-                        <!--}-->
-                    <!--},1000)-->
-                <!--});-->
-
-
-            <!--})-->
-<!--//重命名-->
-            <!--$("ul#demo ").on("click","li .edit",function(){-->
-                <!--var node=$(this).parent().children("a").children("cite");-->
-                <!--var id=$(this).parent().attr("id")-->
-                <!--var that= $(this).closest("li");-->
-                <!--layer.prompt({title: '输入新的分类名称，并确认',value:node.text(), formType:0}, function(text, index){-->
-                    <!--layer.close(index);-->
-
-                    <!--//TODO 可以ajax到后台操作，这里只做模拟-->
-                    <!--layer.load(2);-->
-                    <!--setTimeout(function(){-->
-                        <!--layer.closeAll("loading");-->
-                        <!--node.text(text);-->
-                    <!--},1000)-->
-                <!--});-->
-
-
-            <!--})-->
-<!--//删除分类-->
-            <!--$("ul#demo ").on("click","li .del",function(){-->
-
-                <!--var that= $(this).closest("li");-->
-                <!--if(that.children("ul").length > 0){-->
-                    <!--layer.msg("该分类下含有子分类不能删除")-->
-                    <!--return;-->
-                <!--}-->
-                <!--var id=$(this).parent().attr("id")-->
-
-                <!--layer.confirm('确定要删除？该分类下的课程亦将删除！', {-->
-                    <!--btn: ['删除','取消']-->
-                <!--}, function(){-->
-
-                    <!--//TODO 可以ajax到后台操作，这里只做模拟-->
-                    <!--layer.load(2);-->
-                    <!--setTimeout(function(){-->
-                        <!--layer.closeAll("loading");-->
-                        <!--if((that.parent("ul").children("li").length == 1)&&(that.parent("ul").parent("li").children("i.layui-tree-spread").length=1)){-->
-                            <!--//要把分类名前的三角符号和ul标签删除-->
-                            <!--that.parent("ul").parent("li").children("i.layui-tree-spread").remove();-->
-                        <!--}-->
-                        <!--that.remove()-->
-                    <!--},1000)-->
-                <!--});-->
-
-
-            <!--})-->
-<!--//打开/关闭菜单-->
-
-            <!--$("ul#demo").on({-->
-
-                <!--click:function(event){-->
-                    <!--event.stopPropagation();-->
-                    <!--event.preventDefault();-->
-                    <!--if( $(this).parent().children("ul").hasClass("layui-show")){-->
-
-
-                        <!--$(this).html("");-->
-                        <!--$(this).parent().children("ul").removeClass("layui-show");-->
-                        <!--return;-->
-                    <!--}else{-->
-
-
-                        <!--$(this).html("");-->
-                        <!--$(this).parent().children("ul").addClass("layui-show");-->
-                        <!--return;-->
-                    <!--}-->
-                    <!--return;-->
-                <!--}-->
-            <!--},  'i.layui-tree-spread');-->
-        <!--});-->
-
-    <!--</script>-->
-
+    </style>
 </head>
 <body>
-<div >
-    <ul id="demo1"></ul>
-    <!--<div    style="height:100%;">-->
-        <!--<div class="panel panel-default"-->
-             <!--style=" position:fixed;   width: 250px; height:800px;   overflow:auto;">-->
-            <!--<div class="panel-body"  style=" ">-->
-                <!--<h4 style="text-align: center;">分类管理</h4>-->
-                <!--<ul  unselectable="on" id="demo"-->
-                    <!--style="margin-top: 30px; -moz-user-select: none; -webkit-user-select: none;"-->
-                    <!--onselectstart="return false;"  ></ul>-->
-                <!--<button  id="addcate" class="layui-btn  layui-btn-primary"  style="margin-top:20px; margin-left:28px; width:70%;">添加分类</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">文章栏目</label>
+        <div class="layui-input-inline">
+            <div class="layui-unselect layui-form-select downpanel">
+                <div class="layui-select-title">
+                    <span class="layui-input layui-unselect" id="treeclass">选择栏目</span>
+                    <input type="hidden" name="selectID" value="0">
+                    <i class="layui-edge"></i>
+                </div>
+                <dl class="layui-anim layui-anim-upbit">
+                    <dd>
+                        <ul id="classtree"></ul>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script type="text/javascript">
+    layui.use(['element', 'tree', 'layer', 'form', 'upload'], function () {
+        var $ = layui.jquery, tree = layui.tree;
+        tree({
+            elem: "#classtree"
+            ,
+            nodes: [{
+                name: '常用文件夹',
+                id: 1,
+                alias: 'changyong',
+                children: [{name: '所有未读', id: 11, href: 'http://www.layui.com/', alias: 'weidu'}, {
+                    name: '置顶邮件',
+                    id: 12
+                }, {name: '标签邮件', id: 13}]
+            }, {
+                name: '我的邮箱',
+                id: 2,
+                spread: true,
+                children: [{
+                    name: 'QQ邮箱',
+                    id: 21,
+                    spread: true,
+                    children: [{
+                        name: '收件箱',
+                        id: 211,
+                        children: [{name: '所有未读', id: 2111}, {name: '置顶邮件', id: 2112}, {name: '标签邮件', id: 2113}]
+                    }, {name: '已发出的邮件', id: 212}, {name: '垃圾邮件', id: 213}]
+                }, {
+                    name: '阿里云邮',
+                    id: 22,
+                    children: [{name: '收件箱', id: 221}, {name: '已发出的邮件', id: 222}, {name: '垃圾邮件', id: 223}]
+                }]
+            }]
+            ,
+            click: function (node) {
+                var $select = $($(this)[0].elem).parents(".layui-form-select");
+                $select.removeClass("layui-form-selected").find(".layui-select-title span").html(node.name).end().find("input:hidden[name='selectID']").val(node.id);
+            }
+        });
+        $(".downpanel").on("click", ".layui-select-title", function (e) {
+            $(".layui-form-select").not($(this).parents(".layui-form-select")).removeClass("layui-form-selected");
+            $(this).parents(".downpanel").toggleClass("layui-form-selected");
+            layui.stope(e);
+        }).on("click", "dl i", function (e) {
+            layui.stope(e);
+        });
+        $(document).on("click", function (e) {
+            $(".layui-form-select").removeClass("layui-form-selected");
+        });
+    });
+</script>
+</body>
+</html>
 </body>
 </html>

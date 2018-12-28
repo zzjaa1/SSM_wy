@@ -24,7 +24,6 @@ public class CostController {
     @RequestMapping("/queryCost")
     @ResponseBody
     public Map<String, Object> queryCost(String hNumber, HttpServletRequest request,int page,int limit){
-        System.out.println(hNumber);
         PageBean pageBean =new PageBean();
         pageBean.setRows(limit);
         pageBean.setPage(page);
@@ -73,6 +72,22 @@ public class CostController {
     public Map<String,Object> insertCost(Cost cost){
         System.out.println(cost);
         iCostService.insertCost(cost);
+        Map<String,Object> map =new HashMap<>();
+        map.put("success",true);
+        map.put("msg","成功");
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping("/updateCoststate")
+    public Map<String,Object> updateCoststate(String cid){
+
+        String[] split = cid.split(",");
+        for (String s : split) {
+            System.out.println(s);
+            iCostService.Updacostate(Integer.parseInt(s));
+        }
+
         Map<String,Object> map =new HashMap<>();
         map.put("success",true);
         map.put("msg","成功");

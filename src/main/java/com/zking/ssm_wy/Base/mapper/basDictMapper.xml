@@ -22,7 +22,34 @@
     <select id="querybasDict" resultType="map" parameterType="com.zking.ssm_wy.Base.model.basDict">
       SELECT  *  FROM bas_dict
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    <select id="querybasDictPage" resultType="map" parameterType="com.zking.ssm_wy.Base.model.basDict">
+       SELECT  *  FROM bas_dict
+      <if test="''!=dictType and null!=dictType">
+        where  dict_type LIKE #{dictType}
+      </if>
+    </select>
+  <select id="updpl">
+    <if test="null!= list and list.size()>0">
+      REPLACE INTO `costname`(cn_id,cn_name,cn_type,cn_price,cn_cycle,cn_remarks) VALUES
+      <trim  suffixOverrides=",">
+      <foreach collection="list" item="li">
+        (${li.cn_id},'${li.cn_name}','${li.cn_type}',${li.cn_price},${li.cn_cycle},'${li.cn_remarks}'),
+      </foreach>
+      </trim>
+    </if>
+  </select>
+  <select id="delpl">
+    <if test="null!= list and list.size()>0">
+      DELETE  FROM `costname` WHERE cn_id IN (
+      <trim  suffixOverrides=",">
+      <foreach collection="list" item="li">
+        ${li.cn_id},
+      </foreach>
+      </trim>
+      );
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from bas_dict
     where dict_id = #{dictId,jdbcType=BIGINT}
   </delete>
@@ -35,9 +62,6 @@
   <insert id="insertSelective" parameterType="com.zking.ssm_wy.Base.model.basDict" >
     insert into bas_dict
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="dictId != null" >
-        dict_id,
-      </if>
       <if test="dictType != null" >
         dict_type,
       </if>
@@ -52,9 +76,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="dictId != null" >
-        #{dictId,jdbcType=BIGINT},
-      </if>
       <if test="dictType != null" >
         #{dictType,jdbcType=VARCHAR},
       </if>

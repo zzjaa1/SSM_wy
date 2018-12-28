@@ -31,7 +31,8 @@
     where c_id = #{cId,jdbcType=INTEGER}
   </select>
     <select id="queryCostPager" resultType="map">
-      SELECT c.*,so.* FROM  costname c, cost so WHERE c.cn_id=so.cn_id AND so.h_number LIKE CONCAT(CONCAT('%',#{h_number}),'%')
+      SELECT c.*,so.* FROM  costname c, cost so WHERE c.cn_id=so.cn_id AND so.h_number LIKE CONCAT(CONCAT('%',#{h_number}),'%')AND so.state=0
+
     </select>
   <select id="queryCostfwPage" resultType="map">
       SELECT c.*,so.* FROM  costname c, cost so WHERE c.cn_id=so.cn_id
@@ -56,7 +57,11 @@
           '')
       </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="queryrq" resultType="map">
+      SELECT * FROM `cost` WHERE  #{qq} &lt; c_bcfyzq_date AND c_bcfyqq_date &lt;  #{qq}
+      OR  #{zq}   &lt;  c_bcfyzq_date AND c_bcfyqq_date &lt;  #{zq}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from cost
     where c_id = #{cId,jdbcType=INTEGER}
   </delete>
@@ -250,4 +255,12 @@ VALUES(#{cFc},#{cUser},#{cJfdw},#{cDwjg},#{cYjfy},
   c_bcfyzq_date = #{cBcfyzqDate},c_bcjfzq_date = #{cBcjfzqDate},c_costName = #{cCostname},c_real = #{cReal},c_remarks =#{cRemarks},cn_id=#{cnId}
     WHERE c_id =#{cId}
   </update>
+  <update id="Updacostate" >
+      update cost
+      <set>
+        state=1
+      </set>
+      where c_id = #{list}
+  </update>
+
 </mapper>

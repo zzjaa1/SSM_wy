@@ -34,8 +34,8 @@
     where cn_id = #{cnId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zking.ssm_wy.Base.model.CostName" >
-    insert into costname ( cn_name, cn_type,
-      cn_price, cn_cycle, "cn_ remarks"
+    insert into costname (cn_name, cn_type,
+      cn_price, cn_cycle, cn_remarks
       )
     values ( #{cnName,jdbcType=VARCHAR}, #{cnType,jdbcType=VARCHAR},
       #{cnPrice,jdbcType=REAL}, #{cnCycle,jdbcType=INTEGER}, #{cnRemarks,jdbcType=VARCHAR}

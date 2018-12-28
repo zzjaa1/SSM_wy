@@ -20,4 +20,10 @@ public interface basDictMapper {
     int updateByPrimaryKey(basDict record);
 
     List<Map<String,Object>> querybasDict(basDict basdict);
+
+    List<Map<String,Object>> querybasDictPage(basDict basdict);
+
+    void updpl(List<Map<String,Object>> list);
+
+    void delpl(List<Map<String,Object>> list);
 }

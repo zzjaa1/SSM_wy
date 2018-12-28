@@ -2,8 +2,6 @@ package com.zking.ssm_wy.Base.service;
 
 import com.zking.ssm_wy.Base.model.Cost;
 import com.zking.ssm_wy.Base.util.PageBean;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;

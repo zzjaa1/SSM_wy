@@ -11,4 +11,8 @@ public interface IOwnerService {
 
     List<Map<String,Object>> queryowenPage(String o_name ,String h_number, PageBean pageBean);
 
+    int UpdateOwen(Owner owner);
+
+    int deleteOwen(String O_number);
+
 }

@@ -47,4 +47,29 @@ public class OwnerController {
         map.put("msg","");
         return map;
     }
+
+    @ResponseBody
+    @RequestMapping("/Updateowener")
+    public Map<String,Object> Updateowener(Owner owner){
+        System.out.println(owner);
+        int i = iOwnerService.UpdateOwen(owner);
+        Map<String,Object> map=new HashMap<>();
+        map.put("msg","成功");
+        map.put("success",true);
+
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping("/Deleteowener")
+    public Map<String,Object> Deleteowener(String Onumber){
+        System.out.println(Onumber);
+        int i = iOwnerService.deleteOwen(Onumber);
+        Map<String,Object> map=new HashMap<>();
+        map.put("msg","成功");
+        map.put("success",true);
+
+        return map;
+    }
+
 }

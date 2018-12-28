@@ -11,23 +11,33 @@
     <link rel="stylesheet" href="../../css/systemsManagement.css">
     <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
     <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+
     <script>
         layui.use('table', function () {
             var table = layui.table;
             //第一个实例
             table.render({
                 elem: '#bzdemo'
-                , height: 500
+                , height: 550
                 , url: '/ssm_wy/queryPage' //数据接口
                 , where: {
                    // hNumber: obj.data.h_number
                 },page:true
                 ,id:'bzdemo1'
+                ,toolbar: true
+                // ,title: '基础数据表'
+                ,totalRow: true
                 , cols: [[ //表头
                     {field: 'o_number', title: '住户编号', width: '25%'},
                     {field: 'o_name', title: '业主名', width: '15%'},
                     {field: 'h_number', title: '房间编号', width: '15%'},
                     {field: 'o_phone', title: '业主号码', width: '15%'},
+                    {field: 'o_jdata', title: '入住时间', width: '15%',
+                        templet: function (d) {
+                            return showTime(d.o_jdata);
+                        }
+                    },
+                    {field: 'o_before', title: '预付金额', width: '15%'},
                     {field: 'o_ownership', title: '住户类型', width: '15%'},
                     {field: 'o_carder', title: '身份证号', width: '25%'},
                     {field: '', title: '操作', width: '15%',
@@ -36,13 +46,14 @@
                             return " <button class=\"layui-btn layui-btn-sm\" value='编辑' onclick='member_edit(" + obj + ")'>\n" +
                                 "   <i class=\"layui-icon\">&#xe642;</i>\n" +
                                 "   </button>"+
-                                "<button class=\"layui-btn layui-btn-sm\" value='删除' onclick='del(" + value.c_id + ")'>\n" +
+                                "<button class=\"layui-btn layui-btn-sm\" onclick=\"del('" + value.o_number + "')\">\n" +
                                 "    <i class=\"layui-icon\">&#xe640;</i>\n" +
                                 "  </button>";
                         }
                     }
                 ]]
             });
+
 
             //点击查询业主信息
             $("#btn_qu").click(function () {
@@ -62,7 +73,110 @@
                     } //设定异步数据接口的额外参数
                 });
             }
+
         });
+
+        //时间转换函数
+        function showTime(tempDate) {
+            var d = new Date(tempDate);
+            var year = d.getFullYear();
+            var month = d.getMonth();
+            month++;
+            var day = d.getDate();
+            var hours = d.getHours();
+
+            var minutes = d.getMinutes();
+            var seconds = d.getSeconds();
+            month = month < 10 ? "0" + month : month;
+            day = day < 10 ? "0" + day : day;
+            hours = hours<10 ? "0"+hours:hours;
+            minutes = minutes<10 ? "0"+minutes:minutes;
+            seconds = seconds<10 ? "0"+seconds:seconds;
+            var time = year + "-" + month + "-" + day+" "+hours+":"+minutes;
+            return time;
+        }
+
+        function member_edit(data) {
+            console.log(data);
+            data.o_jdata=showTime(data.o_jdata);
+            // data.c_bcfyzq_date = showTime(data.c_bcfyzq_date);
+            // data.c_bcfyqq_date = showTime(data.c_bcfyqq_date);
+            // data.c_bcjfzq_date = showTime(data.c_bcjfzq_date);
+            // data.c_scfyzq_date = showTime(data.c_scfyzq_date);
+
+            var body;
+            layer.open({
+                type: 2,
+                title: '修改信息',
+                maxmin: true,
+                shadeClose: true, //点击遮罩关闭层
+                shade: 1,   //遮罩
+                anim: 4,
+                area: ['920px', '700px'],
+                content: 'systems_owner_add.html',
+                btn: ['提交', '取消'],
+                success: function (layero, index) {
+                    body = layer.getChildFrame('body', index);  //巧妙的地方在这里哦
+                        for (var i = 1; Object.entries(data).length > i; i++) {
+                            var id = '#' + Object.entries(data)[i][0];
+                            var text = Object.entries(data)[i][1];
+                            body.contents().find(id).val(text);
+                            // datas=  body.contents().find('#ff').serialize()
+                        }
+                        //var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
+                        //iframeWin.ss(data.cn_id);
+
+                },
+                yes: function (index, layero) {
+                      //  url = '';
+                   var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
+                    var ss = iframeWin.s().serializeJSON();
+                   console.log(ss)
+                    // var companyId=iframeWin.document.getElementById("companyId").value;
+                    // console.log(companyId)
+                    // var grade=iframeWin.document.getElementById("grade").value;
+                    // console.log(grade)
+                    $.ajax({
+                        url: '/ssm_wy/Updateowener',
+                        method: 'post',
+                        data: ss,
+                        dataType: 'JSON',
+                        success: function (res) {
+                            // $('#tj').click();
+                            layer.alert(data.success, {icon: 1});
+                            // location.reload();
+                        },
+                        error: function (data) {
+                        }
+                    });
+                    // body.contents().find('#tj').click();
+                    layer.alert('ccc', {icon: 1});
+                    layer.close(index);
+                }, btn2: function (index, layero) {
+                    layer.close(index);
+                }
+
+            });
+        }
+
+        function del(o_number) {
+            layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index) {
+                $.ajax({
+                    url: '/ssm_wy/Deleteowener',
+                    method: 'post',
+                    data: {'Onumber': o_number},
+                    dataType: 'JSON',
+                    success: function (data) {
+                        // $('#tj').click();
+                        layer.alert(data.suucess, {icon: 1});
+                        location.reload();
+                    },
+                    error: function (data) {
+                    }
+                });
+                layer.close(index);
+            });
+        }
     </script>
 </head>
 <body>
@@ -148,6 +262,7 @@
         <a href="javascript:;" class="close">取消</a>
         <a href="javascript:;" class="makeSure">确认</a>
     </div>
+</div>
 </div>
 <script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
 <script>

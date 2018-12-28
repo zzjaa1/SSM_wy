@@ -31,7 +31,8 @@
     where c_id = #{cId,jdbcType=INTEGER}
   </select>
     <select id="queryCostPager" resultType="map">
-      SELECT c.*,so.* FROM  costname c, cost so WHERE c.cn_id=so.cn_id AND so.h_number LIKE CONCAT(CONCAT('%',#{h_number}),'%')
+      SELECT c.*,so.* FROM  costname c, cost so WHERE c.cn_id=so.cn_id AND so.h_number LIKE CONCAT(CONCAT('%',#{h_number}),'%')AND so.state=0
+
     </select>
   <select id="queryCostfwPage" resultType="map">
       SELECT c.*,so.* FROM  costname c, cost so WHERE c.cn_id=so.cn_id

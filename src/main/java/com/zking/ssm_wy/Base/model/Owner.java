@@ -1,5 +1,8 @@
 package com.zking.ssm_wy.Base.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Owner {
@@ -7,7 +10,9 @@ public class Owner {
     private String onumber;
     private String oname;
     private String ostate;
-    private int ophone;
+    private String ophone;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date Ojdata;
     private String ocarder;
     private String ownership;
@@ -46,11 +51,11 @@ public class Owner {
         this.ostate = ostate;
     }
 
-    public int getOphone() {
+    public String getOphone() {
         return ophone;
     }
 
-    public void setOphone(int ophone) {
+    public void setOphone(String ophone) {
         this.ophone = ophone;
     }
 

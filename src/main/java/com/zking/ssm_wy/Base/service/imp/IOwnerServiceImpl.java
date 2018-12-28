@@ -26,4 +26,15 @@ public class IOwnerServiceImpl implements IOwnerService{
     public List<Map<String, Object>> queryowenPage(String o_name ,String h_number,PageBean pageBean) {
         return ownerMapper.queryowenPage(o_name,h_number);
     }
+
+    @Override
+    public int UpdateOwen(Owner owner) {
+        return ownerMapper.UpdateOwen(owner);
+    }
+
+    @Override
+    public int deleteOwen(String O_number) {
+        return ownerMapper.deleteOwen(O_number);
+    }
+
 }

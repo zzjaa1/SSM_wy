@@ -48,9 +48,34 @@
                         </button>
                     </div>
                     <div class="layui-inline" style="padding-left: 80px">
-                        <button   class="layui-btn layui-btn-lg layui-btn-radius layui-btn-normal layui-btn-warm" id="">
+                        <button   class="layui-btn layui-btn-lg layui-btn-radius layui-btn-normal layui-btn-warm" id="dr">
                             导入抄表数据
                         </button>
+                        <script>
+                            $('#dr').on('click', function(){
+                                layer.open({
+                                    type: 2,
+                                    title: '替换账单',
+                                    maxmin: true,
+                                    shadeClose:true, //点击遮罩关闭层
+                                    shade: 1 ,   //遮罩
+                                    anim:4,
+                                    area : ['1000px' , '600px'],
+                                    content:'/ssm_wy/html/Jfgl/ExcelDR.html',
+                                    btn:['保存','取消'],
+                                    success: function (layero, index) {
+                                      /*  var iframeWin = window[layero.find('iframe')[0]['name']];
+                                        iframeWin.ssss(sjy,sj);*/
+                                    },
+                                    yes:function(index,layero){
+                                        layer.closeAll();
+                                    } ,btn2: function(index, layero){
+                                        layer.closeAll();
+                                    }
+
+                                });
+                            });
+                        </script>
                     </div>
                     <script>
                         var fyqq="";
@@ -490,14 +515,17 @@
                             ,totalRow: true
                             , cols: [[ //表头
                                 {field: 'c_fc', title: '房屋信息', width: '35%'},
+                                {field: 'c_user', title: '业主', width: '35%'},
                                 {field: 'cn_name', title: '费用名称', width: '12%'},
+                                {field: 'c_jfdw', title: '计费单位', width: '35%'},
+                                {field: 'c_dwjg', title: '单位价格', width: '35%'},
                                 {field: 'c_real', title: '实际用量', width: '12%'},
                                 {field: 'c_yjfy', title: '费用金额', width: '12%'},
-                                {field: 'c_scfyzq_date', title: '上次费用止期',
+                              /*  {field: 'c_scfyzq_date', title: '上次费用止期',
                                     templet: function (d) {
                                         return showTime(d.c_scfyzq_date);
                                     }, width: '15%'
-                                },
+                                },*/
                                 {field: 'c_bcfyqq_date', title: '本次费用起期',
                                     templet: function (d) {
                                         return showTime(d.c_bcfyqq_date);
@@ -720,7 +748,7 @@
                             shadeClose: true, //点击遮罩关闭层
                             shade: 1,   //遮罩
                             anim: 4,
-                            area: ['1000px', '500px'],
+                            area: ['1200px', '500px'],
                             content: 'zhangdan.html',
                             btn: ['提交', '取消'],
                             success: function (layero, index) {

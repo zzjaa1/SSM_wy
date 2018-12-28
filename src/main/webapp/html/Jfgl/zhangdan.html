@@ -27,14 +27,9 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 440
-            //,data:[{"fyid":"1","fjid":"2"}]
-            // ,url: '/ssm_wy/costName/queryCostName' //数据接口
-            // ,where:{'cnName':cn_name}
+            ,height: 330
             ,id:'demo'
-            //,page: true //开启分页
-            //,limit:10
-            //,count:10
+            ,title: '预计账单'
             ,cellMinWidth: 80
             ,cols: [[ //表头
                 {type: 'checkbox', fixed: 'left'},
@@ -57,6 +52,8 @@
 
 <script>
     var arr="";
+    var sjy="";
+    var sj="";
     function zd(fj,fy,qq,zq,xq) {
         var html="";
             for(var i=0;i<fy.length;i++){
@@ -79,7 +76,7 @@
                         if(fy[i].cn_type=="按使用量"){
                             html+= "<div class=\"layui-inline\">\n" +
                             "        <label class=\"layui-form-label\" style=\"width: 160px\">"+fy[i].cn_price+"￥/度(吨)</label>\n" +
-                            " <input type=\"text\" class=\"layui-input\" id='syl"+fy[i].cn_id+"' style=\"width: 100px\" >   </div>";
+                            " <input type=\"text\" class=\"layui-input\" id='syl"+fy[i].cn_id+"' style=\"width: 100px\" value='500' >   </div>";
                         }else if (fy[i].cn_type=="按房屋面积"){
                             html+="<div class=\"layui-inline\">\n" +
                                 "        <label class=\"layui-form-label\" style=\"width: 160px\">"+fy[i].cn_price+"￥/㎡</label>\n" +
@@ -174,22 +171,17 @@
             ,jump: function(obj){
                 //模拟渲染
                     var thisData = data.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
-                    /*  layui.each(thisData, function(index, item){
-                          arr.push('<li>'+ item +'</li>');
-                      });*/
-                    console.log(thisData);
                      layui.use('table', function(){
                      var table = layui.table;
                      table.reload('demo', {
                          data:thisData
                      });
-                    });
+                });
             }
         });
     });
 
         $('#sczdss').on('click', function(){
-            console.log("111");
             $.ajax({
                 url:'/ssm_wy/sczd',
                 method: 'post',
@@ -198,16 +190,44 @@
                 contentType:"application/json",
                 success: function (res) {
                     var han=res.han;
-                    if(han!=0){
-                        layer.alert('成功,失败行：'+han, {icon: 1});
+                    var sbhan=res.sbhan;
+                    if(sbhan==0){
+                        layer.alert('成功,生成账单数：'+han, {icon: 1});
                     }else{
-                        layer.msg('失败,失败行:'+han, {icon: 5});
-
+                        layer.confirm('失败,共计冲突行：'+sbhan+'是否查看', {icon: 3, title:'提示'}, function(index){
+                             sjy=res.sbsjy;
+                             sj=res.sbsj;
+                            cth();
+                        });
                     }
                 },
                 error: function (data) {
                 }
             });
+        });
+    }
+
+    function  cth() {
+        layer.open({
+            type: 2,
+            title: '替换账单',
+            maxmin: true,
+            shadeClose:true, //点击遮罩关闭层
+            shade: 1 ,   //遮罩
+            anim:4,
+            area : ['600px' , '400px'],
+            content:'/ssm_wy/html/Jfgl/thzhangdan.html',
+            btn:['保存','取消'],
+            success: function (layero, index) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                iframeWin.ssss(sjy,sj);
+            },
+            yes:function(index,layero){
+                layer.closeAll();
+            } ,btn2: function(index, layero){
+                layer.closeAll();
+            }
+
         });
     }
 </script>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" href="/ssm_wy/layui/css/layui.css" media="all">
+<script src="/ssm_wy/layui/layui.js"></script>
+<body>
+<div class="layui-inline" style="padding-left: 500px">
+    <button class="layui-btn layui-btn-warm" data-type="reload"   id="th">替换选中行数据</button>
+</div>
+<table id="demo"></table>
+<div id="demo20"></div>
+
+<script>
+
+    var arr="";
+    function ssss(sjy,sj) {
+
+        var newArry=new Array();
+        for(var i=0;i<sjy.length;i++){
+            for(var j=0;j<sj.length;j++){
+                if(sjy[i].h_number==sj[j].h_number && sjy[i].cn_id==sj[j].cn_id){
+                    newArry.push({
+                        'c_fc':sj[j].h_number
+                        ,'c_dwjg':sj[j].c_fc
+                        ,'c_costName':sj[j].c_costName
+                        ,'c_yjfy':sj[j].c_yjfy
+                        ,'c_yjfy_y':sjy[i].c_yjfy
+                        ,'c_bcjfzq_date':sj[j].c_bcjfzq_date
+                        ,'c_bcjfzq_date_y':sjy[i].c_bcjfzq_date
+                        ,'c_bcfyqq_date':sj[j].c_bcfyqq_date
+                        ,'c_bcfyqq_date_y':sjy[i].c_bcfyqq_date
+                        ,'c_bcfyzq_date':sj[j].c_bcfyzq_date
+                        ,'c_bcfyzq_date_y':sjy[i].c_bcfyzq_date
+                        ,'c_jfdw':sj[j].c_jfdw
+                        ,'cn_id':sj[j].cn_id
+                        ,'c_user':sj[j].c_user
+                    });
+                }
+            }
+        }
+        arr=newArry;
+        layui.use('table', function(){
+            var table = layui.table;
+            //第一个实例
+            table.render({
+                elem: '#demo'
+                ,height: 250
+                ,id:'demo'
+                ,data:arr
+                ,title: '预计账单'
+                ,cellMinWidth: 80
+                ,cols: [[ //表头
+                    {type: 'checkbox', fixed: 'left'},
+                    {field: 'h_number', title: '房屋编号', width: '15%'},
+                    {field: 'c_fc', title: '房屋信息', width: '12%'},
+                    {field: 'c_costName',title: '费用名称', width: '15%'},
+                    {field: 'c_yjfy', title: '费用金额', width: '15%'},
+                    {field: 'c_yjfy_y', title: '冲突费用金额', width: '15%'},
+                    {field: 'c_bcfyqq_date', title: '本次费用起期', width: '15%'},
+                    {field: 'c_bcfyqq_date_y', title: '冲突费用起期', width: '15%'},
+                    {field: 'c_bcfyzq_date', title: '本次费用止期', width: '15%'},
+                    {field: 'c_bcfyzq_date_y', title: '冲突费用止期', width: '15%'},
+                    {field: 'c_bcjfzq_date', title: '本次缴费止期', width: '15%'},
+                    {field: 'c_bcjfzq_date_y', title: '冲突缴费止期', width: '15%'},
+                    {field: 'c_jfdw', title: '计费单位', width: '15%'},
+                    {field: 'c_user', title: '业主', width: '15%'},
+                ]]
+            });
+
+            $('#th').on('click', function(){
+                var checkStatus = table.checkStatus('demo')
+                    ,datas = checkStatus.data;
+               /* $.ajax({
+                    url:'/ssm_wy/basDict/delbasDictpl',
+                    method: 'post',
+                    data:JSON.stringify(datas),//"cBcfyzqDate":fyzq,"cBjfyzqDate":fyxq},
+                    dataType: 'JSON',
+                    contentType:"application/json",
+                    success: function (res) {
+                        var suc=res.success;
+                        layer.msg(suc, {icon: 1});
+                        $('#tj').click();
+
+                    },
+                    error: function (data) {
+                    }
+                });*/
+            });
+
+        });
+
+        layui.use(['laypage', 'layer'], function(){
+            var laypage = layui.laypage
+                ,layer = layui.layer;
+            var data =arr;
+            laypage.render({
+                elem: 'demo20'
+                ,count: data.length
+                ,limit: 10
+                ,limits: [5,10,20,50,100,500,1000]
+                ,jump: function(obj){
+                    //模拟渲染
+                    var thisData = data.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
+                    layui.use('table', function(){
+                        var table = layui.table;
+                        table.reload('demo', {
+                            data:thisData
+                        });
+                    });
+                }
+            });
+        });
+        console.log(arr);
+    }
+
+
+</script>
+</body>
+</html>

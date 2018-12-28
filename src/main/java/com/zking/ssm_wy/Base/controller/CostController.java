@@ -30,9 +30,15 @@ public class CostController {
         pageBean.setRequest(request);
         List<Map<String, Object>> maps = iCostService.queryCostPage(hNumber,pageBean);
         for (Map<String, Object> map : maps) {
-            System.out.println(map);
+            map.put("c_scfyzq_date",map.get("c_scfyzq_date").toString());
+            map.put("c_bcfyqq_date",map.get("c_bcfyqq_date").toString());
+            map.put("c_bcfyzq_date",map.get("c_bcfyzq_date").toString());
+            map.put("c_bcjfzq_date",map.get("c_bcjfzq_date").toString());
         }
         Map<String,Object> map =new HashMap<>();
+        for (Map<String, Object> mapss : maps) {
+            System.out.println(mapss.toString());
+        }
         map.put("data",maps);
         map.put("code",0);
         map.put("msg","");

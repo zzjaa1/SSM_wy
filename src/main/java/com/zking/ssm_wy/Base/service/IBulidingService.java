@@ -15,4 +15,6 @@ public interface IBulidingService {
     int updateunitname(Buliding buliding);
 
     int update(Buliding buliding);
+
+    int updateByPrimaryKeySelective(Buliding record);
 }

@@ -55,8 +55,6 @@ public class HousesController {
         map.put("msg","");
         return map;
     }
-
-
     /**
      * 添加单元
      * @param houses
@@ -104,6 +102,49 @@ public class HousesController {
         int update = bulidingService.update(buliding);
         System.out.println(houses);
         int i = iHousesService.insertSelective(houses);
+        Map<String,Object> map =new HashMap<>();
+        map.put("success",true);
+        map.put("msg","成功");
+        return map;
+    }
+
+    @RequestMapping("/updateHours2")
+    @ResponseBody
+    public Map<String ,Object> updateHours2(Houses houses){
+        System.out.println(houses);
+        houses.sethUnitnumber(1);
+        iHousesService.updateByPrimaryKeySelective(houses);
+
+        Map<String,Object> map =new HashMap<>();
+        map.put("success",true);
+        map.put("msg","成功");
+        return map;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/updateHours")
+    public Map<String,Object> updateHours(Houses houses){
+
+
+        System.out.println(houses);
+        if (!houses.gethBulidingname().contains("室")){
+            houses.sethBulidingname(houses.gethBulidingname()+"室");
+        }
+       int i = iHousesService.updateByPrimaryKeySelective(houses);
+
+        Map<String,Object> map =new HashMap<>();
+        map.put("success",true);
+        map.put("msg","成功");
+        return map;
+    }
+
+
+    @RequestMapping("/deleteHours")
+    @ResponseBody
+    public Map<String,Object> deleteHours(String hnumber){
+
+        int i = iHousesService.DeleteHours(hnumber);
         Map<String,Object> map =new HashMap<>();
         map.put("success",true);
         map.put("msg","成功");

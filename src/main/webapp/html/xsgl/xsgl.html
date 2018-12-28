@@ -12,6 +12,7 @@
     <script type="text/javascript" src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="/ssm_wy/layui/lay/modules/form.js"></script>
     <script type="text/javascript" src="/ssm_wy/layui/lay/modules/element.js"></script>
+    <script type="text/javascript" src="/ssm_wy/js/jquery.serializejson.js"></script>
     <!--树形-->
     <script>
         var data={};
@@ -131,22 +132,75 @@
                             var text = Object.entries(data)[i][1];
                             body.contents().find(id).val(text);
                         }
-                        console.log("h_state="+data.h_state);
-                    iframeWin.ss(data.h_state);
                 }
-                ,btn: ['确定', '关闭']
+                ,btn: ['确定', '关闭','自动填充']
                 ,yes: function(index, layero){
                     //按钮【按钮一】的回调
-
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    //var sdata=body.contents().find('#ff').serializeJSON();
+                    var sdata=iframeWin.sasa();
+                    var redate=new Date();
+                   // redate=sdata.re_date;
+                    console.log(redate)
+                    $.ajax({
+                        url: '/ssm_wy/addReall',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {"renumber": sdata.re_number,"reprice":sdata.re_price,"redate":redate,"refkfs":sdata.re_fkfs,"oname":sdata.o_name,"recard":sdata.re_card
+                            ,"rephone":sdata.re_phone,"ophone":sdata.o_phone,"reremarks":sdata.re_remarks,"hnumber":sdata.h_number,"onumber":sdata.o_number
+                        },
+                        success: function (status) {
+                           if(status=="成功"){
+                               layer.msg('添加成功', function(){
+                                   layer.close(layer.index);
+                               });
+                           }
+                        }
+                    })
                 },btn2: function(index, layero){
                     //按钮【按钮二】的回调
                     layer.msg('我是按钮二', function(){
                         //do something
                     });
-                    //return false 开启该代码可禁止点击该按钮关闭
+                    // 开启该代码可禁止点击该按钮关闭
+                },btn3: function (index,layero) {
+                    layer.prompt(
+                        {
+                            formType:0,
+                            title: '请输入业主姓名',
+                        },function(value, index, elem){
+
+                            alert(value); //得到value
+                            zdtc(value);
+                            layer.close(index);
+                        });
+                            return false;
+
+
                 }
 
             });
+           /* function zdtc(value) {
+                console.log("value="+value);
+                $.ajax({
+                    url: '/ssm_wy/queryOwner',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {"oname":value},
+                    success: function (status) {
+                        $.each(status.date, function(key, val,index,layero) {
+                            var body = layui.layer.getChildFrame('body', index);
+                            var iframeWin = window[layero.find('iframe')[0]['name']];
+                            for (var i = 1; Object.entries(date).length > i; i++) {
+                                var id = '#' + Object.entries(date)[i][0];
+                                var text = Object.entries(date)[i][1];
+                                body.contents().find(id).val(text);
+                            }
+                            console.log(val)
+                        });
+                    }
+                });
+            }*/
         }
     </script>
     <script>

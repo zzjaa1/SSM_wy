@@ -193,4 +193,14 @@ public class XiaoQuController {
         return map;
     }
 
+
+    @ResponseBody
+    @RequestMapping("/selectXiaoqu")
+    public Map<String,Object> selectXiaoqu(){
+        List<Map<String, Object>> queryxq = iXiaoQuService.queryxq(null);
+        Map<String,Object> map =new HashMap<>();
+        map.put("data",queryxq);
+        return map;
+    }
+
 }

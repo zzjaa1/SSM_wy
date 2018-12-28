@@ -1,47 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
-    <script src="layui/layui.js" charset="utf-8"></script>
-    <script>
-  var data={};
-  var data1={};
-        layui.use(['tree', 'layer'], function(){
-            var layer = layui.layer
-                ,$ = layui.jquery;
-            $.ajax({
-                url: '/ssm_wy/querytree',
-                type: 'post',
-                dataType: 'json',
-                data: {
-                },
-                success: function (status) {
-                    $.each(status.li, function(key, val) {
-                          data.name=val.name;
-                           data.id=val.id;
-                           data.children=val.children;
-                        layui.tree({
-                            elem: '#demo1' //指定元素
-                            ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
-                            ,click: function(item){ //点击节点回调
-                                layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
-                                // console.log(item);
-                            }
-                            ,nodes:
-                                [data
-                                ]
-                        });
-                    });
-                }
-            });
-        });
-    </script>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style type="text/css">
+        .downpanel .layui-select-title span {
+            line-height: 38px;
+        }
+
+        /*继承父类颜色*/
+        .downpanel dl dd:hover {
+            background-color: inherit;
+        }
+    </style>
+    <style type="text/css">
+        body {
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            margin: 0 auto;
+        }
+        td {
+            font-size: 12px !important;
+        }
+
+        .layui-form-checkbox span {
+            height: 30px;
+        }
+        .layui-field-title {
+            border-top: 1px solid white;
+        }
+        table {
+            width: 100% !important;
+        }
+
+    </style>
 </head>
 <body>
-<div >
-    <ul id="demo1"></ul>
-</div>
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">文章栏目</label>
+        <div class="layui-input-inline">
+            <div class="layui-unselect layui-form-select downpanel">
+                <div class="layui-select-title">
+                    <span class="layui-input layui-unselect" id="treeclass">选择栏目</span>
+                    <input type="hidden" name="selectID" value="0">
+                    <i class="layui-edge"></i>
+                </div>
+                <dl class="layui-anim layui-anim-upbit">
+                    <dd>
+                        <ul id="classtree"></ul>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script type="text/javascript">
+    layui.use(['element', 'tree', 'layer', 'form', 'upload'], function () {
+        var $ = layui.jquery, tree = layui.tree;
+        tree({
+            elem: "#classtree"
+            ,
+            nodes: [{
+                name: '常用文件夹',
+                id: 1,
+                alias: 'changyong',
+                children: [{name: '所有未读', id: 11, href: 'http://www.layui.com/', alias: 'weidu'}, {
+                    name: '置顶邮件',
+                    id: 12
+                }, {name: '标签邮件', id: 13}]
+            }, {
+                name: '我的邮箱',
+                id: 2,
+                spread: true,
+                children: [{
+                    name: 'QQ邮箱',
+                    id: 21,
+                    spread: true,
+                    children: [{
+                        name: '收件箱',
+                        id: 211,
+                        children: [{name: '所有未读', id: 2111}, {name: '置顶邮件', id: 2112}, {name: '标签邮件', id: 2113}]
+                    }, {name: '已发出的邮件', id: 212}, {name: '垃圾邮件', id: 213}]
+                }, {
+                    name: '阿里云邮',
+                    id: 22,
+                    children: [{name: '收件箱', id: 221}, {name: '已发出的邮件', id: 222}, {name: '垃圾邮件', id: 223}]
+                }]
+            }]
+            ,
+            click: function (node) {
+                var $select = $($(this)[0].elem).parents(".layui-form-select");
+                $select.removeClass("layui-form-selected").find(".layui-select-title span").html(node.name).end().find("input:hidden[name='selectID']").val(node.id);
+            }
+        });
+        $(".downpanel").on("click", ".layui-select-title", function (e) {
+            $(".layui-form-select").not($(this).parents(".layui-form-select")).removeClass("layui-form-selected");
+            $(this).parents(".downpanel").toggleClass("layui-form-selected");
+            layui.stope(e);
+        }).on("click", "dl i", function (e) {
+            layui.stope(e);
+        });
+        $(document).on("click", function (e) {
+            $(".layui-form-select").removeClass("layui-form-selected");
+        });
+    });
+</script>
+</body>
+</html>
 </body>
 </html>

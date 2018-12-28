@@ -31,5 +31,15 @@ public class BulidIngController {
         map.put("msg","成功");
         return map;
     }
+    @RequestMapping("/updateBulid")
+    @ResponseBody
+    public Map<String,Object> updateBulid(Buliding buliding){
+        System.out.println(buliding);
+        int i = iBulidingService.updateByPrimaryKeySelective(buliding);
+        Map<String,Object> map =new HashMap<>();
+        map.put("msg","编辑成功");
+        map.put("success",true);
+        return map;
+    }
 
 }

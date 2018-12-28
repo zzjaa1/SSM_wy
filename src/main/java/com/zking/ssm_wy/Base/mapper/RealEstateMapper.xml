@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm_wy.Base.mapper.RealEstateMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm_wy.Base.model.RealEstate" >
+    <constructor >
+      <idArg column="re_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="re_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="re_price" jdbcType="FLOAT" javaType="java.lang.Double" />
+      <arg column="re_date" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="refkfs" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="o_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="re_card" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="re_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="o_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="re_remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="h_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="o_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+    <sql id="Base_Column_List" >
+      re_id, re_number, re_price, re_date, re_date, o_name, re_card, re_phone,
+      o_phone, re_remarks,h_number,o_number
+    </sql>
+  <select id="addReal" resultType="String" parameterType="com.zking.ssm_wy.Base.model.RealEstate">
+    INSERT INTO real_estate (
+    re_id,re_number,Re_price,Re_date,Re_fkfs,O_name,Re_card,Re_phone,O_phone,re_remarks,h_number,o_number
+    )
+    VALUES
+    (#{reid},#{renumber},#{reprice},#{redate},#{refkfs},#{oname},
+    #{recard},#{rephone},#{ophone},#{reremarks},#{hnumber},#{onumber})
+  </select>
+
+
+</mapper>

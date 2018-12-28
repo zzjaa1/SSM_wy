@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
+    <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <script src="/ssm_wy/js/jquery.serializejson.js"></script>
+</head>
+<body>
+<form id="ff" class="layui-form" method="post" action="/ssm_wy/UpdateCost">
+    <label><h3>修改业主缴费信息</h3></label>
+    <input type="hidden" id="c_id" name="cId">
+    <div class="layui-form-item">
+        <label class="layui-form-label">房屋编号</label>
+        <div class="layui-input-block">
+            <input type="text" id="h_number" name="hNumber" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" readonly >
+        </div>
+   <div class="layui-form-item">
+        <label class="layui-form-label">房屋信息</label>
+        <div class="layui-input-block">
+            <input type="text" id="c_fc" name="cFc" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" >
+        </div>
+        <label class="layui-form-label">业主</label>
+        <div class="layui-input-block">
+            <input type="text" id="c_user" name="cUser" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" >
+        </div>
+        <label class="layui-form-label">计费单位</label>
+        <div class="layui-input-block">
+            <input type="text" id="c_jfdw" name="cJfdw" lay-verify="title" placeholder="请输入计费单位" autocomplete="off" class="layui-input" style="width: 300px" >
+        </div>
+        <label class="layui-form-label">单位价格</label>
+        <div class="layui-input-block">
+            <input type="text" id="c_dwjg" name="cDwjg" lay-verify="title" placeholder="请输入单位价格" autocomplete="off" class="layui-input" style="width: 300px" >
+        </div>
+       <!--<label class="layui-form-label">费用名称</label>-->
+       <!--<div class="layui-input-block">-->
+           <!--<input type="text" id="c_costName" name="cCostname" lay-verify="title" placeholder="请输入费用名称" autocomplete="off" class="layui-input" style="width: 300px" >-->
+       <!--</div>-->
+    </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">费用类型</label>
+            <!--  <input type="hidden" id="cn_type">-->
+            <div class="layui-input-inline" id="fylx">
+                <select id="cn_id" name="cnId"  style="width: 200px">
+                    <option value="0">请选择</option>
+                </select>
+            </div>
+  <div class="layui-form-item">
+        <label class="layui-form-label">应交费用</label>
+        <div class="layui-input-block">
+            <input type="text" id="c_yjfy" name="cYjfy" lay-verify="title" placeholder="请输入应交费用" autocomplete="off" class="layui-input" style="width: 300px" >
+        </div>
+    </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">上次费用止期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="cScfyzqDate" class="layui-input" id="c_scfyzq_date" placeholder="yyyy-MM-dd">
+                </div>
+            </div>
+        </div>
+           <div class="layui-form-item">
+           <div class="layui-inline">
+               <label class="layui-form-label">本次费用止期</label>
+               <div class="layui-input-inline">
+                   <input type="text" name="cBcfyzqDate" class="layui-input" id="c_bcfyzq_date" placeholder="yyyy-MM-dd">
+               </div>
+           </div>
+       </div>
+     <div class="layui-form-item">
+           <div class="layui-inline">
+               <label class="layui-form-label">本次费用起期</label>
+               <div class="layui-input-inline">
+                   <input type="text" name="cBcfyqqDate" class="layui-input" id="c_bcfyqq_date" placeholder="yyyy-MM-dd">
+               </div>
+           </div>
+       </div>
+       <div class="layui-form-item">
+           <div class="layui-inline">
+               <label class="layui-form-label">本次缴费止期</label>
+               <div class="layui-input-inline">
+                   <input type="text" name="cBcjfzqDate" class="layui-input" id="c_bcjfzq_date" placeholder="yyyy-MM-dd">
+               </div>
+           </div>
+       </div>
+    </div>
+   <!-- <button class="layui-btn tj" lay-submit lay-filter="formDemo">立即提交</button>-->
+    </div>
+</form>
+
+
+<script>
+function s() {
+    var sdata=$('#ff');
+    console.log("111");
+    console.log(sdata);
+    return sdata;
+}
+
+    layui.use('laydate', function() {
+        var laydate = layui.laydate;
+
+        //常规用法
+        laydate.render({
+            elem: '#c_bcjfzq_date'
+        });
+        laydate.render({
+            elem: '#c_bcfyqq_date'
+        });
+        laydate.render({
+            elem: '#c_bcfyzq_date'
+        });
+        laydate.render({
+            elem: '#c_scfyzq_date'
+        });
+    });
+
+layui.use('form', function(){
+    var form = layui.form;
+       //监听提交
+       form.on('submit(formDemo)', function(data){
+           layer.msg(JSON.stringify(data.field));
+           return false;
+       });
+
+
+});
+
+function ss(a) {
+    // console.log("zx="+a);
+    $.get("/ssm_wy/costName/queryCostname",
+        function(result, state) {
+            var names=result.data;
+            for(var i = 0;i<names.length;i++) {
+                $("#cn_id").append(new Option(names[i].cn_name,names[i].cn_id));
+                layui.form.render('select');
+            }
+            $("#cn_id").val(a);
+            layui.form.render('select');
+        });
+}
+
+</script>
+
+</body>
+</html>

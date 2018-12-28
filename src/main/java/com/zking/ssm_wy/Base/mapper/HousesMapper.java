@@ -19,8 +19,6 @@ import java.util.Map;
 
     int updateByPrimaryKeySelective(Houses record);
 
-    int updateByPrimaryKey(Houses record);
-
     List<Map<String,Object>> queryHourse(String number);
     List<Map<String,Object>> queryBulidingName(String bulidingName);
     List<Map<String,Object>> queryState(String bulidingName);
@@ -28,5 +26,14 @@ import java.util.Map;
     String queryHourId();
 
     int Updatequery(String bnumber);
+
+    int DeleteHours(String hnamber);
+
+    void UpdateState(String hun);
+
+    List<Map<String,Object>> queryStatePage(String bulidingName);
+
+
+
 
 }

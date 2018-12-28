@@ -14,6 +14,8 @@
       <arg column="h_area" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="h_remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="b_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="zt" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="price" jdbcType="FLOAT" javaType="java.lang.Double" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -35,6 +37,12 @@
   <select id="queryState" resultType="map">
     SELECT * FROM houses WHERE h_number like #{bulidingName} AND h_state="未入住"
   </select>
+  <select id="UpdateState">
+    UPDATE houses SET zt='已售' AND h_state='已入住' WHERE h_number=#{hun,jdbcType=VARCHAR}
+  </select>
+  <select id="queryStatePage" resultType="map">
+    SELECT * FROM houses WHERE h_number like #{bulidingName} AND h_state="未入住"
+  </select>
   <select id="queryHourId" resultType="string">
     SELECT MAX(h_id)h_id  FROM houses WHERE h_unitNumber IS NOT NULL
   </select>
@@ -45,6 +53,9 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from houses
     where h_id = #{hId,jdbcType=INTEGER}
+  </delete>
+  <delete id="DeleteHours">
+    DELETE FROM houses WHERE h_number=#{hnamber}
   </delete>
   <insert id="insert" parameterType="com.zking.ssm_wy.Base.model.Houses" >
     insert into houses (h_id, h_number, h_state, 
@@ -132,9 +143,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm_wy.Base.model.Houses" >
     update houses
     <set >
-      <if test="hNumber != null" >
-        h_number = #{hNumber,jdbcType=VARCHAR},
-      </if>
       <if test="hState != null" >
         h_state = #{hState,jdbcType=VARCHAR},
       </if>
@@ -159,24 +167,8 @@
       <if test="hRemarks != null" >
         h_remarks = #{hRemarks,jdbcType=VARCHAR},
       </if>
-      <if test="bNumber != null" >
-        b_number = #{bNumber,jdbcType=VARCHAR},
-      </if>
     </set>
-    where h_id = #{hId,jdbcType=INTEGER}
+    where h_number = #{hNumber}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zking.ssm_wy.Base.model.Houses" >
-    update houses
-    set h_number = #{hNumber,jdbcType=VARCHAR},
-      h_state = #{hState,jdbcType=VARCHAR},
-      h_bulidingName = #{hBulidingname,jdbcType=VARCHAR},
-      h_unitNumber = #{hUnitnumber,jdbcType=INTEGER},
-      h_floor = #{hFloor,jdbcType=INTEGER},
-      h_type = #{hType,jdbcType=VARCHAR},
-      h_direction = #{hDirection,jdbcType=VARCHAR},
-      h_area = #{hArea,jdbcType=INTEGER},
-      h_remarks = #{hRemarks,jdbcType=VARCHAR},
-      b_number = #{bNumber,jdbcType=VARCHAR}
-    where h_id = #{hId,jdbcType=INTEGER}
-  </update>
+
 </mapper>

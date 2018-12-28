@@ -50,4 +50,22 @@ public class IHousesServiceImpl implements IHousesService {
     public int Updatequery(String bnumber) {
         return housesMapper.Updatequery(bnumber);
     }
+
+    @Transactional
+    @Override
+    public int DeleteHours(String hnamber) {
+        return housesMapper.DeleteHours(hnamber);
+    }
+    @Transactional
+    @Override
+    public int updateByPrimaryKeySelective(Houses record) {
+        return housesMapper.updateByPrimaryKeySelective(record);
+    }
+    @Transactional
+    @Override
+    public void UpdateState(String hun) {
+        housesMapper.UpdateState(hun);
+    }
+
+
 }

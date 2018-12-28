@@ -14,8 +14,19 @@
     <script src="/ssm_wy/js/jquery.serializejson.js"></script>
     <script>
         layui.use(['tree', 'layer'], function () {
-            var layer = layui.layer
-                , $ = layui.jquery;
+                var layer = layui.layer
+                    , $ = layui.jquery;
+            trees();
+             $('#fj_btn').on('click', function(){
+                $('#loudong').css('display','block');
+                $('#louff').css('display','none');
+            });
+        });
+        
+        function trees() {
+            layui.use(['tree', 'layer'], function () {
+                var layer = layui.layer
+                    , $ = layui.jquery;
             $.ajax({
                 url: '/ssm_wy/querytree',
                 type: 'post',
@@ -36,98 +47,218 @@
                             , click: function (item) { //点击节点回调
                                 //layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
                                 // console.log(JSON.stringify(item));
-                                // $('#dd').html(item.name);
                                 var idlen= item.id.split('-').length;
-                                if(idlen==1){
-                                    $("#xqmc").html("小区名称："+item.name);
-                                    $("#xqid").val(item.id);
-                                    $('#xNumber').val(item.id);
+                                $('#lodiv').css('display','block');
+                                $('#cr_btn1').on('click', function(){
+                                    if(idlen==1){
+                                        $('#bj').css('display','block');
+                                        $("#xqmc").html("小区名称："+item.name);
+                                        $("#xqid").val(item.id);
+                                        $('#xNumber').val(item.id);
+                                        $('#fangjian').css('display','none');
+                                        $('#loudong').css('display','none');
+                                        $('#louff').css('display','block');
+                                    }else if(idlen==2){
+                                        $('#h_bulidingNames').val(item.name);
+                                        $('#b_number').val(item.id);
+                                        $('#fangjian').css('display','none');
+                                        $('#louff').css('display','none');
+                                        $('#loudong').css('display','block');
+                                    }else if (idlen==3){
+                                        $('#dym').val(item.name);
+                                        $('#bnumber').val(item.id);
+                                        $('#louff').css('display','none');
+                                        $('#loudong').css('display','none');
+                                        $('#fangjian').css('display','block');
+                                    }
+                                });
+                                $('#xx_btn').on('click', function(){
                                     $('#fangjian').css('display','none');
                                     $('#loudong').css('display','none');
-                                    $('#louff').css('display','block');
-                                }else if(idlen==2){
-                                    $('#h_bulidingNames').val(item.name);
-                                    $('#b_number').val(item.id);
+                                    $('#louff').css('display','none');
+                                    //删除
+                                    if(item.id.search("-S")!=-1){
+                                        del(item.id);
+                                    }else {
+                                        alert("只能选择未入住的房间删除！")
+                                    }
+                                });
+                                $('#sc_btn').on('click', function(){
                                     $('#fangjian').css('display','none');
-                                    $('#louff').css('display','none');
-                                    $('#loudong').css('display','block');
-                                }else if (idlen==3){
-                                    $('#dym').val(item.name);
-                                    $('#bnumber').val(item.id);
-                                    $('#louff').css('display','none');
                                     $('#loudong').css('display','none');
-                                    $('#fangjian').css('display','block');
-                                }
+                                    $('#louff').css('display','none');
+                                    if(idlen==2){
+                                        $('#bj').css('display','block');
+                                        $("#xqmc").html("名称："+item.name);
+                                        $('#bBuliding').val(item.name);
+                                        $("#xqid").val(item.id);
+                                        $('#xNumber').val(item.id);
+                                        $('#b_numbers').val(item.id);
+                                        $('#fangjian').css('display','none');
+                                        $('#loudong').css('display','none');
+                                        $('#louff').css('display','block');
+                                        formdamo("编辑");
+                                    }else if(idlen==3){
+                                        $('#h_bulidingNames').val(item.name);
+                                        $('#b_number').val(item.id);
+                                        $('#h_bulidingName').val(item.name);
+                                        $('#hNumbers').val(item.id);
+                                        $('#fangjian').css('display','none');
+                                        $('#louff').css('display','none');
+                                        $('#loudong').css('display','block');
+                                        formdamo2('编辑');
+                                    }else if (idlen==4){
+                                        $('#dym').css('display','none');
+                                        $('#hNumber').val(item.id);
+                                        $('#h_buliding').val(item.name);
+                                        $('#bnumber').val(item.id);
+                                        $('#louff').css('display','none');
+                                        $('#loudong').css('display','none');
+                                        $('#fangjian').css('display','block');
+                                        formdamo3("编辑");
+                                    }
+                                });
                             }
                             , nodes:
                                 [data
                                 ]
                         });
+
                     });
                 }
             });
-            $('#fj_btn').on('click', function(){
-                $('#loudong').css('display','block');
-                $('#louff').css('display','none');
             });
-
-        });
+        }
+        function del(id) {
+            layer.confirm('确定删除?', {icon: 3, title: '提示'}, function (index) {
+                $.ajax({
+                    url: '/ssm_wy/deleteHours',
+                    method: 'post',
+                    data: {'hnumber': id},
+                    dataType: 'JSON',
+                    success: function (data) {
+                        layer.alert(data.suucess, {icon: 1});
+                        trees();
+                    },
+                    error: function (data) {
+                    }
+                });
+                layer.close(index);
+            });
+        }
 
     </script>
     <script>
        layui.use(['form','jquery'], function(){
            var form = layui.form;
            var $=layui.jquery;
-           //监听提交
+           formdamo('增加')
+           formdamo2('增加')
+           formdamo3('增加')
+       });
+       
+       function formdamo(data) {
+           layui.use(['form','jquery'], function(){
+               var form = layui.form;
+               var $=layui.jquery;
+               //监听提交
+               var url="";
+               if(data!='增加'){
+                   url="/ssm_wy/BulidIng/updateBulid";
+               }else{
+                   url='/ssm_wy/BulidIng/insertBulid';
+               }
+               console.log(url);
            form.on('submit(formDemo)', function(data){
                data.field.xNumber=$('#xNumber').val();
                data.field.bBuliding=$('#bBuliding').val();
                data.field.bHours=$('#bHours').val();
                data.field.csRemarks=$('#csRemarks').val();
+               data.field.bNumber=$('#b_numbers').val();
                console.log(JSON.stringify(data.field));
-                   $.ajax({
-                       url: '/ssm_wy/BulidIng/insertBulid',
-                       data: data.field,
-                       dataType: 'json',
-                       method: 'post',
-                       // async:false,
-                       success: function (obj) {
-                           layer.msg(obj.msg);
-                           $('#h_bulidingNames').val(obj.xbuliding);
-                           $('#b_number').val(obj.bnumber);
-                           if(obj.success){
-                               c();
-                           }
-                       }
-                   });
-           });
-           form.on('submit(formDemo2)', function(data){
-               data.field.bNumber=$('#b_number').val();
-               data.field.hBulidingname=$('#h_bulidingName').val();
                $.ajax({
-                   url: '/ssm_wy/insertHouse',
+                   url: url,
                    data: data.field,
                    dataType: 'json',
                    method: 'post',
                    // async:false,
                    success: function (obj) {
                        layer.msg(obj.msg);
+                       if(data=='添加'){
+                           $('#h_bulidingNames').val(obj.xbuliding);
+                           $('#b_number').val(obj.bnumber);
+                           if(obj.success){
+                               c();
+                           }
+                       }else{
+                           trees();
+                       }
+
+                   }
+               });
+           });
+           });
+       }
+       function formdamo2(data) {
+           layui.use(['form','jquery'], function() {
+               var form = layui.form;
+               var $ = layui.jquery;
+               var url="";
+               if(data!='增加'){
+                   url="/ssm_wy/updateHours2";
+               }else{
+                   url='/ssm_wy/insertHouse';
+               }
+               console.log(url);
+           form.on('submit(formDemo2)', function(data){
+               data.field.bNumber=$('#b_number').val();
+               data.field.hBulidingname=$('#h_bulidingName').val();
+               data.field.hNumber=$('#hNumbers').val();
+               $.ajax({
+                   url:url ,
+                   data: data.field,
+                   dataType: 'json',
+                   method: 'post',
+                   // async:false,
+                   success: function (obj) {
+                       layer.msg(obj.msg);
+                       if(data=='添加'){
                        $('#dym').val(obj.homename);
                        $('#bnumber').val(obj.bh);
                        if(obj.success){
                            $("#loudong").css('display', 'none');
                            $('#fangjian').css('display', 'block');
                        }
+                       }else{
+                           // location.reload();
+                           //$(".tree").load(location.href+"/ssm_wy/querytree");
+                           trees();
+                       }
                    }
                });
            });
+           });
+       }
+
+       function formdamo3(data) {
+           var url="";
+           if(data!='增加'){
+              url="/ssm_wy/updateHours";
+           }else{
+               url="/ssm_wy/inserthome";
+           }
+           console.log(url);
+           layui.use(['form','jquery'], function(){
+               var form = layui.form;
+               var $=layui.jquery;
            form.on('submit(formDemo3)', function(data){
                data.field.bNumber=$('#bnumber').val();
                data.field.hBulidingname=$('#h_buliding').val();
                data.field.hState=$('#hState').val();
+               data.field.hNumber=$('#hNumber').val();
                console.log(data);
                $.ajax({
-                   url: '/ssm_wy/inserthome',
+                   url: url,
                    data: data.field,
                    dataType: 'json',
                    method: 'post',
@@ -139,7 +270,8 @@
                    }
                });
            });
-       });
+           });
+       }
        function c() {
            $('#louff').css('display','none');
            $("#loudong").css('display', 'block');
@@ -157,7 +289,9 @@
             <div class="con_left_head">
                     <em><img src="../../images/qb.png" alt=""></em>小区楼栋信息
                 </div>
-            <ul id="demo1" style="padding-left: 20px"></ul>
+            <div class="tree">
+                <ul id="demo1" style="padding-left: 20px"></ul>
+            </div>
             </div>
         </div>
         <!--小区-->
@@ -166,13 +300,15 @@
                 <em><img src="../../images/Hbi.png" alt="" style="width: 100%;height: 100%;"></em>
                 <label id="xqmc"></label><input type="hidden" id="xqid">
                 <a href="#" id="crh_dr">批量导入房屋信息</a>
-                <!--<a href="#" id="crh_tj">批量添加楼栋信息</a>-->
+                <!--<a href="#" id="bj" style="display: none">编辑楼栋信息</a>-->
                 <!--<a href="#">批量修改房屋信息</a>-->
             </div>
-            <!--<div class="con_right_con">-->
-                <!--&lt;!&ndash;<button class="cr_btn" id="cr_btn">添加楼栋信息</button>&ndash;&gt;-->
-                <!--&lt;!&ndash;<button class="cr_btn" id="fj_btn">添加单元房间信息</button>&ndash;&gt;-->
-            <!--</div>-->
+            <div class="con_right_con" id="lodiv" style="display: none">
+                <button class="cr_btn" id="cr_btn1">添加楼栋信息</button>
+                <button class="cr_btn" id="xx_btn">删除信息</button>
+                <button class="cr_btn" id="sc_btn">修改信息</button>
+                <!--<button class="cr_btn" id="">删除信息</button>-->
+            </div>
             <div class="ld_add" style="display: none;border-bottom: 1px solid #ddd;" id="louff">
                 <div class="figs" style="font-weight: bold;padding-left: 22px">
                     添加楼栋信息
@@ -180,9 +316,10 @@
               <form method="post" action="" >
                   <div class="figs">
                       <span>小区编号:</span><input style="width: 300px" name="xNumber" id="xNumber" type="text" class="cr_ipt1">
+                      <input type="hidden" id="b_numbers" name="bNumber">
                   </div>
                   <div class="figs">
-                      <span>楼/栋名称：</span><input style="width: 300px" id="bBuliding" name="bBuliding" type="text" class="cr_ipt1"> 栋
+                      <span>楼/栋名称：</span><input style="width: 300px" id="bBuliding" name="bBuliding" type="text" class="cr_ipt1">
                   </div>
                   <div class="figs">
                       <span>房屋结构：</span><input style="width: 300px" id="bHours" name="bHours" type="text" class="cr_ipt1">
@@ -195,33 +332,25 @@
                              serif;font-size: 14px;border: 1px solid #ddd;"></textarea>
               </div>
                   <div class="btn">
-                  <button class="layui-btn tj" type="button" id="bc" lay-submit lay-filter="formDemo">保存且继续添加</button>
-                  <!--<button type="submit" style="margin-left: 60px;background-color: #2f96b4" onclick="tjlou();"></button>-->
+                  <button class="layui-btn tj" type="button" id="bc" lay-submit lay-filter="formDemo">保存且继续</button>
               </div>
               </form>
             </div>
 
             <div class="ld_add" style="display: none;border-bottom: 1px solid #ddd;" id="loudong">
                 <div class="figs" style="font-weight: bold;padding-left: 22px" >
-                    添加单元信息
+                    单元信息
                 </div>
                 <form method="post" >
                     <div class="figs">
                         <span>楼/栋名称：</span><input style="width: 300px" type="text" id="h_bulidingNames"  class="cr_ipt1">
                         <br><span>楼栋编号:</span> <input type="text" id="b_number" name="bNumber"><br>
+                        <input type="hidden" id="hNumbers" name="hNumber">
                         <span>单元名称:</span><input type="text" style="width: 300px" id="h_bulidingName" name="hBulidingname"><br>
-                        <button class="layui-btn tj" type="button"  lay-submit lay-filter="formDemo2">保存且继续添加</button>
+                        <button class="layui-btn tj" type="button"  lay-submit lay-filter="formDemo2">保存且继续</button>
                     </div>
-                <!--<div class="figs">-->
-                    <!--<button style="" id="tjdy">添加单元</button>-->
-                <!--</div>-->
-                <!--<div class="btn">-->
-                    <!--&lt;!&ndash;<button style="margin-left: 60px;background-color: #2f96b4">保存并继续添加</button>&ndash;&gt;-->
-                <!--</div>-->
             </form>
         </div>
-        <!--楼栋-->
-        <!--单元-->
             <!--房间-->
             <div class="ld_add" style="display: none;border-bottom: 1px solid #ddd;" id="fangjian">
                 <div class="figs" style="font-weight: bold;padding-left: 22px" >
@@ -229,24 +358,20 @@
                 </div>
                 <form method="post" >
                     <div class="figs">
-                        <span>单元名称：</span><input style="width: 300px" type="text" id="dym"  class="cr_ipt1"> 栋
+                        <span>单元名称：</span><input style="width: 300px" type="text" id="dym"  class="cr_ipt1">
                         <br><span>单元编号:</span> <input type="text" id="bnumber" name="bNumber"><br>
+                            <input type="hidden" id="hNumber" name="hNumber">
                         <span>房间状态:</span>
                         <select name="hState" id="hState">
                             <option value="未入住">未入住</option>
                          <option value="已入住">已入住</option>
                        </select><br>
                         <span>房间名称:</span><input type="text" style="width: 300px" id="h_buliding" name="hBulidingname">室<br>
-                        <button class="layui-btn tj" type="button"  lay-submit lay-filter="formDemo3">保存且继续添加</button>
+                        <button class="layui-btn tj" type="button"  lay-submit lay-filter="formDemo3">保存且继续</button>
                     </div>
-                    <!--<div class="figs">-->
-                    <!--<button style="" id="tjdy">添加单元</button>-->
-                    <!--</div>-->
-                    <!--<div class="btn">-->
-                    <!--&lt;!&ndash;<button style="margin-left: 60px;background-color: #2f96b4">保存并继续添加</button>&ndash;&gt;-->
-                    <!--</div>-->
                 </form>
             </div>
+        </div>
 <!--楼栋弹出内容-->
     <div class="login" id="login3" style="top: -200px;">
         <div class="login_head">
@@ -498,9 +623,9 @@
         });
 
         /*添加楼栋效果*/
-        $('#cr_btn').click(function () {
-            $('.ld_add').eq(0).css('display','block')
-        });
+        // $('#cr_btn').click(function () {
+        //     $('.ld_add').eq(0).css('display','block')
+        // });
 
         /*批量添加楼栋*/
         $('#crh_tj').click(function () {

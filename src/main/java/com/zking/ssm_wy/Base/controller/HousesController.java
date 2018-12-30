@@ -21,10 +21,11 @@ public class HousesController {
     @Autowired
     private IHousesService iHousesService;
 
-
-    private IBulidingService bulidingService;
-    @RequestMapping("/queryBulidingNamePage")
     @Autowired
+    private IBulidingService bulidingService;
+
+    @RequestMapping("/queryBulidingNamePage")
+    @ResponseBody
     public Map<String,Object> queryBulidingNamePage(Houses houses,int page,int limit){
         System.out.println(houses.gethBulidingname());
         houses.sethBulidingname("%"+houses.gethBulidingname()+"%");

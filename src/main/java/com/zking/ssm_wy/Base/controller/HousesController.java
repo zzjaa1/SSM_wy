@@ -21,12 +21,10 @@ public class HousesController {
     @Autowired
     private IHousesService iHousesService;
 
+
+    private IBulidingService bulidingService;
     @RequestMapping("/queryBulidingNamePage")
     @Autowired
-    private IBulidingService bulidingService;
-
-    @RequestMapping("/queryBulidingName")
-    @ResponseBody
     public Map<String,Object> queryBulidingNamePage(Houses houses,int page,int limit){
         System.out.println(houses.gethBulidingname());
         houses.sethBulidingname("%"+houses.gethBulidingname()+"%");
@@ -52,9 +50,9 @@ public class HousesController {
         return map;
     }
 
-    @RequestMapping("/queryState")
+    @RequestMapping("/queryStatePage")
     @ResponseBody
-    public Map<String,Object> queryState(Houses houses){
+    public Map<String,Object> queryStatePage(Houses houses,int page,int limit){
 
         houses.sethBulidingname("%"+houses.gethBulidingname()+"%");
         String bulidingname=houses.gethBulidingname();

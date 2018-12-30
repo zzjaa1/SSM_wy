@@ -9,5 +9,5 @@ public interface IRealEstateService {
 
     String addReal(RealEstate realEstate);
 
-    List<Map<String,Object>> querytj(String year);
+    List<Map<String,Object>> querytj();
 }

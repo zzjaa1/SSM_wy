@@ -8,5 +8,5 @@ import java.util.Map;
 public interface RealEstateMapper {
     String addReal(RealEstate realEstate);
 
-    List<Map<String,Object>> querytj(String year);
+    List<Map<String,Object>> querytj();
 }

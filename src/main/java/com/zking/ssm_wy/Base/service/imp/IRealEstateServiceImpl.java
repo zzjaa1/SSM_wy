@@ -22,7 +22,7 @@ public class IRealEstateServiceImpl implements IRealEstateService{
     }
 
     @Override
-    public List<Map<String, Object>> querytj(String year) {
-        return realEstateMapper.querytj(year);
+    public List<Map<String, Object>> querytj() {
+        return realEstateMapper.querytj();
     }
 }

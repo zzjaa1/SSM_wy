@@ -36,9 +36,8 @@ public class RealEstateController {
     @ResponseBody
     public Map<String,Object> querytj(String year){
         Map<String,Object> map2=new HashMap<>();
-       // List<Map<String, Object>> querytj = iRealEstateService.querytj(year);
-        List<Map<String,Object>> querytj =new ArrayList<>();
-        Map<String,Object> m=new HashMap<>();
+        List<Map<String, Object>> querytj = iRealEstateService.querytj();
+        System.out.println(querytj);
 
 //        for (Map<String, Object> map : querytj) {
 //            System.out.println(map);

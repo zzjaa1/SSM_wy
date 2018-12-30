@@ -46,7 +46,13 @@
   <select id="QueryId" resultType="string">
     SELECT MAX(b_id)b_id FROM buliding;
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="queryB" resultType="map">
+        SELECT * FROM buliding WHERE 1=1
+        <if test="null!= b.xNumber and null!=b.xNumber">
+            AND x_number=#{b.xNumber}
+        </if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from buliding
     where b_id = #{bId,jdbcType=INTEGER}
   </delete>

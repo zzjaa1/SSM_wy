@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -38,6 +39,18 @@ public class BulidIngController {
         int i = iBulidingService.updateByPrimaryKeySelective(buliding);
         Map<String,Object> map =new HashMap<>();
         map.put("msg","编辑成功");
+        map.put("success",true);
+        return map;
+    }
+
+
+    @RequestMapping("/queryB")
+    @ResponseBody
+    public Map<String,Object> queryB(Buliding buliding){
+        System.out.println(buliding);
+        List<Map<String, Object>> maps = iBulidingService.queryB(buliding);
+        Map<String,Object> map =new HashMap<>();
+        map.put("data",maps);
         map.put("success",true);
         return map;
     }

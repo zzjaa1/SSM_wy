@@ -299,7 +299,6 @@ public class ExcelUtils {
 				e.printStackTrace();
 			}
 		}
-
 		try {
 			// 默认一个工作簿
 			Sheet sheet = xssf.getSheetAt(0);
@@ -346,12 +345,9 @@ public class ExcelUtils {
 						// 添加值
 						for (int ie = 0; ie < ls.size(); ie++) {
 							map.put(mapKey[ie], ls.get(ie));
-
 						}
-
 						list.add(map);
 						ls.clear();// 读完一行之后清空ls,方便存储下一行数据
-
 					}
 				}
 

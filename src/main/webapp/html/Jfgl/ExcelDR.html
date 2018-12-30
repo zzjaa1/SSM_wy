@@ -17,8 +17,33 @@
     <p>点击上传，或将文件拖拽到此处</p>
 </div>
 </div>
+<table id="demo"></table>
+<div id="demo20"></div>
 <script>
-
+    layui.use('table', function(){
+        var table = layui.table;
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: 250
+            ,id:'demo'
+            ,data:arr
+            ,title: '预计账单'
+            ,cellMinWidth: 80
+            ,cols: [[ //表头
+                {field: 'c_fc', title: '房屋信息', width: '30%'},
+                {field: 'cn_suer', title: '业主', width: '30%'},
+                {field: 'cn_name', title: '费用名称',width:'15%'},
+                {field: 'c_real', title: '实际用量',width:'15%'},
+                {field: 'c_yjfy', title: '费用金额',width:'15%'},
+                {field: 'c_scfyzq_date', title: '上次费用止期', width: '15%'},
+                { field: 'c_bcfyqq_date', title: '本次费用起期',width: '15%'},
+                {field: 'c_bcfyzq_date', title: '本次费用止期',width: '15%'},
+                {field: 'c_bcjfzq_date', title: '本次缴费止期', width: '15%'},
+                {field: 'cn_cycle', title: '费用周期', width: '15%'},
+            ]]
+        });    });
+var arr='';
     layui.use(['element','upload'], function() {
         element = layui.element;
         upload = layui.upload;
@@ -30,7 +55,29 @@
             ,accept: 'file' //普通文件
             ,multiple: true
             ,done: function(res){
-                console.log(res.data);
+                arr=res.data;
+                layui.use(['laypage', 'layer'], function(){
+                    var laypage = layui.laypage
+                        ,layer = layui.layer;
+                    var data =arr;
+                    laypage.render({
+                        elem: 'demo20'
+                        ,count: data.length
+                        ,limit: 10
+                        ,limits: [5,10,20,50,100,500,1000]
+                        ,jump: function(obj){
+                            //模拟渲染
+                            var thisData = data.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
+                            console.log(thisData);
+                            layui.use('table', function(){
+                                var table = layui.table;
+                                table.reload('demo', {
+                                    data:thisData
+                                });
+                            });
+                        }
+                    });
+                });
             }
         });
     });

@@ -134,11 +134,11 @@ public class sfController {
         // 获取文件名
         String name = file.getOriginalFilename();
         ExcelUtils ex=new ExcelUtils(); //c_user, cn_name, c_jfdw, c_dwjg, c_real, c_yjfy, c_bcfyqq_date, c_bcfyzq_date, c_bcjfzq_date, cn_cycle
-        String[] s={"name","price"};
+        String[] s={"c_fc","cn_suer","cn_name","c_jfdw","c_dwjg","c_real","c_yjfy","c_bcfyqq_date","c_bcfyzq_date"
+                ,"c_bcjfzq_date","cn_cycle"};
         CommonsMultipartFile cFile = (CommonsMultipartFile) file;
         DiskFileItem fileItem = (DiskFileItem) cFile.getFileItem();
         InputStream inputStream = fileItem.getInputStream();
-
         List<Map<String, Object>> maps = ex.readCaseFile(inputStream, 1, s);
         for (Map<String, Object> stringObjectMap : maps) {
             System.out.println("ss="+stringObjectMap);

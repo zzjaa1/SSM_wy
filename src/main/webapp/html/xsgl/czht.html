@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/lay/modules/form.js"></script>
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/modules/laydate/default/laydate.css">
+    <script src="/ssm_wy/layui/layui.js"></script>
+    <!--vue-->
+    <script src="/ssm_wy/vue/vue.js"></script>
+    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+    <script src="/ssm_wy/js/jquery.serializejson.js"></script>
+    <script src="/ssm_wy/layui/lay/modules/laydate.js"></script>
+    <title>Title</title>
+</head>
+<script>
+</script>
+<body>
+    <form class="layui-form layui-form-pane"  id="ddd" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">租赁合同信息编号:</label>
+            <div class="layui-input-block">
+                <input type="hidden"value="" name="l_id">
+                <input type="text" id="l_number" name="l_number" required  lay-verify="required" placeholder="请输入房产信息"
+                       autocomplete="off" class="layui-input" style="width: 34%" readonly>
+            </div>
+        </div>
+        <div>
+        <div class="layui-inline">
+        <div class="layui-form-item">
+            <label class="layui-form-label">租户:</label>
+            <div class="layui-input-block">
+                <input type="text" id="l_zh" name="l_zh" required  lay-verify="required" value="222" placeholder="请输入房产信息"
+                       autocomplete="off" class="layui-input" style="width: 100%" readonly>
+            </div>
+        </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label">签订日期:</label>
+                <div class="layui-input-block">
+                    <input type="text" id="l_date" name="l_date" required  lay-verify="required" placeholder="请输入房屋户型" autocomplete="off" class="layui-input" readonly>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="layui-inline">
+        <div class="layui-form-item">
+            <label class="layui-form-label">合同状态:</label>
+            <div class="layui-input-block">
+                <input type="text" id="l_htzt" name="l_htzt" required  lay-verify="required" placeholder="请输入房屋朝向" autocomplete="off" class="layui-input" readonly>
+            </div>
+        </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label">法人代表:</label>
+                <div class="layui-input-block">
+                    <input type="text" id="L_frdb" name="L_frdb" required  lay-verify="required" placeholder="请输入建筑面积" autocomplete="off" class="layui-input" readonly>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">合同编号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="L_lxr" name="L_lxr"  required  lay-verify="required" placeholder="请输入合同编号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">起租日期:</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="l_qzrq" name="l_qzrq" required  lay-verify="required" placeholder="请输入合同金额" autocomplete="off" class="layui-input" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">合同日期:</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="re_date" name="re_date"  required  lay-verify="required" placeholder="请输入合同日期" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">停租日期:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="L_tzrq" id="L_tzrq"   required  lay-verify="required" placeholder="请输入付款方式" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">保证金:</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="L_bzj" name="L_bzj" required  lay-verify="required" placeholder="请输入业主姓名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label">收费面积:</label>
+                <div class="layui-input-block">
+                    <input type="text" id="L_sfmj" name="L_sfmj" required  lay-verify="required" placeholder="请输入身份证号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否收租金:</label>
+                <div class="layui-input-block">
+                    <input type="text" id="L_sfsq" name="L_sfsq" required  lay-verify="required" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">租金总额:</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="L_zjze" name="L_zjze" required  lay-verify="required" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <textarea id="l_remarks" name="l_remarks" placeholder="请输入备注" class="layui-textarea" style="width: 39%"></textarea>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">房屋编号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="h_number" name="h_number" required  lay-verify="required" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </form>
+    <script>
+        function sasa() {
+            var state=$('#ddd').serializeJSON();
+            console.log("state")
+            console.log(state)
+            return state;
+        }
+
+        layui.use('laydate', function(){
+            var laydate=layui.laydate;
+            laydate.render({
+                elem:'#l_date'
+                ,format:'yyyy年MM月dd日 HH时mm分ss秒'
+                ,value:new Date()
+            });
+            laydate.render({
+                elem:'#re_date'
+                ,format:'yyyy年MM月dd日 HH时mm分ss秒'
+                ,value:new Date()
+            });
+            laydate.render({
+                elem:'#L_tzrq'
+                ,format:'yyyy年MM月dd日 HH时mm分ss秒'
+                ,value:new Date()
+            });
+            laydate.render({
+                elem:'#l_qzrq'
+                ,format:'yyyy年MM月dd日 HH时mm分ss秒'
+                ,value:new Date()
+            });
+        });
+    </script>
+</body>
+</html>

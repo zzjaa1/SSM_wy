@@ -13,6 +13,7 @@
     <script type="text/javascript" src="/ssm_wy/layui/lay/modules/form.js"></script>
     <script type="text/javascript" src="/ssm_wy/layui/lay/modules/element.js"></script>
     <script type="text/javascript" src="/ssm_wy/js/jquery.serializejson.js"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/lay/modules/upload.js"></script>
     <!--树形-->
     <script>
         var data={};
@@ -43,8 +44,8 @@
 
                                 table.render({
                                     elem: '#demo'
-                                    , height: 312
-                                    , url: '/ssm_wy/queryBulidingName' //数据接口
+                                    , height: 400
+                                    , url: '/ssm_wy/queryBulidingNamePage' //数据接口
                                     , where: {
                                         'hBulidingname': item.id                                }
                                     , page: true //开启分页
@@ -58,7 +59,7 @@
                                         , {field: 'h_type', title: '所属户型', width: 100, sort: true}
                                         , {field: 'h_direction', title: '房屋朝向', width: 95}
                                         , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
-                                        , {field: 'h_remarks', title: '备注', width: 70, sort: true}
+                                        , {field: 'price', title: '价格', width: 70, sort: true}
                                         , {field: 'b_number', title: '楼宇编号', width: 95, sort: true}
                                         /*, {title: '操作', minWidth: 175, templet: function (value) {
                                                 var obj = JSON.stringify(value);
@@ -75,9 +76,9 @@
 
                                 table.render({
                                     elem: '#demo2'
-                                    , height: 312
+                                    , height: 400
                                     ,id: 'idTest'
-                                    , url: '/ssm_wy/queryState' //数据接口
+                                    , url: '/ssm_wy/queryStatePage' //数据接口
                                     , where: {
                                         'hBulidingname': item.id
                                     }
@@ -91,7 +92,7 @@
                                         , {field: 'h_type', title: '所属户型', width: 100, sort: true}
                                         , {field: 'h_direction', title: '房屋朝向', width: 95}
                                         , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
-                                        , {field: 'h_remarks', title: '备注', width: 70, sort: true}
+                                        , {field: 'price', title: '价格', width: 70, sort: true}
                                         , {title: '操作', minWidth: 175, templet: function (value) {
                                                 var obj = JSON.stringify(value);
                                                 var checkStatus=table.checkStatus("idTest");
@@ -115,6 +116,47 @@
                 }
             });
 
+
+            $("#cxbutton").click(function() {
+                var price=document.getElementById("price");
+                var htype=document.getElementById("setype");
+                table.render({
+                    elem: '#demo2'
+                    , height: 400
+                    ,id: 'idTest'
+                    , url: '/ssm_wy/queryPricePage' //数据接口
+                    , where: {
+                        'price': price.value,'hType':htype.value
+                    }
+                    , page: true //开启分页
+                    , cols: [[ //表头
+                        {field: 'h_id', title: '房屋编号', width: 100, sort: true, fixed: 'left'}
+                        , {field: 'h_state', title: '房屋状态', width: 95, sort: true}
+                        , {field: 'h_bulidingName', title: '楼宇名称', width: 95}
+                        , {field: 'h_unitNumber', title: '单元号', width: 80}
+                        , {field: 'h_floor', title: '所属楼层', width: 100, sort: true}
+                        , {field: 'h_type', title: '所属户型', width: 100, sort: true}
+                        , {field: 'h_direction', title: '房屋朝向', width: 95}
+                        , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
+                        , {field: 'h_remarks', title: '备注', width: 70, sort: true}
+                        , {title: '操作', minWidth: 175, templet: function (value) {
+                                var obj = JSON.stringify(value);
+                                var checkStatus=table.checkStatus("idTest");
+                                var rowvalue=checkStatus.date;
+                                return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tk("+obj+")';>\n" +
+                                    "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                    "   </button>" +
+                                    "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
+                                    "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                    "  </button>";
+                            }
+                        }
+                    ]]
+                });
+            });
+
+            //30-50======================================================================================================
+
         });
         function tk(data) {
             var url="/ssm_wy/html/xsgl/gmht.html";
@@ -133,7 +175,7 @@
                             body.contents().find(id).val(text);
                         }
                 }
-                ,btn: ['确定', '关闭','自动填充']
+                ,btn: ['确定', '关闭']
                 ,yes: function(index, layero){
                     //按钮【按钮一】的回调
                     var iframeWin = window[layero.find('iframe')[0]['name']];
@@ -163,45 +205,44 @@
                         //do something
                     });
                     // 开启该代码可禁止点击该按钮关闭
-                },btn3: function (index,layero) {
-                    layer.prompt(
-                        {
-                            formType:0,
-                            title: '请输入业主姓名',
-                        },function(value, index, elem){
-
-                            alert(value); //得到value
-                            zdtc(value);
-                            layer.close(index);
-                        });
-                            return false;
-
-
                 }
-
             });
-           /* function zdtc(value) {
-                console.log("value="+value);
-                $.ajax({
-                    url: '/ssm_wy/queryOwner',
-                    type: 'post',
-                    dataType: 'json',
-                    data: {"oname":value},
-                    success: function (status) {
-                        $.each(status.date, function(key, val,index,layero) {
-                            var body = layui.layer.getChildFrame('body', index);
-                            var iframeWin = window[layero.find('iframe')[0]['name']];
-                            for (var i = 1; Object.entries(date).length > i; i++) {
-                                var id = '#' + Object.entries(date)[i][0];
-                                var text = Object.entries(date)[i][1];
-                                body.contents().find(id).val(text);
-                            }
-                            console.log(val)
-                        });
-                    }
-                });
-            }*/
         }
+    </script>
+    <script>
+    function sa(a,b) {
+        console.log(a+"--"+b);
+                        layui.table.render({
+                        elem: '#demo2'
+                        , height: 400
+                        ,id: 'idTest'
+                        , url: '/ssm_wy/queryPriceScopePage' //数据接口
+                        , where: {
+                        'price': a,'price2':b
+                        }
+                        , page: true //开启分页
+                        , cols: [[ //表头
+                        {field: 'h_id', title: '房屋编号', width: 100, sort: true, fixed: 'left'}
+                        , {field: 'h_state', title: '房屋状态', width: 95, sort: true}
+                        , {field: 'h_bulidingName', title: '楼宇名称', width: 95}
+                        , {field: 'h_unitNumber', title: '单元号', width: 80}
+                        , {field: 'h_floor', title: '所属楼层', width: 100, sort: true}
+                        , {field: 'h_type', title: '所属户型', width: 100, sort: true}
+                        , {field: 'h_direction', title: '房屋朝向', width: 95}
+                        , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
+                        , {field: 'h_remarks', title: '备注', width: 70, sort: true}
+                        , {title: '操作', minWidth: 175, templet: function (value) {
+                        var obj = JSON.stringify(value);
+                        return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tk("+obj+")';>\n" +
+                        "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
+                        "   </button>" +
+                        "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
+                        "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                        "  </button>";
+                        }
+                        }
+                        ]]
+                        });  }
     </script>
     <script>
         //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
@@ -298,47 +339,32 @@
         <li>订单管理</li>
     </ul>
     <div class="layui-tab-content">
-        <div class="layui-tab-item layui-show"><form class="layui-form">
-            <div class="layui-inline">
-                <div class="layui-inline" style="width: 80px">
-                    <select name="city" lay-filter="filter" style="width: 80px">
-                        <option value="全部">全部</option>
-                        <option value="已出售">已出售</option>
-                        <option value="未出售">未出售</option>
-                    </select>
-                </div>
-                <div class="layui-inline">
-                    <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" style="width: 200px">
-                </div>
-                <div class="layui-inline">
-                    <button class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
-                </div>
-            </div>
-        </form>
+        <div class="layui-tab-item layui-show">
             <div >
                 <table id="demo" lay-table="test" style="height: 100%" >
                 </table>
-            </div></div>
+            </div>
+        </div>
         <div class="layui-tab-item">
             <div class="layui-inline">
-                <button class="layui-btn layui-btn-radius layui-btn-normal">30万-50万</button>
-                <button class="layui-btn layui-btn-radius layui-btn-normal">50万-80万</button>
-                <button class="layui-btn layui-btn-radius layui-btn-normal">100万-150万</button>
-                <button class="layui-btn layui-btn-radius layui-btn-normal" value="">200万-500万</button>
+                <button id="30-50" class="layui-btn layui-btn-radius layui-btn-normal price" onclick="sa('299999','500001')">30万-50万</button>
+                <button id="50-80" class="layui-btn layui-btn-radius layui-btn-normal price" onclick="sa('499999','800001')">50万-80万</button>
+                <button id="100-150" class="layui-btn layui-btn-radius layui-btn-normal price" onclick="sa('999999','1500001')">100万-150万</button>
+                <button id="200-500" class="layui-btn layui-btn-radius layui-btn-normal price" onclick="sa('1999999','5000001')">200万-500万</button>
             </div>
             <div class="layui-inline">
-                <select name="city" lay-filter="filter" style="width: 80px">
+                <select id="setype" name="city" lay-filter="filter" style="width: 80px">
                     <option value="">全部</option>
-                    <option value="两室一厅">两室一厅</option>
+                    <option value="二室一厅">二室一厅</option>
                     <option value="三室一厅">三室一厅</option>
                     <option value="四室一厅">四室一厅</option>
                 </select>
             </div>
             <div class="layui-inline">
-                <input type="text" name="title" required lay-verify="required" placeholder="请输入能接受的价位" autocomplete="off" class="layui-input">
-            </div>
+            <input type="text" id="price" name="title" required lay-verify="required" placeholder="请输入能接受的价位" autocomplete="off" class="layui-input">
+        </div>
             <div class="layui-inline">
-                <button class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
+                <button id="cxbutton" class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
             </div>
             <table id="demo2" lay-filter="test" style="height: 100%">
             </table>

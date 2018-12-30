@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,16 +35,21 @@ public class RealEstateController {
     @RequestMapping("/querytj")
     @ResponseBody
     public Map<String,Object> querytj(String year){
-        Map<String,Object> map1=new HashMap<>();
-        List<Map<String, Object>> querytj = iRealEstateService.querytj(year);
+        Map<String,Object> map2=new HashMap<>();
+       // List<Map<String, Object>> querytj = iRealEstateService.querytj(year);
+        List<Map<String,Object>> querytj =new ArrayList<>();
+        Map<String,Object> m=new HashMap<>();
+
 //        for (Map<String, Object> map : querytj) {
 //            System.out.println(map);
 //            map1=new HashMap<>();
-//            map1.put("name",map.get("Re_date").toString());
-//            map1.put("value",map.get("Re_price").toString());
+//            map1.put("name",map.get("X").toString());
+//            map1.put("value",map.get("Z").toString());
+//            map1.put("Y",map.get("Y").toString());
 //        }
-        map1.put("li",querytj);
-        return map1;
+
+        map2.put("li",querytj);
+        return map2;
     }
 
 

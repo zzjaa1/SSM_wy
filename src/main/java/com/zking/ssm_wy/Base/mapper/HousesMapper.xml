@@ -19,9 +19,8 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    h_id, h_number, h_state, h_bulidingName, h_unitNumber, h_floor, h_type, h_direction, 
-    h_area, h_remarks, b_number
-  </sql>
+    h_id, h_number, h_state, h_bulidingName, h_unitNumber, h_floor, h_type, h_direction,
+    h_area, h_remarks, b_number,zt,price  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -31,17 +30,21 @@
     <select id="queryHourse" resultType="map">
         SELECT *  FROM houses  WHERE b_number =#{number}
     </select>
-  <select id="queryBulidingName" resultType="map">
+  <select id="queryBulidingNamePage" resultType="map">
     SELECT * FROM houses WHERE h_number like #{bulidingName}
   </select>
-  <select id="queryState" resultType="map">
+  <select id="queryStatePage" resultType="map">
     SELECT * FROM houses WHERE h_number like #{bulidingName} AND h_state="未入住"
   </select>
   <select id="UpdateState">
     UPDATE houses SET zt='已售' AND h_state='已入住' WHERE h_number=#{hun,jdbcType=VARCHAR}
   </select>
-  <select id="queryStatePage" resultType="map">
-    SELECT * FROM houses WHERE h_number like #{bulidingName} AND h_state="未入住"
+  <select id="queryPricePage" resultType="map">
+    SELECT * FROM houses WHERE zt="未售"
+    <if test="null!=hState and ''!=hState">
+    AND h_type=#{hState}
+    </if>
+    ORDER BY ABS(price-#{price})
   </select>
   <select id="queryHourId" resultType="string">
     SELECT MAX(h_id)h_id  FROM houses WHERE h_unitNumber IS NOT NULL
@@ -49,7 +52,9 @@
   <select id="Updatequery" resultType="int">
      SELECT COUNT(b_number)b_number FROM houses WHERE b_number =#{bnumber}
   </select>
-
+  <select id="queryPriceScopePage" resultType="map">
+    SELECT * FROM houses WHERE price>#{price} AND price &lt; #{price2}  and  zt="未售"
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from houses
     where h_id = #{hId,jdbcType=INTEGER}

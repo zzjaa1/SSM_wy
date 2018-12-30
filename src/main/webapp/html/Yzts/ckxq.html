@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/ssm_wy/layui/lay/modules/form.js"></script>
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/modules/laydate/default/laydate.css">
+    <script src="/ssm_wy/layui/layui.js"></script>
+    <!--vue-->
+    <script src="/ssm_wy/vue/vue.js"></script>
+    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+    <script src="/ssm_wy/js/jquery.serializejson.js"></script>
+    <script src="/ssm_wy/layui/lay/modules/laydate.js"></script>
+    <title>Title</title>
+</head>
+<script>
+</script>
+<body>
+    <form class="layui-form layui-form-pane"  id="ddd" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">投诉编号:</label>
+            <div class="layui-input-block">
+                <input type="text" id="c_id" name="c_id" required  lay-verify="required"
+                       autocomplete="off" class="layui-input" style="width: 34%" readonly>
+            </div>
+        </div>
+        <div>
+        <div class="layui-inline">
+        <div class="layui-form-item">
+            <label class="layui-form-label">投诉单号:</label>
+            <div class="layui-input-block">
+                <input type="text" id="c_odd" name="c_odd" required  lay-verify="required"  placeholder="请输入房产信息"
+                       autocomplete="off" class="layui-input" style="width: 100%" readonly>
+            </div>
+        </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label">房屋编号:</label>
+                <div class="layui-input-block">
+                    <input type="text" id="h_number" name="h_number" required  lay-verify="required" placeholder="请输入房屋户型" autocomplete="off" class="layui-input" readonly>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="layui-inline">
+        <div class="layui-form-item">
+            <label class="layui-form-label">投诉人:</label>
+            <div class="layui-input-block">
+                <input type="text" id="c_name" required  lay-verify="required" placeholder="请输入房屋朝向" autocomplete="off" class="layui-input" readonly>
+            </div>
+        </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label">投诉人电话:</label>
+                <div class="layui-input-block">
+                    <input type="text" id="c_phone" required  lay-verify="required" placeholder="请输入建筑面积" autocomplete="off" class="layui-input" readonly>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">投诉日期:</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="c_date" name="c_date"  required  lay-verify="required" placeholder="请输入合同编号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">投诉状态:</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="c_state" name="c_state" required  lay-verify="required" placeholder="请输入合同金额" autocomplete="off" class="layui-input" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        function sasa() {
+            var state=$('#ddd').serializeJSON();
+            console.log("state")
+            console.log(state)
+            return state;
+        }
+        /*layui.use('laydate', function(){
+            var laydate=layui.laydate;
+            laydate.render({
+                elem:'#c_date'
+                ,format:'yyyy年MM月dd日 HH时mm分ss秒'
+                ,value:new Date()
+
+            });
+        });*/
+    </script>
+</body>
+</html>

@@ -22,7 +22,11 @@ public class Buliding {
 
     private String bNumber;
 
-    public Buliding(Integer bId, String bBuliding, String bHours, Integer bUnitnumber, Integer bNuberj, Integer bHoursnumber, String csRemarks, String xNumber, String bNumber) {
+    private int X;
+    private int Y;
+
+
+    public Buliding(Integer bId, String bBuliding, String bHours, Integer bUnitnumber, Integer bNuberj, Integer bHoursnumber, String csRemarks, String xNumber, String bNumber, int x, int y) {
         this.bId = bId;
         this.bBuliding = bBuliding;
         this.bHours = bHours;
@@ -32,6 +36,24 @@ public class Buliding {
         this.csRemarks = csRemarks;
         this.xNumber = xNumber;
         this.bNumber = bNumber;
+        X = x;
+        Y = y;
+    }
+
+    public int getX() {
+        return X;
+    }
+
+    public void setX(int x) {
+        X = x;
+    }
+
+    public int getY() {
+        return Y;
+    }
+
+    public void setY(int y) {
+        Y = y;
     }
 
     public Buliding() {

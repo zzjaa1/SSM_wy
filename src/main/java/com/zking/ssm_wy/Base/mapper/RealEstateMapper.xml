@@ -38,6 +38,47 @@
       LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NULL) s
       ON dy.h_number=s.b_number  GROUP BY x_buliding
     </select>
+    <select id="queryxsetj" resultType="map">
+      SELECT xq.x_number,xq.x_buliding,SUM(re.Re_price)AS price,MONTH(re.Re_date) AS mouth,YEAR(re.Re_date) AS years FROM xiaoqu xq
+        LEFT JOIN buliding b
+        ON xq.x_number = b.x_number
+        LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NOT NULL) dy
+        ON b.b_number = dy.b_number
+        LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NULL) s
+        ON dy.h_number=s.b_number
+        INNER JOIN Real_estate re ON s.h_number =re.h_number
+         <if test="null!=year and ''!=year">
+           AND YEAR (re.Re_date)=#{year}
+         </if>
+        GROUP BY xq.x_number,YEAR(re.Re_date) HAVING  price IS NOT NULL ORDER BY SUM(re.Re_price) DESC
+    </select>
+  <select id="queryxsetj2" resultType="map">
+    SELECT xq.x_number,xq.x_buliding, MONTH(re.Re_date) AS mouth,YEAR(re.Re_date) AS years,SUM(re.Re_price)AS price
+    <if test="null!=mouth and ''!=mouth">
+      ,DAY(re.Re_date) AS days
+    </if>
+       FROM xiaoqu xq
+      LEFT JOIN buliding b
+      ON xq.x_number = b.x_number
+      LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NOT NULL) dy
+      ON b.b_number = dy.b_number
+      LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NULL) s
+      ON dy.h_number=s.b_number
+      INNER JOIN Real_estate re ON s.h_number =re.h_number
+      GROUP BY MONTH(re.Re_date),YEAR(re.Re_date),xq.x_number
+    <if test="null!=mouth and ''!=mouth">
+      ,DAY(re.Re_date)
+    </if>
+    <if test="null!=year and ''!=year">
+      HAVING years=#{year}
+    </if>
+    <if test="null!=x_number and ''!=x_number">
+      AND xq.x_number=#{x_number}
+    </if>
+    <if test="null!=mouth and ''!=mouth">
+      AND mouth=#{mouth}
+    </if>
+  </select>
 
 
 </mapper>

@@ -8,31 +8,31 @@
     <script src="/ssm_wy/js/jquery.serializejson.js"></script>
 </head>
 <body>
-<form id="ff" class="layui-form" method="post" action="/ssm_wy/UpdateCost">
+<form id="ff" class="layui-form" method="post"  lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin">
     <label><h3>修改业主缴费信息</h3></label>
     <input type="hidden" id="c_id" name="cId">
     <div class="layui-form-item">
         <label class="layui-form-label">房屋编号</label>
         <div class="layui-input-block">
-            <input type="text" id="h_number" name="hNumber" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" readonly >
+            <input type="text" id="h_number" name="hNumber"   autocomplete="off" class="layui-input" style="width: 300px" readonly >
         </div>
    <div class="layui-form-item">
         <label class="layui-form-label">房屋信息</label>
         <div class="layui-input-block">
-            <input type="text" id="c_fc" name="cFc" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" >
+            <input type="text" id="c_fc" name="cFc" lay-verify="required" autocomplete="off" class="layui-input" style="width: 300px" >
         </div>
         <label class="layui-form-label">业主</label>
         <div class="layui-input-block">
-            <input type="text" id="c_user" name="cUser" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" >
+            <input type="text" id="c_user" name="cUser" lay-verify="required" lay-verify="cUser" autocomplete="off" class="layui-input" style="width: 300px" >
         </div>
         <label class="layui-form-label">计费单位</label>
         <div class="layui-input-block">
-            <input type="text" id="c_jfdw" name="cJfdw" lay-verify="title" placeholder="请输入计费单位" autocomplete="off" class="layui-input" style="width: 300px" >
+            <input type="text" id="c_jfdw" name="cJfdw" lay-verify="required" placeholder="请输入计费单位" autocomplete="off" class="layui-input" style="width: 300px" >
         </div>
         <label class="layui-form-label">单位价格</label>
         <div class="layui-input-block">
-            <input type="text" id="c_dwjg" name="cDwjg" lay-verify="title" placeholder="请输入单位价格" autocomplete="off" class="layui-input" style="width: 300px" >
-        </div>
+            <input type="text" id="c_dwjg" name="cDwjg" lay-verify="required" placeholder="请输入单位价格" autocomplete="off" class="layui-input" style="width: 300px" >
+   </div>
        <!--<label class="layui-form-label">费用名称</label>-->
        <!--<div class="layui-input-block">-->
            <!--<input type="text" id="c_costName" name="cCostname" lay-verify="title" placeholder="请输入费用名称" autocomplete="off" class="layui-input" style="width: 300px" >-->
@@ -41,22 +41,22 @@
         <div class="layui-form-item">
             <label class="layui-form-label">费用类型</label>
             <!--  <input type="hidden" id="cn_type">-->
-            <div class="layui-input-inline" id="fylx">
-                <select id="cn_id" name="cnId"  style="width: 200px">
-                    <option value="0">请选择</option>
+            <div class="layui-input-inline"  id="fylx">
+                <select id="cn_id" name="cnId" lay-verify="required"  style="width: 200px">
+                    <option value="">请选择</option>
                 </select>
             </div>
   <div class="layui-form-item">
         <label class="layui-form-label">应交费用</label>
         <div class="layui-input-block">
-            <input type="text" id="c_yjfy" name="cYjfy" lay-verify="title" placeholder="请输入应交费用" autocomplete="off" class="layui-input" style="width: 300px" >
+            <input type="text" id="c_yjfy" name="cYjfy" lay-verify="required" placeholder="请输入应交费用" autocomplete="off" class="layui-input" style="width: 300px" >
         </div>
     </div>
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">上次费用止期</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="cScfyzqDate" class="layui-input" id="c_scfyzq_date" placeholder="yyyy-MM-dd">
+                    <input type="text" name="cScfyzqDate"  class="layui-input" id="c_scfyzq_date" placeholder="yyyy-MM-dd">
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@
            <div class="layui-inline">
                <label class="layui-form-label">本次费用止期</label>
                <div class="layui-input-inline">
-                   <input type="text" name="cBcfyzqDate" class="layui-input" id="c_bcfyzq_date" placeholder="yyyy-MM-dd">
+                   <input type="text" name="cBcfyzqDate"  class="layui-input" id="c_bcfyzq_date" placeholder="yyyy-MM-dd">
                </div>
            </div>
        </div>
@@ -72,7 +72,7 @@
            <div class="layui-inline">
                <label class="layui-form-label">本次费用起期</label>
                <div class="layui-input-inline">
-                   <input type="text" name="cBcfyqqDate" class="layui-input" id="c_bcfyqq_date" placeholder="yyyy-MM-dd">
+                   <input type="text" name="cBcfyqqDate"  class="layui-input" id="c_bcfyqq_date" placeholder="yyyy-MM-dd">
                </div>
            </div>
        </div>
@@ -85,6 +85,9 @@
            </div>
        </div>
     </div>
+        <div class="layui-form-item layui-hide">
+            <input type="button" lay-submit lay-filter="LAY-user-front-submit" id="LAY-user-front-submit" value="确认">
+        </div>
    <!-- <button class="layui-btn tj" lay-submit lay-filter="formDemo">立即提交</button>-->
     </div>
 </form>
@@ -92,10 +95,11 @@
 
 <script>
 function s() {
+    layui.use('form',function () {
+        var form=layui.form;
     var sdata=$('#ff');
-    console.log("111");
-    console.log(sdata);
     return sdata;
+});
 }
 
     layui.use('laydate', function() {
@@ -140,6 +144,7 @@ function ss(a) {
             layui.form.render('select');
         });
 }
+
 
 </script>
 

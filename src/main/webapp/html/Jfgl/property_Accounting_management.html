@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
     <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
     <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
-
+    <script src="/ssm_wy/js/jquery.serializejson.js"></script>
     <!--树形-->
     <script>
      layui.use( 'layer', function() {
@@ -334,39 +334,178 @@
                     }
                 },
                 yes: function (index, layero) {
+
+
+                   /* layui.use(['form','jquery'], function() {
+                        var form = layui.form;
+                        var $ = layui.jquery;*/
+
+                   /* form.verify({
+                        hNumber: function(value){
+                            if(value.length==0){
+                                // layer.tips("标题至少得5个字符啊");
+                                return '小区编号不能为空';
+                            }
+                        }, cFc: function(value){
+                            if(value.length==0){
+                                return '楼/栋名称不能为空';
+                            }
+                        },
+                        cUser: function(value){
+                            if(value.length==0){
+                                return '房屋结构不能为空';
+                            }
+                        },
+                        cJfdw: function(value){
+                            if(value.length==0){
+                                return '房屋结构不能为空';
+                            }
+                        },
+                        cDwjg: function(value){
+                            if(value.length==0){
+                                return '房屋结构不能为空';
+                            }
+                        },
+                        cDwjg: function(value){
+                            if(value.length==0){
+                                return '房屋结构不能为空';
+                            }
+                        },
+                        cnId: function(value){
+                            if(value.length==0){
+                                return '房屋结构不能为空';
+                            }
+                        },
+                        cYjfy: function(value){
+                            if(value.length==0){
+                                return '房屋结构不能为空';
+                            }
+                        },
+                    });
+                    });*/
+
+                //     body = layer.getChildFrame('body', index);
+                //     var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
+                //     console.log(body.find("#ff"));
+                //     // var ss = iframeWin.s().serializeJSON();
+                //     alert(b);
+                //     return ;
+                //     // var companyId=iframeWin.document.getElementById("companyId").value;
+                //     // console.log(companyId)
+                //     // var grade=iframeWin.document.getElementById("grade").value;
+                //     // console.log(grade)
+                //     $.ajax({
+                //         url: url,
+                //         method: 'post',
+                //         data: ss,
+                //         dataType: 'JSON',
+                //         success: function (res) {
+                //             // $('#tj').click();
+                //             layer.alert(data.suucess, {icon: 1});
+                //             location.reload();
+                //         },
+                //         error: function (data) {
+                //         }
+                //     });
+                //     // body.contents().find('#tj').click();
+                //     layer.alert('ccc', {icon: 1});
+                //     layer.close(index);
+                // }, btn2: function (index, layero) {
+                //     layer.close(index);
                     if (data == "新增") {
                         url = '/ssm_wy/Cost/insertCost';
                     } else {
                         url = '/ssm_wy/Cost/UpdateCost';
                     }
-                    var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
-                    var ss = iframeWin.s().serializeJSON();
-                    console.log(ss)
-                    // var companyId=iframeWin.document.getElementById("companyId").value;
-                    // console.log(companyId)
-                    // var grade=iframeWin.document.getElementById("grade").value;
-                    // console.log(grade)
-                    $.ajax({
-                        url: url,
-                        method: 'post',
-                        data: ss,
-                        dataType: 'JSON',
-                        success: function (res) {
-                            // $('#tj').click();
-                            layer.alert(data.suucess, {icon: 1});
-                            location.reload();
-                        },
-                        error: function (data) {
-                        }
-                    });
-                    // body.contents().find('#tj').click();
-                    layer.alert('ccc', {icon: 1});
-                    layer.close(index);
-                }, btn2: function (index, layero) {
-                    layer.close(index);
-                }
+                    var body = layer.getChildFrame('body', index);  // body.html() body里面的内容
+                    var iframeWindow = window['layui-layer-iframe' + index]
+                        , submitID = 'LAY-user-front-submit'
+                        , submit = layero.find('iframe').contents().find('#' + submitID);
+                    //监听提交
+                    iframeWindow.layui.form.on('submit(' + submitID + ')', function (data) {
+                        var field = data.field; //获取提交的字段
+                        console.log(field);
+                        $.ajax({
+                           url: url,
+                            method: 'post',
+                            data: field,
+                            dataType: 'JSON',
+                            success: function (res) {
+                               // $('#tj').click();
+                                layer.alert(data.suucess, {icon: 1});
+                                location.reload();
+                            },
+                            error: function (data) {
+                            }
+                        });
 
+                    });
+                    submit.trigger('click');
+                }
             });
+        }
+
+
+        /**
+         * 获取对象|键值对数组的键数组
+         *
+         * @param object
+         * @returns
+         */
+        function getObjectKeys(object) {
+            var keys = [];
+            for (var property in object)
+                keys.push(property);
+            return keys;
+        }
+
+        /**
+         * 获取对象|键值对数组的值数组
+         *
+         * @param object
+         * @returns
+         */
+        function getObjectValues(object) {
+            var values = [];
+            for (var property in object)
+                values.push(object[property]);
+            return values;
+        }
+
+        /**
+         * 判断表单数据isNull是否成立
+         * @param row
+         * @param strs 不给予判断的列数组
+         * @return b true|false
+         */
+        function isNull(row, strs) {
+            // row所有键--
+            var rows = getObjectKeys(row);
+            // 及所有值--
+            var values = getObjectValues(row);
+            var b = true;
+            var b2 = true;
+            for (var i = 0; i < values.length; i++) {
+                var obj = values[i];
+                //如果有值为空
+                if (typeof obj == "undefined" || obj == null || obj == "" || obj == "请输入") {
+                    //判断是否属于不需要判断的
+                    if (null != strs) {
+                        for (var s = 0; s < strs.length; s++) {
+                            if (strs[s] == rows[i]) {
+                                b2 = false;
+                            }
+                        }
+                    }
+                    //不是属于！中的才验证
+                    if (b2) {
+                        b = false;
+                        break;
+                    }
+                    b2 = true;
+                }
+            }
+            return b;
         }
 
     </script>

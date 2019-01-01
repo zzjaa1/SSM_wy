@@ -96,6 +96,12 @@
       <if test="bNumber != null" >
         b_number,
       </if>
+      <if test="X!=null ">
+        X,
+      </if>
+      <if test="Y!=null">
+        Y,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="bId != null" >
@@ -124,6 +130,12 @@
       </if>
       <if test="bNumber != null" >
         #{bNumber,jdbcType=VARBINARY},
+      </if>
+      <if test="X !=null">
+        #{X},
+      </if>
+      <if test="Y !=null">
+        #{Y},
       </if>
     </trim>
   </insert>

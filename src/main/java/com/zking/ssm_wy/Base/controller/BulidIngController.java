@@ -21,6 +21,7 @@ public class BulidIngController {
     @RequestMapping("/insertBulid")
     @ResponseBody
     public Map<String,Object> insertBulid(Buliding buliding){
+        System.out.println("123========"+buliding);
         String s = iBulidingService.QueryId();
         int id= Integer.parseInt(s)+1;
         buliding.setbNumber(buliding.getxNumber()+"-B"+id);

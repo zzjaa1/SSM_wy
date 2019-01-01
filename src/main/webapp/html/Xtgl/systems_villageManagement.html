@@ -5,7 +5,6 @@
     <title>物业后台</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <link rel="stylesheet" href="../../css/bootstrap.css">
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/property.css">
     <link rel="stylesheet" href="../../css/valueService.css">
@@ -22,12 +21,24 @@
     layui.use(['form','jquery'], function() {
             var form = layui.form;
             var $ = layui.jquery;
-            // $('#loudong').css('display','block');
+
+        form.verify({
+            xBulidings: function(value){
+                if(value.length==0){
+                    // layer.tips("标题至少得5个字符啊");
+                    return '小区名称不能为空';
+                }
+            }, xMj: function(value){
+                if(value.length==0){
+                    return '小区建筑面积不能为空';
+                }
+            },
+        });
             //监听提交
             form.on('submit(formDemo)', function (data) {
                 // console.log(data);/ssm_wy/BulidIng/insertBulid
                 // layer.msg(JSON.stringify(data.field));
-                console.log(111);
+
                 data.field.xBuliding=$('#xBuliding').val();
                 data.field.xMj=$('#xMj').val();
                 data.field.xRemarks=$('#xRemarks').val();
@@ -49,7 +60,6 @@
                 });
             });
         });
-
 </script>
 <body>
 <div>
@@ -62,26 +72,28 @@
             <p>添加小区</p>
         </div>
         <!--<button class="layui-btn tj" type="button"  lay-submit lay-filter="formDemo3">修改</button>-->
-        <form action="" class="theForm equipmetn_theForm" method="post">
-            <div>
-                <label for=""><em>*</em>小区名称</label>
-                <input type="text" class="ipt1" name="xBuliding" id="xBuliding">
+        <form action="" class="layui-form" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 100px">小区名称:</label>
+                <input class="layui-input-block" style="width: 400px" type="text" class="ipt1" lay-verify="xBulidings" placeholder="请输入小区名称"  name="xBulidings" id="xBuliding"  autocomplete="off">
             </div>
-            <div>
-                <label for=""><em>*</em>小区建筑面积</label>
-                <input type="text" class="ipt2" name="xMj" id="xMj">
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 100px">小区建筑面积:</label>
+                <input class="layui-input-block" type="text" class="ipt2" style="width: 400px" lay-verify="xMj" name="xMj" placeholder="请输入小区建筑面积" id="xMj"  autocomplete="off">
                 <span>万m</span>
                 <sup>2</sup>
             </div>
-            <div>
-                <label for=""><em>*</em>备注</label>
-                <textarea placeholder="请输入内容" id="xRemarks"  class="layui-textarea" name="xRemarks"></textarea>
+            <div class="layui-form-item" >
+                <label class="layui-form-label" style="width: 100px">备注:</label>
+                <textarea placeholder="请输入备注" id="xRemarks"lay-verify="xRemarks"  class="layui-textarea" name="xRemarks" style="width: 700px"></textarea>
+            </div>
+            <div class="btn" style="width: 200px">
+                <button class="layui-btn tj" type="button" lay-submit lay-filter="formDemo">保存</button>
             </div>
         </form>
     </div>
-            <div class="btn">
-                <button class="layui-btn tj" type="button" lay-submit lay-filter="formDemo">保存并继续添加</button>
-            </div>
+    </div>
+
 <div class="mask"></div>
 <div class="waring">请输入巡检内容</div>
 <script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>

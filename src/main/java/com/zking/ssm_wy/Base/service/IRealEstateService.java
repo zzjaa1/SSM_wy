@@ -10,4 +10,8 @@ public interface IRealEstateService {
     String addReal(RealEstate realEstate);
 
     List<Map<String,Object>> querytj();
+
+    List<Map<String,Object>> queryxsetj(String year);
+
+    List<Map<String,Object>> queryxsetj2(String year,String x_number,String mouth);
 }

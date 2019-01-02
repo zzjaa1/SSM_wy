@@ -15,7 +15,6 @@ import java.util.Map;
 
 @Controller
 public class SysUserController {
-
     @Autowired
     private ISysUserService iSysUserService;
 

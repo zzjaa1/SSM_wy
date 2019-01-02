@@ -16,6 +16,8 @@
     <i class="layui-icon"></i>
     <p>点击上传，或将文件拖拽到此处</p>
 </div>
+    <button  class="layui-btn layui-btn-lg layui-btn-radius layui-btn-normal" id="js">
+        结算选中项</button>
 </div>
 <table id="demo"></table>
 <div id="demo20"></div>
@@ -31,18 +33,42 @@
             ,title: '预计账单'
             ,cellMinWidth: 80
             ,cols: [[ //表头
+                {type: 'checkbox', fixed: 'left'},
                 {field: 'c_fc', title: '房屋信息', width: '30%'},
-                {field: 'cn_suer', title: '业主', width: '30%'},
-                {field: 'cn_name', title: '费用名称',width:'15%'},
+                {field: 'c_user', title: '业主', width: '30%'},
+                {field: 'c_costName', title: '费用名称',width:'15%'},
                 {field: 'c_real', title: '实际用量',width:'15%'},
                 {field: 'c_yjfy', title: '费用金额',width:'15%'},
-                {field: 'c_scfyzq_date', title: '上次费用止期', width: '15%'},
                 { field: 'c_bcfyqq_date', title: '本次费用起期',width: '15%'},
                 {field: 'c_bcfyzq_date', title: '本次费用止期',width: '15%'},
                 {field: 'c_bcjfzq_date', title: '本次缴费止期', width: '15%'},
-                {field: 'cn_cycle', title: '费用周期', width: '15%'},
+                {field: 'c_number', title: '账单号', width: '15%'},
+                {field: 'c_remarks', title: '缴费人', width: '15%'},
+
             ]]
-        });    });
+        });
+
+
+        $('#js').on('click', function(){
+            var checkStatus = table.checkStatus('demo')
+                ,datas = checkStatus.data;
+            console.log("111");
+            console.log(datas);
+            $.ajax({
+                url:'/ssm_wy/JFJS',
+                method: 'post',
+                data:JSON.stringify(datas),//"cBcfyzqDate":fyzq,"cBjfyzqDate":fyxq},
+                dataType: 'JSON',
+                contentType:"application/json",
+                success: function (res) {
+                    layer.alert('结算成功', {icon: 1});
+                },
+                error: function (data) {
+                }
+            });
+        });
+
+    });
 var arr='';
     layui.use(['element','upload'], function() {
         element = layui.element;
@@ -51,27 +77,11 @@ var arr='';
         //指定允许上传的文件类型
         upload.render({
             elem: '#test10'
-            ,url:'/ssm_wy/ExcelDR'
+            ,url:'/ssm_wy/ExcelFY'
             ,accept: 'file' //普通文件
             ,multiple: true
             ,done: function(res){
-                var han=res.han;
-                var sbhan=res.sbhan;
-                if(sbhan==0){
-                    layer.alert('成功,生成账单数：'+han, {icon: 1});
-                }else{
-                    layer.confirm('失败,共计冲突行：'+sbhan+'是否查看', {icon: 3, title:'提示'}, function(index){
-                        sjy=res.sbsjy;
-                        sj=res.sbsj;
-                        console.log(sj);
-                        console.log(sjy);
-                        cth();
-                    });
-                }
-
-
-
-                arr=res.sbsj;
+                arr=res.li;
                 layui.use(['laypage', 'layer'], function(){
                     var laypage = layui.laypage
                         ,layer = layui.layer;

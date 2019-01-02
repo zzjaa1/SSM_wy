@@ -27,7 +27,7 @@
       DELETE FROM OWNER WHERE o_number=#{O_number}
   </delete>
   <select id="queryOwner" resultType="map">
-    select * from owner where o_name=#{oname}
+    select * from owner where o_name like #{oname}
   </select>
   <select id="queryowenPage" resultType="map">
     SELECT oo.* ,l.*  FROM
@@ -43,6 +43,13 @@
       AND oo.h_number LIKE CONCAT(CONCAT('%',#{h_number}),'%')
     </if>
   </select>
+    <select id="maxNumber" resultType="int">
+       SELECT MAX(o_id) FROM OWNER
+    </select>
+    <select id="addOwner" >
+       INSERT INTO OWNER(o_number,o_name,o_phone,
+o_carder,o_before) VALUES(#{owner.onumber},#{owner.oname},#{owner.ophone},#{owner.ocarder},#{owner.obefore})
+    </select>
 
 
 </mapper>

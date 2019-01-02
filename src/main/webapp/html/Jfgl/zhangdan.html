@@ -44,7 +44,7 @@
                 {field: 'c_bcjfzq_date', title: '本次缴费止期', width: '15%'},
              /*   {field: 'c_real', title: '实际用量', width: '15%'},*/
               /*  {field: 'cn_id', title: '费项ID', width: '15%'},*/
-                {field: 'c_user', title: '业主', width: '15%'},
+                {field: 'o_name', title: '业主', width: '15%'},
             ]]
         });
     });
@@ -75,21 +75,21 @@
                     "    </div>\n" ;
                         if(fy[i].cn_type=="按使用量"){
                             html+= "<div class=\"layui-inline\">\n" +
-                            "        <label class=\"layui-form-label\" style=\"width: 160px\">"+fy[i].cn_price+"￥/度(吨)</label>\n" +
+                            "        <label class=\"layui-form-label\" style=\"width: 160px\">"+fy[i].cn_price+"/度(吨)</label>\n" +
                             " <input type=\"text\" class=\"layui-input\" id='syl"+fy[i].cn_id+"' style=\"width: 100px\" value='500' >   </div>";
                         }else if (fy[i].cn_type=="按房屋面积"){
                             html+="<div class=\"layui-inline\">\n" +
-                                "        <label class=\"layui-form-label\" style=\"width: 160px\">"+fy[i].cn_price+"￥/㎡</label>\n" +
+                                "        <label class=\"layui-form-label\" style=\"width: 160px\">"+fy[i].cn_price+"/㎡</label>\n" +
                                 "    </div>";
                         }else {
                             html+="<div class=\"layui-inline\">\n" +
-                                "        <label class=\"layui-form-label\" style=\"width: 160px\">"+fy[i].cn_price+"￥/月</label>\n" +
+                                "        <label class=\"layui-form-label\" style=\"width: 160px\">"+fy[i].cn_price+"/月</label>\n" +
                                 "    </div>";
                         }
                             html+= "</div>"
                         }
                 html+="<div class=\"layui-inline\" style='padding-left: 100px'>\n" +
-                    "        <label class=\"layui-form-label\" style=\"width: 400px;color: red\">您选中了"+fy.length+"个费用项，包含"+fj.length+"个房间" +
+                    "        <label class=\"layui-form-label\" style=\"width: 400px;color: #ff080e\">您选中了"+fy.length+"个费用项，包含"+fj.length+"个房间" +
                     "，预计产生"+fy.length*fj.length+"个明细账单</label>\n" +
                     "    </div>" +
                     "<div class=\"layui-inline\" style=\"padding-left: 20px\"><div class=\"layui-inline\">" +
@@ -134,7 +134,7 @@
                         price=fj[j].h_area*fy[i].cn_price;
                     }else {
                         dw="￥/月";
-                        price=fj[j].h_area*fy[i].cn_price;
+                        price=fy[i].cn_price;
                     }
                     newArry.push({
                         'c_fc':fj[j].h_bulidingName
@@ -145,6 +145,7 @@
                         ,'c_bcfyzq_date':zq
                         ,'c_costName':fy[i].cn_name
                         ,'h_number':fj[j].id
+                        ,'o_name':fj[j].o_name
                         ,'cn_id':fy[i].cn_id
                         ,'c_jfdw':dw
                         ,'c_real':sjyl
@@ -197,6 +198,8 @@
                         layer.confirm('失败,共计冲突行：'+sbhan+'是否查看', {icon: 3, title:'提示'}, function(index){
                              sjy=res.sbsjy;
                              sj=res.sbsj;
+                             console.log(sj);
+                            console.log(sjy);
                             cth();
                         });
                     }

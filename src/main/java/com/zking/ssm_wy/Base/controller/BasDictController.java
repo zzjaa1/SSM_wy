@@ -6,6 +6,7 @@ import com.zking.ssm_wy.Base.model.CostName;
 import com.zking.ssm_wy.Base.service.IbasDictService;
 import com.zking.ssm_wy.Base.service.IcostnameService;
 import com.zking.ssm_wy.Base.util.PageBean;
+import com.zking.ssm_wy.annotation.SystemControllerLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,9 @@ public class BasDictController {
 
     @RequestMapping("/querybasDict")
     @ResponseBody
+
+    //日志注解Controller
+    @SystemControllerLog(description = "查询费项")
     public Map<String,Object> query(basDict basdict){
         Map<String,Object> result=new HashMap<>();
         List<Map<String,Object>> li=ibasDictService.querybasDict(basdict);

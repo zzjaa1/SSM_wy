@@ -23,10 +23,10 @@
     </sql>
   <select id="addReal" resultType="String" parameterType="com.zking.ssm_wy.Base.model.RealEstate">
     INSERT INTO real_estate (
-    re_id,re_number,Re_price,Re_date,Re_fkfs,O_name,Re_card,Re_phone,O_phone,re_remarks,h_number,o_number
+    re_number,Re_price,Re_date,Re_fkfs,O_name,Re_card,Re_phone,O_phone,re_remarks,h_number,o_number
     )
     VALUES
-    (#{reid},#{renumber},#{reprice},#{redate},#{refkfs},#{oname},
+    (#{renumber},#{reprice},#{redate},#{refkfs},#{oname},
     #{recard},#{rephone},#{ophone},#{reremarks},#{hnumber},#{onumber})
   </select>
     <select id="querytj" resultType="map">
@@ -37,6 +37,11 @@
    </if>
     GROUP BY DATE_FORMAT(Re_date,'%Y-%m')
     </select>
-
+  <select id="queryHtbh" resultType="int">
+        SELECT MAX(re_id) FROM `real_estate`
+  </select>
+    <select id="queryRealEstatePage" resultType="map" parameterType="com.zking.ssm_wy.Base.model.RealEstate">
+      SELECT * FROM real_estate
+    </select>
 
 </mapper>

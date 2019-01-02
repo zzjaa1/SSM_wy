@@ -22,6 +22,9 @@ public class OwnerController {
     @ResponseBody
     public Map<String,Object> queryOwner(String oname){
         System.out.println("name="+oname);
+        if(oname!=null){
+            oname="%"+oname+"%";
+        }
         Map<String,Object> map=new HashMap<>();
         List<Map<String, Object>> maps = iOwnerService.queryOwner(oname);
         map.put("data",maps);
@@ -38,10 +41,9 @@ public class OwnerController {
        pageBean.setPage(page);
        pageBean.setRows(limit);
        pageBean.setRequest(request);
-
-        List<Map<String, Object>> maps = iOwnerService.queryowenPage(o_name,h_number, pageBean);
+      /*  List<Map<String, Object>> maps = iOwnerService.queryowenPage(o_name,h_number, pageBean);*/
         Map<String,Object> map=new HashMap<>();
-        map.put("data",maps);
+        map.put("data","");
         map.put("code",0);
         map.put("count",pageBean.getTotal());
         map.put("msg","");
@@ -68,7 +70,33 @@ public class OwnerController {
         Map<String,Object> map=new HashMap<>();
         map.put("msg","成功");
         map.put("success",true);
+        return map;
+    }
 
+    @ResponseBody
+    @RequestMapping("/maxNumber")
+    public Map<String,Object> maxNumber(String Onumber){
+        Map<String,Object> map=new HashMap<>();
+        int a = iOwnerService.maxNumber();
+        String s="OW";
+        int cd = String.valueOf(a).length();
+        for(int i=0;i<9-cd;i++){
+            s+="0";
+        }
+        s+=a+1;
+        map.put("max",s);
+        map.put("success",true);
+        return map;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/addOwner")
+    public Map<String,Object> addOwner(Owner owner){
+        Map<String,Object> map=new HashMap<>();
+        System.out.println("owner="+owner);
+        iOwnerService.addOwner(owner);
+        map.put("success",1);
         return map;
     }
 

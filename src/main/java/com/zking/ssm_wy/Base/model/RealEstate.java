@@ -1,11 +1,13 @@
 package com.zking.ssm_wy.Base.model;
 
-import java.util.Date;
+import lombok.ToString;
 
+import java.util.Date;
+@ToString
 public class RealEstate {
     private int reid;
     private String renumber;
-    private Double reprice;
+    private Float reprice;
     private Date redate;
     private String refkfs;
     private String oname;
@@ -32,11 +34,11 @@ public class RealEstate {
         this.renumber = renumber;
     }
 
-    public Double getReprice() {
+    public Float getReprice() {
         return reprice;
     }
 
-    public void setReprice(Double reprice) {
+    public void setReprice(Float reprice) {
         this.reprice = reprice;
     }
 

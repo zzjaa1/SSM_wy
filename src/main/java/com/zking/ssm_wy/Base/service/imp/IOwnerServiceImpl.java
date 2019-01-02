@@ -37,4 +37,13 @@ public class IOwnerServiceImpl implements IOwnerService{
         return ownerMapper.deleteOwen(O_number);
     }
 
+    @Override
+    public int maxNumber() {
+        return ownerMapper.maxNumber();
+    }
+
+    public void addOwner(Owner owner){
+        ownerMapper.addOwner(owner);
+    }
+
 }

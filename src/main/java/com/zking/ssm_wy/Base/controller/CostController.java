@@ -32,7 +32,7 @@ public class CostController {
         List<Map<String, Object>> maps = iCostService.queryCostPage(hNumber,pageBean);
         System.out.println(maps);
         for (Map<String, Object> map : maps) {
-            map.put("c_scfyzq_date",map.get("c_scfyzq_date").toString());
+         /*   map.put("c_scfyzq_date",map.get("c_scfyzq_date").toString());*/
             map.put("c_bcfyqq_date",map.get("c_bcfyqq_date").toString());
             map.put("c_bcfyzq_date",map.get("c_bcfyzq_date").toString());
             map.put("c_bcjfzq_date",map.get("c_bcjfzq_date").toString());
@@ -95,7 +95,6 @@ public class CostController {
             System.out.println(s);
             iCostService.Updacostate(Integer.parseInt(s));
         }
-
         Map<String,Object> map =new HashMap<>();
         map.put("success",true);
         map.put("msg","成功");

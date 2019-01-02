@@ -8,10 +8,14 @@ import java.util.Map;
 
 public interface OwnerMapper {
     int UpdateOwen(Owner owner);
+
     List<Map<String,Object>> queryOwner(String oname);
 
     List<Map<String,Object>> queryowenPage(@Param("o_name") String o_name , @Param("h_number") String h_number);
 
     int deleteOwen(String O_number);
 
+    int maxNumber();
+
+    void addOwner(@Param("owner")Owner owner);
 }

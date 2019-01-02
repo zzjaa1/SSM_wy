@@ -251,6 +251,7 @@
                     $.get("/ssm_wy/queryBootstraptree",
                         function(result, state) {
                             var data=result.li;
+                            console.log(data);
                             options= {
                                 data:data, //data属性是必须的，是一个对象数组    Array of Objects.
                                 color: "", //所有节点使用的默认前景色，这个颜色会被节点数据上的backColor属性覆盖.        String

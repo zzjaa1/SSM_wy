@@ -26,6 +26,11 @@ public class IHousesServiceImpl implements IHousesService {
     }
 
     @Override
+    public List<Map<String, Object>> queryHourses(String number) {
+        return housesMapper.queryHourses(number);
+    }
+
+    @Override
     public List<Map<String, Object>> queryBulidingNamePage(String bulidingName,PageBean pd) {
         return housesMapper.queryBulidingNamePage(bulidingName);
     }
@@ -64,8 +69,8 @@ public class IHousesServiceImpl implements IHousesService {
     }
     @Transactional
     @Override
-    public void UpdateState(String hun) {
-        housesMapper.UpdateState(hun);
+    public void UpdateState(String hun,String rz) {
+        housesMapper.UpdateState(hun,rz);
     }
 
     @Override
@@ -76,6 +81,11 @@ public class IHousesServiceImpl implements IHousesService {
     @Override
     public List<Map<String, Object>> queryPriceScopePage(Float price, Float price2,PageBean pd) {
         return housesMapper.queryPriceScopePage(price,price2);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryCfcCost() {
+        return housesMapper.queryCfcCost();
     }
 
 

@@ -3,6 +3,7 @@ package com.zking.ssm_wy.Base.controller;
 import com.github.pagehelper.PageHelper;
 import com.zking.ssm_wy.Base.model.Cost;
 import com.zking.ssm_wy.Base.service.ICostService;
+import com.zking.ssm_wy.Base.service.IHousesService;
 import com.zking.ssm_wy.Base.util.ExcelUtils;
 import com.zking.ssm_wy.Base.util.PageBean;
 import org.apache.commons.fileupload.disk.DiskFileItem;
@@ -20,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -27,6 +30,8 @@ public class sfController {
     @Autowired
     private ICostService iCostService;
 
+    @Autowired
+    private IHousesService iHousesService;
     @RequestMapping("/queryCost")
     @ResponseBody
     public Map<String, Object> queryCost(HttpServletRequest req,int page,int limit,String qq,String zq,String fj,String fy){
@@ -61,7 +66,7 @@ public class sfController {
             maps=iCostService.queryCostfwPage(lifj, qq, zq, lify,pb);
         }
         for (Map<String, Object> map : maps) {
-            map.put("c_scfyzq_date",map.get("c_scfyzq_date").toString());
+          /*  map.put("c_scfyzq_date",map.get("c_scfyzq_date").toString());*/
             map.put("c_bcfyqq_date",map.get("c_bcfyqq_date").toString());
             map.put("c_bcfyzq_date",map.get("c_bcfyzq_date").toString());
             map.put("c_bcjfzq_date",map.get("c_bcjfzq_date").toString());
@@ -92,38 +97,90 @@ public class sfController {
 
     @RequestMapping("/sczd")
     @ResponseBody
-    public Map<String, Object> sczd(@RequestBody List<Map<String,Object>> li){
+    public Map<String, Object> sczd(@RequestBody List<Map<String,Object>> li) throws ParseException {
         Map<String,Object> map =new HashMap<>();
         String c_bcfyqq_date = li.get(0).get("c_bcfyqq_date").toString();
         String c_bcfyzq_date = li.get(0).get("c_bcfyzq_date").toString();
         List<Map<String, Object>> queryrq = iCostService.queryrq(c_bcfyqq_date, c_bcfyzq_date);
-        if(queryrq==null){
-            map.put("han",0);
+        List<Map<String, Object>> maps = iHousesService.queryCfcCost();//c_fc
+        List<Map<String, Object>> insert = new ArrayList<>();//插入
+        int han=0;
+        int sbhan=0;
+        int max=0;
+        System.out.println("rq="+queryrq.toString());
+        if(queryrq.toString()=="[]"){
+            System.out.println("无冲突");
+            for (Map<String, Object> stringObjectMap : li) {
+                for (Map<String, Object> s :maps) {
+                    if(s.get("h_number").toString().equals(stringObjectMap.get("h_number").toString())){
+                        stringObjectMap.put("c_fc",s.get("c_fc"));
+                        han++;
+                        max++;
+                    }
+                }
+                int a = iCostService.MaxCostNumber();
+                stringObjectMap.put("c_number",maxNumber(a+max));
+            }
+            iCostService.InsetsCost(li);
+            map.put("han",han);
+            map.put("sbhan",0);
         }else{
-            int han=0;//冲突行
+            System.out.println("冲突");
+            sbhan=0;//冲突行
             List<Map<String,Object>> sbsjy=new ArrayList<>();
             List<Map<String,Object>> sbsj=new ArrayList<>();
-            for (Map<String, Object> rq : queryrq) {
-                for (Map<String, Object> lis : li) {
+            for (Map<String, Object> lis : li) {
+                    int i=1;
+                    for (Map<String, Object> rq : queryrq) {
                     if(rq.get("cn_id").equals(lis.get("cn_id"))&&rq.get("h_number").equals(lis.get("h_number"))){
-                        han++;
+                        i=0;
+                        sbhan++;
                         rq.put("c_bcfyqq_date",rq.get("c_bcfyqq_date").toString());
                         rq.put("c_bcfyzq_date",rq.get("c_bcfyzq_date").toString());
                         rq.put("c_bcjfzq_date",rq.get("c_bcjfzq_date").toString());
                         sbsjy.add(rq);
                         sbsj.add(lis);
+                        System.out.println("冲突行："+sbhan);
                     }
                 }
+                if(i>0){
+                    System.out.println("执行");
+                    for (Map<String, Object> s :maps) {
+                        if(lis.get("h_number").toString().equals(s.get("h_number").toString())){
+                            lis.put("c_fc",s.get("c_fc"));
+                            han++;
+                        }
+                    }
+                    int a = iCostService.MaxCostNumber();
+                    max++;
+                    lis.put("c_number",maxNumber(a+max));
+                    insert.add(lis);
+                    }
             }
+            if(insert.toString()!="[]"){
+                iCostService.InsetsCost(insert);
+            }
+
             map.put("sbsjy",sbsjy);
             map.put("sbsj",sbsj);
-            map.put("han",li.size()-han);
-            map.put("sbhan",han);
+            map.put("han",han);
+            map.put("sbhan",sbhan);
         }
 
         return map;
     }
 
+    public String maxNumber(int a){
+        Map<String,Object> map=new HashMap<>();
+        System.out.println("int="+a);
+        String s="C";
+        int cd = String.valueOf(a+1).length();
+        for(int i=0;i<9-cd;i++){
+            s+="0";
+        }
+        s+=a+1;
+        return s;
+    }
     @RequestMapping("/ExcelDR")
     @ResponseBody
     public Map<String, Object> ExcelDR(@RequestParam MultipartFile file,HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -134,18 +191,111 @@ public class sfController {
         // 获取文件名
         String name = file.getOriginalFilename();
         ExcelUtils ex=new ExcelUtils(); //c_user, cn_name, c_jfdw, c_dwjg, c_real, c_yjfy, c_bcfyqq_date, c_bcfyzq_date, c_bcjfzq_date, cn_cycle
-        String[] s={"c_fc","cn_suer","cn_name","c_jfdw","c_dwjg","c_real","c_yjfy","c_bcfyqq_date","c_bcfyzq_date"
-                ,"c_bcjfzq_date","cn_cycle"};
+        String[] s={"c_fc","cn_suer","c_costName","c_jfdw","c_dwjg","c_real","c_yjfy","c_bcfyqq_date","c_bcfyzq_date"
+                ,"c_bcjfzq_date","cn_cycle","cn_id","h_number"};
         CommonsMultipartFile cFile = (CommonsMultipartFile) file;
         DiskFileItem fileItem = (DiskFileItem) cFile.getFileItem();
         InputStream inputStream = fileItem.getInputStream();
         List<Map<String, Object>> maps = ex.readCaseFile(inputStream, 1, s);
-        for (Map<String, Object> stringObjectMap : maps) {
-            System.out.println("ss="+stringObjectMap);
+        int sbhan=0;
+        int han=0;
+        int max=0;
+        List<Map<String, Object>> queryrq = iCostService.queryrq(maps.get(0).get("c_bcfyqq_date").toString(),
+                maps.get(0).get("c_bcfyzq_date").toString());
+        List<Map<String,Object>> sbsjy=new ArrayList<>();
+        List<Map<String,Object>> sbsj=new ArrayList<>();
+        List<Map<String, Object>> insert = new ArrayList<>();//插入
+        for (Map<String, Object> lis : maps) {
+            int i=1;
+            for (Map<String, Object> rq : queryrq) {
+                System.out.println("rq="+rq.toString());
+                if(rq.get("cn_id").toString().equals(lis.get("cn_id").toString())&&rq.get("h_number").toString().equals(lis.get("h_number").toString())){
+                    i=0;
+                    sbhan++;
+                    rq.put("c_bcfyqq_date",rq.get("c_bcfyqq_date").toString());
+                    rq.put("c_bcfyzq_date",rq.get("c_bcfyzq_date").toString());
+                    rq.put("c_bcjfzq_date",rq.get("c_bcjfzq_date").toString());
+                    sbsjy.add(rq);
+                    sbsj.add(lis);
+                    System.out.println("冲突行："+sbhan);
+                }
+            }
+            if(i>0){
+                System.out.println("执行");
+                han++;
+                max++;
+                int a = iCostService.MaxCostNumber();
+                lis.put("c_number",maxNumber(a+max));
+                insert.add(lis);
+            }
+        }
+        if(insert.toString()!="[]") {
+            iCostService.InsetsCost(insert);
         }
         // 判断文件大小、即名称
         long size = file.getSize();
-        map.put("data",maps);
+        map.put("han",han);
+        map.put("sbhan",sbhan);
+        map.put("sbsj",sbsj);
+        map.put("sbsjy",sbsjy);
+        map.put("success","成功");
+        return map;
+    }
+
+    /**
+     * 替换
+     */
+    @RequestMapping("/thCost")
+    @ResponseBody
+    public Map<String, Object> thCost(@RequestBody List<Map<String,Object>> li) throws IOException {
+        Map<String,Object> map =new HashMap<>();
+        // 判断文件名是否为空
+        iCostService.updateth(li);
+        map.put("success","成功");
+        return map;
+    }
+
+
+    @RequestMapping("/ExcelFY")
+    @ResponseBody
+    public Map<String, Object> ExcelFY(@RequestParam MultipartFile file,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Map<String,Object> map =new HashMap<>();
+        // 判断文件名是否为空
+        if (file == null)
+            return null;
+        // 获取文件名
+        String name = file.getOriginalFilename();
+        ExcelUtils ex=new ExcelUtils();
+        String[] s={"c_number","c_remarks"};
+        CommonsMultipartFile cFile = (CommonsMultipartFile) file;
+        DiskFileItem fileItem = (DiskFileItem) cFile.getFileItem();
+        InputStream inputStream = fileItem.getInputStream();
+        List<Map<String, Object>> maps = ex.readCaseFile(inputStream, 1, s);
+        List<Map<String, Object>> maps1 = iCostService.queryJfCost(maps);
+        // 判断文件大小、即名称
+        for (Map<String, Object> stringObjectMap : maps1) {
+            stringObjectMap.put("c_bcfyqq_date",stringObjectMap.get("c_bcfyqq_date").toString());
+            stringObjectMap.put("c_bcfyzq_date",stringObjectMap.get("c_bcfyzq_date").toString());
+            stringObjectMap.put("c_bcjfzq_date",stringObjectMap.get("c_bcjfzq_date").toString());
+            for (Map<String, Object> stringObjectMaps : maps) {
+                if(stringObjectMaps.get("c_number").toString().equals(stringObjectMap.get("c_number").toString())){
+                    stringObjectMap.put("c_remarks",stringObjectMaps.get("c_remarks").toString());
+                }
+            }
+
+        }
+        long size = file.getSize();
+        map.put("li",maps1);
+        map.put("success","成功");
+        return map;
+    }
+
+
+    @RequestMapping("/JFJS")
+    @ResponseBody
+    public Map<String, Object> JFJS(@RequestBody List<Map<String,Object>> li) throws IOException {
+        Map<String,Object> map =new HashMap<>();
+        iCostService.UpdateJsDD(li);
         map.put("success","成功");
         return map;
     }

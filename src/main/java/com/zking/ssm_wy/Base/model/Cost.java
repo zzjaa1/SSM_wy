@@ -20,6 +20,8 @@ public class Cost {
 
     private Float cYjfy;
 
+    private String cNumber;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date cScfyzqDate;
@@ -42,6 +44,14 @@ public class Cost {
     private String hNumber;
 
     private Integer cnId;
+
+    public String getcNumber() {
+        return cNumber;
+    }
+
+    public void setcNumber(String cNumber) {
+        this.cNumber = cNumber;
+    }
 
     public Cost(Integer cId, String cFc, String cUser, Float cJfdw, Float cDwjg, Float cYjfy, Date cScfyzqDate, Date cBcfyqqDate, Date cBcfyzqDate, Date cBcjfzqDate, String cCostname, Integer cReal, String cRemarks, String hNumber, Integer cnId) {
         this.cId = cId;

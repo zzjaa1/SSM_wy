@@ -52,5 +52,35 @@ public class CostServiceImpl implements ICostService {
         return costMapper.Updacostate(cid);
     }
 
+    @Override
+    public int insert(Cost record) {
+        return costMapper.insert(record);
+    }
+
+    @Override
+    public int MaxCostNumber() {
+        return costMapper.MaxCostNumber();
+    }
+
+    @Override
+    public void InsetsCost(List<Map<String, Object>> list) {
+         costMapper.InsetsCost(list);
+    }
+
+    @Override
+    public void updateth(List<Map<String, Object>> list) {
+        costMapper.updateth(list);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryJfCost(List<Map<String,Object>> list) {
+        return costMapper.queryJfCost(list);
+    }
+
+    @Override
+    public void UpdateJsDD(List<Map<String, Object>> list) {
+        costMapper.UpdateJsDD(list);
+    }
+
 
 }

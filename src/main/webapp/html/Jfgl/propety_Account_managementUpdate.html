@@ -14,24 +14,28 @@
     <div class="layui-form-item">
         <label class="layui-form-label">房屋编号</label>
         <div class="layui-input-block">
-            <input type="text" id="h_number" name="hNumber" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" readonly >
+            <input type="text" id="h_number"  name="hNumber" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" readonly >
         </div>
    <div class="layui-form-item">
         <label class="layui-form-label">房屋信息</label>
         <div class="layui-input-block">
-            <input type="text" id="c_fc" name="cFc" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" >
+            <input type="text" id="c_fc" readonly name="cFc" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" >
         </div>
+       <label class="layui-form-label">费用编号</label>
+       <div class="layui-input-block">
+           <input type="text" id="c_number" readonly name="cNumber" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" >
+       </div>
         <label class="layui-form-label">业主</label>
         <div class="layui-input-block">
-            <input type="text" id="c_user" name="cUser" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" >
+            <input type="text" id="c_user" readonly name="cUser" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" >
         </div>
         <label class="layui-form-label">计费单位</label>
         <div class="layui-input-block">
-            <input type="text" id="c_jfdw" name="cJfdw" lay-verify="title" placeholder="请输入计费单位" autocomplete="off" class="layui-input" style="width: 300px" >
+            <input type="text" id="c_jfdw" readonly name="cJfdw" lay-verify="title" placeholder="请输入计费单位" autocomplete="off" class="layui-input" style="width: 300px" >
         </div>
         <label class="layui-form-label">单位价格</label>
         <div class="layui-input-block">
-            <input type="text" id="c_dwjg" name="cDwjg" lay-verify="title" placeholder="请输入单位价格" autocomplete="off" class="layui-input" style="width: 300px" >
+            <input type="text" id="c_dwjg" required name="cDwjg" lay-verify="title" placeholder="请输入单位价格" autocomplete="off" class="layui-input" style="width: 300px" >
         </div>
        <!--<label class="layui-form-label">费用名称</label>-->
        <!--<div class="layui-input-block">-->

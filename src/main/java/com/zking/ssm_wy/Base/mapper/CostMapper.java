@@ -34,4 +34,24 @@ public interface CostMapper {
     List<Map<String,Object>> queryCostfwPage(@Param("lifj") List<String> lifj,@Param("qq")String qq,@Param("zq")String zq,@Param("lify")List<String> lify);
 
     List<Map<String,Object>> queryrq(@Param("qq")String qq,@Param("zq")String zq);
+
+    int MaxCostNumber();
+
+    void InsetsCost(@Param("list")List<Map<String,Object>> list);
+
+
+    void updateth(@Param("list")List<Map<String,Object>> list);
+
+    /**
+     * 查询抄表账单
+     * @param list
+     * @return
+     */
+    List<Map<String,Object>> queryJfCost(@Param("list") List<Map<String,Object>> list);
+
+    /**
+     * 选择结算订单
+     */
+
+    void UpdateJsDD(@Param("list") List<Map<String,Object>> list);
 }

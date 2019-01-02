@@ -6,8 +6,10 @@ import com.zking.ssm_wy.Base.model.Houses;
 import com.zking.ssm_wy.Base.service.IBulidingService;
 import com.zking.ssm_wy.Base.service.IHousesService;
 import com.zking.ssm_wy.Base.util.PageBean;
+import com.zking.ssm_wy.annotation.SystemControllerLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,6 +28,7 @@ public class HousesController {
 
     @RequestMapping("/queryBulidingNamePage")
     @ResponseBody
+
     public Map<String,Object> queryBulidingNamePage(Houses houses,int page,int limit){
         System.out.println(houses.gethBulidingname());
         houses.sethBulidingname("%"+houses.gethBulidingname()+"%");
@@ -186,6 +189,7 @@ public class HousesController {
 
     @RequestMapping("/updateHours2")
     @ResponseBody
+
     public Map<String ,Object> updateHours2(Houses houses){
         System.out.println(houses);
         houses.sethUnitnumber(1);

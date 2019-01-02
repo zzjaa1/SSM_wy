@@ -18,14 +18,20 @@
 
     var arr="";
     function ssss(sjy,sj) {
-
         var newArry=new Array();
         for(var i=0;i<sjy.length;i++){
             for(var j=0;j<sj.length;j++){
                 if(sjy[i].h_number==sj[j].h_number && sjy[i].cn_id==sj[j].cn_id){
+                  /*  c_fc, c_user,
+                        c_dwjg, c_yjfy,
+                        c_bcfyqq_date, c_bcfyzq_date, c_bcjfzq_date,
+                        c_costName, c_real, c_remarks,
+                        h_number, cn_id,c_number*/
                     newArry.push({
-                        'c_fc':sj[j].h_number
-                        ,'c_dwjg':sj[j].c_fc
+                        'c_remarks':sjy[i].c_remarks
+                        ,'c_real':sjy[i].c_real
+                        ,'c_fc':sjy[i].c_fc
+                        ,'c_dwjg':sj[j].c_dwjg
                         ,'c_costName':sj[j].c_costName
                         ,'c_yjfy':sj[j].c_yjfy
                         ,'c_yjfy_y':sjy[i].c_yjfy
@@ -37,7 +43,9 @@
                         ,'c_bcfyzq_date_y':sjy[i].c_bcfyzq_date
                         ,'c_jfdw':sj[j].c_jfdw
                         ,'cn_id':sj[j].cn_id
-                        ,'c_user':sj[j].c_user
+                        ,'c_user':sjy[i].c_user
+                        ,'h_number':sj[j].h_number
+                        ,'c_id':sjy[i].c_id
                     });
                 }
             }
@@ -59,13 +67,13 @@
                     {field: 'c_fc', title: '房屋信息', width: '12%'},
                     {field: 'c_costName',title: '费用名称', width: '15%'},
                     {field: 'c_yjfy', title: '费用金额', width: '15%'},
-                    {field: 'c_yjfy_y', title: '冲突费用金额', width: '15%'},
+                    {field: 'c_yjfy_y', title: '冲突费用金额', width: '15%',style:'background-color:  #4cffca;'},
                     {field: 'c_bcfyqq_date', title: '本次费用起期', width: '15%'},
-                    {field: 'c_bcfyqq_date_y', title: '冲突费用起期', width: '15%'},
+                    {field: 'c_bcfyqq_date_y', title: '冲突费用起期', width: '15%',style:'background-color:  #4cffca;'},
                     {field: 'c_bcfyzq_date', title: '本次费用止期', width: '15%'},
-                    {field: 'c_bcfyzq_date_y', title: '冲突费用止期', width: '15%'},
+                    {field: 'c_bcfyzq_date_y', title: '冲突费用止期', width: '15%',style:'background-color: #4cffca;'},
                     {field: 'c_bcjfzq_date', title: '本次缴费止期', width: '15%'},
-                    {field: 'c_bcjfzq_date_y', title: '冲突缴费止期', width: '15%'},
+                    {field: 'c_bcjfzq_date_y', title: '冲突缴费止期', width: '15%',style:'background-color:  #4cffca'},
                     {field: 'c_jfdw', title: '计费单位', width: '15%'},
                     {field: 'c_user', title: '业主', width: '15%'},
                 ]]
@@ -74,21 +82,21 @@
             $('#th').on('click', function(){
                 var checkStatus = table.checkStatus('demo')
                     ,datas = checkStatus.data;
-               /* $.ajax({
-                    url:'/ssm_wy/basDict/delbasDictpl',
+                console.log("111");
+                console.log(datas);
+                $.ajax({
+                    url:'/ssm_wy/thCost',
                     method: 'post',
                     data:JSON.stringify(datas),//"cBcfyzqDate":fyzq,"cBjfyzqDate":fyxq},
                     dataType: 'JSON',
                     contentType:"application/json",
                     success: function (res) {
-                        var suc=res.success;
-                        layer.msg(suc, {icon: 1});
-                        $('#tj').click();
+                        layer.alert('替换成功', {icon: 1});
 
                     },
                     error: function (data) {
                     }
-                });*/
+                });
             });
 
         });

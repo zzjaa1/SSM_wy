@@ -82,8 +82,9 @@
             created: function () {
                 $.get("/ssm_wy/sys/queryPermission",
                     function(result, state) {
+                    console.log(result.li);
                         a.sa=result.li;
-                        localStorage.setItem('userName', result.li);
+                        //localStorage.setItem('userName', result.li);
                     });
             },
             methods:{

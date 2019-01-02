@@ -7,4 +7,6 @@ import java.util.Map;
 
 public interface ISysPermissionService {
     List<Map<String,Object>> queryPermission(String pid);
+
+    List<Map<String,Object>> queryPermissione2(Integer userid);
 }

@@ -19,7 +19,13 @@
     from t_sys_user
     where userid = #{userid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="userLogin" resultType="com.zking.ssm_wy.Base.model.SysUser"
+            parameterType="com.zking.ssm_wy.Base.model.SysUser">
+       SELECT * FROM t_sys_user a INNER JOIN t_sys_user_role b ON a.userid=b.roleid
+       WHERE a.username=#{username} AND PASSWORD=#{password}
+
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_sys_user
     where userid = #{userid,jdbcType=INTEGER}
   </delete>

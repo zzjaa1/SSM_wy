@@ -24,7 +24,11 @@
       SELECT <include refid="Base_Column_List"/>
       FROM t_sys_permission WHERE pid=#{pid}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <select id="queryPermissione2" resultType="map">
+    SELECT * FROM t_sys_user_role ur ,t_sys_role_permission srp ,t_sys_permission sp
+    WHERE ur.roleid =srp.roleid AND srp.perid=sp.perid AND userid=#{userid}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_sys_permission
     where perid = #{perid,jdbcType=INTEGER}
   </delete>

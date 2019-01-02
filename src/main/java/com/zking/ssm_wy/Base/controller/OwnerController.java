@@ -41,9 +41,9 @@ public class OwnerController {
        pageBean.setPage(page);
        pageBean.setRows(limit);
        pageBean.setRequest(request);
-      /*  List<Map<String, Object>> maps = iOwnerService.queryowenPage(o_name,h_number, pageBean);*/
+         List<Map<String, Object>> maps = iOwnerService.queryowenPage(o_name,h_number, pageBean);
         Map<String,Object> map=new HashMap<>();
-        map.put("data","");
+        map.put("data",maps);
         map.put("code",0);
         map.put("count",pageBean.getTotal());
         map.put("msg","");

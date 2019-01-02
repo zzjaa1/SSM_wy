@@ -1,7 +1,12 @@
 package com.zking.ssm_wy.Base.model;
 
-import java.util.Date;
+import lombok.ToString;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+@ToString
 public class SysUser {
     private Integer userid;
 
@@ -12,6 +17,17 @@ public class SysUser {
     private String salt;
 
     private Date createdate;
+
+    //用户对应的模块信息
+    private List<Map<String, Object>> sysPermissions;
+
+    public List<Map<String, Object>> getSysPermissions() {
+        return sysPermissions;
+    }
+
+    public void setSysPermissions(List<Map<String, Object>> sysPermissions) {
+        this.sysPermissions = sysPermissions;
+    }
 
     public SysUser(Integer userid, String username, String password, String salt, Date createdate) {
         this.userid = userid;

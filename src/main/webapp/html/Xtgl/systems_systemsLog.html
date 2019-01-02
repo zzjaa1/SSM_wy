@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>物业后台</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <link rel="stylesheet" href="../../css/reset.css">
-    <link rel="stylesheet" href="../../css/property.css">
-    <link rel="stylesheet" href="../../css/meter.css">
-    <link rel="stylesheet" href="../../css/systemsManagement.css">
-    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
-    <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+            <head>
+            <meta charset="UTF-8">
+            <title>物业后台</title>
+            <meta name="keywords" content="">
+            <meta name="description" content="">
+            <link rel="stylesheet" href="../../css/reset.css">
+            <link rel="stylesheet" href="../../css/property.css">
+            <link rel="stylesheet" href="../../css/meter.css">
+            <link rel="stylesheet" href="../../css/systemsManagement.css">
+            <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
+            <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
     <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
     <script>
         layui.use('table', function () {
@@ -34,11 +34,11 @@
                 ]]
             });
             $('#tj').on('click', function(){
-                var demoReload = $('#logParams').val();
+                var demoReload = $('#logparams').val();
                 table.reload('logbiao', {
                     url: '/ssm_wy/querylogPage',
                     where: {
-                        logParams:demoReload
+                        logparams:demoReload
                     }
                 });
             });
@@ -73,7 +73,7 @@
 <div class="layui-inline">
     <label class="layui-form-label">方法描述名：</label>
     <div class="layui-input-inline">
-        <input type="text" name="logParams" placeholder="请输入方法描述名" id="logParams" autocomplete="off" class="layui-input" style="width: 200px">
+        <input type="text" name="logParams" placeholder="请输入方法描述名" id="logparams" autocomplete="off" class="layui-input" style="width: 200px">
     </div>
     <button class="layui-btn" data-type="reload" id="tj">立即查询</button>
 </div>

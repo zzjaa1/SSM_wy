@@ -49,6 +49,8 @@
     <redis.spring.version>1.7.1.RELEASE</redis.spring.version>
     <!-- jackson -->
     <jackson.version>2.9.3</jackson.version>
+    <!--6.2 spring+quartz-->
+    <quartz.version>2.3.0</quartz.version>
   </properties>
 
   <dependencies>
@@ -321,7 +323,28 @@
           <artifactId>poi-ooxml-schemas</artifactId>
           <version>${poi-ooxml-schemas.version}</version>
         </dependency>-->
-
+    <!--spring+quartz-->
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz</artifactId>
+      <version>${quartz.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz-jobs</artifactId>
+      <version>${quartz.version}</version>
+    </dependency>
+    <!--整合String 帮助包-->
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.0</version>
+    </dependency>
       </dependencies>
 
       <build>

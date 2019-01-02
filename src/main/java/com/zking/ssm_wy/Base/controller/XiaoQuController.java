@@ -44,7 +44,6 @@ public class XiaoQuController {
                     stringObjectMap.put("id",stringObjectMap.get("x_number").toString());
                     stringObjectMap.put("name",stringObjectMap.get("x_buliding").toString());
                     stringObjectMap.put("parant",stringObjectMap.get("name"));
-
                     map3= iBulidingService.queryBulid(stringObjectMap.get("x_number").toString());
                         for (Map<String,Object> s : map3) {
                         if (null!=s){

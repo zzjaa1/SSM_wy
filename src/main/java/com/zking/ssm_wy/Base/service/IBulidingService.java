@@ -17,4 +17,6 @@ public interface IBulidingService {
     int update(Buliding buliding);
 
     int updateByPrimaryKeySelective(Buliding record);
+
+    List<Map<String,Object>> queryB(Buliding b);
 }

@@ -53,38 +53,79 @@
 <script type="text/javascript" src="/ssm_wy/js/jquery-1.8.3.min.js"></script>
 <div id="main" style="width: 1000px;height:800px;"></div>
 <script>
-    var xdata=[];
-    var ydata=[''];
+
+    var x="";
+    var y="";
+
+
     $.getJSON('/ssm_wy/querytj',function(obj,index){
+        var xdata=[];
+        var ydata=[];
 //读取json文件文件，遍历对象重新组合成data
         var data=echarts.util.map(obj.li, function(item, index) {
             return {
                 //index值x值，2指示y值，item.value指z值。其中x值代表省的变化，z值代表信用的变化
-                value: [ index,2, item.value],
+                value: [0,index, item.x_mj],
                 //柱状图的填充颜色
                 itemStyle:{
                     color:'#66D9EF'
                 }
             }
-
         });
-        for(var i=0;i<obj.li.length;i++){
-            xdata.push(obj.li[i].name);//获取省名
-        }
-        console.log(xdata);
-        console.log(data);
-        initChart(xdata,data)
 
+        for(var i=0;i<obj.li.length;i++){
+            xdata.push(obj.li[i].x_buliding);//获取省名
+        }
+        initChart(xdata,data,ydata)
     })
 
-   function initChart(xdata,ydata) {
+   function initChart(xdata,data,ydata) {
+       $.get("/ssm_wy/basDict/querybasDict",
+           function(result, state) {
+               var names=result.data;
+               var xx=new Array();
+               var yy=new Array();
+               for(var i = 0;i<names.length;i++) {
+                   var type=names[i].dict_type;
+                   if(type.search('统计区域X')!=-1){
+                       xx.push(names[i].dict_value);
+                   }else if(type.search('统计区域Y')!=-1){
+                       yy.push(names[i].dict_value);
+                   }
+               }
+
+
        var myChart = echarts.init(document.getElementById('main'));
-       var hours = ['12a', '1a', '2a', '3a', '4a', '5a', '6a',
-           '7a', '8a', '9a','10a','11a',];
-       var days = ['2018-09','2018-10','2018-11'];
-       let earth = {};
-       var data = [[1,19,3],[6,10,3],[6,21,2],[6,22,2],[6,11,2]];
-       var option = {
+       var hours = xx;
+       var days = yy;
+
+       var datas =new Array()/* [[0,0,5],[0,1,1],[0,2,0],[0,3,0],[0,4,0],[0,5,0],[0,6,0],[1,0,7],[1,1,0],[1,2,0],[1,3,0],
+           [1,4,0],[1,5,0],[1,6,0],[2,0,1],[2,1,1],[2,2,0],[2,3,0],[2,4,0],[2,5,0],[2,6,0],
+           [3,0,7],[3,1,3],[3,2,0],[3,3,0],[3,4,0],[3,5,0],[3,6,0],[4,0,1],[4,1,3],[4,2,0],
+           [4,3,0],[4,4,0],[4,5,1],[4,6,0],[5,0,2],[5,1,1],[5,2,0],[5,3,3],[5,4,0],[5,5,0],[5,6,0],[6,0,1],
+           [6,1,0],[6,2,0],[6,3,0],[6,4,0],[6,5,0],[6,6,0]]*/;
+
+               $.ajax({
+                   url: "/ssm_wy/BulidIng/queryB",
+                   data: {xNumber:'XQ4'},
+                   dataType:'json',
+                   type:'post',
+                   async:false,
+                   success:function(data){
+                       var s=data.data;
+                       for(var i=0;i<s.length;i++){
+                           var a=new Array();
+                           a.push(parseInt(s[i].X)-1);
+                           a.push(parseInt(s[i].Y)-1);
+                           a.push(s[i].b_Nuberj);
+                           a.push(s[i].b_number);
+                           datas.push(a);
+                       }
+                   }
+               });
+
+console.log(datas);
+       option = {
            tooltip: {},
            visualMap: {
                max: 20,
@@ -94,17 +135,19 @@
            },
            xAxis3D: {
                type: 'category',
-               data: days
+               data: hours,
+
            },
            yAxis3D: {
                type: 'category',
-               data: ydata
+               data: days,
            },
            zAxis3D: {
-               type: 'value'
+               type: 'value',
+               data:['ABC'],
            },
            grid3D: {
-               boxWidth: 100,
+               boxWidth: 200,
                boxDepth: 80,
                viewControl: {
                    // projection: 'orthographic'
@@ -121,21 +164,29 @@
            },
            series: [{
                type: 'bar3D',
-               data:
-                   ydata.map(function (item) {
-                       console.log(item);
-                       return {
-                           value:
-                           [item.value[1], item.value[0], item.value[2]],
-                           // ydata
-                       }
-                   }),
+               data:datas.map(function (item) {
+                   return {
+                       value: [item[1], item[0], item[2]]
+                   }
+               }),
                shading: 'lambert',
-
                label: {
                    textStyle: {
                        fontSize: 16,
                        borderWidth: 1
+                   },
+                   formatter: function(params) {
+                       console.log(params);
+                     /*  var strs = "131313131313131313".split(''); //字符串数组
+                       var str = ''
+                       for(var i = 0, s; s = strs[i++];) { //遍历字符串数组
+                           str += s;
+                           if(!(i % 2)) str += '\n'; //按需要求余
+                       }*/
+                       return "";
+                   },
+                   axisLine: {
+                       show: false
                    }
                },
 
@@ -143,17 +194,29 @@
                    label: {
                        textStyle: {
                            fontSize: 20,
-                           color: '#900'
+                           color: '#4a9995'
                        }
                    },
                    itemStyle: {
-                       color: '#900'
+                       color: '#189099'
                    }
                }
            }]
        }
        myChart.setOption(option);
+
+               myChart.on('click', function (params) {
+                    alert(params);
+
+               });/*  console.log(data.map(function (item) {
+                        return {
+                            value: [item[1], item[0], item[2]]
+                        }
+                    }))*/
+           });
    }
+
+
 
 </script>
 

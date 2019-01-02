@@ -129,6 +129,7 @@ GROUP BY s.h_number
       <if test="bNumber != null" >
         b_number,
       </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="hId != null" >

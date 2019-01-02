@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +67,9 @@ public class RealEstateController {
     @RequestMapping("/querytj")
     @ResponseBody
     public Map<String,Object> querytj(String year){
+        Map<String,Object> map2=new HashMap<>();
+        List<Map<String, Object>> querytj = iRealEstateService.querytj();
+        System.out.println(querytj);
        // List<Map<String, Object>> querytj = iRealEstateService.querytj(year);
         Map<String,Object> map1=new HashMap<>();
         List<Map<String, Object>> querytj = iRealEstateService.querytj(year);
@@ -96,4 +98,24 @@ public class RealEstateController {
         map1.put("htbh",s);
         return map1;
     }
+
+    @ResponseBody
+    @RequestMapping("/queryxqxseTj")
+    public Map<String,Object> queryxqxseTj(String year){
+        System.out.println("--------"+year);
+        List<Map<String, Object>> queryxsetj = iRealEstateService.queryxsetj(year);
+       Map<String,Object> map =new HashMap<>();
+       map.put("rows",queryxsetj);
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping("/queryxqxseTj2")
+    public  List<Map<String, Object>> queryxqxseTj2(String year,String x_number ,String mouth){
+
+        List<Map<String, Object>> maps = iRealEstateService.queryxsetj2(year, x_number, mouth);
+
+        return maps;
+    }
+
 }

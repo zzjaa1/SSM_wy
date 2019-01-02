@@ -1,6 +1,7 @@
 package com.zking.ssm_wy.Base.mapper;
 
 import com.zking.ssm_wy.Base.model.Buliding;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public interface BulidingMapper {
 
     int update(Buliding buliding);
 
-
+    List<Map<String,Object>> queryB(@Param("b")Buliding b);
 
 
 }

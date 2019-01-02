@@ -158,12 +158,47 @@
        layui.use(['form','jquery'], function(){
            var form = layui.form;
            var $=layui.jquery;
+           form.verify({
+               xNumber: function(value){
+                   if(value.length==0){
+                       // layer.tips("标题至少得5个字符啊");
+                       return '小区编号不能为空';
+                   }
+               }, bBuliding: function(value){
+                   if(value.length==0){
+                       return '楼/栋名称不能为空';
+                   }
+               },
+               bHours: function(value){
+                   if(value.length==0){
+                       return '房屋结构不能为空';
+                   }
+               },
+           });
            formdamo('增加')
+           form.verify({
+               xNumber: function(value){
+                   if(value.length==0){
+                       // layer.tips("标题至少得5个字符啊");
+                       return '小区编号不能为空';
+                   }
+               }, bBuliding: function(value){
+                   if(value.length==0){
+                       return '楼/栋名称不能为空';
+                   }
+               },
+               bHours: function(value){
+                   if(value.length==0){
+                       return '房屋结构不能为空';
+                   }
+               },
+           });
            formdamo2('增加')
            formdamo3('增加')
        });
        
        function formdamo(data) {
+
            layui.use(['form','jquery'], function(){
                var form = layui.form;
                var $=layui.jquery;
@@ -174,14 +209,16 @@
                }else{
                    url='/ssm_wy/BulidIng/insertBulid';
                }
-               console.log(url);
            form.on('submit(formDemo)', function(data){
                data.field.xNumber=$('#xNumber').val();
                data.field.bBuliding=$('#bBuliding').val();
                data.field.bHours=$('#bHours').val();
                data.field.csRemarks=$('#csRemarks').val();
                data.field.bNumber=$('#b_numbers').val();
+               data.field.X=$('#X option:selected') .val()
+               data.field.Y=$('#Y option:selected').val();
                console.log(JSON.stringify(data.field));
+               console.log(url);
                $.ajax({
                    url: url,
                    data: data.field,
@@ -220,6 +257,7 @@
                data.field.bNumber=$('#b_number').val();
                data.field.hBulidingname=$('#h_bulidingName').val();
                data.field.hNumber=$('#hNumbers').val();
+               console.log(data.field);
                $.ajax({
                    url:url ,
                    data: data.field,
@@ -319,16 +357,39 @@
                 <div class="figs" style="font-weight: bold;padding-left: 22px">
                     添加楼栋信息
                 </div>
-              <form method="post" action="" >
+              <form method="post" action="" class="layui-form" >
                   <div class="figs">
-                      <span>小区编号:</span><input style="width: 300px" name="xNumber" id="xNumber" type="text" class="cr_ipt1">
+                      <span>小区编号:</span><input style="width: 300px" lay-verify="xNumber" name="xNumber" id="xNumber" type="text" class="cr_ipt1">
                       <input type="hidden" id="b_numbers" name="bNumber">
                   </div>
                   <div class="figs">
-                      <span>楼/栋名称：</span><input style="width: 300px" id="bBuliding" name="bBuliding" type="text" class="cr_ipt1">
+                      <span>楼/栋名称：</span><input style="width: 300px" lay-verify="bBuliding" id="bBuliding" name="bBuliding" type="text" class="cr_ipt1">
                   </div>
                   <div class="figs">
-                      <span>房屋结构：</span><input style="width: 300px" id="bHours" name="bHours" type="text" class="cr_ipt1">
+                      <span>房屋结构：</span><input style="width: 300px" lay-verify="bHours" id="bHours" name="bHours" type="text" class="cr_ipt1">
+                  </div>
+                  <div class="figs" style="height: 200px">
+                      <script>
+                          $.get("/ssm_wy/basDict/querybasDict",
+                              function(result, state) {
+                                  var names=result.data;
+                                  for(var i = 0;i<names.length;i++) {
+                                      if (names[i].dict_type=='统计区域X'){
+                                          $("#X").append(new Option(names[i].dict_item,names[i].dict_value));
+                                      }
+                                      if(names[i].dict_type=='统计区域Y'){
+                                          $("#Y").append(new Option(names[i].dict_item,names[i].dict_value));
+                                      }
+                                  }
+                              });
+                      </script>
+                      <span>坐标:</span>
+                      <select name="X"  id="X" lay-verify="required" lay-search="" style="width: 300px;">
+                          <option value="">请选择X轴</option>
+                      </select>
+                      <select name="Y"  id="Y" lay-verify="required" lay-search="" style="width: 300px;">
+                          <option value="">请选择Y轴</option>
+                      </select>
                   </div>
                   <div class="figs" style="height: 130px;overflow: hidden;padding-top: 15px;">
                   <span style="float: left">备注：</span>
@@ -347,12 +408,12 @@
                 <div class="figs" style="font-weight: bold;padding-left: 22px" >
                     单元信息
                 </div>
-                <form method="post" >
+                <form method="post" class="layui-form" >
                     <div class="figs">
-                        <span>楼/栋名称：</span><input style="width: 300px" type="text" id="h_bulidingNames"  class="cr_ipt1">
-                        <br><span>楼栋编号:</span> <input type="text" id="b_number" name="bNumber"><br>
+                        <span>楼/栋名称：</span><input style="width: 300px" type="text" lay-verify="required" id="h_bulidingNames"  class="cr_ipt1">
+                        <br><span>楼栋编号:</span> <input type="text" id="b_number"  lay-verify="required"  name="bNumber"><br>
                         <input type="hidden" id="hNumbers" name="hNumber">
-                        <span>单元名称:</span><input type="text" style="width: 300px" id="h_bulidingName" name="hBulidingname"><br>
+                        <span>单元名称:</span><input type="text" style="width: 300px"  lay-verify="required" id="h_bulidingName" name="hBulidingname"><br>
                         <button class="layui-btn tj" type="button"  lay-submit lay-filter="formDemo2">保存且继续</button>
                     </div>
             </form>
@@ -362,17 +423,18 @@
                 <div class="figs" style="font-weight: bold;padding-left: 22px" >
                     添加房间信息
                 </div>
-                <form method="post" >
+                <form method="post"  class="layui-form" >
                     <div class="figs">
                         <span>单元名称：</span><input style="width: 300px" type="text" id="dym"  class="cr_ipt1">
-                        <br><span>单元编号:</span> <input type="text" id="bnumber" name="bNumber"><br>
-                            <input type="hidden" id="hNumber" name="hNumber">
+                        <br><span>单元编号:</span> <input type="text" id="bnumber" name="bNumber"  lay-verify="required"><br>
+                            <input type="hidden" id="hNumber" name="hNumber" >
                         <span>房间状态:</span>
-                        <select name="hState" id="hState">
+                        <select name="hState" id="hState"  lay-verify="required">
                             <option value="未入住">未入住</option>
-                         <option value="已入住">已入住</option>
-                       </select><br>
-                        <span>房间名称:</span><input type="text" style="width: 300px" id="h_buliding" name="hBulidingname">室<br>
+                             <option value="已入住">已入住</option>
+                       </select>
+                        <br>
+                        <span>房间名称:</span><input type="text" style="width: 300px"  lay-verify="required" id="h_buliding" name="hBulidingname">室<br>
                         <button class="layui-btn tj" type="button"  lay-submit lay-filter="formDemo3">保存且继续</button>
                     </div>
                 </form>

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
     <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
     <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
-
+    <script src="/ssm_wy/js/jquery.serializejson.js"></script>
     <!--树形-->
     <script>
      layui.use( 'layer', function() {
@@ -127,15 +127,15 @@
                 , id: 'testfc'
                 , url: '/ssm_wy/queryweizi' //数据接口
                 , cols: [[ //表头
-                  /*  {field: 'h_number', title: '编号', width: '50%'},*/
-                    {field: 'mz', title: '房产名称', width: '100%'}
+                    {field: 'h_number', title: '编号', width: '50%'},
+                    {field: 'mz', title: '房产名称', width: '50%'}
                 ]]
             });
             //监听行单击事件（单击事件为：rowDouble）
             table.on('row(testdj)', function (obj) {
                 // console.log(obj.tr) //得到当前行元素对象
+                console.log(obj.data.h_number) //得到当前行数据
                 $("#fybh").val(obj.data.h_number);
-                    $('#lab').html(obj.data.mz);
                 layui.use('table', function () {
                     var table = layui.table;
                     //第一个实例
@@ -210,6 +210,7 @@
                     $.each(data,function (idex,em) {
                         a+=em.c_id+",";
                     })
+                console.log(a)
                 $("#jiaofei").click(function () {
                     //alert(1);
                     $.ajax({
@@ -298,6 +299,7 @@
             return time;
         }
         function member_edit(data, gybh) {
+            console.log(data);
             data.c_bcfyzq_date = showTime(data.c_bcfyzq_date);
             data.c_bcfyqq_date = showTime(data.c_bcfyqq_date);
             data.c_bcjfzq_date = showTime(data.c_bcjfzq_date);
@@ -338,6 +340,7 @@
                     }
                     var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
                     var ss = iframeWin.s().serializeJSON();
+                    console.log(ss)
                     // var companyId=iframeWin.document.getElementById("companyId").value;
                     // console.log(companyId)
                     // var grade=iframeWin.document.getElementById("grade").value;
@@ -389,10 +392,10 @@
         <div class="con_box">
             <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" >
                 <ul class="layui-tab-title">
-                    <li class="layui-this" style="padding-left: 80px">简洁模式</li>
-                    <li style="padding-left: 20px">标准模式</li>
+                    <li class="layui-this">简洁模式</li>
+                    <li>标准模式</li>
                 </ul>
-                <div class="layui-tab-content" style="padding-left: 60px">
+                <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         <div class="layui-input-inline">
                             <script>
@@ -406,8 +409,11 @@
                                         // layui.form.render('select');
                                     });
                             </script>
-                            <select name="modules" id="seltree" lay-verify="required" style="width: 150px" >
+                            <select name="modules" id="seltree" lay-verify="required" lay-search=""
+                                    style="width: 150px">
                                 <option value="">请选择</option>
+                                <!--<option value="XQ4">浪琴湾小区</option>-->
+                                <!--<option value="XQ5">浪琴湾小区2</option>-->
                             </select>
                             <a class="layui-btn layui-btn-xs" id="btuquery"><label>查询</label></a>
                         </div>
@@ -426,11 +432,10 @@
                             <option value="Re_card">证件号</option>
                             <option value="O_phone">手机号</option>
                         </select>
-                        <div style="height: 10px;"></div>
                         <div class="layui-input-inline">
-                           <input type="text" id="gjname" class="layui-input" width="600px" height="80px" placeholder="输入关键字">
+                            输入关键字:<input type="text" id="gjname" class="layui-input" width="600px" height="80px">
                         </div>
-                        <button class="layui-btn layui-btn-normal" id="btuyzxx" >查询</button>
+                        <a class="layui-btn layui-btn-xs" id="btuyzxx"><label>查询</label></a>
                         <table id="bzdemo" lay-filter="testdj"></table>
                     </div>
                 </div>
@@ -442,37 +447,11 @@
     <!--表格-->
     <div id="dd">
         <input type="hidden" id="fybh">
+
     </div>
-   <div style="float: left;width: 1300px" >&nbsp;&nbsp;
+   <div style="float: left;width: 900px">
        <button class="layui-btn" data-type="reload" id="jiaofei">缴费</button>
        <button class="layui-btn" data-type="reload" id="add">新增费用项</button>
-       <button class="layui-btn" data-type="reload" id="Excel">导入抄表</button>
-       <script>
-           $('#Excel').on('click', function(){
-               layer.open({
-                   type: 2,
-                   title: '替换账单',
-                   maxmin: true,
-                   shadeClose:true, //点击遮罩关闭层
-                   shade: 1 ,   //遮罩
-                   anim:4,
-                   area : ['1000px' , '600px'],
-                   content:'/ssm_wy/html/Jfgl/ExcelFY.html',
-                   btn:['保存','取消'],
-                   success: function (layero, index) {
-                       /*  var iframeWin = window[layero.find('iframe')[0]['name']];
-                         iframeWin.ssss(sjy,sj);*/
-                   },
-                   yes:function(index,layero){
-                       layer.closeAll();
-                   } ,btn2: function(index, layero){
-                       layer.closeAll();
-                   }
-
-               });
-           });
-       </script>
-       <label style="padding-left: 120px;color: #2cff96;" id="lab"></label>
        <table class="layui-hide" id="testbiao" lay-filter="test"></table>
 
    </div>

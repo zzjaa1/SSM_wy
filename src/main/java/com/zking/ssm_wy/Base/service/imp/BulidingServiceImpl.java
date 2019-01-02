@@ -1,5 +1,6 @@
 package com.zking.ssm_wy.Base.service.imp;
 
+import com.sun.org.apache.regexp.internal.RE;
 import com.zking.ssm_wy.Base.mapper.BulidingMapper;
 import com.zking.ssm_wy.Base.model.Buliding;
 import com.zking.ssm_wy.Base.service.IBulidingService;
@@ -48,5 +49,10 @@ public class BulidingServiceImpl implements IBulidingService {
     @Override
     public int updateByPrimaryKeySelective(Buliding record) {
         return bulidingMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryB(Buliding b) {
+        return bulidingMapper.queryB(b);
     }
 }

@@ -33,5 +33,7 @@ public interface BulidingMapper {
 
     List<Map<String,Object>> queryB(@Param("b")Buliding b);
 
+    List<Map<String,Object>> queryBB();
+
 
 }

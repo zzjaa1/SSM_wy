@@ -55,4 +55,9 @@ public class BulidingServiceImpl implements IBulidingService {
     public List<Map<String, Object>> queryB(Buliding b) {
         return bulidingMapper.queryB(b);
     }
+
+    @Override
+    public List<Map<String, Object>> queryBB() {
+        return bulidingMapper.queryBB();
+    }
 }

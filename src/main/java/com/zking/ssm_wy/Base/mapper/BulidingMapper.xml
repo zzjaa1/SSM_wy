@@ -55,7 +55,13 @@
         </if>
       GROUP BY b.`b_buliding`
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <select id="queryBB" resultType="map">
+    SELECT b.*,h.* FROM buliding b
+  LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NULL) h
+  ON b.`b_number`=h.`L` WHERE 1=1
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from buliding
     where b_id = #{bId,jdbcType=INTEGER}
   </delete>

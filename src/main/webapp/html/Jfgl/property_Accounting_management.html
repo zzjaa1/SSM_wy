@@ -50,7 +50,8 @@
                                     }else {
                                         $('#lab').html(item.name);
                                     }
-                                    $("#fybh").text(item.id)
+                                    $("#fybh").val(item.id)
+                                    $('#yzxx').val(item.parant);
                                     layui.use('table', function(){
                                         var table = layui.table;
                                         //第一个实例
@@ -445,7 +446,7 @@
     <!--表格-->
     <div id="dd">
         <input type="hidden" id="fybh">
-
+        <input type="hidden" id="yzxx">
     </div>
    <div style="float: left;width: 900px">
        <button class="layui-btn" data-type="reload" id="jiaofei">缴费</button>

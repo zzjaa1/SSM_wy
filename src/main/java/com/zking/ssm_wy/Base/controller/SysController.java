@@ -1,6 +1,7 @@
 package com.zking.ssm_wy.Base.controller;
 
 import com.zking.ssm_wy.Base.service.ISysPermissionService;
+import com.zking.ssm_wy.annotation.SystemControllerLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ public class SysController {
 
     @RequestMapping("/queryPermission")
     @ResponseBody
+    @SystemControllerLog(description = "查询模块")
     public Map<String,Object> query(){
         Map<String,Object> map=new HashMap<>();
         List<Map<String, Object>> maps=querys("-1");

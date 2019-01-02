@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,7 @@ public class RealEstateController {
 
     @RequestMapping("/queryRealEstatePage")
     @ResponseBody
-    public Map<String,Object> queryRealEstatePage(RealEstate realEstate, HttpServletRequest req,int page, int limit){
+    public Map<String,Object> queryRealEstatePage(RealEstate realEstate, HttpServletRequest req, int page, int limit){
         // List<Map<String, Object>> querytj = iRealEstateService.querytj(year);
         PageBean pb=new PageBean();
         pb.setPage(page);
@@ -68,8 +69,8 @@ public class RealEstateController {
     @ResponseBody
     public Map<String,Object> querytj(String year){
         Map<String,Object> map2=new HashMap<>();
-        List<Map<String, Object>> querytj = iRealEstateService.querytj();
-        System.out.println(querytj);
+//        List<Map<String, Object>> querytj = iRealEstateService.querytj();
+//        System.out.println(querytj);
        // List<Map<String, Object>> querytj = iRealEstateService.querytj(year);
         Map<String,Object> map1=new HashMap<>();
         List<Map<String, Object>> querytj = iRealEstateService.querytj(year);

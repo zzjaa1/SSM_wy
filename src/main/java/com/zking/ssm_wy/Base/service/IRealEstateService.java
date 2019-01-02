@@ -9,7 +9,7 @@ public interface IRealEstateService {
 
     String addReal(RealEstate realEstate);
 
-    List<Map<String,Object>> querytj();
+//    List<Map<String,Object>> querytj();
 
     List<Map<String,Object>> queryxsetj(String year);
 

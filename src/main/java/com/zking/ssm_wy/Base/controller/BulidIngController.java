@@ -2,6 +2,7 @@ package com.zking.ssm_wy.Base.controller;
 
 import com.zking.ssm_wy.Base.model.Buliding;
 import com.zking.ssm_wy.Base.service.IBulidingService;
+import com.zking.ssm_wy.annotation.SystemControllerLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ public class BulidIngController {
 
     @RequestMapping("/insertBulid")
     @ResponseBody
+    @SystemControllerLog(description = "添加楼栋")
     public Map<String,Object> insertBulid(Buliding buliding){
         System.out.println("123========"+buliding);
         String s = iBulidingService.QueryId();
@@ -35,6 +37,7 @@ public class BulidIngController {
     }
     @RequestMapping("/updateBulid")
     @ResponseBody
+    @SystemControllerLog(description = "修改楼栋")
     public Map<String,Object> updateBulid(Buliding buliding){
         System.out.println(buliding);
         int i = iBulidingService.updateByPrimaryKeySelective(buliding);

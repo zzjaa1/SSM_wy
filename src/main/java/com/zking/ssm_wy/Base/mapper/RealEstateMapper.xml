@@ -43,14 +43,15 @@
     <select id="queryRealEstatePage" resultType="map" parameterType="com.zking.ssm_wy.Base.model.RealEstate">
       SELECT * FROM real_estate
     </select>
-      SELECT xq.x_number,COUNT(b.b_buliding)b_buliding,xq.x_mj,x_buliding FROM xiaoqu xq
-      LEFT JOIN buliding b
-      ON xq.x_number = b.x_number
-      LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NOT NULL) dy
-      ON b.b_number = dy.b_number
-      LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NULL) s
-      ON dy.h_number=s.b_number  GROUP BY x_buliding
-    </select>
+       <!--<select id="querytj">-->
+        <!--SELECT xq.x_number,COUNT(b.b_buliding)b_buliding,xq.x_mj,x_buliding FROM xiaoqu xq-->
+        <!--LEFT JOIN buliding b-->
+        <!--ON xq.x_number = b.x_number-->
+        <!--LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NOT NULL) dy-->
+        <!--ON b.b_number = dy.b_number-->
+        <!--LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NULL) s-->
+        <!--ON dy.h_number=s.b_number  GROUP BY x_buliding-->
+        <!--</select>-->
     <select id="queryxsetj" resultType="map">
       SELECT xq.x_number,xq.x_buliding,SUM(re.Re_price)AS price,MONTH(re.Re_date) AS mouth,YEAR(re.Re_date) AS years FROM xiaoqu xq
         LEFT JOIN buliding b

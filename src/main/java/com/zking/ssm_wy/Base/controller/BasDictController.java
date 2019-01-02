@@ -38,6 +38,7 @@ public class BasDictController {
 
     @RequestMapping("/delbasDict")
     @ResponseBody
+    @SystemControllerLog(description = "删除费项")
     public Map<String,Object> delbasDict(basDict basdict){
         Map<String,Object> result=new HashMap<>();
         int i = ibasDictService.deleteByPrimaryKey(basdict.getDictId());
@@ -51,6 +52,7 @@ public class BasDictController {
 
     @RequestMapping("/addbasDict")
     @ResponseBody
+    @SystemControllerLog(description = "添加费项")
     public Map<String,Object> addbasDict(basDict basdict){
         Map<String,Object> result=new HashMap<>();
         int i = ibasDictService.insertSelective(basdict);
@@ -63,6 +65,7 @@ public class BasDictController {
     }
     @RequestMapping("/updbasDict")
     @ResponseBody
+    @SystemControllerLog(description = "修改费项")
     public Map<String,Object> updbasDict(basDict basdict){
         Map<String,Object> result=new HashMap<>();
         int i = ibasDictService.updateByPrimaryKeySelective(basdict);

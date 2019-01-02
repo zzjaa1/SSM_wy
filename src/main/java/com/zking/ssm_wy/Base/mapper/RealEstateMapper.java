@@ -1,6 +1,7 @@
 package com.zking.ssm_wy.Base.mapper;
 
 import com.zking.ssm_wy.Base.model.RealEstate;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,7 @@ public interface RealEstateMapper {
     int queryHtbh();
 
     List<Map<String,Object>> queryRealEstatePage(RealEstate realEstate);
-    List<Map<String,Object>> querytj();
+//    List<Map<String,Object>> querytj();
 
     List<Map<String,Object>> queryxsetj(@Param("year") String year);
 

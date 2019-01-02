@@ -16,42 +16,11 @@
     <script src="/ssm_wy/layui/lay/modules/laydate.js"></script>
     <title>Title</title>
 </head>
-<script>
-    /*function getQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
-    }
-    function a() {
-        var urlinfo=window.location.href; //获取当前页面的url
-        var len=urlinfo.length;//获取url的长度
-        var offset=urlinfo.indexOf("?");
-        var newsidinfo=urlinfo.substr(offset,len)//取出参数字符串 这里会获得类似“id=1”这样的字符串
-        var newsids=newsidinfo.split("=");
-        //for (i=0;i<=)
-        var newsidss=decodeURIComponent(newsids[1]);
-        var newsidsa=newsidss.split(",");
-        var newsid=Array();
-        newsid[1]=decodeURIComponent(newsidsa[2]);
-        newsid[2]=decodeURIComponent(newsidsa[3]);
-        newsid[3]=decodeURIComponent(newsidsa[4]);
-        newsid[4]=decodeURIComponent(newsidsa[5]);
-        newsid[5]=decodeURIComponent(newsidsa[6]);
-        if(decodeURIComponent(newsidsa[3])=="未住入"){
-            decodeURIComponent(newsidsa[3])=="未售";
-        }
-        document.getElementsByName("fcmessage").values(decodeURIComponent(newsidsa[3]));
-        document.getElementsByName("hstate").values(decodeURIComponent(newsidsa[3]));
-        document.getElementsByName("htype").values(decodeURIComponent(newsidsa[2]));
-        document.getElementsByName("hdirection").values(decodeURIComponent(newsidsa[1]));
-        document.getElementsByName("harea").values(decodeURIComponent(newsidsa[5]));
-       console.log("offset="+newsidsa);
-    }*/
-</script>
 <body>
 <h2 style="text-align: center">-------------------------------------基本信息------------------------------------</h2>
     <form class="layui-form layui-form-pane"  id="ddd" action="">
-        <div class="layui-form-item">
+
+       <!-- <div class="layui-form-item">
             <label class="layui-form-label">房产信息:</label>
             <div class="layui-input-block">
                 <input type="hidden" id="h_number" name="h_number" value="">
@@ -59,7 +28,27 @@
                 <input type="text" id="h_bulidingName" name="h_bulidingNamess" required  lay-verify="required" placeholder="请输入房产信息"
                        autocomplete="off" class="layui-input" style="width: 34%" readonly>
             </div>
+        </div>-->
+        <div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">房产信息</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="h_bulidingName" name="h_bulidingNamess" required  lay-verify="required" placeholder="请输入房产信息"
+                               autocomplete="off" class="layui-input"  readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">业主编号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="O_number" name="o_number" required  lay-verify="required" placeholder="暂无此业主" autocomplete="off" class="layui-input" readonly>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div>
         <div class="layui-inline">
         <div class="layui-form-item">
@@ -95,14 +84,22 @@
                 </div>
             </div>
         </div>
+
         <h2 style="text-align: center">-------------------------------------合同业主------------------------------------</h2>
         <div>
             <div class="layui-inline">
                 <div class="layui-form-item">
                     <label class="layui-form-label">合同编号:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="re_number"  required  lay-verify="required" placeholder="请输入合同编号" autocomplete="off" class="layui-input">
+                        <input type="text" name="re_number" id="htbh"  required  lay-verify="required"
+                               placeholder="" autocomplete="off" class="layui-input" readonly>
                     </div>
+                    <script>
+                        $.get("/ssm_wy/htbh",
+                            function(result, state) {
+                               $('#htbh').val(result.htbh);
+                            });
+                    </script>
                 </div>
             </div>
             <div class="layui-inline">
@@ -127,7 +124,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">付款方式:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="re_fkfs"  value="一次付清" required  lay-verify="required" placeholder="请输入付款方式" autocomplete="off" class="layui-input">
+                        <input type="text" name="re_fkfs"
+                               value="一次付清" required  lay-verify="required" placeholder="请输入付款方式" readonly autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
@@ -177,12 +175,9 @@
             </div>
         </div>
     </form>
-<button onclick="">666</button>
     <script>
         function sasa() {
             var state=$('#ddd').serializeJSON();
-            console.log("state")
-            console.log(state)
             return state;
         }
 

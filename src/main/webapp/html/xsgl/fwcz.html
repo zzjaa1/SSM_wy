@@ -223,6 +223,105 @@
                         });  }
     </script>
     <script>
+        layui.use('table', function () {
+            var table = layui.table;
+            //第一个实例
+            table.render({
+                elem: '#bzdemo'
+                , height: 312
+                , id: 'testdf'
+                , url: '/ssm_wy/queryweizi' //数据接口
+                , cols: [[ //表头
+                    /*  {field: 'h_number', title: '编号', width: '50%'},*/
+                    {field: 'mz', title: '房产名称', width: '100%'}
+                ]]
+            });
+            //监听行单击事件（单击事件为：rowDouble）
+            table.on('row(testdf)', function (obj) {
+                // console.log(obj.tr) //得到当前行元素对象
+
+                layui.use('table', function () {
+                    var table = layui.table;
+                    //第一个实例
+                    table.render({
+                        elem: '#demo2   ',
+                        id:'demo2'
+                        , height: 350
+                        , url: '/ssm_wy/queryStatePage' //数据接口
+                        , where: {
+                            'hBulidingname':obj.data.h_number
+                           // hNumber: obj.data.h_number
+                        },page:true
+                        //,toolbar: true
+                        // ,title: '基础数据表'
+                        //,totalRow: true
+                        , cols: [[ //表头
+                            {field: 'h_id', title: '房屋编号', width: 100, sort: true, fixed: 'left'}
+                            , {field: 'h_state', title: '房屋状态', width: 95, sort: true}
+                            , {field: 'h_bulidingName', title: '楼宇名称', width: 95}
+                            , {field: 'h_unitNumber', title: '单元号', width: 80}
+                            , {field: 'h_floor', title: '所属楼层', width: 100, sort: true}
+                            , {field: 'h_type', title: '所属户型', width: 100, sort: true}
+                            , {field: 'h_direction', title: '房屋朝向', width: 95}
+                            , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
+                            , {field: 'h_remarks', title: '备注', width: 70, sort: true}
+                            , {title: '操作', minWidth: 175, templet: function (value) {
+                                    var obj = JSON.stringify(value);
+                                    var checkStatus=table.checkStatus("idTest");
+                                    var rowvalue=checkStatus.date;
+                                    return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tk("+obj+")';>\n" +
+                                        "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                        "   </button>" +
+                                        "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
+                                        "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                        "  </button>";
+                                }
+                            }
+                        ]]
+                    });
+                });
+            });
+            $("#btuyzxx").click(function () {
+                query();
+            });
+            //查询
+            function query() {
+                var val = $("#selyz").find("option:selected").val();
+                console.log(val);
+                var gjname = $("#gjname").val();
+                table.reload('testdf', {
+                    url: '/ssm_wy/queryweizi'
+                    , where: {
+                        number: val,
+                        gjname: gjname
+                    } //设定异步数据接口的额外参数
+                });
+            }
+        });
+
+        function showTime(tempDate) {
+            var d = new Date(tempDate);
+            var year = d.getFullYear();
+            var month = d.getMonth();
+            month++;
+            var day = d.getDate();
+            var hours = d.getHours();
+
+            var minutes = d.getMinutes();
+            var seconds = d.getSeconds();
+            month = month < 10 ? "0" + month : month;
+            day = day < 10 ? "0" + day : day;
+            // hours = hours<10 ? "0"+hours:hours;
+            // minutes = minutes<10 ? "0"+minutes:minutes;
+            // seconds = seconds<10 ? "0"+seconds:seconds;
+
+
+            var time = year + "-" + month + "-" + day;
+            return time;
+        }
+
+    </script>
+    <script>
         //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
         layui.use('element', function(){
             var element = layui.element;
@@ -266,11 +365,12 @@
                             <option value="Re_card">证件号</option>
                             <option value="O_phone">手机号</option>
                         </select>
+                        <div style="height: 10px;"></div>
                         <div class="layui-input-inline">
-                            输入关键字:<input type="text" id="gjname"  class="layui-input" width="600px" height="80px" >
+                            <input type="text" id="gjname" class="layui-input" width="600px" height="80px" placeholder="输入关键字">
                         </div>
-                        <a class="layui-btn layui-btn-xs"  id="btuyzxx"><label>查询</label></a>
-                        <table id="bzdemo" lay-filter="test"></table>
+                        <button class="layui-btn layui-btn-normal" id="btuyzxx" >查询</button>
+                        <table id="bzdemo" lay-filter="testdf"></table>
                     </div>
                 </div>
             </div>
@@ -334,11 +434,13 @@
             <div class="layui-inline">
                 <input type="text" id="price" name="title" required lay-verify="required" placeholder="请输入能接受的价位" autocomplete="off" class="layui-input">
             </div>
-            <div class="layui-inline">
+            <div class="layui-inline" >
                 <button id="cxbutton" class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
             </div>
-            <table id="demo2" lay-filter="test" style="height: 100%">
+            <div  style="float: left;width: 1300px">
+            <table id="demo2" lay-filter="test" style="height: 85%;">
             </table>
+            </div>
         </div>
             <div class="layui-tab-item">
             </div>

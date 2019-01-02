@@ -136,7 +136,8 @@ public class XiaoQuController {
                                     objectMap.put("icon", "glyphicon glyphicon-share-alt");
                                     objectMap.put("tags", Arrays.asList(new String[]{
                                             objectMap.get("h_bulidingName").toString()}));
-                                    map5=iHousesService.queryHourse(objectMap.get("h_number").toString());
+                                    map5=iHousesService.queryHourses(objectMap.get("h_number").toString());
+                                    int i=0;
                                     for (Map<String, Object> map6 : map5) {
                                         if (null!=map6){
                                             map6.put("id",map6.get("h_number").toString());
@@ -149,7 +150,7 @@ public class XiaoQuController {
                                             map6.put("nodes", "");
                                         }
                                     }
-                                    objectMap.put("nodes",map5);
+                                        objectMap.put("nodes",map5);
                                 }
                             }
                             s.put("nodes",map4);

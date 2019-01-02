@@ -9,7 +9,12 @@ import java.util.Map;
 public interface RealEstateMapper {
     String addReal(RealEstate realEstate);
 
-    List<Map<String,Object>> querytj();
+    List<Map<String,Object>> querytj(String year);
+
+    int queryHtbh();
+
+    List<Map<String,Object>> queryRealEstatePage(RealEstate realEstate);
+//    List<Map<String,Object>> querytj();
 
     List<Map<String,Object>> queryxsetj(@Param("year") String year);
 

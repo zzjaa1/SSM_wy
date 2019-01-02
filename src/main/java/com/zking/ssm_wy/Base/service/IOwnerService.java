@@ -15,4 +15,7 @@ public interface IOwnerService {
 
     int deleteOwen(String O_number);
 
+    int maxNumber();
+
+    void addOwner(Owner owner);
 }

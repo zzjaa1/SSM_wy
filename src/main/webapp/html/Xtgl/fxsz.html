@@ -120,7 +120,7 @@
             ,toolbar: '#toolbarDemo'
             ,totalRow: true
             ,cols: [[ //表头
-                {type:'checkbox'},
+                {type:'checkbox',LAY_CHECKED:false},
                 {field: 'cn_id', title: 'ID', width:100, sort: true}
                 ,{field: 'cn_name', title: '费项名称', width:100, edit: 'text'}
                 ,{field: 'cn_type', title: '费项类型', width:100, edit: 'text'}
@@ -151,6 +151,7 @@
         $('#dels').on('click', function(){
             var checkStatus = table.checkStatus('demo')
                 ,data = checkStatus.data;
+
             $.ajax({
                 url:'/ssm_wy/basDict/delbasDictpl',
                 method: 'post',
@@ -167,7 +168,6 @@
             });
             //layer.alert(JSON.stringify(data));
         });
-
         $('#bc').on('click', function(){
             var checkStatus = table.checkStatus('demo')
                 ,data = checkStatus.data;

@@ -16,15 +16,16 @@ public class IRealEstateServiceImpl implements IRealEstateService{
     @Autowired
     private RealEstateMapper realEstateMapper;
 
+
     @Override
     public String addReal(RealEstate realEstate) {
         return realEstateMapper.addReal(realEstate);
     }
 
-    @Override
-    public List<Map<String, Object>> querytj() {
-        return realEstateMapper.querytj();
-    }
+//    @Override
+//    public List<Map<String, Object>> querytj() {
+//        return realEstateMapper.querytj();
+//    }
 
     @Override
     public List<Map<String, Object>> queryxsetj(String year) {
@@ -34,5 +35,20 @@ public class IRealEstateServiceImpl implements IRealEstateService{
     @Override
     public List<Map<String, Object>> queryxsetj2(String year, String x_number, String mouth) {
         return realEstateMapper.queryxsetj2(year,x_number,mouth);
+    }
+
+    @Override
+    public List<Map<String, Object>> querytj(String year) {
+        return realEstateMapper.querytj(year);
+    }
+
+    @Override
+    public int queryHtbh() {
+        return realEstateMapper.queryHtbh();
+    }
+
+    @Override
+    public List<Map<String, Object>> queryRealEstatePage(RealEstate realEstate) {
+        return realEstateMapper.queryRealEstatePage(realEstate);
     }
 }

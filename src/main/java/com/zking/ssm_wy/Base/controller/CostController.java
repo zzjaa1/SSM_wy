@@ -24,21 +24,29 @@ public class CostController {
     @RequestMapping("/queryCost")
     @ResponseBody
     public Map<String, Object> queryCost(String hNumber, HttpServletRequest request,int page,int limit){
+        System.out.println(page);
         PageBean pageBean =new PageBean();
         pageBean.setRows(limit);
         pageBean.setPage(page);
         pageBean.setRequest(request);
         List<Map<String, Object>> maps = iCostService.queryCostPage(hNumber,pageBean);
+        System.out.println(maps);
         for (Map<String, Object> map : maps) {
-            System.out.println(map);
+         /*   map.put("c_scfyzq_date",map.get("c_scfyzq_date").toString());*/
+            map.put("c_bcfyqq_date",map.get("c_bcfyqq_date").toString());
+            map.put("c_bcfyzq_date",map.get("c_bcfyzq_date").toString());
+            map.put("c_bcjfzq_date",map.get("c_bcjfzq_date").toString());
         }
-        Map<String,Object> map =new HashMap<>();
-        map.put("data",maps);
-        map.put("code",0);
-        map.put("msg","");
-        map.put("count",pageBean.getTotal());
+        Map<String,Object> map1 =new HashMap<>();
+//        for (Map<String, Object> mapss : maps) {
+//            System.out.println(mapss.toString());
+//        }
+        map1.put("data",maps);
+        map1.put("code",0);
+        map1.put("msg","");
+        map1.put("count",pageBean.getTotal());
 
-        return map;
+        return map1;
     }
 
     @ResponseBody
@@ -87,7 +95,6 @@ public class CostController {
             System.out.println(s);
             iCostService.Updacostate(Integer.parseInt(s));
         }
-
         Map<String,Object> map =new HashMap<>();
         map.put("success",true);
         map.put("msg","成功");

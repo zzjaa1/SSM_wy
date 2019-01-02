@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <head>
+
     <meta charset="UTF-8">
     <title>销售管理</title>
     <meta name="keywords" content="">
@@ -14,151 +16,219 @@
     <script type="text/javascript" src="/ssm_wy/layui/lay/modules/element.js"></script>
     <script type="text/javascript" src="/ssm_wy/js/jquery.serializejson.js"></script>
     <script type="text/javascript" src="/ssm_wy/layui/lay/modules/upload.js"></script>
+
+</head>
+<style type="text/css">
+    .layui-table-page {
+        position:fixed;
+    }
+</style>
     <!--树形-->
+    <div id="dd" style="display: none">
+        <input type="button" id="jt" style="display: none">
+       <table id="tabl"></table>
+        <script>
+            var checkStatus="";
+                layui.use('table', function () {
+                    var table = layui.table;
+                    //第一个实例
+                    table.render({
+                        elem: '#tabl'
+                        , height: 550
+                        , url: '/ssm_wy/queryOwner' //数据接口
+                        , where: {
+                            oname: ''
+                        },page:true
+                        ,id:'tabl'
+                        ,toolbar: true
+                        ,totalRow: true
+                        , cols: [[ //表头
+                            {type:'radio'},
+                            {field: 'o_number', title: '住户编号', width: '25%'},
+                            {field: 'o_name', title: '业主名', width: '15%'},
+                            {field: 'h_number', title: '房间编号', width: '15%'},
+                            {field: 'o_phone', title: '业主号码', width: '15%'},
+                            {field: 'o_jdata', title: '入住时间', width: '15%',
+                                templet: function (d) {
+                                    return showTime(d.o_jdata);
+                                }
+                            },
+                            {field: 'o_before', title: '预付金额', width: '15%'},
+                            {field: 'o_ownership', title: '住户类型', width: '15%'},
+                            {field: 'o_carder', title: '身份证号', width: '25%'}
+                        ]] });
+                 $('#jt').on('click', function() {
+                     checkStatus = table.checkStatus('tabl');
+                 });
+            });
+
+        </script>
+    </div>
     <script>
+        layui.use( 'layer', function() {
+            var layer = layui.layer
+                , $ = layui.jquery;
+        $("#btuquery").click(function(){
+            var val= $("#seltree").find("option:selected").val();
+            ff(val);
+            $("#demo1").find("li").remove()
+        });
+        });
         var data={};
         var data1={};
         var itemName=null;
 
-        layui.use(['tree', 'layer','table'], function(){
-            var layer = layui.layer
-                ,$ = layui.jquery;
-            var table=layui.table;
-            $.ajax({
-                url: '/ssm_wy/querytree',
-                type: 'post',
-                dataType: 'json',
-                data: {
-                },
-                success: function (status) {
-                    $.each(status.li, function(key, val) {
-                        data.name=val.name;
-                        data.id=val.id;
-                        data.children=val.children;
-                        console.log(data)
-                        layui.tree({
-                            elem: '#demo1' //指定元素
-                            ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
-                            ,click: function(item){ //点击节点回调
-                                //layer.msg('当前节名称：'+ item.id + '<br>全部参数：'+ JSON.stringify(item));
-
-                                table.render({
-                                    elem: '#demo'
-                                    , height: 400
-                                    , url: '/ssm_wy/queryBulidingNamePage' //数据接口
-                                    , where: {
-                                        'hBulidingname': item.id                                }
-                                    , page: true //开启分页
-                                    , cols: [[ //表头
-                                        {field: 'h_id', title: '房屋编号', width: 100, sort: true, fixed: 'left'}
-                                        , {field: 'h_number', title: '门牌编号', width: 90}
-                                        , {field: 'h_state', title: '房屋状态', width: 95, sort: true}
-                                        , {field: 'h_bulidingName', title: '楼宇名称', width: 95}
-                                        , {field: 'h_unitNumber', title: '单元号', width: 80}
-                                        , {field: 'h_floor', title: '所属楼层', width: 100, sort: true}
-                                        , {field: 'h_type', title: '所属户型', width: 100, sort: true}
-                                        , {field: 'h_direction', title: '房屋朝向', width: 95}
-                                        , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
-                                        , {field: 'price', title: '价格', width: 70, sort: true}
-                                        , {field: 'b_number', title: '楼宇编号', width: 95, sort: true}
-                                        /*, {title: '操作', minWidth: 175, templet: function (value) {
-                                                var obj = JSON.stringify(value);
-                                                return " <button class=\"layui-btn layui-btn-sm\" value='编辑' onclick='member_edit(" + obj + ")'>\n" +
-                                                    "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
-                                                    "   </button>" +
-                                                    "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
-                                                    "    <i class=\"layui-icon\">&#xe640;</i>\n" +
-                                                    "  </button>";
-                                            }
-                                        }*/
-                                    ]]
-                                });
-
-                                table.render({
-                                    elem: '#demo2'
-                                    , height: 400
-                                    ,id: 'idTest'
-                                    , url: '/ssm_wy/queryStatePage' //数据接口
-                                    , where: {
-                                        'hBulidingname': item.id
-                                    }
-                                    , page: true //开启分页
-                                    , cols: [[ //表头
-                                        {field: 'h_id', title: '房屋编号', width: 100, sort: true, fixed: 'left'}
-                                        , {field: 'h_state', title: '房屋状态', width: 95, sort: true}
-                                        , {field: 'h_bulidingName', title: '楼宇名称', width: 95}
-                                        , {field: 'h_unitNumber', title: '单元号', width: 80}
-                                        , {field: 'h_floor', title: '所属楼层', width: 100, sort: true}
-                                        , {field: 'h_type', title: '所属户型', width: 100, sort: true}
-                                        , {field: 'h_direction', title: '房屋朝向', width: 95}
-                                        , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
-                                        , {field: 'price', title: '价格', width: 70, sort: true}
-                                        , {title: '操作', minWidth: 175, templet: function (value) {
-                                                var obj = JSON.stringify(value);
-                                                var checkStatus=table.checkStatus("idTest");
-                                                var rowvalue=checkStatus.date;
-                                                return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tk("+obj+")';>\n" +
-                                                    "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
-                                                    "   </button>" +
-                                                    "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
-                                                    "    <i class=\"layui-icon\">&#xe640;</i>\n" +
-                                                    "  </button>";
-                                            }
+        function ff(id) {
+            layui.use(['tree', 'layer','table'], function(){
+                var layer = layui.layer
+                    ,$ = layui.jquery;
+                var table=layui.table;
+                $.ajax({
+                    url: '/ssm_wy/querytree',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        xNumber:id
+                    },
+                    success: function (status) {
+                        $.each(status.li, function(key, val) {
+                            data.name=val.name;
+                            data.id=val.id;
+                            data.children=val.children;
+                                    layui.tree({
+                                elem: '#demo1' //指定元素
+                                ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
+                                ,click: function(item){ //点击节点回调
+                                    //layer.msg('当前节名称：'+ item.id + '<br>全部参数：'+ JSON.stringify(item));
+                                    table.render({
+                                        elem: '#demos'
+                                        , height: 650
+                                        , url: '/ssm_wy/queryRealEstatePage' //数据接口
+                                        ,id: 'demos'
+                                        , where: {
                                         }
-                                    ]]
-                                });
-                            }
-                            ,nodes:
-                                [data
-                                ]
+                                        , page: true //开启分页
+                                        , cols: [[ //表头
+                                            {field: 're_number', title: '房产合同信息编号', width: 130, sort: true, fixed: 'left', sort: true}
+                                            , {field: 'Re_price', title: '合同金额', width: 90, sort: true}
+                                            , {field: 'Re_date', title: '合同日期', width: 160, sort: true}
+                                            , {field: 'O_name', title: '业主姓名', width: 95}
+                                          /*  , {field: 'Re_card', title: '身份证号', width: 80}*/
+                                            , {field: 'O_phone', title: '业主电话', width: 130}
+                                            , {field: 'h_type', title: '所属户型', width: 100}
+                                            , {field: 're_remarks', title: '备注', width: 95}
+                                        ]]
+                                    });
+
+                                    table.render({
+                                        elem: '#demo2'
+                                        , height: 400
+                                        ,id: 'idTest'
+                                        , url: '/ssm_wy/queryStatePage' //数据接口
+                                        , where: {
+                                            'hBulidingname': item.id
+                                        }
+                                        , page: true //开启分页
+                                        , cols: [[ //表头
+                                            {field: 'h_id', title: '房屋编号', width: 100, sort: true, fixed: 'left'}
+                                            , {field: 'h_state', title: '房屋状态', width: 95, sort: true}
+                                            , {field: 'h_bulidingName', title: '楼宇名称', width: 95}
+                                            , {field: 'h_unitNumber', title: '单元号', width: 80}
+                                            , {field: 'h_floor', title: '所属楼层', width: 100, sort: true}
+                                            , {field: 'h_type', title: '所属户型', width: 100, sort: true}
+                                            , {field: 'h_direction', title: '房屋朝向', width: 95}
+                                            , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
+                                            , {field: 'price', title: '价格', width: 70, sort: true}
+                                            , {title: '操作', minWidth: 175, templet: function (value) {
+                                                    var obj = JSON.stringify(value);
+                                                    var checkStatus=table.checkStatus("idTest");
+                                                    var rowvalue=checkStatus.date;
+                                                    return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tkyz("+obj+")';>\n" +
+                                                        "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                                        "   </button>" +
+                                                        "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
+                                                        "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                                        "  </button>";
+                                                }
+                                            }
+                                        ]]
+                                    });
+                                }
+                                ,nodes:
+                                    [data
+                                    ]
+                            });
                         });
+                    }
+                });
+                $("#cxbutton").click(function() {
+                    var price=document.getElementById("price");
+                    console.log(price.value)
+                    var htype=document.getElementById("setype");
+                    table.render({
+                        elem: '#demo2'
+                        , height: 400
+                        ,id: 'idTest'
+                        , url: '/ssm_wy/queryPricePage' //数据接口
+                        , where: {
+                            'price': price.value,'hType':htype.value
+                        }
+                        , page: true //开启分页
+                        , cols: [[ //表头
+                            {field: 'h_id', title: '房屋编号', width: 100, sort: true, fixed: 'left'}
+                            , {field: 'h_state', title: '房屋状态', width: 95, sort: true}
+                            , {field: 'h_bulidingName', title: '楼宇名称', width: 95}
+                            , {field: 'h_unitNumber', title: '单元号', width: 80}
+                            , {field: 'h_floor', title: '所属楼层', width: 100, sort: true}
+                            , {field: 'h_type', title: '所属户型', width: 100, sort: true}
+                            , {field: 'h_direction', title: '房屋朝向', width: 95}
+                            , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
+                            , {field: 'h_remarks', title: '备注', width: 70, sort: true}
+                            , {title: '操作', minWidth: 175, templet: function (value) {
+                                    var obj = JSON.stringify(value);
+                                    var checkStatus=table.checkStatus("idTest");
+                                    var rowvalue=checkStatus.date;
+                                    return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tkyz("+obj+")';>\n" +
+                                        "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                        "   </button>" +
+                                        "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
+                                        "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                        "  </button>";
+                                }
+                            }
+                        ]]
                     });
+                });
+                //30-50======================================================================================================
+            });
+        }
+
+        function tkyz(data) {
+            layer.open({
+                type: 1,
+                title: '',
+                maxmin: true,
+                shadeClose: true, //点击遮罩关闭层
+                shade: 1,   //遮罩
+                anim: 4,
+                area: ['600px', '400px'],
+                content: $('#dd'),
+                btn: ['选好了', '未有业主,跳过'],
+                success: function (layero, index) {
+                },
+                yes: function (index, layero) {
+                    $('#jt').click();
+                    var datas = checkStatus.data;
+                    layer.close(index);
+                    tk(data,datas)
+                }, btn2: function (index, layero) {
+                    layer.close(index);
+                    tk(data,"")
                 }
             });
-
-
-            $("#cxbutton").click(function() {
-                var price=document.getElementById("price");
-                var htype=document.getElementById("setype");
-                table.render({
-                    elem: '#demo2'
-                    , height: 400
-                    ,id: 'idTest'
-                    , url: '/ssm_wy/queryPricePage' //数据接口
-                    , where: {
-                        'price': price.value,'hType':htype.value
-                    }
-                    , page: true //开启分页
-                    , cols: [[ //表头
-                        {field: 'h_id', title: '房屋编号', width: 100, sort: true, fixed: 'left'}
-                        , {field: 'h_state', title: '房屋状态', width: 95, sort: true}
-                        , {field: 'h_bulidingName', title: '楼宇名称', width: 95}
-                        , {field: 'h_unitNumber', title: '单元号', width: 80}
-                        , {field: 'h_floor', title: '所属楼层', width: 100, sort: true}
-                        , {field: 'h_type', title: '所属户型', width: 100, sort: true}
-                        , {field: 'h_direction', title: '房屋朝向', width: 95}
-                        , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
-                        , {field: 'h_remarks', title: '备注', width: 70, sort: true}
-                        , {title: '操作', minWidth: 175, templet: function (value) {
-                                var obj = JSON.stringify(value);
-                                var checkStatus=table.checkStatus("idTest");
-                                var rowvalue=checkStatus.date;
-                                return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tk("+obj+")';>\n" +
-                                    "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
-                                    "   </button>" +
-                                    "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
-                                    "    <i class=\"layui-icon\">&#xe640;</i>\n" +
-                                    "  </button>";
-                            }
-                        }
-                    ]]
-                });
-            });
-
-            //30-50======================================================================================================
-
-        });
-        function tk(data) {
+            }
+var yzyz="";
+        function tk(data,datas) {
             var url="/ssm_wy/html/xsgl/gmht.html";
             layer.open({
                 type: 2,
@@ -174,16 +244,20 @@
                             var text = Object.entries(data)[i][1];
                             body.contents().find(id).val(text);
                         }
+                        if(datas!=''){
+                            body.contents().find('#o_name').val(datas[0].o_name);
+                            body.contents().find('#o_carder').val(datas[0].o_carder);
+                            body.contents().find('#o_phone').val(datas[0].o_phone);
+                            body.contents().find('#O_number').val(datas[0].o_number);
+                        }
                 }
                 ,btn: ['确定', '关闭']
                 ,yes: function(index, layero){
                     //按钮【按钮一】的回调
                     var iframeWin = window[layero.find('iframe')[0]['name']];
-                    //var sdata=body.contents().find('#ff').serializeJSON();
                     var sdata=iframeWin.sasa();
+                        yzyz=sdata;
                     var redate=new Date();
-                   // redate=sdata.re_date;
-                    console.log(redate)
                     $.ajax({
                         url: '/ssm_wy/addReall',
                         type: 'post',
@@ -192,27 +266,56 @@
                             ,"rephone":sdata.re_phone,"ophone":sdata.o_phone,"reremarks":sdata.re_remarks,"hnumber":sdata.h_number,"onumber":sdata.o_number
                         },
                         success: function (status) {
-                           if(status=="成功"){
-                               layer.msg('添加成功', function(){
-                                   layer.close(layer.index);
-                               });
-                           }
                         }
                     })
+                    layer.close(index);
+                    //layer.alert(data.suucess, {icon: 1});
+                    var body = layui.layer.getChildFrame('body', index);
+                    var number=body.contents().find('#O_number').val();
+                    if(number==""){
+                        xzyz();
+                    }
                 },btn2: function(index, layero){
-                    //按钮【按钮二】的回调
-                    layer.msg('我是按钮二', function(){
-                        //do something
-                    });
-                    // 开启该代码可禁止点击该按钮关闭
+                }
+            });
+        }
+
+        function xzyz() {
+            layer.open({
+                type: 2,
+                area:['500px','400px'],
+                title:"购买合同",
+                maxmin:true,
+                content: '/ssm_wy/html/xsgl/xzyz.html',//这里content是一个普通的String
+                success : function(layero, index){
+                    var body = layui.layer.getChildFrame('body', index);
+                    body.contents().find('#o_name').val(yzyz.o_name);
+                    body.contents().find('#o_carder').val(yzyz.re_card);
+                    body.contents().find('#o_phone').val(yzyz.o_phone);
+                    body.contents().find('#O_number').val(yzyz.o_number);
+                }
+                ,btn: ['确定']
+                ,yes: function(index, layero){
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    var ssdata=iframeWin.sasa();
+                    $.ajax({
+                        url: '/ssm_wy/addOwner',
+                        type: 'post',
+                        dataType: 'json',
+                        data: ssdata,
+                        success: function (status) {
+                           layer.alert('添加成功', {icon: 1});
+                        }
+                    })
+                    $('#dd').css('display','none');
+                    layer.close(index);
                 }
             });
         }
     </script>
     <script>
     function sa(a,b) {
-        console.log(a+"--"+b);
-                        layui.table.render({
+          layui.table.render({
                         elem: '#demo2'
                         , height: 400
                         ,id: 'idTest'
@@ -233,17 +336,107 @@
                         , {field: 'h_remarks', title: '备注', width: 70, sort: true}
                         , {title: '操作', minWidth: 175, templet: function (value) {
                         var obj = JSON.stringify(value);
-                        return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tk("+obj+")';>\n" +
+                        return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tkyz("+obj+")';>\n" +
                         "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
-                        "   </button>" +
-                        "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
-                        "    <i class=\"layui-icon\">&#xe640;</i>\n" +
-                        "  </button>";
+                        "   </button>";
                         }
                         }
                         ]]
                         });  }
     </script>
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+            //第一个实例
+            table.render({
+                elem: '#bzdemo'
+                , height: 312
+                , id: 'testdf'
+                , url: '/ssm_wy/queryweizi' //数据接口
+                , cols: [[ //表头
+                    /*  {field: 'h_number', title: '编号', width: '50%'},*/
+                    {field: 'mz', title: '房产名称', width: '100%'}
+                ]]
+            });
+            //监听行单击事件（单击事件为：rowDouble）
+            table.on('row(testdf)', function (obj) {
+                // console.log(obj.tr) //得到当前行元素对象
+                layui.use('table', function () {
+                    var table = layui.table;
+                    //第一个实例
+                    table.render({
+                        elem: '#demo',
+                        id:'demo'
+                        , height: 350
+                        , url: '/ssm_wy/queryBulidingNamePage' //数据接口
+                        , where: {
+                            'hBulidingname': obj.data.h_number
+                        },page:true
+                        //,toolbar: true
+                        // ,title: '基础数据表'
+                        //,totalRow: true
+                        , cols: [[ //表头
+                            {field: 'h_id', title: '房屋编号', width: 100, sort: true, fixed: 'left'}
+                            , {field: 'h_number', title: '门牌编号', width: 90}
+                            , {field: 'h_state', title: '房屋状态', width: 95, sort: true}
+                            , {field: 'h_bulidingName', title: '楼宇名称', width: 95}
+                            , {field: 'h_unitNumber', title: '单元号', width: 80}
+                            , {field: 'h_floor', title: '所属楼层', width: 100, sort: true}
+                            , {field: 'h_type', title: '所属户型', width: 100, sort: true}
+                            , {field: 'h_direction', title: '房屋朝向', width: 95}
+                            , {field: 'h_area', title: '房屋面积', width: 100, sort: true}
+                            , {field: 'price', title: '价格', width: 70, sort: true}
+                            , {field: 'b_number', title: '楼宇编号', width: 95, sort: true}
+                        ]]
+                    });
+                });
+            });
+
+            $("#btuyzxx").click(function () {
+                query();
+            });
+            //查询
+            function query() {
+                var val = $("#selyz").find("option:selected").val();
+                console.log(val);
+                var gjname = $("#gjname").val();
+                table.reload('testdf', {
+                    url: '/ssm_wy/queryweizi'
+                    , where: {
+                        number: val,
+                        gjname: gjname
+                    } //设定异步数据接口的额外参数
+                });
+            }
+        });
+
+
+
+        function showTime(tempDate) {
+            var d = new Date(tempDate);
+            var year = d.getFullYear();
+            var month = d.getMonth();
+            month++;
+            var day = d.getDate();
+            var hours = d.getHours();
+
+            var minutes = d.getMinutes();
+            var seconds = d.getSeconds();
+            month = month < 10 ? "0" + month : month;
+            day = day < 10 ? "0" + day : day;
+            // hours = hours<10 ? "0"+hours:hours;
+            // minutes = minutes<10 ? "0"+minutes:minutes;
+            // seconds = seconds<10 ? "0"+seconds:seconds;
+
+
+            var time = year + "-" + month + "-" + day;
+            return time;
+        }
+
+
+
+    </script>
+
     <script>
         //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
         layui.use('element', function(){
@@ -258,7 +451,7 @@
         <div class="con_left_head">
             <em><img src="../../images/xql.png" alt=""></em>小区信息
         </div>
-        <div class="con_box">
+        <div class="con_box" style="height: 500px">
             <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
                 <ul class="layui-tab-title">
                     <li class="layui-this">简洁模式</li>
@@ -267,10 +460,19 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         <div class="layui-input-inline">
+                            <script>
+                                $.get("/ssm_wy/selectXiaoqu",
+                                    function(result, state) {
+                                        var names=result.data;
+                                        for(var i = 0;i<names.length;i++) {
+                                            $("#seltree").append(new Option(names[i].x_buliding,names[i].x_number));
+                                        }
+                                    });
+                            </script>
                             <select name="modules" id="seltree" lay-verify="required" lay-search="" style="width: 150px">
                                 <option value="">请选择</option>
-                                <option value="XQ4">浪琴湾小区</option>
-                                <option value="XQ5">浪琴湾小区2</option>
+                                <!--<option value="XQ4">浪琴湾小区</option>-->
+                                <!--<option value="XQ5">浪琴湾小区2</option>-->
                             </select>
                             <a class="layui-btn layui-btn-xs"  id="btuquery"><label>查询</label></a>
                         </div>
@@ -288,11 +490,12 @@
                             <option value="Re_card">证件号</option>
                             <option value="O_phone">手机号</option>
                         </select>
+                        <div style="height: 10px;"></div>
                         <div class="layui-input-inline">
-                            输入关键字:<input type="text" id="gjname"  class="layui-input" width="600px" height="80px" >
+                            <input type="text" id="gjname" class="layui-input" width="600px" height="80px" placeholder="输入关键字">
                         </div>
-                        <a class="layui-btn layui-btn-xs"  id="btuyzxx"><label>查询</label></a>
-                        <table id="bzdemo" lay-filter="test"></table>
+                        <button class="layui-btn layui-btn-normal" id="btuyzxx" >查询</button>
+                        <table id="bzdemo" lay-filter="testdf" ></table>
                     </div>
                 </div>
             </div>
@@ -302,7 +505,6 @@
     <!--表格-->
     <table class="layui-hide" id="test1" lay-filter="test" ></table>
     <!--<table class="layui-hide" id="test1" lay-filter="test"></table>-->
-<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
 <script>
     /*报修列表切换*/
     $('.txs').click(function () {
@@ -332,16 +534,13 @@
 
 <div class="layui-tab">
     <ul class="layui-tab-title">
-        <li class="layui-this">小区信息</li>
+        <li class="layui-this">合同信息</li>
         <li>购买房屋</li>
-        <li>权限分配</li>
-        <li>商品管理</li>
-        <li>订单管理</li>
     </ul>
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
-            <div >
-                <table id="demo" lay-table="test" style="height: 100%" >
+            <div style="float: left;width: 1300px">
+                <table id="demos" lay-table="test"  >
                 </table>
             </div>
         </div>
@@ -366,8 +565,10 @@
             <div class="layui-inline">
                 <button id="cxbutton" class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
             </div>
+            <div style="float: left;width: 1300px">
             <table id="demo2" lay-filter="test" style="height: 100%">
             </table>
+            </div>
         </div>
             <div class="layui-tab-item">
             </div>

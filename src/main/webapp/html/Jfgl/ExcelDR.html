@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" href="/ssm_wy/layui/css/layui.css" media="all">
+<script src="/ssm_wy/layui/layui.js"></script>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>拖拽上传</legend>
+</fieldset>
+<div class="layui-inline" style="padding-left: 350px">
+<div class="layui-upload-drag" id="test10">
+    <i class="layui-icon"></i>
+    <p>点击上传，或将文件拖拽到此处</p>
+</div>
+</div>
+<table id="demo"></table>
+<div id="demo20"></div>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: 250
+            ,id:'demo'
+            ,data:arr
+            ,title: '预计账单'
+            ,cellMinWidth: 80
+            ,cols: [[ //表头
+                {field: 'c_fc', title: '房屋信息', width: '30%'},
+                {field: 'cn_suer', title: '业主', width: '30%'},
+                {field: 'cn_name', title: '费用名称',width:'15%'},
+                {field: 'c_real', title: '实际用量',width:'15%'},
+                {field: 'c_yjfy', title: '费用金额',width:'15%'},
+                {field: 'c_scfyzq_date', title: '上次费用止期', width: '15%'},
+                { field: 'c_bcfyqq_date', title: '本次费用起期',width: '15%'},
+                {field: 'c_bcfyzq_date', title: '本次费用止期',width: '15%'},
+                {field: 'c_bcjfzq_date', title: '本次缴费止期', width: '15%'},
+                {field: 'cn_cycle', title: '费用周期', width: '15%'},
+            ]]
+        });    });
+var arr='';
+    layui.use(['element','upload'], function() {
+        element = layui.element;
+        upload = layui.upload;
+
+        //指定允许上传的文件类型
+        upload.render({
+            elem: '#test10'
+            ,url:'/ssm_wy/ExcelDR'
+            ,accept: 'file' //普通文件
+            ,multiple: true
+            ,done: function(res){
+                var han=res.han;
+                var sbhan=res.sbhan;
+                if(sbhan==0){
+                    layer.alert('成功,生成账单数：'+han, {icon: 1});
+                }else{
+                    layer.confirm('失败,共计冲突行：'+sbhan+'是否查看', {icon: 3, title:'提示'}, function(index){
+                        sjy=res.sbsjy;
+                        sj=res.sbsj;
+                        console.log(sj);
+                        console.log(sjy);
+                        cth();
+                    });
+                }
+
+
+
+                arr=res.sbsj;
+                layui.use(['laypage', 'layer'], function(){
+                    var laypage = layui.laypage
+                        ,layer = layui.layer;
+                    var data =arr;
+                    laypage.render({
+                        elem: 'demo20'
+                        ,count: data.length
+                        ,limit: 10
+                        ,limits: [5,10,20,50,100,500,1000]
+                        ,jump: function(obj){
+                            //模拟渲染
+                            var thisData = data.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
+                            console.log(thisData);
+                            layui.use('table', function(){
+                                var table = layui.table;
+                                table.reload('demo', {
+                                    data:thisData
+                                });
+                            });
+                        }
+                    });
+                });
+            }
+        });
+    });
+
+    function  cth() {
+        layer.open({
+            type: 2,
+            title: '替换账单',
+            maxmin: true,
+            shadeClose:true, //点击遮罩关闭层
+            shade: 1 ,   //遮罩
+            anim:4,
+            area : ['600px' , '400px'],
+            content:'/ssm_wy/html/Jfgl/thzhangdan.html',
+            btn:['保存','取消'],
+            success: function (layero, index) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                iframeWin.ssss(sjy,sj);
+            },
+            yes:function(index,layero){
+                layer.closeAll();
+            } ,btn2: function(index, layero){
+                layer.closeAll();
+            }
+
+        });
+    }
+</script>
+</body>
+</html>

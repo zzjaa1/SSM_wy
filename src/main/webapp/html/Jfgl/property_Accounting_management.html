@@ -18,7 +18,8 @@
          var layer = layui.layer
              , $ = layui.jquery;
          $("#btuquery").click(function(){
-             var val=   $("#seltree").find("option:selected").val();
+             var val= $("#seltree").find("option:selected").val();
+             console.log(val);
              ff(val);
               $("#demo1").find("li").remove()
          });
@@ -43,57 +44,55 @@
                             layui.tree({
                                 elem: '#demo1' //指定元素
                                 ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
-                                // ,id:'demo1'
                                 ,click: function(item){ //点击节点回调
-                                    // layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
-                                    layer.msg(item.id);
-                                    $("#fybh").val(item.id)
+                                    if(item.parant!=undefined){
+                                        $('#lab').html(item.parant);
+                                    }else {
+                                        $('#lab').html(item.name);
+                                    }
+                                    $("#fybh").text(item.id)
                                     layui.use('table', function(){
                                         var table = layui.table;
                                         //第一个实例
                                         table.render({
                                             elem: '#testbiao'
-                                            ,height: 350
+                                            ,height: 500
                                             ,url: '/ssm_wy/Cost/queryCost' //数据接口
                                             ,where:{
                                                 hNumber:item.id
-                                            },page:true,
+                                            },
+                                           totalRow: true ,
+                                            page:true,
                                             id:'testbiao'
-                                            //,toolbar: true
-                                            // ,title: '基础数据表'
-                                            //,totalRow: true
+                                            ,title: '账单'
                                             ,cols: [[ //表头
                                                 {type: 'checkbox', fixed: 'left'},
-                                                {field: 'c_fc', title: '房屋信息', width: '30%'},
-                                                {field: 'cn_name', title: '费用名称',width:'15%'},
-                                                {field: 'c_real', title: '实际用量',width:'15%'},
-                                                {field: 'c_yjfy', title: '费用金额',width:'15%'},
-                                                {field: 'c_scfyzq_date', title: '上次费用止期',
+                                                {field: 'c_fc', title: '房屋信息', width: '20%'},
+                                                {field: 'cn_name', title: '费用名称',width:'10%'},
+                                                {field: 'c_real', title: '实际用量', sort: true, width:'10%'},
+                                                {field: 'c_yjfy', title: '费用金额', sort: true, width:'10%'},
+                                                /*{field: 'c_scfyzq_date', title: '上次费用止期', sort: true,
                                                     templet:function (d) {
                                                         return showTime(d.c_scfyzq_date);
                                                     }, width: '15%'
+                                                },*/
+                                                {
+                                                    field: 'c_bcfyqq_date', title: '本次费用起期', sort: true, width: '15%'
                                                 },
                                                 {
-                                                    field: 'c_bcfyqq_date', title: '本次费用起期',
-                                                    templet: function (d) {
-                                                        return showTime(d.c_scfyzq_date);
-                                                    }, width: '15%'
-                                                },
-                                                {
-                                                    field: 'c_bcfyzq_date', title: '本次费用止期',
+                                                    field: 'c_bcfyzq_date', sort: true,  title: '本次费用止期',
                                                     templet: function (d) {
                                                         return showTime(d.c_bcfyzq_date);
                                                     }, width: '15%'
                                                 },
                                                 {
-                                                    field: 'c_bcjfzq_date', title: '本次缴费止期',
+                                                    field: 'c_bcjfzq_date', title: '本次缴费止期', sort: true,
                                                     templet: function (d) {
                                                         return showTime(d.c_bcjfzq_date);
                                                     }, width: '15%'
                                                 },
-                                                {field: 'cn_cycle', title: '费用周期', width: '15%'},
-                                                {
-                                                    field: '', title: '操作', sort: true, templet: function (value) {
+                                                {field: 'cn_cycle', title: '费用周期', width: '10%'},
+                                                {field: '', title: '操作',templet: function (value) {
                                                         var obj = JSON.stringify(value);
                                                         return " <button class=\"layui-btn layui-btn-sm\" value='编辑' onclick='member_edit(" + obj + ")'>\n" +
                                                             "   <i class=\"layui-icon\">&#xe642;</i>\n" +
@@ -337,95 +336,34 @@
                     } else {
                         url = '/ssm_wy/Cost/UpdateCost';
                     }
-                    var body = layer.getChildFrame('body', index);  // body.html() body里面的内容
-                    var iframeWindow = window['layui-layer-iframe' + index]
-                        , submitID = 'LAY-user-front-submit'
-                        , submit = layero.find('iframe').contents().find('#' + submitID);
-                    //监听提交
-                    iframeWindow.layui.form.on('submit(' + submitID + ')', function (data) {
-                        var field = data.field; //获取提交的字段
-                        console.log(field);
-                        $.ajax({
-                           url: url,
-                            method: 'post',
-                            data: field,
-                            dataType: 'JSON',
-                            success: function (res) {
-                               // $('#tj').click();
-                                layer.alert(data.suucess, {icon: 1});
-                                location.reload();
-                            },
-                            error: function (data) {
-                            }
-                        });
-
-                    });
-                    submit.trigger('click');
-                }
-            });
-        }
-
-
-        /**
-         * 获取对象|键值对数组的键数组
-         *
-         * @param object
-         * @returns
-         */
-        function getObjectKeys(object) {
-            var keys = [];
-            for (var property in object)
-                keys.push(property);
-            return keys;
-        }
-
-        /**
-         * 获取对象|键值对数组的值数组
-         *
-         * @param object
-         * @returns
-         */
-        function getObjectValues(object) {
-            var values = [];
-            for (var property in object)
-                values.push(object[property]);
-            return values;
-        }
-
-        /**
-         * 判断表单数据isNull是否成立
-         * @param row
-         * @param strs 不给予判断的列数组
-         * @return b true|false
-         */
-        function isNull(row, strs) {
-            // row所有键--
-            var rows = getObjectKeys(row);
-            // 及所有值--
-            var values = getObjectValues(row);
-            var b = true;
-            var b2 = true;
-            for (var i = 0; i < values.length; i++) {
-                var obj = values[i];
-                //如果有值为空
-                if (typeof obj == "undefined" || obj == null || obj == "" || obj == "请输入") {
-                    //判断是否属于不需要判断的
-                    if (null != strs) {
-                        for (var s = 0; s < strs.length; s++) {
-                            if (strs[s] == rows[i]) {
-                                b2 = false;
-                            }
+                    var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
+                    var ss = iframeWin.s().serializeJSON();
+                    console.log(ss)
+                    // var companyId=iframeWin.document.getElementById("companyId").value;
+                    // console.log(companyId)
+                    // var grade=iframeWin.document.getElementById("grade").value;
+                    // console.log(grade)
+                    $.ajax({
+                        url: url,
+                        method: 'post',
+                        data: ss,
+                        dataType: 'JSON',
+                        success: function (res) {
+                            // $('#tj').click();
+                            layer.alert(data.suucess, {icon: 1});
+                            location.reload();
+                        },
+                        error: function (data) {
                         }
-                    }
-                    //不是属于！中的才验证
-                    if (b2) {
-                        b = false;
-                        break;
-                    }
-                    b2 = true;
+                    });
+                    // body.contents().find('#tj').click();
+                    layer.alert('ccc', {icon: 1});
+                    layer.close(index);
+                }, btn2: function (index, layero) {
+                    layer.close(index);
                 }
-            }
-            return b;
+
+            });
         }
 
     </script>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
+<script type="text/javascript" src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+<script src="/ssm_wy/js/jquery.serializejson.js"></script>
+<body>
+    <form class="layui-form" id="ff" method="post" >
+        <input type="hidden" id="cn_id" name="cnId">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">业主编号：</label>
+            <div class="layui-input-block">
+                <input id="o_number" type="text" name="onumber" required  lay-verify="required" style="width: 200px"
+                       placeholder="请输入费用名称" readonly autocomplete="off" class="layui-input">
+            </div>
+            <script>
+                $.get("/ssm_wy/maxNumber",
+                    function(result, state) {
+                        var names=result.max;
+                       $('#o_number').val(names);
+                    });
+                function sasa() {
+                    var state=$('#ff').serializeJSON();
+                    return state;
+                }
+            </script>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">业主名称：</label>
+            <!--  <input type="hidden" id="cn_type">-->
+            <div class="layui-input-inline" id="fylx">
+                <input id="o_name" type="text" name="oname" required  lay-verify="required" style="width: 200px"
+                       placeholder="请输入业主名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系电话：</label>
+            <div class="layui-input-block" style="width: 200px">
+                <input type="text" id="o_phone" name="ophone" required  lay-verify="required" style="width: 200px"
+                       placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">身份证：</label>
+            <div class="layui-input-block">
+                <input type="text" id="o_carder" name="ocarder" required  lay-verify="required" style="width: 200px"
+                       placeholder="请输入身份证" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">存款：</label>
+            <div class="layui-input-block">
+                <input type="text" id="o_before" name="obefore" required  lay-verify="required" style="width: 200px"
+                       placeholder="请输入存款" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="display: none" >
+            <div class="layui-input-block">
+                <button class="layui-btn tj" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" id="cz" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

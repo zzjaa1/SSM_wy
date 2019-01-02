@@ -9,6 +9,8 @@ import java.util.Map;
 public interface IHousesService {
     List<Map<String,Object>> queryHourse(String number);
 
+    List<Map<String,Object>> queryHourses(String number);
+
     List<Map<String,Object>> queryBulidingNamePage(String bulidingName,PageBean pd);
 
     List<Map<String,Object>> queryStatePage(String state,PageBean pd);
@@ -23,10 +25,12 @@ public interface IHousesService {
 
     int updateByPrimaryKeySelective(Houses record);
 
-    void UpdateState(String hun);
+    void UpdateState(String hun,String rz);
 
     List<Map<String,Object>> queryPricePage(Float price,String hState,PageBean pd);
 
     List<Map<String,Object>> queryPriceScopePage(Float price,Float price2,PageBean pd);
+
+    List<Map<String,Object>> queryCfcCost();
 
 }

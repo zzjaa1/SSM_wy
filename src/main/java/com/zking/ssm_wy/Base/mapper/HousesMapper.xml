@@ -37,10 +37,10 @@
     SELECT * FROM houses WHERE h_number like #{bulidingName} AND h_state="未入住"
   </select>
   <select id="UpdateState">
-    UPDATE houses SET zt='已售' AND h_state='已入住' WHERE h_number=#{hun,jdbcType=VARCHAR}
+    UPDATE houses SET zt='已售',h_state=#{rz} WHERE h_number=#{hun,jdbcType=VARCHAR}
   </select>
   <select id="queryPricePage" resultType="map">
-    SELECT * FROM houses WHERE zt="未售"
+    SELECT * FROM houses WHERE price=#{price} AND zt="未售"
     <if test="null!=hState and ''!=hState">
     AND h_type=#{hState}
     </if>
@@ -54,6 +54,27 @@
   </select>
   <select id="queryPriceScopePage" resultType="map">
     SELECT * FROM houses WHERE price>#{price} AND price &lt; #{price2}  and  zt="未售"
+  </select>
+    <select id="queryHourses" resultType="map">
+                 SELECT re.o_name,h.* FROM houses h
+                 LEFT JOIN `real_estate` re
+                 ON h.h_number=re.h_number
+                 WHERE h.h_state='已入住'
+                 AND h.b_number =#{number}
+                 GROUP BY h.h_number
+    </select>
+  <select id="queryCfcCost" resultType="map">
+    SELECT s.h_number,CONCAT(xq.x_buliding,'-',b.b_buliding,'-',dy.h_bulidingName,'-',s.h_bulidingName) AS c_fc ,s.h_bulidingName,s.h_number FROM xiaoqu xq
+LEFT JOIN buliding b
+ON xq.x_number = b.x_number
+LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NOT NULL) dy
+ON b.b_number = dy.b_number
+LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NULL) s
+ON dy.h_number=s.b_number
+LEFT JOIN real_estate rel
+ON rel.h_number=s.h_number
+WHERE s.h_state='已入住'
+GROUP BY s.h_number
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from houses

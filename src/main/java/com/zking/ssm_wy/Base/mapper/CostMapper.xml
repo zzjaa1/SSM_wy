@@ -58,10 +58,57 @@
       </if>
   </select>
     <select id="queryrq" resultType="map">
-      SELECT * FROM `cost` WHERE  #{qq} &lt; c_bcfyzq_date AND c_bcfyqq_date &lt;  #{qq}
-      OR  #{zq}   &lt;  c_bcfyzq_date AND c_bcfyqq_date &lt;  #{zq}
+      SELECT * FROM `cost` WHERE  #{qq} &lt;= c_bcfyzq_date AND c_bcfyqq_date &lt;=  #{qq}
+      OR  #{zq}   &lt;=  c_bcfyzq_date AND c_bcfyqq_date &lt;=  #{zq}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <select id="MaxCostNumber" resultType="int">
+    SELECT max(c_id) FROM cost
+  </select>
+  <select id="InsetsCost">
+    INSERT INTO `cost` (c_fc, c_user,
+     c_dwjg, c_yjfy,
+    c_bcfyqq_date, c_bcfyzq_date, c_bcjfzq_date,
+    c_costName, c_real, c_remarks,
+    h_number, cn_id,c_number) VALUES
+    <foreach collection="list" item="item" separator=",">
+      (
+      #{item.c_fc },
+      #{item.o_name},
+      #{item.c_dwjg},
+      #{item.c_yjfy},
+      #{item.c_bcfyqq_date},
+      #{item.c_bcfyzq_date},
+      #{item.c_bcjfzq_date},
+      #{item.c_costName},
+      #{item.c_real},
+      #{item.c_remarks},
+      #{item.h_number},
+      #{item.cn_id},
+      #{item.c_number}
+      )
+    </foreach>
+
+  </select>
+  <select id="updateth">
+    <foreach collection="list" item="item">
+    UPDATE cost set c_yjfy=#{item.c_yjfy},c_bcjfzq_date=#{item.c_bcjfzq_date},c_bcfyqq_date=#{item.c_bcfyqq_date},c_bcfyzq_date=#{item.c_bcfyzq_date},state=0 WHERE c_id=#{item.c_id};
+    </foreach>
+  </select>
+  <select id="queryJfCost" resultType="map">
+    SELECT * FROM cost WHERE c_number in (
+    <trim  suffixOverrides="," >
+    <foreach collection="list" item="item">
+      #{item.c_number},
+    </foreach>
+     </trim>
+    )
+  </select>
+  <select id="UpdateJsDD">
+    <foreach collection="list" item="item">
+      UPDATE cost set state='1',c_remarks=#{item.c_remarks} WHERE c_number=#{item.c_number};
+    </foreach>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from cost
     where c_id = #{cId,jdbcType=INTEGER}
   </delete>
@@ -69,12 +116,12 @@
     DELETE FROM cost WHERE c_id=#{cId}
   </delete>
   <insert id="insert" parameterType="com.zking.ssm_wy.Base.model.Cost" >
-    insert into cost (c_id, c_fc, c_user, 
+    insert into cost (c_fc, c_user,
       c_jfdw, c_dwjg, c_yjfy, c_scfyzq_date, 
       c_bcfyqq_date, c_bcfyzq_date, c_bcjfzq_date, 
-      c_costName, c_real, "c_ remarks", 
+      c_costName, c_real, c_remarks,
       h_number, cn_id)
-    values (#{cId,jdbcType=INTEGER}, #{cFc,jdbcType=VARCHAR}, #{cUser,jdbcType=VARCHAR}, 
+    values (#{cFc,jdbcType=VARCHAR}, #{cUser,jdbcType=VARCHAR},
       #{cJfdw,jdbcType=REAL}, #{cDwjg,jdbcType=REAL}, #{cYjfy,jdbcType=REAL}, #{cScfyzqDate,jdbcType=DATE}, 
       #{cBcfyqqDate,jdbcType=DATE}, #{cBcfyzqDate,jdbcType=DATE}, #{cBcjfzqDate,jdbcType=DATE}, 
       #{cCostname,jdbcType=VARCHAR}, #{cReal,jdbcType=INTEGER}, #{cRemarks,jdbcType=VARCHAR}, 
@@ -178,10 +225,10 @@
     </trim>
   </insert>
   <insert id="insertCost" parameterType="com.zking.ssm_wy.Base.model.Cost">
-   INSERT INTO cost (c_fc,c_user,c_jfdw,c_dwjg,c_yjfy,c_scfyzq_date,c_bcfyqq_date,c_bcfyzq_date,c_bcjfzq_date,c_costName,c_real,c_remarks,h_number,cn_id)
+   INSERT INTO cost (c_fc,c_user,c_jfdw,c_dwjg,c_yjfy,c_scfyzq_date,c_bcfyqq_date,c_bcfyzq_date,c_bcjfzq_date,c_costName,c_real,c_remarks,h_number,cn_id,c_number)
 VALUES(#{cFc},#{cUser},#{cJfdw},#{cDwjg},#{cYjfy},
 #{cScfyzqDate},#{cBcfyqqDate}, #{cBcfyzqDate},#{cBcjfzqDate},
-#{cCostname},#{cReal},#{cRemarks},#{hNumber},#{cnId}) ;
+#{cCostname},#{cReal},#{cRemarks},#{hNumber},#{cnId},#{cNumber}) ;
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm_wy.Base.model.Cost" >
     update cost

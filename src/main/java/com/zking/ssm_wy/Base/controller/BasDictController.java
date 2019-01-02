@@ -6,6 +6,7 @@ import com.zking.ssm_wy.Base.model.CostName;
 import com.zking.ssm_wy.Base.service.IbasDictService;
 import com.zking.ssm_wy.Base.service.IcostnameService;
 import com.zking.ssm_wy.Base.util.PageBean;
+import com.zking.ssm_wy.annotation.SystemControllerLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,9 @@ public class BasDictController {
 
     @RequestMapping("/querybasDict")
     @ResponseBody
+
+    //日志注解Controller
+    @SystemControllerLog(description = "查询费项")
     public Map<String,Object> query(basDict basdict){
         Map<String,Object> result=new HashMap<>();
         List<Map<String,Object>> li=ibasDictService.querybasDict(basdict);
@@ -34,6 +38,7 @@ public class BasDictController {
 
     @RequestMapping("/delbasDict")
     @ResponseBody
+    @SystemControllerLog(description = "删除费项")
     public Map<String,Object> delbasDict(basDict basdict){
         Map<String,Object> result=new HashMap<>();
         int i = ibasDictService.deleteByPrimaryKey(basdict.getDictId());
@@ -47,6 +52,7 @@ public class BasDictController {
 
     @RequestMapping("/addbasDict")
     @ResponseBody
+    @SystemControllerLog(description = "添加费项")
     public Map<String,Object> addbasDict(basDict basdict){
         Map<String,Object> result=new HashMap<>();
         int i = ibasDictService.insertSelective(basdict);
@@ -59,6 +65,7 @@ public class BasDictController {
     }
     @RequestMapping("/updbasDict")
     @ResponseBody
+    @SystemControllerLog(description = "修改费项")
     public Map<String,Object> updbasDict(basDict basdict){
         Map<String,Object> result=new HashMap<>();
         int i = ibasDictService.updateByPrimaryKeySelective(basdict);

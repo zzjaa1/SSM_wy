@@ -23,21 +23,35 @@
     </sql>
   <select id="addReal" resultType="String" parameterType="com.zking.ssm_wy.Base.model.RealEstate">
     INSERT INTO real_estate (
-    re_id,re_number,Re_price,Re_date,Re_fkfs,O_name,Re_card,Re_phone,O_phone,re_remarks,h_number,o_number
+    re_number,Re_price,Re_date,Re_fkfs,O_name,Re_card,Re_phone,O_phone,re_remarks,h_number,o_number
     )
     VALUES
-    (#{reid},#{renumber},#{reprice},#{redate},#{refkfs},#{oname},
+    (#{renumber},#{reprice},#{redate},#{refkfs},#{oname},
     #{recard},#{rephone},#{ophone},#{reremarks},#{hnumber},#{onumber})
   </select>
     <select id="querytj" resultType="map">
-      SELECT xq.x_number,COUNT(b.b_buliding)b_buliding,xq.x_mj,x_buliding FROM xiaoqu xq
-      LEFT JOIN buliding b
-      ON xq.x_number = b.x_number
-      LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NOT NULL) dy
-      ON b.b_number = dy.b_number
-      LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NULL) s
-      ON dy.h_number=s.b_number  GROUP BY x_buliding
+      SELECT DATE_FORMAT(Re_date,'%Y-%m')name,SUM(Re_price)value,COUNT(h_type)h_type FROM real_estate rel,houses h
+      WHERE rel.h_number=h.h_number  AND  DATE_FORMAT(Re_date,'%Y')
+   <if test="null!=year and ''!=year">
+     AND  DATE_FORMAT(Re_date,'%Y') LIKE CONCAT(CONCAT('%',#{year}),'%')
+   </if>
+    GROUP BY DATE_FORMAT(Re_date,'%Y-%m')
     </select>
+  <select id="queryHtbh" resultType="int">
+        SELECT MAX(re_id) FROM `real_estate`
+  </select>
+    <select id="queryRealEstatePage" resultType="map" parameterType="com.zking.ssm_wy.Base.model.RealEstate">
+      SELECT * FROM real_estate
+    </select>
+       <!--<select id="querytj">-->
+        <!--SELECT xq.x_number,COUNT(b.b_buliding)b_buliding,xq.x_mj,x_buliding FROM xiaoqu xq-->
+        <!--LEFT JOIN buliding b-->
+        <!--ON xq.x_number = b.x_number-->
+        <!--LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NOT NULL) dy-->
+        <!--ON b.b_number = dy.b_number-->
+        <!--LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NULL) s-->
+        <!--ON dy.h_number=s.b_number  GROUP BY x_buliding-->
+        <!--</select>-->
     <select id="queryxsetj" resultType="map">
       SELECT xq.x_number,xq.x_buliding,SUM(re.Re_price)AS price,MONTH(re.Re_date) AS mouth,YEAR(re.Re_date) AS years FROM xiaoqu xq
         LEFT JOIN buliding b

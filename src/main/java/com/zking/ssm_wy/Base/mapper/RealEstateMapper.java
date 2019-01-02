@@ -19,4 +19,6 @@ public interface RealEstateMapper {
     List<Map<String,Object>> queryxsetj(@Param("year") String year);
 
     List<Map<String,Object>> queryxsetj2(@Param("year")String year,@Param("x_number")String x_number,@Param("mouth")String mouth);
+
+
 }

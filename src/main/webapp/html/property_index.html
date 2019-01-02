@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>物业后台登录</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/property_index.css">
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
+    <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <!--<script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>-->
+</head>
+<script>
+    layui.use('form',function () {
+        var form = layui.form;
+        var $=layui.jquery;
+        $("#login").click(function () {
+         var username= $('#username').val();
+        var password= $('#password').val();
+        $.ajax({
+            url: "/ssm_wy/sysUseLogin",
+            method: 'post',
+            data: {"username":username,"password":password},
+            dataType: 'JSON',
+            success: function (res) {
+                console.log(res);
+
+                // location.reload();
+                if (res.success==true){
+                    layer.alert(res.msg, {icon: 1});
+                    location.href='/ssm_wy/layui.html';
+                }else{
+                    layer.alert(res.msg, {icon: 1});
+                    $('#username').val("");
+                    $('#password').val("");
+                }
+            },
+            error: function (data) {
+            }
+        });
+        });
+    });
+</script>
+<body>
+    <div class="box">
+        <!--左侧大图-->
+        <div class="box_left">
+            <div class="box_img">
+                <img src="../images/addshops_11.png" alt="">
+            </div>
+            <div class="left_news">
+                <p class="left_p1">物业管理登录入口</p>
+                <p class="left_p2">输入您的账号以及密码，轻松管理物业。</p>
+            </div>
+        </div>
+        <!--右侧表单-->
+        <div class="box_right">
+            <p class="right_p1">云联汇-社区服务管理系统</p>
+            <form action="" method="post" id="ff">
+                <p class="right_p2" style="margin-top: 20px">物业账号</p>
+                <p ><input class="ipt1" type="text" placeholder="请输入物业账号" id="username" name="username"></p>
+                <p class="right_p2">物业密码</p>
+                <p><input class="ipt1"  type="password" placeholder="请输入物业密码" id="password" name="password"></p>
+                <button class="btn1" type="button" id="login">登录</button>
+                <a href="#" class="right_a">忘记密码</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

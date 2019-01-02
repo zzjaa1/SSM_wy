@@ -21,4 +21,8 @@ public interface SysPermissionMapper {
     int updateByPrimaryKey(SysPermission record);
 
     List<Map<String,Object>> queryPermission(String pid);
+
+    //根据用户id查询对应的角色
+    List<Map<String,Object>> queryPermissione2(Integer userid);
+
 }

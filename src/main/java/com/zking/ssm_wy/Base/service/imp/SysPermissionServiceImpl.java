@@ -22,4 +22,10 @@ public class SysPermissionServiceImpl implements ISysPermissionService {
     }
 
 
+    @Override
+    public List<Map<String, Object>> queryPermissione2(Integer userid) {
+        return sysPermissionMapper.queryPermissione2(userid);
+    }
+
+
 }

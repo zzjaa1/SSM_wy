@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/ssm_wy/Highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="/ssm_wy/Highcharts/exporting.js"></script>
+    <script type="text/javascript" src="/ssm_wy/Highcharts/drilldown.js"></script>
+    <script type="text/javascript" src="/ssm_wy/Highcharts/sand-signika.js"></script>
+    <script type="text/javascript" src="/ssm_wy/Highcharts/highcharts-zh_CN.js"></script>
+    <link rel="stylesheet" href="/ssm_wy/layui/css/layui.css"  media="all">
+    <script src="/ssm_wy/layui/layui.js" charset="utf-8"></script>
+    <script>
+        layui.use('form',function() {
+            var $ = layui.jquery;
+            $("#cx").click(function() {
+                var options=$("#yeas option:selected").val();
+                alert(options);
+                tj(options);
+            });
+        });
+        function tj (year) {
+            alert(year)
+            var myDate=new Date();//获取系统当前时间
+            //取到选择框的时间
+            var data1=[];
+            var date4=[];
+            /*if(year!=""){
+                title=year+"销售情况";
+            }*/
+
+            $.ajax({
+                url : '/ssm_wy/queryxqxseTj',
+                data : {
+                    'year':year
+                },
+                dataType : 'json',
+                type : 'post',
+                async : false,
+                success : function(data) {
+                    $.each(data.rows,function(idx,elem){
+                        cust_no=elem.cust_no;
+                        data1.push({
+                            "name":elem.x_buliding,
+                            "y":elem.price,
+                            "drilldown":elem.x_number,
+                            "years":elem.years,
+                            "pd":1
+                        });
+                    });
+                }
+            });
+
+            $(function () {
+                // Create the chart
+                $('#container').highcharts({
+                    chart: {
+                        type: 'column',
+                        events: {
+                            drillup: function(e) {
+                                // 上钻回调事件
+                                if(e.seriesOptions.data[0].pd==1){
+                                    if($('#years').val()==""){
+                                        $('#year').html("全年销售情况");
+                                    }else{
+                                        $('#year').html($('#years').val()+"年销售情况");
+                                    }
+                                }else if(e.seriesOptions.data[0].pd==2){
+                                    if($('#years').val()==""){
+                                        $('#year').html(e.seriesOptions.data[0].names+"  全年每月销售情况");
+                                    }else{
+                                        $('#year').html(e.seriesOptions.data[0].names+"  "+$('#years').val()+"年每月销售情况");
+                                    }
+                                }
+                            },
+                            drilldown: function (e) {
+                                mouth="";
+                                //第三层
+                                if(undefined!=e.point.mouth){
+                                    mouth=e.point.mouth;
+                                }
+                                year=e.point.years;
+                                $.ajax({
+                                    url : '/ssm_wy/queryxqxseTj2',
+                                    data : {
+                                        'year':e.point.years,
+                                        'cust_nos':e.point.drilldown,
+                                        'mouth':mouth
+                                    },
+                                    dataType : 'json',
+                                    type : 'post',
+                                    async : false,
+                                    success : function(data) {
+                                        if(""==data){
+                                            text=["没有数据"],
+                                                count=[0]
+                                        }
+                                        date4=[];
+                                        if(undefined!=e.point.mouth){
+                                            $.each(data,function(idx,elem){
+                                                pd=elem.days;
+                                                mouth="";
+                                                title=elem.cust_name+" "+year+"年";
+                                                title2=elem.mouth+"月每天消费订单情况";
+                                                $('#year').html(title);
+                                                date4.push({
+                                                    "name":elem.days+"日",
+                                                    "y":elem.price,
+                                                    "drilldown":elem.x_number,
+                                                    "years":elem.years,
+                                                    "mouth":elem.mouth,
+                                                    "days":elem.days,
+                                                    "pd":3
+                                                });
+                                            });
+                                            if($('#years').val()!=""){
+                                                $('#year').html(e.point.names+" "+title+title2);
+                                            }else{
+                                                $('#year').html(e.point.names+" 全年"+title2);
+                                            }
+                                        }else{
+                                            $.each(data,function(idx,elem){
+                                                mouth=elem.mouth;
+                                                title=elem.cust_name+" "+year+"年每月消费订单情况";
+                                                $('#year').html(title);
+                                                date4.push({
+                                                    "name":elem.mouth+"月",
+                                                    "y":elem.price,
+                                                    "drilldown":elem.x_number,
+                                                    "years":elem.years,
+                                                    "mouth":elem.mouth,
+                                                    "pd":2,
+                                                    "names":elem.x_buliding
+                                                });
+                                            });
+                                            if($('#years').val()!=""){
+                                                $('#year').html(e.point.name+" "+title);
+                                            }else{
+                                                $('#year').html(e.point.name+" 全年每月消费订单情况");
+                                            }
+                                        }
+
+                                        if(undefined!=e.point.days)
+                                            date4=[];
+                                    }
+                                });
+
+                                if (!e.seriesOptions) {
+                                    var nname=e.point.name;
+                                    var chart = this,
+                                        drilldowns = {
+                                            'haha': {
+                                                name: nname,
+                                                colorByPoint: true,
+                                                data: date4
+                                            }
+                                        },
+
+                                        series = drilldowns['haha'];
+                                    // Show the loading label
+                                    chart.showLoading('Simulating Ajax ...');
+                                    setTimeout(function () {
+                                        chart.hideLoading();
+                                        chart.addSeriesAsDrilldown(e.point, series);
+                                    }, 1000);
+                                }
+                            }
+                        }
+                    },
+                    title: {
+                        text: 'Async drilldown'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        title: {
+                            text: '小区'
+                        },
+                    },
+                    yAxis: {
+                        type: 'category',
+                        title: {
+                            text: '收入金额'
+                        },
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        series: {
+                            borderWidth: 0,
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    },
+                    series: [{
+                        name: '父级模块',
+                        colorByPoint: true,
+                        data: data1
+                    }],
+                    drilldown: {
+                        series: []
+                    }
+                });
+            });
+        }
+
+    </script>
+    <script>
+        layui.use('form',function(){
+            var $ = layui.jquery;
+            form = layui.form
+            var a="<option value=''>请选择年份</option>";
+            for (var i = 2000; i < 2050; i++) {
+                a+="<option value='"+i+"'>"+i+"</option>";
+            }
+            $('#yeas').append(a);
+            form.render('select');
+        });<!--加载form模块-->
+        </script>
+</head>
+<body>
+<!--<label >年份:</label>-->
+<!--<select id="yeas"></select>-->
+ <div class="layui-form" >
+<div class="layui-inline">
+    <!--<label class="layui-form-label">年份</label>-->
+    <div class="layui-input-inline" style="width:700px">
+        <select name="modules" id="yeas" lay-verify="required" lay-search="" >
+            <!--<option value="">请选择</option>-->
+        </select>
+    </div>
+    <button class="layui-btn" id="cx">查询</button>
+</div>
+</div>
+<div id="container" style="min-width:400px;height:400px"></div>
+</body>
+</html>

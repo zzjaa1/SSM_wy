@@ -294,8 +294,6 @@
             // hours = hours<10 ? "0"+hours:hours;
             // minutes = minutes<10 ? "0"+minutes:minutes;
             // seconds = seconds<10 ? "0"+seconds:seconds;
-
-
             var time = year + "-" + month + "-" + day;
             return time;
         }
@@ -334,84 +332,6 @@
                     }
                 },
                 yes: function (index, layero) {
-
-
-                   /* layui.use(['form','jquery'], function() {
-                        var form = layui.form;
-                        var $ = layui.jquery;*/
-
-                   /* form.verify({
-                        hNumber: function(value){
-                            if(value.length==0){
-                                // layer.tips("标题至少得5个字符啊");
-                                return '小区编号不能为空';
-                            }
-                        }, cFc: function(value){
-                            if(value.length==0){
-                                return '楼/栋名称不能为空';
-                            }
-                        },
-                        cUser: function(value){
-                            if(value.length==0){
-                                return '房屋结构不能为空';
-                            }
-                        },
-                        cJfdw: function(value){
-                            if(value.length==0){
-                                return '房屋结构不能为空';
-                            }
-                        },
-                        cDwjg: function(value){
-                            if(value.length==0){
-                                return '房屋结构不能为空';
-                            }
-                        },
-                        cDwjg: function(value){
-                            if(value.length==0){
-                                return '房屋结构不能为空';
-                            }
-                        },
-                        cnId: function(value){
-                            if(value.length==0){
-                                return '房屋结构不能为空';
-                            }
-                        },
-                        cYjfy: function(value){
-                            if(value.length==0){
-                                return '房屋结构不能为空';
-                            }
-                        },
-                    });
-                    });*/
-
-                //     body = layer.getChildFrame('body', index);
-                //     var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
-                //     console.log(body.find("#ff"));
-                //     // var ss = iframeWin.s().serializeJSON();
-                //     alert(b);
-                //     return ;
-                //     // var companyId=iframeWin.document.getElementById("companyId").value;
-                //     // console.log(companyId)
-                //     // var grade=iframeWin.document.getElementById("grade").value;
-                //     // console.log(grade)
-                //     $.ajax({
-                //         url: url,
-                //         method: 'post',
-                //         data: ss,
-                //         dataType: 'JSON',
-                //         success: function (res) {
-                //             // $('#tj').click();
-                //             layer.alert(data.suucess, {icon: 1});
-                //             location.reload();
-                //         },
-                //         error: function (data) {
-                //         }
-                //     });
-                //     // body.contents().find('#tj').click();
-                //     layer.alert('ccc', {icon: 1});
-                //     layer.close(index);
-                // }, btn2: function (index, layero) {
-                //     layer.close(index);
                     if (data == "新增") {
                         url = '/ssm_wy/Cost/insertCost';
                     } else {

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm_wy.Base.mapper.LogsMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm_wy.Base.model.Logs" >
+    <constructor >
+      <arg column="logId" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="logParams" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="logName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="logIP" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="logcreateTime" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="moID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="userId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.zking.ssm_wy.Base.model.Logs" >
+    insert into logs (logId, logParams, logName, 
+      logIP, logcreateTime, moID, 
+      userId)
+    values (#{logid,jdbcType=VARCHAR}, #{logparams,jdbcType=VARCHAR}, #{logname,jdbcType=VARCHAR}, 
+      #{logip,jdbcType=VARCHAR}, #{logcreatetime,jdbcType=DATE}, #{moid,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm_wy.Base.model.Logs" >
+    insert into logs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logid != null" >
+        logId,
+      </if>
+      <if test="logparams != null" >
+        logParams,
+      </if>
+      <if test="logname != null" >
+        logName,
+      </if>
+      <if test="logip != null" >
+        logIP,
+      </if>
+      <if test="logcreatetime != null" >
+        logcreateTime,
+      </if>
+      <if test="moid != null" >
+        moID,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logid != null" >
+        #{logid,jdbcType=VARCHAR},
+      </if>
+      <if test="logparams != null" >
+        #{logparams,jdbcType=VARCHAR},
+      </if>
+      <if test="logname != null" >
+        #{logname,jdbcType=VARCHAR},
+      </if>
+      <if test="logip != null" >
+        #{logip,jdbcType=VARCHAR},
+      </if>
+      <if test="logcreatetime != null" >
+        #{logcreatetime,jdbcType=DATE},
+      </if>
+      <if test="moid != null" >
+        #{moid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="queryLogPage" resultType="map">
+     SELECT *  FROM LOGS
+       <if test="null!=logparams and ''!=logparams">
+          WHERE logParams LIKE CONCAT('%',CONCAT(#{logparams},'%'))
+       </if>
+       ORDER BY logcreateTime DESC
+  </select>
+</mapper>

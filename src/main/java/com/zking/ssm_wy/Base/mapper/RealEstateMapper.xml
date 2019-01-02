@@ -41,7 +41,9 @@
         SELECT MAX(re_id) FROM `real_estate`
   </select>
     <select id="queryRealEstatePage" resultType="map" parameterType="com.zking.ssm_wy.Base.model.RealEstate">
-      SELECT * FROM real_estate
+      SELECT re.*,h.h_type FROM real_estate re
+ LEFT JOIN houses h
+ ON re.`h_number`=h.`h_number`
     </select>
        <!--<select id="querytj">-->
         <!--SELECT xq.x_number,COUNT(b.b_buliding)b_buliding,xq.x_mj,x_buliding FROM xiaoqu xq-->

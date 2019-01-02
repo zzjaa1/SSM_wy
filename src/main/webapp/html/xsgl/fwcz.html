@@ -14,11 +14,50 @@
     <script type="text/javascript" src="/ssm_wy/layui/lay/modules/element.js"></script>
     <script type="text/javascript" src="/ssm_wy/js/jquery.serializejson.js"></script>
     <!--树形-->
+    <div id="dd" style="display: none">
+        <input type="button" id="jt" style="display: none">
+        <table id="tabl"></table>
+        <script>
+            var checkStatus="";
+            layui.use('table', function () {
+                var table = layui.table;
+                //第一个实例
+                table.render({
+                    elem: '#tabl'
+                    , height: 550
+                    , url: '/ssm_wy/queryOwner' //数据接口
+                    , where: {
+                        oname: ''
+                    },page:true
+                    ,id:'tabl'
+                    ,toolbar: true
+                    ,totalRow: true
+                    , cols: [[ //表头
+                        {type:'radio'},
+                        {field: 'o_number', title: '住户编号', width: '25%'},
+                        {field: 'o_name', title: '业主名', width: '15%'},
+                        {field: 'h_number', title: '房间编号', width: '15%'},
+                        {field: 'o_phone', title: '业主号码', width: '15%'},
+                        {field: 'o_jdata', title: '入住时间', width: '15%',
+                            templet: function (d) {
+                                return showTime(d.o_jdata);
+                            }
+                        },
+                        {field: 'o_before', title: '预付金额', width: '15%'},
+                        {field: 'o_ownership', title: '住户类型', width: '15%'},
+                        {field: 'o_carder', title: '身份证号', width: '25%'}
+                    ]] });
+                $('#jt').on('click', function() {
+                    checkStatus = table.checkStatus('tabl');
+                });
+            });
+
+        </script>
+    </div>
     <script>
         var data={};
         var data1={};
         var itemName=null;
-
         layui.use(['tree', 'layer','table'], function(){
             var layer = layui.layer
                 ,$ = layui.jquery;
@@ -63,7 +102,7 @@
                                                 var obj = JSON.stringify(value);
                                                 var checkStatus=table.checkStatus("idTest");
                                                 var rowvalue=checkStatus.date;
-                                                return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tk("+obj+")';>\n" +
+                                                return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tkyz("+obj+")';>\n" +
                                                     "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
                                                     "   </button>" +
                                                     "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
@@ -81,8 +120,6 @@
                     });
                 }
             });
-
-
             $("#cxbutton").click(function() {
                 var price=document.getElementById("price");
                 var htype=document.getElementById("setype");
@@ -109,7 +146,7 @@
                                 var obj = JSON.stringify(value);
                                 var checkStatus=table.checkStatus("idTest");
                                 var rowvalue=checkStatus.date;
-                                return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tk("+obj+")';>\n" +
+                                return " <button class=\"layui-btn layui-btn-sm\" value='购买' onclick='tkyz("+obj+")';>\n" +
                                     "                         <i class=\"layui-icon\">&#xe642;</i>\n" +
                                     "   </button>" +
                                     "<button class=\"layui-btn layui-btn-sm\" oclick=\"delete(" + value.id + ")\">\n" +
@@ -124,11 +161,39 @@
             //30-50======================================================================================================
 
         });
-        function tk(data) {
+
+        function tkyz(data) {
+            console.log(11);
+            console.log(data)
+            layer.open({
+                type: 1,
+                title: '',
+                maxmin: true,
+                shadeClose: true, //点击遮罩关闭层
+                shade: 1,   //遮罩
+                anim: 4,
+                area: ['1000px', '600px'],
+                content: $('#dd'),
+                btn: ['选好了', '未有业主,跳过'],
+                success: function (layero, index) {
+                },
+                yes: function (index, layero) {
+                    $('#jt').click();
+                    var datas = checkStatus.data;
+                    console.log(datas);
+                    layer.close(index);
+                    tk(data,datas)
+                }, btn2: function (index, layero) {
+                    layer.close(index);
+                    tk(data,"")
+                }
+            });
+        }
+        function tk(data,datas) {
             var url="/ssm_wy/html/xsgl/czht.html";
             layer.open({
                 type: 2,
-                area:['800px','550px'],
+                area:['1200px','600px'],
                 title:"出租合同",
                 maxmin:true,
                 content: url,//这里content是一个普通的String
@@ -139,6 +204,9 @@
                             var id = '#' + Object.entries(data)[i][0];
                             var text = Object.entries(data)[i][1];
                             body.contents().find(id).val(text);
+                        }
+                        if (datas!=null){
+                            // body.contents().find("#").val();
                         }
                 }
                 ,btn: ['确定', '关闭','自动填充']
@@ -167,9 +235,9 @@
                     })
                 },btn2: function(index, layero){
                     //按钮【按钮二】的回调
-                    layer.msg('我是按钮二', function(){
-                        //do something
-                    });
+                    // layer.msg('我是按钮二', function(){
+                    //     //do something
+                    // });
                     // 开启该代码可禁止点击该按钮关闭
                 },btn3: function (index,layero) {
                     layer.prompt(

@@ -14,9 +14,11 @@
             </list>
         </property>
     </bean>
-
+    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
     <import resource="applicationContext-mybatis.xml"/>
     <!--<import resource="applicationContext-ehcatch.xml"/>-->
     <import resource="applicationContext-redis.xml"/>
    <!-- <import resource="applicationContext-shiro.xml"/>-->
+
+
 </beans>

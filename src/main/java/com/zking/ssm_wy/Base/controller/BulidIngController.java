@@ -55,6 +55,7 @@ public class BulidIngController {
         List<Map<String, Object>> maps = iBulidingService.queryB(buliding);
         Map<String,Object> map =new HashMap<>();
         map.put("data",maps);
+
         map.put("success",true);
         return map;
     }

@@ -47,10 +47,13 @@
     SELECT MAX(b_id)b_id FROM buliding;
   </select>
     <select id="queryB" resultType="map">
-        SELECT * FROM buliding WHERE 1=1
-        <if test="null!= b.xNumber and null!=b.xNumber">
-            AND x_number=#{b.xNumber}
+      SELECT b.*,h.*,MAX(h.h_floor) AS m FROM buliding b
+      LEFT JOIN (SELECT * FROM houses WHERE h_unitNumber IS NULL) h
+      ON b.`b_number`=h.`L` WHERE 1=1
+      <if test="null!= b.xNumber and null!=b.xNumber">
+            AND b.x_number=#{b.xNumber}
         </if>
+      GROUP BY b.`b_buliding`
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from buliding

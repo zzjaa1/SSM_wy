@@ -22,139 +22,139 @@
         .chooseIn_foot{width:100%;margin-top:20px;position:relative}
     </style>
 </head>
-<body>
-<div >
-    <em><img src="../../images/H_form.png" alt=""></em><a href="#">报表中心</a><span>></span><a href="#">报修统计</a>
-</div>
-<div >
-    <div class="touSu">
-        <div class="chooseIn_top chairFix">
-            <div><img src="../../images/H_edit.png" alt=""></div>
-            <h5>报修统计</h5>
-        </div>
-        <div class="chooseIn_con chairFix">
-            <div class="container1"></div>
-            <div class="container2"></div>
-        </div>
-        <div class="chooseIn_foot">
-            <div class="chooseIn_fo" style="width: 100%; height: 400px; margin: 0px auto;"></div>
-            <p class="chooseDate">
-                <label for="">选择日期</label>
-                <input type="number" value="2017" id="theDate">
-            </p>
-        </div>
-    </div>
-</div>
-<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
-<script src="../../js/Highcharts111.js"></script>
-<script src="../../js/Reporting_baoXiu.js"></script>
-<script>
-    $('.hr_div1').click(function(){
-        var i=$('.hr_div1').index(this);
-        if($(".header_list").eq(i).get(0).style.display=="block"){
-            $(".header_list").eq(i).hide()
-        }else{
-            $(".header_list").hide()
-            $(".header_list").eq(i).show()
-        }
-    })
-    $('.hdl_select').click(function () {
-        var a=$(this).html();
-        $('.hr_show').html(a);
-    });
-    /*投诉概况双线图*/
-    $(document).ready(function() {
-        var title = {
-            text: '报修概况'
-        };
-        var xAxis = {
-            categories: ["2017/1","2017/2","2017/3","2017/4","2017/5","2017/6","2017/7","2017/8","2017/9","2017/10","2017/11","2017/12"]
-        };
-        var yAxis = {
-            title: {
-                text: ''
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        };
-        var tooltip = {
-            valueSuffix: ''
-        }
-        var legend = {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 1
-        };
-        var series =  [
-            {
-                name: '报修数量',
-                data: [1,5,7,11,3,1,0,5,8,9,3,8]
-            },
-            {
-                name: '已报修数量',
-                data: [1,4,6,9,2,1,0,5,8,6,2,7]
-            }
-        ];
-        var json = {};
-        json.title = title;
-        json.xAxis = xAxis;
-        json.yAxis = yAxis;
-        json.tooltip = tooltip;
-        json.legend = legend;
-        json.series = series;
-        $('.chooseIn_fo').highcharts(json);
 
-        $("#theDate").click(function(){
-            Dat=$("#theDate").get(0).value;
-            var title = {
-                text: '报修概况'
-            };
-            var xAxis = {
-                categories: [Dat+"/1",Dat+"/2",Dat+"/3",Dat+"/4",Dat+"/5",Dat+"/6",Dat+"/7",Dat+"/8",Dat+"/9",Dat+"/10",Dat+"/11",Dat+"/12"]
-            };
-            var yAxis = {
-                title: {
-                    text: ''
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            };
-            var tooltip = {
-                valueSuffix: ''
-            }
-            var legend = {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 1
-            };
-            var series =  [
-                {
-                    name: '报修数量',
-                    data: [1,5,7,11,3,1,0,5,8,9,3,8]
-                },
-                {
-                    name: '已报修数量',
-                    data: [1,4,6,9,2,1,0,5,8,6,2,7]
+<script src="/ssm_wy/Echarts/echarts.js"></script>
+<script src="/ssm_wy/Echarts/echarts-gl.js"></script>
+<script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
+<body onload="initChart()">
+<div id="main" style="width: 1000px;height:800px;"></div>
+<script>
+
+    var x="";
+    var y="";
+    function initChart() {
+        $.get("/ssm_wy/basDict/querybasDict",
+            function (result, state) {
+                var names = result.data;
+                var xx = new Array();
+                var yy = new Array();
+                for (var i = 0; i < names.length; i++) {
+                    var type = names[i].dict_type;
+                    if (type.search('统计区域X') != -1) {
+                        xx.push(names[i].dict_item);
+                    } else if (type.search('统计区域Y') != -1) {
+                        yy.push(names[i].dict_item);
+                    }
                 }
-            ];
-            var json = {};
-            json.title = title;
-            json.xAxis = xAxis;
-            json.yAxis = yAxis;
-            json.tooltip = tooltip;
-            json.legend = legend;
-            json.series = series;
-            $('.chooseIn_fo').highcharts(json);
-        })
-    });
+                var myChart = echarts.init(document.getElementById('main'));
+                var hours = xx;
+                var days = yy;
+
+                var datas = new Array();
+                $.ajax({
+                    url: "/ssm_wy/BulidIng/queryB",
+                    data: {xNumber: 'XQ4'},
+                    dataType: 'json',
+                    type: 'post',
+                    async: false,
+                    success: function (data) {
+                        datas= data.data;
+
+                    }
+                });
+
+                $.getScript('/ssm_wy/Echarts/simplex.js').done(function () {
+                    var series = [];
+                    console.log(datas);
+                    for (var i = 1; i < 3; i++) {//层数
+                        for (var j = 0; j < datas.length; j++) {//数据层数
+                        if(datas[j].m!=undefined){
+                            var fool=datas[j].m;
+                            if(parseInt(fool)>=i){
+                                var ss = new Array();
+                                console.log("执行");
+                                ss.push(parseInt(datas[j].X));
+                                ss.push(parseInt(datas[j].Y));
+                                ss.push(1);
+                                console.log("X="+datas[j].X+"Y="+datas[j].Y+"Z="+i);
+                                series.push({
+                                    type: 'bar3D',
+                                    data: ss,
+                                    stack: 'stack',
+                                    shading: 'lambert',
+                                   name: datas[j].b_buliding + "," + i + "," + datas[j].b_number,
+                                emphasis: {
+                                    label: {
+                                       formatter: function (params) {
+                                        var a = params.seriesName.split(",");
+                                        console.log(params);
+                                        return a[0] + "第" + a[1] + "层-----------------------------";
+                                    },
+                                }
+                            }
+                            });
+                            }
+                        }
+                           /* for (var j = 0; j < parseInt(fool); j++) {
+                                console.log("222");
+                                var ss = new Array();
+                                console.log(datas[j]);
+                                ss.push(parseInt(datas[i].X) - 1);
+                                ss.push(parseInt(datas[i].Y) - 1);
+                                ss.push(j+1);
+                                series.push({
+                                    type: 'bar3D',
+                                    data: ss,
+                                    stack: 'stack',
+                                    shading: 'lambert',
+                                 /!*   name: datas[i].b_buliding + "," + i + "," + datas[i].b_number,*!/
+                                    emphasis: {
+                                        label: {
+                                          /!*  formatter: function (params) {
+                                                var a = params.seriesName.split(",");
+                                                console.log(params);
+                                                return a[0] + "第" + a[1] + "层-----------------------------";
+                                            },*!/
+                                        }
+                                    }
+                                });
+                            }*/
+                            }
+                    }
+                    console.log("service");
+                    console.log(series);
+                    var myChart = echarts.init(document.getElementById('main'));
+                    myChart.setOption({
+                        xAxis3D: {
+                            type: 'category',
+                            data: [1,2,3,4,5,6]
+                        },
+                        yAxis3D: {
+                            type: 'category',
+                            data:  [1,2,3,4,5,6]
+                        },
+                        zAxis3D: {
+                            type: 'value'
+                        },
+                        grid3D: {
+                            viewControl: {
+                                // autoRotate: true
+                            },
+                            light: {
+                                main: {
+                                    shadow: true,
+                                    quality: 'ultra',
+                                    intensity: 2
+                                }
+                            }
+                        },
+                        series: series
+                    });
+
+                });
+
+            });
+    }
 </script>
 </body>
 </html>

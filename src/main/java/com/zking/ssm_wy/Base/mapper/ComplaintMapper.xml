@@ -33,4 +33,10 @@
   <select id="delComplaint" resultType="string">
     DELETE FROM complaint where c_id=#{cid}
   </select>
+    <select id="addComplaint" resultType="string" parameterType="com.zking.ssm_wy.Base.model.Complaint">
+      insert into complaint (c_id, c_odd, h_number,
+      c_name, c_phone, c_date,
+      c_state)
+    values (#{cid},#{cname},#{cdate},#{codd},#{cphone},#{cstate},#{h_number})
+    </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.zking.ssm_wy.Base.controller;
 
 import com.github.pagehelper.PageHelper;
+import com.zking.ssm_wy.Base.model.Complaint;
 import com.zking.ssm_wy.Base.service.ComplaintService;
 import com.zking.ssm_wy.Base.util.PageBean;
 import org.apache.ibatis.jdbc.Null;
@@ -150,6 +151,13 @@ public class ComplainController {
     @ResponseBody
     public String delComplaint(int cid){
         complaintService.delComplaint(cid);
+        return "成功";
+    }
+    @RequestMapping("/addComplaint")
+    @ResponseBody
+    public String addComplaint(Complaint complaint){
+        complaintService.addComplaint(complaint);
+        System.out.println("111");
         return "成功";
     }
 

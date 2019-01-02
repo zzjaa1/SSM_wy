@@ -24,7 +24,7 @@
             <label class="layui-form-label">投诉编号:</label>
             <div class="layui-input-block">
                 <input type="text" id="c_id" name="c_id" required  lay-verify="required"
-                       autocomplete="off" class="layui-input" style="width: 34%" readonly>
+                       autocomplete="off" class="layui-input" style="width: 34%" >
             </div>
         </div>
         <div>
@@ -33,7 +33,7 @@
             <label class="layui-form-label">投诉单号:</label>
             <div class="layui-input-block">
                 <input type="text" id="c_odd" name="c_odd" required  lay-verify="required"  placeholder="请输入房产信息"
-                       autocomplete="off" class="layui-input" style="width: 100%" readonly>
+                       autocomplete="off" class="layui-input" style="width: 100%" >
             </div>
         </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">房屋编号:</label>
                 <div class="layui-input-block">
-                    <input type="text" id="h_number" name="h_number" required  lay-verify="required" placeholder="请输入房屋户型" autocomplete="off" class="layui-input" readonly>
+                    <input type="text" id="h_number" name="h_number" required  lay-verify="required" placeholder="请输入房屋户型" autocomplete="off" class="layui-input" >
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">投诉人:</label>
             <div class="layui-input-block">
-                <input type="text" id="c_name" name="c_name"required  lay-verify="required" placeholder="请输入房屋朝向" autocomplete="off" class="layui-input" readonly>
+                <input type="text" id="c_name" name="c_name"required  lay-verify="required" placeholder="请输入房屋朝向" autocomplete="off" class="layui-input" >
             </div>
         </div>
         </div>
@@ -58,7 +58,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">投诉人电话:</label>
                 <div class="layui-input-block">
-                    <input type="text" id="c_phone" name="c_phone" required  lay-verify="required" placeholder="请输入建筑面积" autocomplete="off" class="layui-input" readonly>
+                    <input type="text" id="c_phone" name="c_phone" required  lay-verify="required" placeholder="请输入建筑面积" autocomplete="off" class="layui-input" >
                 </div>
             </div>
         </div>
@@ -75,7 +75,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">投诉状态:</label>
                     <div class="layui-input-block">
-                        <input type="text" id="c_state" name="c_state" required  lay-verify="required" placeholder="请输入合同金额" autocomplete="off" class="layui-input" readonly>
+                        <input type="text" id="c_state" name="c_state" required  lay-verify="required" placeholder="请输入合同金额" autocomplete="off" class="layui-input" >
                     </div>
                 </div>
             </div>
@@ -88,7 +88,7 @@
             console.log(state)
             return state;
         }
-        /*layui.use('laydate', function(){
+        layui.use('laydate', function(){
             var laydate=layui.laydate;
             laydate.render({
                 elem:'#c_date'
@@ -96,7 +96,7 @@
                 ,value:new Date()
 
             });
-        });*/
+        });
     </script>
 </body>
 </html>

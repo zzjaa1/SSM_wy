@@ -1,5 +1,7 @@
 package com.zking.ssm_wy.Base.mapper;
 
+import com.zking.ssm_wy.Base.model.Complaint;
+
 import java.util.List;
 import java.util.Map;
 
@@ -15,4 +17,6 @@ public interface ComplaintMapper {
     List<Map<String,Object>> queryComplaint5Page(String cname);
 
     String delComplaint(int cid);
+
+    String addComplaint(Complaint complaint);
 }

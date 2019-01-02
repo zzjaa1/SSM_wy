@@ -31,6 +31,9 @@
             <div class="layui-inline">
                 <button id="cxbutton" class="layui-btn layui-btn-radius layui-btn-normal">查询</button>
             </div>
+            <div class="layui-inline">
+                <button id="add" class="layui-btn layui-btn-radius layui-btn-normal" onclick="tk2()">新增</button>
+            </div>
             <div >
                 <table id="demo" lay-table="test" style="height: 100%" >
                 </table>
@@ -89,6 +92,49 @@
 </div>
 </body>
 <script>
+
+    function tk2() {
+        var url="/ssm_wy/html/Yzts/addc.html";
+        layer.open({
+            type: 2,
+            area:['600px','500px'],
+            title:"详情",
+            maxmin:true,
+            content: url,//这里content是一个普通的String
+            success : function(layero, index){
+                var body = layui.layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                for (var i = 1; Object.entries(data).length > i; i++) {
+                    var id = '#' + Object.entries(data)[i][0];
+                    var text = Object.entries(data)[i][1];
+                    body.contents().find(id).val(text);
+                }
+            }
+            ,btn: ['确定', '关闭']
+            ,yes: function(index, layero){
+                //按钮【按钮一】的回调
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                var sdata=iframeWin.sasa();
+                var redate=new Date();
+                console.log(sdata)
+                console.log("cname="+sdata.c_name)
+                $.ajax({
+                    url: '/ssm_wy/addComplaint',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {'cid':sdata.c_id,'codd':sdata.c_odd,'h_number'
+                            :sdata.h_number,'cname':sdata.c_name,'cphone':sdata.c_phone,'cdate':redate,'cstate':sdata.c_state
+                    },
+                    success: function (status) {
+                        layui.layer.close(index);
+                    }
+                });
+            },btn2: function(index, layero){
+                //按钮【按钮二】的回调
+                // 开启该代码可禁止点击该按钮关闭
+            }
+        });
+    }
     layui.use('table',function () {
 
         var table=layui.table;

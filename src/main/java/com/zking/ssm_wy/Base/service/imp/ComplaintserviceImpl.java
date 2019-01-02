@@ -1,6 +1,7 @@
 package com.zking.ssm_wy.Base.service.imp;
 
 import com.zking.ssm_wy.Base.mapper.ComplaintMapper;
+import com.zking.ssm_wy.Base.model.Complaint;
 import com.zking.ssm_wy.Base.service.ComplaintService;
 import com.zking.ssm_wy.Base.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,10 @@ public class ComplaintserviceImpl implements ComplaintService{
     @Override
     public String delComplaint(int cid) {
         return complaintMapper.delComplaint(cid);
+    }
+
+    @Override
+    public String addComplaint(Complaint complaint) {
+        return complaintMapper.addComplaint(complaint);
     }
 }

@@ -22,16 +22,43 @@
         .chooseIn_foot{width:100%;margin-top:20px;position:relative}
     </style>
 </head>
-
+<link rel="stylesheet" href="/ssm_wy/layui/css/layui.css" media="all">
+<script src="/ssm_wy/layui/layui.js"></script>
 <script src="/ssm_wy/Echarts/echarts.js"></script>
 <script src="/ssm_wy/Echarts/echarts-gl.js"></script>
 <script src="/ssm_wy/js/jquery-1.9.1.min.js"></script>
 <body onload="initChart()">
 <div id="main" style="width: 1000px;height:800px;"></div>
+<table id="demo"></table>
+<input type="button" id="tj" style="display: none;">
 <script>
-
+    var tab=new Array();
+    layui.use('table', function(){
+        var table = layui.table;
+        //第一个实例
+        $('#tj').on('click', function(){
+        table.render({
+            elem: '#demo'
+            ,height: 600
+            ,id:'demo'
+            ,title: '费用项表'
+            ,data:tab
+            ,cols: [[ //表头
+                {type:'checkbox'},
+                {field: 'b_id', title: 'ID', width:100, sort: true}
+                ,{field: 'b_buliding', title: '所属楼', width:100, edit: 'text'}
+                ,{field: 'h_bulidingName', title: '房间', width:100, edit: 'text'}
+                ,{field: 'h_state', title: '是否入住', sort: true, width:100}
+                ,{field: 'h_type', title: '所属户型', sort: true, width: 120}
+                ,{field: 'price', title: '房屋价格', width: 100}
+            ]]
+        });
+        });
+    });
     var x="";
-    var y="";
+    var li="";
+    var bgsj=new Array();
+
     function initChart() {
         $.get("/ssm_wy/basDict/querybasDict",
             function (result, state) {
@@ -59,24 +86,21 @@
                     async: false,
                     success: function (data) {
                         datas= data.data;
-
+                        li=data.li;
                     }
                 });
 
                 $.getScript('/ssm_wy/Echarts/simplex.js').done(function () {
                     var series = [];
-                    console.log(datas);
                     for (var i = 1; i < 3; i++) {//层数
                         for (var j = 0; j < datas.length; j++) {//数据层数
                         if(datas[j].m!=undefined){
                             var fool=datas[j].m;
                             if(parseInt(fool)>=i){
                                 var ss = new Array();
-                                console.log("执行");
                                 ss.push(parseInt(datas[j].X));
                                 ss.push(parseInt(datas[j].Y));
                                 ss.push(1);
-                                console.log("X="+datas[j].X+"Y="+datas[j].Y+"Z="+i);
                                 series.push({
                                     type: 'bar3D',
                                     data: ss,
@@ -87,42 +111,27 @@
                                     label: {
                                        formatter: function (params) {
                                         var a = params.seriesName.split(",");
-                                        console.log(params);
-                                        return a[0] + "第" + a[1] + "层-----------------------------";
+                                        var ii=0;
+                                        for(var i=0;i<li.length;i++){
+                                            /*console.log(li[i].b_number+"--"+a[2]);
+                                            console.log(li[i].h_floor+"--"+a[1]);*/
+                                            if(li[i].b_number==a[2]&&li[i].h_floor==a[1]){
+                                                ii++;
+
+                                            }
+                                        }
+                                           bgsj[0]=a[1];
+                                           bgsj[1]=a[2]
+                                        return a[0] + "第" + a[1] + "层--房间数:"+ii+"----------------------------------";
                                     },
                                 }
                             }
                             });
                             }
                         }
-                           /* for (var j = 0; j < parseInt(fool); j++) {
-                                console.log("222");
-                                var ss = new Array();
-                                console.log(datas[j]);
-                                ss.push(parseInt(datas[i].X) - 1);
-                                ss.push(parseInt(datas[i].Y) - 1);
-                                ss.push(j+1);
-                                series.push({
-                                    type: 'bar3D',
-                                    data: ss,
-                                    stack: 'stack',
-                                    shading: 'lambert',
-                                 /!*   name: datas[i].b_buliding + "," + i + "," + datas[i].b_number,*!/
-                                    emphasis: {
-                                        label: {
-                                          /!*  formatter: function (params) {
-                                                var a = params.seriesName.split(",");
-                                                console.log(params);
-                                                return a[0] + "第" + a[1] + "层-----------------------------";
-                                            },*!/
-                                        }
-                                    }
-                                });
-                            }*/
+
                             }
                     }
-                    console.log("service");
-                    console.log(series);
                     var myChart = echarts.init(document.getElementById('main'));
                     myChart.setOption({
                         xAxis3D: {
@@ -153,7 +162,21 @@
 
                 });
 
+                myChart.on('click', function (params) {
+                    var s=new Array();
+                    for(var i=0;i<li.length;i++){
+                        if(li[i].b_number==bgsj[1]&&li[i].h_floor==bgsj[0]){
+                            s.push(li[i]);
+                        }
+                    }
+                       tab=s;
+                    $('#tj').click();
+                })
+
             });
+    }
+    function sj(a) {
+        alert(a);
     }
 </script>
 </body>

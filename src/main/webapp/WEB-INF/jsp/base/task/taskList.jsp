@@ -103,7 +103,7 @@
 <body class="bgray">
 	<form id="addForm" method="post">
 
-		<table class="list_table">
+		<table class="layui-table" lay-filter="test">
 			<thead>
 				<tr>
 					<td style="width: 20px;">id&nbsp;&nbsp;&nbsp;</td>
